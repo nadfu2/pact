@@ -113,7 +113,7 @@ Good to know: open data has no ratings, prices, photos or opening hours, and som
 5. Limits: times are clock times, so a friend in another time zone sees the same clock time. Only the person who made an event can change it. There are no phone push notifications yet; alerts show while Pact is open.
 
 ## Your People
-Profile -> Your People. Personal and business contacts (no account needed), a reminder rhythm per person, Block (never remind), "In touch today", and an optional link to a Pact friend. The Schedule tab shows a "Time to reach out" banner for whoever is most overdue. Saved with the rest of your data.
+Social -> Your People (moved out of Profile). Personal and business contacts (no account needed), a reminder rhythm per person, Block (never remind), "In touch today", and an optional link to a Pact friend. The Schedule tab shows a "Time to reach out" banner for whoever is most overdue. Saved with the rest of your data.
 
 ## Ideas filters
 Each Ideas category has filter chips (for example Shopping: Books & Records, Clothes & Vintage, Homeware & Art, Markets). Chips are multi-select, stay on across refreshes, and are saved with your account until you press "Clear filters". The chips map to real place kinds in the `places` table (and to OpenStreetMap tags for the live fallback), so "Clothes" only returns clothes shops. After changing `RULES` in `tools/import_places.py`, re-run `--load` for each city.
@@ -129,5 +129,32 @@ Settings > Appearance: Light, Dark or Match my device, and five palettes (Autumn
 ## Development skills library
 `src/skills.js` holds skill-specific milestone ladders and links to reliable learning sites (Coursera, edX, Khan Academy, MIT OpenCourseWare, NHS, GOV.UK, JustinGuitar, parkrun and others). Nothing is an invented course. To add a skill, copy one entry in `PLANS` and change `match`, `steps` and `resources`. Skills with no entry get general steps plus search links.
 
+## Social tab
+Three sub-tabs: **Plans** (invite a friend, joint events and plans shared with you merged into one "Plans with friends" card, and community event search links), **Friend Book** (find by @username, search your friends, message, profile pictures and descriptions) and **Your People**.
+
+## Profile picture and description
+Profile -> Account -> "Your profile". The picture is cropped and shrunk to 128px in the browser, then saved with a 280 character description via `set_my_profile` (`supabase/migrations/0006_profile.sql`). Only people you are friends with see them.
+
+## Adding contacts to Your People
+"Add from phone contacts" uses the browser Contact Picker, which only exists in Chrome on Android, and lets you tick several people at once. Everywhere else, export your contacts as .vcf (iPhone Contacts, Google Contacts) or .csv and use "Import contacts file"; you tick who to add. Each person can have phone, WhatsApp and email, shown as Call / WhatsApp / Email buttons. Nothing is uploaded: parsing happens in the browser.
+
+## Voice
+The mic card on Home, the mic button inside Roamie, and the home-screen shortcut `/?voice=1` (long-press the installed Pact icon on Android) open a voice sheet. It uses the browser's speech recognition (Chrome, Edge, Safari) so what you say is sent to that browser vendor's speech service. Check the words, tap "Add it", and Roamie adds the plan. A true home-screen widget is not possible for a web app; the shortcut is the closest equivalent. `/?tab=schedule` opens the Schedule.
+
+## Notifications
+The bell in the header collects: friend requests, friends accepting or adding you, new messages, new invites, and changes or cancellations to plans you accepted. Checked every 45 seconds and whenever you open the Social tab. With "Turn on device alerts" allowed, they also appear as phone alerts while Pact is open or running in the background. A fully closed app cannot be woken yet: that needs a push server (Web Push with VAPID keys plus a Supabase function), which is the next step if wanted.
+
+## Reminders
+A reminder set to "15 min before" now fires 15 minutes before your getting-ready time begins (travel plus prep buffer), not before the start time. The message says when to start getting ready.
+
+## Community events
+There is no built-in events list any more (it was example data). Pick a goal and Pact opens live searches for your city on Meetup, Eventbrite and Google.
+
+## Ideas: search, see more, adventurous
+Search box at the top (places database, then OpenStreetMap, plus your saved ideas). "Tap to see more" replaces Refresh: it reveals more saved ideas, then fetches new ones. "Adventurous" follows the category and filters you picked (for example Adventurous restaurant) and favours less obvious places.
+
+## Install and phone sizes
+Installable from the browser menu (Add to Home screen / Install app). Layout checked from 344px (folded phone) to 884px (unfolded).
+
 ## Updating an existing install
-Run `supabase/RUN_IN_SUPABASE.sql` once in the Supabase SQL editor (it is safe to run more than once), upload the source to GitHub, then re-run `tools/import_places.py --city <name> --load` for each city.
+Run `supabase/RUN_IN_SUPABASE.sql` once in the Supabase SQL editor (now includes 0006 profile pictures) (it is safe to run more than once), upload the source to GitHub, then re-run `tools/import_places.py --city <name> --load` for each city.

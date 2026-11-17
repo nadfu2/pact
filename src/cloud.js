@@ -138,6 +138,16 @@ export const cloud = {
     if (error) throw new Error(error.message || 'friends unavailable');
     return data || [];
   },
+  async getMyProfile() {
+    const { data, error } = await sb.rpc('get_my_profile');
+    if (error) throw new Error(error.message || 'profile unavailable');
+    return (data && data[0]) || { bio: '', avatar: '' };
+  },
+  async setMyProfile(bio, avatar) {
+    const { data, error } = await sb.rpc('set_my_profile', { p_bio: bio || '', p_avatar: avatar || '' });
+    if (error) throw new Error(error.message || 'could not save');
+    return data;   // ok | bio_too_long | picture_too_big | not_signed_in
+  },
   async removeFriend(userId) {
     const { error } = await sb.rpc('remove_friend', { p_user: userId });
     if (error) throw new Error(error.message || 'could not remove');

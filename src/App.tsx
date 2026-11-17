@@ -9,6 +9,8 @@ import {
   GitBranch,
   Users,
   User,
+  Bell,
+  Mic,
   Plus,
   Check,
   X,
@@ -48,7 +50,7 @@ import {
 
 
 // Pre-compiled Tailwind CSS for this app, so it renders the same regardless of the host's Tailwind version.
-const ROAM_CSS = "*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:\"\"}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width:640px){.container{max-width:640px}}@media (min-width:768px){.container{max-width:768px}}@media (min-width:1024px){.container{max-width:1024px}}@media (min-width:1280px){.container{max-width:1280px}}@media (min-width:1536px){.container{max-width:1536px}}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.visible{visibility:visible}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.inset-x-0{left:0;right:0}.inset-x-3{left:.75rem;right:.75rem}.-top-2{top:-.5rem}.bottom-16{bottom:4rem}.bottom-20{bottom:5rem}.bottom-24{bottom:6rem}.left-1{left:.25rem}.left-1\\/2{left:50%}.left-\\[30\\%\\]{left:30%}.right-4{right:1rem}.right-\\[30\\%\\]{right:30%}.top-0{top:0}.top-2{top:.5rem}.z-0{z-index:0}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-40{z-index:40}.z-50{z-index:50}.m-3{margin:.75rem}.mx-auto{margin-left:auto;margin-right:auto}.-mt-1{margin-top:-.25rem}.mb-0{margin-bottom:0}.mb-0\\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.ml-1{margin-left:.25rem}.ml-1\\.5{margin-left:.375rem}.ml-2{margin-left:.5rem}.ml-4{margin-left:1rem}.ml-8{margin-left:2rem}.mr-1{margin-right:.25rem}.mt-0{margin-top:0}.mt-0\\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.contents{display:contents}.\\!hidden{display:none!important}.hidden{display:none}.h-0{height:0}.h-0\\.5{height:.125rem}.h-1{height:.25rem}.h-1\\.5{height:.375rem}.h-10{height:2.5rem}.h-11{height:2.75rem}.h-12{height:3rem}.h-2{height:.5rem}.h-24{height:6rem}.h-3{height:.75rem}.h-3\\.5{height:.875rem}.h-4{height:1rem}.h-44{height:11rem}.h-5{height:1.25rem}.h-52{height:13rem}.h-56{height:14rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-full{height:100%}.h-screen{height:100vh}.max-h-72{max-height:18rem}.max-h-\\[88vh\\]{max-height:88vh}.min-h-full{min-height:100%}.w-1{width:.25rem}.w-1\\.5{width:.375rem}.w-11{width:2.75rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-16{width:4rem}.w-3{width:.75rem}.w-3\\.5{width:.875rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-full{width:100%}.min-w-0{min-width:0}.min-w-\\[140px\\]{min-width:140px}.min-w-\\[160px\\]{min-width:160px}.min-w-\\[30\\%\\]{min-width:30%}.max-w-\\[230px\\]{max-width:230px}.max-w-\\[48\\%\\]{max-width:48%}.max-w-\\[80\\%\\]{max-width:80%}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1{--tw-translate-x:-0.25rem}.-translate-x-1,.-translate-x-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-x-1\\/2{--tw-translate-x:-50%}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}@keyframes spin{to{transform:rotate(1turn)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid-cols-7{grid-template-columns:repeat(7,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.items-stretch{align-items:stretch}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0{gap:0}.gap-0\\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-5{gap:1.25rem}.space-y-0>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0px*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0px*var(--tw-space-y-reverse))}.space-y-0\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.125rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.125rem*var(--tw-space-y-reverse))}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-stone-200>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(231 229 228/var(--tw-divide-opacity,1))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.rounded{border-radius:.25rem}.rounded-\\[14px\\]{border-radius:14px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.border{border-width:1px}.border-2{border-width:2px}.border-\\[1\\.5px\\]{border-width:1.5px}.border-x{border-left-width:1px;border-right-width:1px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-l-2{border-left-width:2px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-t-2{border-top-width:2px}.border-dashed{border-style:dashed}.border-amber-600{--tw-border-opacity:1;border-color:rgb(217 119 6/var(--tw-border-opacity,1))}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254/var(--tw-border-opacity,1))}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254/var(--tw-border-opacity,1))}.border-blue-300{--tw-border-opacity:1;border-color:rgb(147 197 253/var(--tw-border-opacity,1))}.border-blue-400{--tw-border-opacity:1;border-color:rgb(96 165 250/var(--tw-border-opacity,1))}.border-blue-50{--tw-border-opacity:1;border-color:rgb(239 246 255/var(--tw-border-opacity,1))}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity,1))}.border-blue-600{--tw-border-opacity:1;border-color:rgb(37 99 235/var(--tw-border-opacity,1))}.border-blue-700{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.border-blue-800{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.border-blue-900{--tw-border-opacity:1;border-color:rgb(30 58 138/var(--tw-border-opacity,1))}.border-blue-950{--tw-border-opacity:1;border-color:rgb(23 37 84/var(--tw-border-opacity,1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183/var(--tw-border-opacity,1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255/var(--tw-border-opacity,1))}.border-purple-200{--tw-border-opacity:1;border-color:rgb(233 213 255/var(--tw-border-opacity,1))}.border-purple-300{--tw-border-opacity:1;border-color:rgb(216 180 254/var(--tw-border-opacity,1))}.border-purple-400{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.border-purple-50{--tw-border-opacity:1;border-color:rgb(250 245 255/var(--tw-border-opacity,1))}.border-purple-500{--tw-border-opacity:1;border-color:rgb(168 85 247/var(--tw-border-opacity,1))}.border-purple-600{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.border-purple-700{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.border-purple-900{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.border-purple-950{--tw-border-opacity:1;border-color:rgb(59 7 100/var(--tw-border-opacity,1))}.border-rose-100{--tw-border-opacity:1;border-color:rgb(255 228 230/var(--tw-border-opacity,1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211/var(--tw-border-opacity,1))}.border-rose-300{--tw-border-opacity:1;border-color:rgb(253 164 175/var(--tw-border-opacity,1))}.border-rose-400{--tw-border-opacity:1;border-color:rgb(251 113 133/var(--tw-border-opacity,1))}.border-rose-50{--tw-border-opacity:1;border-color:rgb(255 241 242/var(--tw-border-opacity,1))}.border-rose-500{--tw-border-opacity:1;border-color:rgb(244 63 94/var(--tw-border-opacity,1))}.border-rose-600{--tw-border-opacity:1;border-color:rgb(225 29 72/var(--tw-border-opacity,1))}.border-rose-700{--tw-border-opacity:1;border-color:rgb(190 18 60/var(--tw-border-opacity,1))}.border-rose-800{--tw-border-opacity:1;border-color:rgb(159 18 57/var(--tw-border-opacity,1))}.border-rose-900{--tw-border-opacity:1;border-color:rgb(136 19 55/var(--tw-border-opacity,1))}.border-rose-950{--tw-border-opacity:1;border-color:rgb(76 5 25/var(--tw-border-opacity,1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225/var(--tw-border-opacity,1))}.border-slate-400{--tw-border-opacity:1;border-color:rgb(148 163 184/var(--tw-border-opacity,1))}.border-slate-50{--tw-border-opacity:1;border-color:rgb(248 250 252/var(--tw-border-opacity,1))}.border-slate-500{--tw-border-opacity:1;border-color:rgb(100 116 139/var(--tw-border-opacity,1))}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity,1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59/var(--tw-border-opacity,1))}.border-slate-900{--tw-border-opacity:1;border-color:rgb(15 23 42/var(--tw-border-opacity,1))}.border-slate-950{--tw-border-opacity:1;border-color:rgb(2 6 23/var(--tw-border-opacity,1))}.border-stone-100{--tw-border-opacity:1;border-color:rgb(245 245 244/var(--tw-border-opacity,1))}.border-stone-200{--tw-border-opacity:1;border-color:rgb(231 229 228/var(--tw-border-opacity,1))}.border-stone-200\\/30{border-color:hsla(20,6%,90%,.3)}.border-stone-300{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.border-stone-400{--tw-border-opacity:1;border-color:rgb(168 162 158/var(--tw-border-opacity,1))}.border-stone-50{--tw-border-opacity:1;border-color:rgb(250 250 249/var(--tw-border-opacity,1))}.border-stone-500{--tw-border-opacity:1;border-color:rgb(120 113 108/var(--tw-border-opacity,1))}.border-stone-600{--tw-border-opacity:1;border-color:rgb(87 83 78/var(--tw-border-opacity,1))}.border-stone-700{--tw-border-opacity:1;border-color:rgb(68 64 60/var(--tw-border-opacity,1))}.border-stone-800{--tw-border-opacity:1;border-color:rgb(41 37 36/var(--tw-border-opacity,1))}.border-stone-900{--tw-border-opacity:1;border-color:rgb(28 25 23/var(--tw-border-opacity,1))}.border-stone-950{--tw-border-opacity:1;border-color:rgb(12 10 9/var(--tw-border-opacity,1))}.border-transparent{border-color:transparent}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255/var(--tw-border-opacity,1))}.bg-\\[\\#EDEAE0\\]{--tw-bg-opacity:1;background-color:rgb(237 234 224/var(--tw-bg-opacity,1))}.bg-\\[\\#F5F3EC\\]{--tw-bg-opacity:1;background-color:rgb(245 243 236/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F5\\]{--tw-bg-opacity:1;background-color:rgb(250 248 245/var(--tw-bg-opacity,1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235/var(--tw-bg-opacity,1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0/var(--tw-bg-opacity,1))}.bg-black\\/40{background-color:rgba(0,0,0,.4)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254/var(--tw-bg-opacity,1))}.bg-blue-200{--tw-bg-opacity:1;background-color:rgb(191 219 254/var(--tw-bg-opacity,1))}.bg-blue-300{--tw-bg-opacity:1;background-color:rgb(147 197 253/var(--tw-bg-opacity,1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250/var(--tw-bg-opacity,1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.bg-blue-800{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.bg-blue-900{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84/var(--tw-bg-opacity,1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105/var(--tw-bg-opacity,1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255/var(--tw-bg-opacity,1))}.bg-purple-200{--tw-bg-opacity:1;background-color:rgb(233 213 255/var(--tw-bg-opacity,1))}.bg-purple-300{--tw-bg-opacity:1;background-color:rgb(216 180 254/var(--tw-bg-opacity,1))}.bg-purple-400{--tw-bg-opacity:1;background-color:rgb(192 132 252/var(--tw-bg-opacity,1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255/var(--tw-bg-opacity,1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234/var(--tw-bg-opacity,1))}.bg-purple-700{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.bg-purple-800{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.bg-purple-900{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.bg-purple-950{--tw-bg-opacity:1;background-color:rgb(59 7 100/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-200{--tw-bg-opacity:1;background-color:rgb(254 205 211/var(--tw-bg-opacity,1))}.bg-rose-300{--tw-bg-opacity:1;background-color:rgb(253 164 175/var(--tw-bg-opacity,1))}.bg-rose-400{--tw-bg-opacity:1;background-color:rgb(251 113 133/var(--tw-bg-opacity,1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242/var(--tw-bg-opacity,1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94/var(--tw-bg-opacity,1))}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-rose-700{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.bg-rose-800{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.bg-rose-900{--tw-bg-opacity:1;background-color:rgb(136 19 55/var(--tw-bg-opacity,1))}.bg-rose-950{--tw-bg-opacity:1;background-color:rgb(76 5 25/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225/var(--tw-bg-opacity,1))}.bg-slate-400{--tw-bg-opacity:1;background-color:rgb(148 163 184/var(--tw-bg-opacity,1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.bg-slate-500{--tw-bg-opacity:1;background-color:rgb(100 116 139/var(--tw-bg-opacity,1))}.bg-slate-600{--tw-bg-opacity:1;background-color:rgb(71 85 105/var(--tw-bg-opacity,1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23/var(--tw-bg-opacity,1))}.bg-slate-950\\/70{background-color:rgba(2,6,23,.7)}.bg-stone-100{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.bg-stone-200{--tw-bg-opacity:1;background-color:rgb(231 229 228/var(--tw-bg-opacity,1))}.bg-stone-300{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.bg-stone-400{--tw-bg-opacity:1;background-color:rgb(168 162 158/var(--tw-bg-opacity,1))}.bg-stone-50{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.bg-stone-500{--tw-bg-opacity:1;background-color:rgb(120 113 108/var(--tw-bg-opacity,1))}.bg-stone-600{--tw-bg-opacity:1;background-color:rgb(87 83 78/var(--tw-bg-opacity,1))}.bg-stone-700{--tw-bg-opacity:1;background-color:rgb(68 64 60/var(--tw-bg-opacity,1))}.bg-stone-800{--tw-bg-opacity:1;background-color:rgb(41 37 36/var(--tw-bg-opacity,1))}.bg-stone-900{--tw-bg-opacity:1;background-color:rgb(28 25 23/var(--tw-bg-opacity,1))}.bg-stone-950{--tw-bg-opacity:1;background-color:rgb(12 10 9/var(--tw-bg-opacity,1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.p-1{padding:.25rem}.p-1\\.5{padding:.375rem}.p-2{padding:.5rem}.p-2\\.5{padding:.625rem}.p-3{padding:.75rem}.p-3\\.5{padding:.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-0{padding-left:0;padding-right:0}.px-0\\.5{padding-left:.125rem;padding-right:.125rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-0{padding-top:0;padding-bottom:0}.py-0\\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-px{padding-top:1px;padding-bottom:1px}.pb-0{padding-bottom:0}.pb-0\\.5{padding-bottom:.125rem}.pb-1{padding-bottom:.25rem}.pb-2{padding-bottom:.5rem}.pb-28{padding-bottom:7rem}.pb-3{padding-bottom:.75rem}.pb-3\\.5{padding-bottom:.875rem}.pb-8{padding-bottom:2rem}.pl-3{padding-left:.75rem}.pl-3\\.5{padding-left:.875rem}.pr-1{padding-right:.25rem}.pr-4{padding-right:1rem}.pt-0{padding-top:0}.pt-1{padding-top:.25rem}.pt-1\\.5{padding-top:.375rem}.pt-2{padding-top:.5rem}.pt-4{padding-top:1rem}.pt-5{padding-top:1.25rem}.pt-6{padding-top:1.5rem}.pt-7{padding-top:1.75rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-\\[10px\\]{font-size:10px}.text-\\[11px\\]{font-size:11px}.text-\\[13px\\]{font-size:13px}.text-\\[28px\\]{font-size:28px}.text-\\[38px\\]{font-size:38px}.text-\\[44px\\]{font-size:44px}.text-\\[52px\\]{font-size:52px}.text-\\[8\\.5px\\]{font-size:8.5px}.text-\\[9px\\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-light{font-weight:300}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.normal-case{text-transform:none}.italic{font-style:italic}.leading-\\[0\\.92\\]{line-height:.92}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-normal{letter-spacing:0}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-black{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.text-blue-100{--tw-text-opacity:1;color:rgb(219 234 254/var(--tw-text-opacity,1))}.text-blue-200{--tw-text-opacity:1;color:rgb(191 219 254/var(--tw-text-opacity,1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-blue-50{--tw-text-opacity:1;color:rgb(239 246 255/var(--tw-text-opacity,1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235/var(--tw-text-opacity,1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216/var(--tw-text-opacity,1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175/var(--tw-text-opacity,1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138/var(--tw-text-opacity,1))}.text-blue-950{--tw-text-opacity:1;color:rgb(23 37 84/var(--tw-text-opacity,1))}.text-purple-100{--tw-text-opacity:1;color:rgb(243 232 255/var(--tw-text-opacity,1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255/var(--tw-text-opacity,1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252/var(--tw-text-opacity,1))}.text-purple-50{--tw-text-opacity:1;color:rgb(250 245 255/var(--tw-text-opacity,1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247/var(--tw-text-opacity,1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234/var(--tw-text-opacity,1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206/var(--tw-text-opacity,1))}.text-purple-800{--tw-text-opacity:1;color:rgb(107 33 168/var(--tw-text-opacity,1))}.text-purple-900{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.text-purple-950{--tw-text-opacity:1;color:rgb(59 7 100/var(--tw-text-opacity,1))}.text-rose-100{--tw-text-opacity:1;color:rgb(255 228 230/var(--tw-text-opacity,1))}.text-rose-200{--tw-text-opacity:1;color:rgb(254 205 211/var(--tw-text-opacity,1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-50{--tw-text-opacity:1;color:rgb(255 241 242/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57/var(--tw-text-opacity,1))}.text-rose-900{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.text-rose-950{--tw-text-opacity:1;color:rgb(76 5 25/var(--tw-text-opacity,1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-50{--tw-text-opacity:1;color:rgb(248 250 252/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23/var(--tw-text-opacity,1))}.text-stone-100{--tw-text-opacity:1;color:rgb(245 245 244/var(--tw-text-opacity,1))}.text-stone-200{--tw-text-opacity:1;color:rgb(231 229 228/var(--tw-text-opacity,1))}.text-stone-300{--tw-text-opacity:1;color:rgb(214 211 209/var(--tw-text-opacity,1))}.text-stone-400{--tw-text-opacity:1;color:rgb(168 162 158/var(--tw-text-opacity,1))}.text-stone-50{--tw-text-opacity:1;color:rgb(250 250 249/var(--tw-text-opacity,1))}.text-stone-500{--tw-text-opacity:1;color:rgb(120 113 108/var(--tw-text-opacity,1))}.text-stone-600{--tw-text-opacity:1;color:rgb(87 83 78/var(--tw-text-opacity,1))}.text-stone-700{--tw-text-opacity:1;color:rgb(68 64 60/var(--tw-text-opacity,1))}.text-stone-800{--tw-text-opacity:1;color:rgb(41 37 36/var(--tw-text-opacity,1))}.text-stone-900{--tw-text-opacity:1;color:rgb(28 25 23/var(--tw-text-opacity,1))}.text-stone-950{--tw-text-opacity:1;color:rgb(12 10 9/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.text-white\\/80{color:hsla(0,0%,100%,.8)}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.opacity-0{opacity:0}.opacity-70{opacity:.7}.opacity-75{opacity:.75}.opacity-80{opacity:.8}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-2xl,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.shadow-sm,.shadow-xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.\\[out\\:json\\]{out:json}.\\[timeout\\:20\\]{timeout:20}#root,body,html{margin:0;height:100%;background:#f5f3ec;color-scheme:light}.file\\:mr-2::file-selector-button{margin-right:.5rem}.file\\:border-0::file-selector-button{border-width:0}.file\\:bg-purple-900::file-selector-button{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.file\\:px-2\\.5::file-selector-button{padding-left:.625rem;padding-right:.625rem}.file\\:py-1\\.5::file-selector-button{padding-top:.375rem;padding-bottom:.375rem}.file\\:text-\\[10px\\]::file-selector-button{font-size:10px}.file\\:uppercase::file-selector-button{text-transform:uppercase}.file\\:tracking-wider::file-selector-button{letter-spacing:.05em}.file\\:text-white::file-selector-button{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:border-blue-800:hover{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.hover\\:border-purple-400:hover{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.hover\\:border-purple-600:hover{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.hover\\:border-purple-700:hover{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.hover\\:border-purple-800:hover{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.hover\\:border-purple-900:hover{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.hover\\:bg-blue-50:hover{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.hover\\:bg-blue-600:hover{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.hover\\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.hover\\:bg-blue-800:hover{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.hover\\:bg-blue-900:hover{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.hover\\:bg-purple-700:hover{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.hover\\:bg-purple-800:hover{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.hover\\:bg-purple-900:hover{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.hover\\:bg-rose-600:hover{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.hover\\:bg-rose-700:hover{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.hover\\:bg-rose-800:hover{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.hover\\:bg-stone-100:hover{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.hover\\:bg-stone-300:hover{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.hover\\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.hover\\:bg-white\\/10:hover{background-color:hsla(0,0%,100%,.1)}.hover\\:text-purple-900:hover{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.hover\\:text-rose-700:hover{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.hover\\:text-rose-900:hover{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.hover\\:text-slate-700:hover{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.hover\\:text-slate-900:hover{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.hover\\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:opacity-100:hover{opacity:1}.focus\\:border-stone-300:focus{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.disabled\\:opacity-30:disabled{opacity:.3}.disabled\\:opacity-40:disabled{opacity:.4}.disabled\\:opacity-50:disabled{opacity:.5}@media (min-width:640px){.sm\\:items-center{align-items:center}}";
+const ROAM_CSS = "*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:\"\"}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width:640px){.container{max-width:640px}}@media (min-width:768px){.container{max-width:768px}}@media (min-width:1024px){.container{max-width:1024px}}@media (min-width:1280px){.container{max-width:1280px}}@media (min-width:1536px){.container{max-width:1536px}}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.visible{visibility:visible}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.inset-x-0{left:0;right:0}.inset-x-3{left:.75rem;right:.75rem}.-right-1{right:-.25rem}.-top-1{top:-.25rem}.-top-2{top:-.5rem}.bottom-0{bottom:0}.bottom-16{bottom:4rem}.bottom-20{bottom:5rem}.bottom-24{bottom:6rem}.left-1{left:.25rem}.left-1\\/2{left:50%}.left-\\[30\\%\\]{left:30%}.right-4{right:1rem}.right-\\[30\\%\\]{right:30%}.top-0{top:0}.top-2{top:.5rem}.z-0{z-index:0}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-40{z-index:40}.z-50{z-index:50}.m-3{margin:.75rem}.mx-auto{margin-left:auto;margin-right:auto}.-mt-1{margin-top:-.25rem}.mb-0{margin-bottom:0}.mb-0\\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.ml-1{margin-left:.25rem}.ml-1\\.5{margin-left:.375rem}.ml-2{margin-left:.5rem}.ml-4{margin-left:1rem}.ml-8{margin-left:2rem}.mr-1{margin-right:.25rem}.mt-0{margin-top:0}.mt-0\\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.contents{display:contents}.\\!hidden{display:none!important}.hidden{display:none}.h-0{height:0}.h-0\\.5{height:.125rem}.h-1{height:.25rem}.h-1\\.5{height:.375rem}.h-10{height:2.5rem}.h-11{height:2.75rem}.h-12{height:3rem}.h-2{height:.5rem}.h-24{height:6rem}.h-3{height:.75rem}.h-3\\.5{height:.875rem}.h-4{height:1rem}.h-44{height:11rem}.h-5{height:1.25rem}.h-52{height:13rem}.h-56{height:14rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-\\[100dvh\\]{height:100dvh}.h-full{height:100%}.h-screen{height:100vh}.max-h-56{max-height:14rem}.max-h-72{max-height:18rem}.max-h-80{max-height:20rem}.max-h-\\[88vh\\]{max-height:88vh}.min-h-full{min-height:100%}.w-1{width:.25rem}.w-1\\.5{width:.375rem}.w-10{width:2.5rem}.w-11{width:2.75rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-16{width:4rem}.w-3{width:.75rem}.w-3\\.5{width:.875rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-full{width:100%}.min-w-0{min-width:0}.min-w-\\[140px\\]{min-width:140px}.min-w-\\[160px\\]{min-width:160px}.min-w-\\[16px\\]{min-width:16px}.min-w-\\[30\\%\\]{min-width:30%}.max-w-\\[230px\\]{max-width:230px}.max-w-\\[48\\%\\]{max-width:48%}.max-w-\\[80\\%\\]{max-width:80%}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1{--tw-translate-x:-0.25rem}.-translate-x-1,.-translate-x-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-x-1\\/2{--tw-translate-x:-50%}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}@keyframes spin{to{transform:rotate(1turn)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid-cols-7{grid-template-columns:repeat(7,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.items-stretch{align-items:stretch}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0{gap:0}.gap-0\\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-5{gap:1.25rem}.space-y-0>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0px*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0px*var(--tw-space-y-reverse))}.space-y-0\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.125rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.125rem*var(--tw-space-y-reverse))}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-stone-200>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(231 229 228/var(--tw-divide-opacity,1))}.self-center{align-self:center}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.rounded{border-radius:.25rem}.rounded-\\[14px\\]{border-radius:14px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.border{border-width:1px}.border-2{border-width:2px}.border-\\[1\\.5px\\]{border-width:1.5px}.border-x{border-left-width:1px;border-right-width:1px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-l-2{border-left-width:2px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-t-2{border-top-width:2px}.border-dashed{border-style:dashed}.border-amber-600{--tw-border-opacity:1;border-color:rgb(217 119 6/var(--tw-border-opacity,1))}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254/var(--tw-border-opacity,1))}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254/var(--tw-border-opacity,1))}.border-blue-300{--tw-border-opacity:1;border-color:rgb(147 197 253/var(--tw-border-opacity,1))}.border-blue-400{--tw-border-opacity:1;border-color:rgb(96 165 250/var(--tw-border-opacity,1))}.border-blue-50{--tw-border-opacity:1;border-color:rgb(239 246 255/var(--tw-border-opacity,1))}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity,1))}.border-blue-600{--tw-border-opacity:1;border-color:rgb(37 99 235/var(--tw-border-opacity,1))}.border-blue-700{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.border-blue-800{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.border-blue-900{--tw-border-opacity:1;border-color:rgb(30 58 138/var(--tw-border-opacity,1))}.border-blue-950{--tw-border-opacity:1;border-color:rgb(23 37 84/var(--tw-border-opacity,1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183/var(--tw-border-opacity,1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255/var(--tw-border-opacity,1))}.border-purple-200{--tw-border-opacity:1;border-color:rgb(233 213 255/var(--tw-border-opacity,1))}.border-purple-300{--tw-border-opacity:1;border-color:rgb(216 180 254/var(--tw-border-opacity,1))}.border-purple-400{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.border-purple-50{--tw-border-opacity:1;border-color:rgb(250 245 255/var(--tw-border-opacity,1))}.border-purple-500{--tw-border-opacity:1;border-color:rgb(168 85 247/var(--tw-border-opacity,1))}.border-purple-600{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.border-purple-700{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.border-purple-900{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.border-purple-950{--tw-border-opacity:1;border-color:rgb(59 7 100/var(--tw-border-opacity,1))}.border-rose-100{--tw-border-opacity:1;border-color:rgb(255 228 230/var(--tw-border-opacity,1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211/var(--tw-border-opacity,1))}.border-rose-300{--tw-border-opacity:1;border-color:rgb(253 164 175/var(--tw-border-opacity,1))}.border-rose-400{--tw-border-opacity:1;border-color:rgb(251 113 133/var(--tw-border-opacity,1))}.border-rose-50{--tw-border-opacity:1;border-color:rgb(255 241 242/var(--tw-border-opacity,1))}.border-rose-500{--tw-border-opacity:1;border-color:rgb(244 63 94/var(--tw-border-opacity,1))}.border-rose-600{--tw-border-opacity:1;border-color:rgb(225 29 72/var(--tw-border-opacity,1))}.border-rose-700{--tw-border-opacity:1;border-color:rgb(190 18 60/var(--tw-border-opacity,1))}.border-rose-800{--tw-border-opacity:1;border-color:rgb(159 18 57/var(--tw-border-opacity,1))}.border-rose-900{--tw-border-opacity:1;border-color:rgb(136 19 55/var(--tw-border-opacity,1))}.border-rose-950{--tw-border-opacity:1;border-color:rgb(76 5 25/var(--tw-border-opacity,1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225/var(--tw-border-opacity,1))}.border-slate-400{--tw-border-opacity:1;border-color:rgb(148 163 184/var(--tw-border-opacity,1))}.border-slate-50{--tw-border-opacity:1;border-color:rgb(248 250 252/var(--tw-border-opacity,1))}.border-slate-500{--tw-border-opacity:1;border-color:rgb(100 116 139/var(--tw-border-opacity,1))}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity,1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59/var(--tw-border-opacity,1))}.border-slate-900{--tw-border-opacity:1;border-color:rgb(15 23 42/var(--tw-border-opacity,1))}.border-slate-950{--tw-border-opacity:1;border-color:rgb(2 6 23/var(--tw-border-opacity,1))}.border-stone-100{--tw-border-opacity:1;border-color:rgb(245 245 244/var(--tw-border-opacity,1))}.border-stone-200{--tw-border-opacity:1;border-color:rgb(231 229 228/var(--tw-border-opacity,1))}.border-stone-200\\/30{border-color:hsla(20,6%,90%,.3)}.border-stone-300{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.border-stone-400{--tw-border-opacity:1;border-color:rgb(168 162 158/var(--tw-border-opacity,1))}.border-stone-50{--tw-border-opacity:1;border-color:rgb(250 250 249/var(--tw-border-opacity,1))}.border-stone-500{--tw-border-opacity:1;border-color:rgb(120 113 108/var(--tw-border-opacity,1))}.border-stone-600{--tw-border-opacity:1;border-color:rgb(87 83 78/var(--tw-border-opacity,1))}.border-stone-700{--tw-border-opacity:1;border-color:rgb(68 64 60/var(--tw-border-opacity,1))}.border-stone-800{--tw-border-opacity:1;border-color:rgb(41 37 36/var(--tw-border-opacity,1))}.border-stone-900{--tw-border-opacity:1;border-color:rgb(28 25 23/var(--tw-border-opacity,1))}.border-stone-950{--tw-border-opacity:1;border-color:rgb(12 10 9/var(--tw-border-opacity,1))}.border-transparent{border-color:transparent}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255/var(--tw-border-opacity,1))}.bg-\\[\\#EDEAE0\\]{--tw-bg-opacity:1;background-color:rgb(237 234 224/var(--tw-bg-opacity,1))}.bg-\\[\\#F5F3EC\\]{--tw-bg-opacity:1;background-color:rgb(245 243 236/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F5\\]{--tw-bg-opacity:1;background-color:rgb(250 248 245/var(--tw-bg-opacity,1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235/var(--tw-bg-opacity,1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0/var(--tw-bg-opacity,1))}.bg-black\\/40{background-color:rgba(0,0,0,.4)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254/var(--tw-bg-opacity,1))}.bg-blue-200{--tw-bg-opacity:1;background-color:rgb(191 219 254/var(--tw-bg-opacity,1))}.bg-blue-300{--tw-bg-opacity:1;background-color:rgb(147 197 253/var(--tw-bg-opacity,1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250/var(--tw-bg-opacity,1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.bg-blue-800{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.bg-blue-900{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84/var(--tw-bg-opacity,1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105/var(--tw-bg-opacity,1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255/var(--tw-bg-opacity,1))}.bg-purple-200{--tw-bg-opacity:1;background-color:rgb(233 213 255/var(--tw-bg-opacity,1))}.bg-purple-300{--tw-bg-opacity:1;background-color:rgb(216 180 254/var(--tw-bg-opacity,1))}.bg-purple-400{--tw-bg-opacity:1;background-color:rgb(192 132 252/var(--tw-bg-opacity,1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255/var(--tw-bg-opacity,1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234/var(--tw-bg-opacity,1))}.bg-purple-700{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.bg-purple-800{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.bg-purple-900{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.bg-purple-950{--tw-bg-opacity:1;background-color:rgb(59 7 100/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-200{--tw-bg-opacity:1;background-color:rgb(254 205 211/var(--tw-bg-opacity,1))}.bg-rose-300{--tw-bg-opacity:1;background-color:rgb(253 164 175/var(--tw-bg-opacity,1))}.bg-rose-400{--tw-bg-opacity:1;background-color:rgb(251 113 133/var(--tw-bg-opacity,1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242/var(--tw-bg-opacity,1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94/var(--tw-bg-opacity,1))}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-rose-700{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.bg-rose-800{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.bg-rose-900{--tw-bg-opacity:1;background-color:rgb(136 19 55/var(--tw-bg-opacity,1))}.bg-rose-950{--tw-bg-opacity:1;background-color:rgb(76 5 25/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225/var(--tw-bg-opacity,1))}.bg-slate-400{--tw-bg-opacity:1;background-color:rgb(148 163 184/var(--tw-bg-opacity,1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.bg-slate-500{--tw-bg-opacity:1;background-color:rgb(100 116 139/var(--tw-bg-opacity,1))}.bg-slate-600{--tw-bg-opacity:1;background-color:rgb(71 85 105/var(--tw-bg-opacity,1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23/var(--tw-bg-opacity,1))}.bg-slate-950\\/70{background-color:rgba(2,6,23,.7)}.bg-stone-100{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.bg-stone-200{--tw-bg-opacity:1;background-color:rgb(231 229 228/var(--tw-bg-opacity,1))}.bg-stone-300{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.bg-stone-400{--tw-bg-opacity:1;background-color:rgb(168 162 158/var(--tw-bg-opacity,1))}.bg-stone-50{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.bg-stone-500{--tw-bg-opacity:1;background-color:rgb(120 113 108/var(--tw-bg-opacity,1))}.bg-stone-600{--tw-bg-opacity:1;background-color:rgb(87 83 78/var(--tw-bg-opacity,1))}.bg-stone-700{--tw-bg-opacity:1;background-color:rgb(68 64 60/var(--tw-bg-opacity,1))}.bg-stone-800{--tw-bg-opacity:1;background-color:rgb(41 37 36/var(--tw-bg-opacity,1))}.bg-stone-900{--tw-bg-opacity:1;background-color:rgb(28 25 23/var(--tw-bg-opacity,1))}.bg-stone-950{--tw-bg-opacity:1;background-color:rgb(12 10 9/var(--tw-bg-opacity,1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.object-cover{-o-object-fit:cover;object-fit:cover}.p-1{padding:.25rem}.p-1\\.5{padding:.375rem}.p-2{padding:.5rem}.p-2\\.5{padding:.625rem}.p-3{padding:.75rem}.p-3\\.5{padding:.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-0{padding-left:0;padding-right:0}.px-0\\.5{padding-left:.125rem;padding-right:.125rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-0{padding-top:0;padding-bottom:0}.py-0\\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-px{padding-top:1px;padding-bottom:1px}.pb-0{padding-bottom:0}.pb-0\\.5{padding-bottom:.125rem}.pb-1{padding-bottom:.25rem}.pb-2{padding-bottom:.5rem}.pb-28{padding-bottom:7rem}.pb-3{padding-bottom:.75rem}.pb-3\\.5{padding-bottom:.875rem}.pb-8{padding-bottom:2rem}.pl-3{padding-left:.75rem}.pl-3\\.5{padding-left:.875rem}.pr-1{padding-right:.25rem}.pr-4{padding-right:1rem}.pt-0{padding-top:0}.pt-1{padding-top:.25rem}.pt-1\\.5{padding-top:.375rem}.pt-2{padding-top:.5rem}.pt-4{padding-top:1rem}.pt-5{padding-top:1.25rem}.pt-6{padding-top:1.5rem}.pt-7{padding-top:1.75rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-\\[10px\\]{font-size:10px}.text-\\[11px\\]{font-size:11px}.text-\\[13px\\]{font-size:13px}.text-\\[28px\\]{font-size:28px}.text-\\[38px\\]{font-size:38px}.text-\\[44px\\]{font-size:44px}.text-\\[52px\\]{font-size:52px}.text-\\[8\\.5px\\]{font-size:8.5px}.text-\\[9px\\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-light{font-weight:300}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.normal-case{text-transform:none}.italic{font-style:italic}.leading-\\[0\\.92\\]{line-height:.92}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-normal{letter-spacing:0}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-black{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.text-blue-100{--tw-text-opacity:1;color:rgb(219 234 254/var(--tw-text-opacity,1))}.text-blue-200{--tw-text-opacity:1;color:rgb(191 219 254/var(--tw-text-opacity,1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-blue-50{--tw-text-opacity:1;color:rgb(239 246 255/var(--tw-text-opacity,1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235/var(--tw-text-opacity,1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216/var(--tw-text-opacity,1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175/var(--tw-text-opacity,1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138/var(--tw-text-opacity,1))}.text-blue-950{--tw-text-opacity:1;color:rgb(23 37 84/var(--tw-text-opacity,1))}.text-purple-100{--tw-text-opacity:1;color:rgb(243 232 255/var(--tw-text-opacity,1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255/var(--tw-text-opacity,1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252/var(--tw-text-opacity,1))}.text-purple-50{--tw-text-opacity:1;color:rgb(250 245 255/var(--tw-text-opacity,1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247/var(--tw-text-opacity,1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234/var(--tw-text-opacity,1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206/var(--tw-text-opacity,1))}.text-purple-800{--tw-text-opacity:1;color:rgb(107 33 168/var(--tw-text-opacity,1))}.text-purple-900{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.text-purple-950{--tw-text-opacity:1;color:rgb(59 7 100/var(--tw-text-opacity,1))}.text-rose-100{--tw-text-opacity:1;color:rgb(255 228 230/var(--tw-text-opacity,1))}.text-rose-200{--tw-text-opacity:1;color:rgb(254 205 211/var(--tw-text-opacity,1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-50{--tw-text-opacity:1;color:rgb(255 241 242/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57/var(--tw-text-opacity,1))}.text-rose-900{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.text-rose-950{--tw-text-opacity:1;color:rgb(76 5 25/var(--tw-text-opacity,1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-50{--tw-text-opacity:1;color:rgb(248 250 252/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23/var(--tw-text-opacity,1))}.text-stone-100{--tw-text-opacity:1;color:rgb(245 245 244/var(--tw-text-opacity,1))}.text-stone-200{--tw-text-opacity:1;color:rgb(231 229 228/var(--tw-text-opacity,1))}.text-stone-300{--tw-text-opacity:1;color:rgb(214 211 209/var(--tw-text-opacity,1))}.text-stone-400{--tw-text-opacity:1;color:rgb(168 162 158/var(--tw-text-opacity,1))}.text-stone-50{--tw-text-opacity:1;color:rgb(250 250 249/var(--tw-text-opacity,1))}.text-stone-500{--tw-text-opacity:1;color:rgb(120 113 108/var(--tw-text-opacity,1))}.text-stone-600{--tw-text-opacity:1;color:rgb(87 83 78/var(--tw-text-opacity,1))}.text-stone-700{--tw-text-opacity:1;color:rgb(68 64 60/var(--tw-text-opacity,1))}.text-stone-800{--tw-text-opacity:1;color:rgb(41 37 36/var(--tw-text-opacity,1))}.text-stone-900{--tw-text-opacity:1;color:rgb(28 25 23/var(--tw-text-opacity,1))}.text-stone-950{--tw-text-opacity:1;color:rgb(12 10 9/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.text-white\\/80{color:hsla(0,0%,100%,.8)}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.opacity-0{opacity:0}.opacity-50{opacity:.5}.opacity-70{opacity:.7}.opacity-75{opacity:.75}.opacity-80{opacity:.8}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-2xl,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.shadow-sm,.shadow-xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.\\[out\\:json\\]{out:json}.\\[timeout\\:20\\]{timeout:20}#root,body,html{margin:0;height:100%;background:#f5f3ec;color-scheme:light}.file\\:mr-2::file-selector-button{margin-right:.5rem}.file\\:border-0::file-selector-button{border-width:0}.file\\:bg-purple-900::file-selector-button{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.file\\:px-2\\.5::file-selector-button{padding-left:.625rem;padding-right:.625rem}.file\\:py-1\\.5::file-selector-button{padding-top:.375rem;padding-bottom:.375rem}.file\\:text-\\[10px\\]::file-selector-button{font-size:10px}.file\\:uppercase::file-selector-button{text-transform:uppercase}.file\\:tracking-wider::file-selector-button{letter-spacing:.05em}.file\\:text-white::file-selector-button{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:border-blue-800:hover{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.hover\\:border-purple-400:hover{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.hover\\:border-purple-600:hover{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.hover\\:border-purple-700:hover{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.hover\\:border-purple-800:hover{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.hover\\:border-purple-900:hover{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.hover\\:bg-blue-50:hover{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.hover\\:bg-blue-600:hover{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.hover\\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.hover\\:bg-blue-800:hover{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.hover\\:bg-blue-900:hover{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.hover\\:bg-purple-700:hover{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.hover\\:bg-purple-800:hover{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.hover\\:bg-purple-900:hover{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.hover\\:bg-rose-600:hover{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.hover\\:bg-rose-700:hover{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.hover\\:bg-rose-800:hover{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.hover\\:bg-stone-100:hover{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.hover\\:bg-stone-300:hover{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.hover\\:bg-stone-50:hover{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.hover\\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.hover\\:bg-white\\/10:hover{background-color:hsla(0,0%,100%,.1)}.hover\\:text-purple-900:hover{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.hover\\:text-rose-700:hover{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.hover\\:text-rose-900:hover{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.hover\\:text-slate-700:hover{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.hover\\:text-slate-900:hover{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.hover\\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:opacity-100:hover{opacity:1}.focus\\:border-stone-300:focus{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.disabled\\:opacity-30:disabled{opacity:.3}.disabled\\:opacity-40:disabled{opacity:.4}.disabled\\:opacity-50:disabled{opacity:.5}@media (max-width:359px){.max-\\[359px\\]\\:text-\\[32px\\]{font-size:32px}}@media (min-width:600px){.min-\\[600px\\]\\:max-w-\\[640px\\]{max-width:640px}}@media (min-width:640px){.sm\\:items-center{align-items:center}}@media (min-width:820px){.min-\\[820px\\]\\:max-w-\\[820px\\]{max-width:820px}}";
 const PACT_CSS = "\n@import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..900&family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&display=swap');\nhtml, body { margin: 0; height: 100%; overflow: hidden; overscroll-behavior: none; }\nbody { position: fixed; inset: 0; width: 100%; }\n.font-sans, .font-sans input, .font-sans textarea, .font-sans select, .font-sans button { font-family: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif; font-variation-settings: 'wdth' 90; }\n.font-sans { font-weight: 500; }\n.font-light, .font-normal { font-weight: 500 !important; }\n.font-medium { font-weight: 700 !important; }\n.font-semibold { font-weight: 800 !important; }\n.font-editorial { font-family: 'Archivo', sans-serif; font-weight: 900 !important; font-variation-settings: 'wdth' 75; text-transform: uppercase; letter-spacing: -0.01em !important; line-height: 1.08; }\n.font-pact { font-family: 'Bodoni Moda', 'Didot', Georgia, serif; font-weight: 500 !important; text-transform: uppercase; letter-spacing: 1px; line-height: 1; }\n.font-mono { font-family: 'Archivo', sans-serif !important; font-weight: 800; font-variation-settings: 'wdth' 80; font-variant-numeric: tabular-nums; }\n.no-scrollbar::-webkit-scrollbar { display: none; }\n.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }\nbutton { border-radius: 12px; }\ninput, textarea, select { border-radius: 10px; }\ndiv.border:not([class*=\"rounded\"]), form.border:not([class*=\"rounded\"]), label.border:not([class*=\"rounded\"]), section.border:not([class*=\"rounded\"]) { border-radius: 16px; }\ndiv[class*=\"bg-purple-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]), div[class*=\"bg-slate-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]), div[class*=\"bg-blue-9\"]:not([class*=\"rounded\"]) { border-radius: 16px; }\n.shadow-sm, .shadow-xl { box-shadow: none !important; }\n.border-l-4 { border-radius: 4px; }\n@keyframes pact-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-4px) } }\n.pact-bob { animation: pact-bob 3.2s ease-in-out infinite; }\n@media (prefers-reduced-motion: reduce) { .pact-bob { animation: none; } }\n.bg-purple-950{background-color:#12251C!important}\n.hover\\:bg-purple-950:hover{background-color:#12251C!important}\n.text-purple-950{color:#12251C!important}\n.hover\\:text-purple-950:hover{color:#12251C!important}\n.border-purple-950{border-color:#12251C!important}\n.hover\\:border-purple-950:hover{border-color:#12251C!important}\n.focus\\:border-purple-950:focus{border-color:#12251C!important}\n.bg-purple-900{background-color:#1F3A2E!important}\n.hover\\:bg-purple-900:hover{background-color:#1F3A2E!important}\n.text-purple-900{color:#1F3A2E!important}\n.hover\\:text-purple-900:hover{color:#1F3A2E!important}\n.border-purple-900{border-color:#1F3A2E!important}\n.hover\\:border-purple-900:hover{border-color:#1F3A2E!important}\n.focus\\:border-purple-900:focus{border-color:#1F3A2E!important}\n.bg-purple-800{background-color:#2C4A3B!important}\n.hover\\:bg-purple-800:hover{background-color:#2C4A3B!important}\n.text-purple-800{color:#2C4A3B!important}\n.hover\\:text-purple-800:hover{color:#2C4A3B!important}\n.border-purple-800{border-color:#2C4A3B!important}\n.hover\\:border-purple-800:hover{border-color:#2C4A3B!important}\n.focus\\:border-purple-800:focus{border-color:#2C4A3B!important}\n.bg-purple-700{background-color:#3F6B55!important}\n.hover\\:bg-purple-700:hover{background-color:#3F6B55!important}\n.text-purple-700{color:#3F6B55!important}\n.hover\\:text-purple-700:hover{color:#3F6B55!important}\n.border-purple-700{border-color:#3F6B55!important}\n.hover\\:border-purple-700:hover{border-color:#3F6B55!important}\n.focus\\:border-purple-700:focus{border-color:#3F6B55!important}\n.bg-purple-600{background-color:#4F7A63!important}\n.hover\\:bg-purple-600:hover{background-color:#4F7A63!important}\n.text-purple-600{color:#4F7A63!important}\n.hover\\:text-purple-600:hover{color:#4F7A63!important}\n.border-purple-600{border-color:#4F7A63!important}\n.hover\\:border-purple-600:hover{border-color:#4F7A63!important}\n.focus\\:border-purple-600:focus{border-color:#4F7A63!important}\n.bg-purple-500{background-color:#5F8C73!important}\n.hover\\:bg-purple-500:hover{background-color:#5F8C73!important}\n.text-purple-500{color:#5F8C73!important}\n.hover\\:text-purple-500:hover{color:#5F8C73!important}\n.border-purple-500{border-color:#5F8C73!important}\n.hover\\:border-purple-500:hover{border-color:#5F8C73!important}\n.focus\\:border-purple-500:focus{border-color:#5F8C73!important}\n.bg-purple-400{background-color:#8FB09D!important}\n.hover\\:bg-purple-400:hover{background-color:#8FB09D!important}\n.text-purple-400{color:#8FB09D!important}\n.hover\\:text-purple-400:hover{color:#8FB09D!important}\n.border-purple-400{border-color:#8FB09D!important}\n.hover\\:border-purple-400:hover{border-color:#8FB09D!important}\n.focus\\:border-purple-400:focus{border-color:#8FB09D!important}\n.bg-purple-300{background-color:#B5CABD!important}\n.hover\\:bg-purple-300:hover{background-color:#B5CABD!important}\n.text-purple-300{color:#B5CABD!important}\n.hover\\:text-purple-300:hover{color:#B5CABD!important}\n.border-purple-300{border-color:#B5CABD!important}\n.hover\\:border-purple-300:hover{border-color:#B5CABD!important}\n.focus\\:border-purple-300:focus{border-color:#B5CABD!important}\n.bg-purple-200{background-color:#D5E0D8!important}\n.hover\\:bg-purple-200:hover{background-color:#D5E0D8!important}\n.text-purple-200{color:#D5E0D8!important}\n.hover\\:text-purple-200:hover{color:#D5E0D8!important}\n.border-purple-200{border-color:#D5E0D8!important}\n.hover\\:border-purple-200:hover{border-color:#D5E0D8!important}\n.focus\\:border-purple-200:focus{border-color:#D5E0D8!important}\n.bg-purple-100{background-color:#E6EDE8!important}\n.hover\\:bg-purple-100:hover{background-color:#E6EDE8!important}\n.text-purple-100{color:#E6EDE8!important}\n.hover\\:text-purple-100:hover{color:#E6EDE8!important}\n.border-purple-100{border-color:#E6EDE8!important}\n.hover\\:border-purple-100:hover{border-color:#E6EDE8!important}\n.focus\\:border-purple-100:focus{border-color:#E6EDE8!important}\n.bg-purple-50{background-color:#F0F4F1!important}\n.hover\\:bg-purple-50:hover{background-color:#F0F4F1!important}\n.text-purple-50{color:#F0F4F1!important}\n.hover\\:text-purple-50:hover{color:#F0F4F1!important}\n.border-purple-50{border-color:#F0F4F1!important}\n.hover\\:border-purple-50:hover{border-color:#F0F4F1!important}\n.focus\\:border-purple-50:focus{border-color:#F0F4F1!important}\n.bg-rose-950{background-color:#3A1F10!important}\n.hover\\:bg-rose-950:hover{background-color:#3A1F10!important}\n.text-rose-950{color:#3A1F10!important}\n.hover\\:text-rose-950:hover{color:#3A1F10!important}\n.border-rose-950{border-color:#3A1F10!important}\n.hover\\:border-rose-950:hover{border-color:#3A1F10!important}\n.focus\\:border-rose-950:focus{border-color:#3A1F10!important}\n.bg-rose-900{background-color:#6B3A1E!important}\n.hover\\:bg-rose-900:hover{background-color:#6B3A1E!important}\n.text-rose-900{color:#6B3A1E!important}\n.hover\\:text-rose-900:hover{color:#6B3A1E!important}\n.border-rose-900{border-color:#6B3A1E!important}\n.hover\\:border-rose-900:hover{border-color:#6B3A1E!important}\n.focus\\:border-rose-900:focus{border-color:#6B3A1E!important}\n.bg-rose-800{background-color:#8A4A27!important}\n.hover\\:bg-rose-800:hover{background-color:#8A4A27!important}\n.text-rose-800{color:#8A4A27!important}\n.hover\\:text-rose-800:hover{color:#8A4A27!important}\n.border-rose-800{border-color:#8A4A27!important}\n.hover\\:border-rose-800:hover{border-color:#8A4A27!important}\n.focus\\:border-rose-800:focus{border-color:#8A4A27!important}\n.bg-rose-700{background-color:#A65F37!important}\n.hover\\:bg-rose-700:hover{background-color:#A65F37!important}\n.text-rose-700{color:#A65F37!important}\n.hover\\:text-rose-700:hover{color:#A65F37!important}\n.border-rose-700{border-color:#A65F37!important}\n.hover\\:border-rose-700:hover{border-color:#A65F37!important}\n.focus\\:border-rose-700:focus{border-color:#A65F37!important}\n.bg-rose-600{background-color:#B5683A!important}\n.hover\\:bg-rose-600:hover{background-color:#B5683A!important}\n.text-rose-600{color:#B5683A!important}\n.hover\\:text-rose-600:hover{color:#B5683A!important}\n.border-rose-600{border-color:#B5683A!important}\n.hover\\:border-rose-600:hover{border-color:#B5683A!important}\n.focus\\:border-rose-600:focus{border-color:#B5683A!important}\n.bg-rose-500{background-color:#C77E52!important}\n.hover\\:bg-rose-500:hover{background-color:#C77E52!important}\n.text-rose-500{color:#C77E52!important}\n.hover\\:text-rose-500:hover{color:#C77E52!important}\n.border-rose-500{border-color:#C77E52!important}\n.hover\\:border-rose-500:hover{border-color:#C77E52!important}\n.focus\\:border-rose-500:focus{border-color:#C77E52!important}\n.bg-rose-400{background-color:#D9945F!important}\n.hover\\:bg-rose-400:hover{background-color:#D9945F!important}\n.text-rose-400{color:#D9945F!important}\n.hover\\:text-rose-400:hover{color:#D9945F!important}\n.border-rose-400{border-color:#D9945F!important}\n.hover\\:border-rose-400:hover{border-color:#D9945F!important}\n.focus\\:border-rose-400:focus{border-color:#D9945F!important}\n.bg-rose-300{background-color:#E6B38C!important}\n.hover\\:bg-rose-300:hover{background-color:#E6B38C!important}\n.text-rose-300{color:#E6B38C!important}\n.hover\\:text-rose-300:hover{color:#E6B38C!important}\n.border-rose-300{border-color:#E6B38C!important}\n.hover\\:border-rose-300:hover{border-color:#E6B38C!important}\n.focus\\:border-rose-300:focus{border-color:#E6B38C!important}\n.bg-rose-200{background-color:#F0D1B8!important}\n.hover\\:bg-rose-200:hover{background-color:#F0D1B8!important}\n.text-rose-200{color:#F0D1B8!important}\n.hover\\:text-rose-200:hover{color:#F0D1B8!important}\n.border-rose-200{border-color:#F0D1B8!important}\n.hover\\:border-rose-200:hover{border-color:#F0D1B8!important}\n.focus\\:border-rose-200:focus{border-color:#F0D1B8!important}\n.bg-rose-100{background-color:#F6E4D5!important}\n.hover\\:bg-rose-100:hover{background-color:#F6E4D5!important}\n.text-rose-100{color:#F6E4D5!important}\n.hover\\:text-rose-100:hover{color:#F6E4D5!important}\n.border-rose-100{border-color:#F6E4D5!important}\n.hover\\:border-rose-100:hover{border-color:#F6E4D5!important}\n.focus\\:border-rose-100:focus{border-color:#F6E4D5!important}\n.bg-rose-50{background-color:#FAF1EA!important}\n.hover\\:bg-rose-50:hover{background-color:#FAF1EA!important}\n.text-rose-50{color:#FAF1EA!important}\n.hover\\:text-rose-50:hover{color:#FAF1EA!important}\n.border-rose-50{border-color:#FAF1EA!important}\n.hover\\:border-rose-50:hover{border-color:#FAF1EA!important}\n.focus\\:border-rose-50:focus{border-color:#FAF1EA!important}\n.bg-blue-950{background-color:#14282B!important}\n.hover\\:bg-blue-950:hover{background-color:#14282B!important}\n.text-blue-950{color:#14282B!important}\n.hover\\:text-blue-950:hover{color:#14282B!important}\n.border-blue-950{border-color:#14282B!important}\n.hover\\:border-blue-950:hover{border-color:#14282B!important}\n.focus\\:border-blue-950:focus{border-color:#14282B!important}\n.bg-blue-900{background-color:#1E3F44!important}\n.hover\\:bg-blue-900:hover{background-color:#1E3F44!important}\n.text-blue-900{color:#1E3F44!important}\n.hover\\:text-blue-900:hover{color:#1E3F44!important}\n.border-blue-900{border-color:#1E3F44!important}\n.hover\\:border-blue-900:hover{border-color:#1E3F44!important}\n.focus\\:border-blue-900:focus{border-color:#1E3F44!important}\n.bg-blue-800{background-color:#2A5359!important}\n.hover\\:bg-blue-800:hover{background-color:#2A5359!important}\n.text-blue-800{color:#2A5359!important}\n.hover\\:text-blue-800:hover{color:#2A5359!important}\n.border-blue-800{border-color:#2A5359!important}\n.hover\\:border-blue-800:hover{border-color:#2A5359!important}\n.focus\\:border-blue-800:focus{border-color:#2A5359!important}\n.bg-blue-700{background-color:#3A6A70!important}\n.hover\\:bg-blue-700:hover{background-color:#3A6A70!important}\n.text-blue-700{color:#3A6A70!important}\n.hover\\:text-blue-700:hover{color:#3A6A70!important}\n.border-blue-700{border-color:#3A6A70!important}\n.hover\\:border-blue-700:hover{border-color:#3A6A70!important}\n.focus\\:border-blue-700:focus{border-color:#3A6A70!important}\n.bg-blue-600{background-color:#4C7F85!important}\n.hover\\:bg-blue-600:hover{background-color:#4C7F85!important}\n.text-blue-600{color:#4C7F85!important}\n.hover\\:text-blue-600:hover{color:#4C7F85!important}\n.border-blue-600{border-color:#4C7F85!important}\n.hover\\:border-blue-600:hover{border-color:#4C7F85!important}\n.focus\\:border-blue-600:focus{border-color:#4C7F85!important}\n.bg-blue-500{background-color:#639499!important}\n.hover\\:bg-blue-500:hover{background-color:#639499!important}\n.text-blue-500{color:#639499!important}\n.hover\\:text-blue-500:hover{color:#639499!important}\n.border-blue-500{border-color:#639499!important}\n.hover\\:border-blue-500:hover{border-color:#639499!important}\n.focus\\:border-blue-500:focus{border-color:#639499!important}\n.bg-blue-400{background-color:#8FB2B6!important}\n.hover\\:bg-blue-400:hover{background-color:#8FB2B6!important}\n.text-blue-400{color:#8FB2B6!important}\n.hover\\:text-blue-400:hover{color:#8FB2B6!important}\n.border-blue-400{border-color:#8FB2B6!important}\n.hover\\:border-blue-400:hover{border-color:#8FB2B6!important}\n.focus\\:border-blue-400:focus{border-color:#8FB2B6!important}\n.bg-blue-300{background-color:#A8C4C6!important}\n.hover\\:bg-blue-300:hover{background-color:#A8C4C6!important}\n.text-blue-300{color:#A8C4C6!important}\n.hover\\:text-blue-300:hover{color:#A8C4C6!important}\n.border-blue-300{border-color:#A8C4C6!important}\n.hover\\:border-blue-300:hover{border-color:#A8C4C6!important}\n.focus\\:border-blue-300:focus{border-color:#A8C4C6!important}\n.bg-blue-200{background-color:#CADCDD!important}\n.hover\\:bg-blue-200:hover{background-color:#CADCDD!important}\n.text-blue-200{color:#CADCDD!important}\n.hover\\:text-blue-200:hover{color:#CADCDD!important}\n.border-blue-200{border-color:#CADCDD!important}\n.hover\\:border-blue-200:hover{border-color:#CADCDD!important}\n.focus\\:border-blue-200:focus{border-color:#CADCDD!important}\n.bg-blue-100{background-color:#E1ECED!important}\n.hover\\:bg-blue-100:hover{background-color:#E1ECED!important}\n.text-blue-100{color:#E1ECED!important}\n.hover\\:text-blue-100:hover{color:#E1ECED!important}\n.border-blue-100{border-color:#E1ECED!important}\n.hover\\:border-blue-100:hover{border-color:#E1ECED!important}\n.focus\\:border-blue-100:focus{border-color:#E1ECED!important}\n.bg-blue-50{background-color:#EEF4F5!important}\n.hover\\:bg-blue-50:hover{background-color:#EEF4F5!important}\n.text-blue-50{color:#EEF4F5!important}\n.hover\\:text-blue-50:hover{color:#EEF4F5!important}\n.border-blue-50{border-color:#EEF4F5!important}\n.hover\\:border-blue-50:hover{border-color:#EEF4F5!important}\n.focus\\:border-blue-50:focus{border-color:#EEF4F5!important}\n.bg-slate-950{background-color:#0F0F0D!important}\n.hover\\:bg-slate-950:hover{background-color:#0F0F0D!important}\n.text-slate-950{color:#0F0F0D!important}\n.hover\\:text-slate-950:hover{color:#0F0F0D!important}\n.border-slate-950{border-color:#0F0F0D!important}\n.hover\\:border-slate-950:hover{border-color:#0F0F0D!important}\n.focus\\:border-slate-950:focus{border-color:#0F0F0D!important}\n.bg-slate-900{background-color:#1A1A17!important}\n.hover\\:bg-slate-900:hover{background-color:#1A1A17!important}\n.text-slate-900{color:#1A1A17!important}\n.hover\\:text-slate-900:hover{color:#1A1A17!important}\n.border-slate-900{border-color:#1A1A17!important}\n.hover\\:border-slate-900:hover{border-color:#1A1A17!important}\n.focus\\:border-slate-900:focus{border-color:#1A1A17!important}\n.bg-slate-800{background-color:#2A2A26!important}\n.hover\\:bg-slate-800:hover{background-color:#2A2A26!important}\n.text-slate-800{color:#2A2A26!important}\n.hover\\:text-slate-800:hover{color:#2A2A26!important}\n.border-slate-800{border-color:#2A2A26!important}\n.hover\\:border-slate-800:hover{border-color:#2A2A26!important}\n.focus\\:border-slate-800:focus{border-color:#2A2A26!important}\n.bg-slate-700{background-color:#3E3D37!important}\n.hover\\:bg-slate-700:hover{background-color:#3E3D37!important}\n.text-slate-700{color:#3E3D37!important}\n.hover\\:text-slate-700:hover{color:#3E3D37!important}\n.border-slate-700{border-color:#3E3D37!important}\n.hover\\:border-slate-700:hover{border-color:#3E3D37!important}\n.focus\\:border-slate-700:focus{border-color:#3E3D37!important}\n.bg-slate-600{background-color:#55534B!important}\n.hover\\:bg-slate-600:hover{background-color:#55534B!important}\n.text-slate-600{color:#55534B!important}\n.hover\\:text-slate-600:hover{color:#55534B!important}\n.border-slate-600{border-color:#55534B!important}\n.hover\\:border-slate-600:hover{border-color:#55534B!important}\n.focus\\:border-slate-600:focus{border-color:#55534B!important}\n.bg-slate-500{background-color:#6B6960!important}\n.hover\\:bg-slate-500:hover{background-color:#6B6960!important}\n.text-slate-500{color:#6B6960!important}\n.hover\\:text-slate-500:hover{color:#6B6960!important}\n.border-slate-500{border-color:#6B6960!important}\n.hover\\:border-slate-500:hover{border-color:#6B6960!important}\n.focus\\:border-slate-500:focus{border-color:#6B6960!important}\n.bg-slate-400{background-color:#8A877D!important}\n.hover\\:bg-slate-400:hover{background-color:#8A877D!important}\n.text-slate-400{color:#8A877D!important}\n.hover\\:text-slate-400:hover{color:#8A877D!important}\n.border-slate-400{border-color:#8A877D!important}\n.hover\\:border-slate-400:hover{border-color:#8A877D!important}\n.focus\\:border-slate-400:focus{border-color:#8A877D!important}\n.bg-slate-300{background-color:#B5B1A5!important}\n.hover\\:bg-slate-300:hover{background-color:#B5B1A5!important}\n.text-slate-300{color:#B5B1A5!important}\n.hover\\:text-slate-300:hover{color:#B5B1A5!important}\n.border-slate-300{border-color:#B5B1A5!important}\n.hover\\:border-slate-300:hover{border-color:#B5B1A5!important}\n.focus\\:border-slate-300:focus{border-color:#B5B1A5!important}\n.bg-slate-200{background-color:#D6D1C4!important}\n.hover\\:bg-slate-200:hover{background-color:#D6D1C4!important}\n.text-slate-200{color:#D6D1C4!important}\n.hover\\:text-slate-200:hover{color:#D6D1C4!important}\n.border-slate-200{border-color:#D6D1C4!important}\n.hover\\:border-slate-200:hover{border-color:#D6D1C4!important}\n.focus\\:border-slate-200:focus{border-color:#D6D1C4!important}\n.bg-slate-100{background-color:#E7E3D8!important}\n.hover\\:bg-slate-100:hover{background-color:#E7E3D8!important}\n.text-slate-100{color:#E7E3D8!important}\n.hover\\:text-slate-100:hover{color:#E7E3D8!important}\n.border-slate-100{border-color:#E7E3D8!important}\n.hover\\:border-slate-100:hover{border-color:#E7E3D8!important}\n.focus\\:border-slate-100:focus{border-color:#E7E3D8!important}\n.bg-slate-50{background-color:#F1EEE6!important}\n.hover\\:bg-slate-50:hover{background-color:#F1EEE6!important}\n.text-slate-50{color:#F1EEE6!important}\n.hover\\:text-slate-50:hover{color:#F1EEE6!important}\n.border-slate-50{border-color:#F1EEE6!important}\n.hover\\:border-slate-50:hover{border-color:#F1EEE6!important}\n.focus\\:border-slate-50:focus{border-color:#F1EEE6!important}\n.bg-stone-950{background-color:#1A1A17!important}\n.hover\\:bg-stone-950:hover{background-color:#1A1A17!important}\n.text-stone-950{color:#1A1A17!important}\n.hover\\:text-stone-950:hover{color:#1A1A17!important}\n.border-stone-950{border-color:#1A1A17!important}\n.hover\\:border-stone-950:hover{border-color:#1A1A17!important}\n.focus\\:border-stone-950:focus{border-color:#1A1A17!important}\n.bg-stone-900{background-color:#25241F!important}\n.hover\\:bg-stone-900:hover{background-color:#25241F!important}\n.text-stone-900{color:#25241F!important}\n.hover\\:text-stone-900:hover{color:#25241F!important}\n.border-stone-900{border-color:#25241F!important}\n.hover\\:border-stone-900:hover{border-color:#25241F!important}\n.focus\\:border-stone-900:focus{border-color:#25241F!important}\n.bg-stone-800{background-color:#33322B!important}\n.hover\\:bg-stone-800:hover{background-color:#33322B!important}\n.text-stone-800{color:#33322B!important}\n.hover\\:text-stone-800:hover{color:#33322B!important}\n.border-stone-800{border-color:#33322B!important}\n.hover\\:border-stone-800:hover{border-color:#33322B!important}\n.focus\\:border-stone-800:focus{border-color:#33322B!important}\n.bg-stone-700{background-color:#47453D!important}\n.hover\\:bg-stone-700:hover{background-color:#47453D!important}\n.text-stone-700{color:#47453D!important}\n.hover\\:text-stone-700:hover{color:#47453D!important}\n.border-stone-700{border-color:#47453D!important}\n.hover\\:border-stone-700:hover{border-color:#47453D!important}\n.focus\\:border-stone-700:focus{border-color:#47453D!important}\n.bg-stone-600{background-color:#5C5A52!important}\n.hover\\:bg-stone-600:hover{background-color:#5C5A52!important}\n.text-stone-600{color:#5C5A52!important}\n.hover\\:text-stone-600:hover{color:#5C5A52!important}\n.border-stone-600{border-color:#5C5A52!important}\n.hover\\:border-stone-600:hover{border-color:#5C5A52!important}\n.focus\\:border-stone-600:focus{border-color:#5C5A52!important}\n.bg-stone-500{background-color:#6B6960!important}\n.hover\\:bg-stone-500:hover{background-color:#6B6960!important}\n.text-stone-500{color:#6B6960!important}\n.hover\\:text-stone-500:hover{color:#6B6960!important}\n.border-stone-500{border-color:#6B6960!important}\n.hover\\:border-stone-500:hover{border-color:#6B6960!important}\n.focus\\:border-stone-500:focus{border-color:#6B6960!important}\n.bg-stone-400{background-color:#8A877D!important}\n.hover\\:bg-stone-400:hover{background-color:#8A877D!important}\n.text-stone-400{color:#8A877D!important}\n.hover\\:text-stone-400:hover{color:#8A877D!important}\n.border-stone-400{border-color:#8A877D!important}\n.hover\\:border-stone-400:hover{border-color:#8A877D!important}\n.focus\\:border-stone-400:focus{border-color:#8A877D!important}\n.bg-stone-300{background-color:#CFCABD!important}\n.hover\\:bg-stone-300:hover{background-color:#CFCABD!important}\n.text-stone-300{color:#CFCABD!important}\n.hover\\:text-stone-300:hover{color:#CFCABD!important}\n.border-stone-300{border-color:#CFCABD!important}\n.hover\\:border-stone-300:hover{border-color:#CFCABD!important}\n.focus\\:border-stone-300:focus{border-color:#CFCABD!important}\n.bg-stone-200{background-color:#D9D4C6!important}\n.hover\\:bg-stone-200:hover{background-color:#D9D4C6!important}\n.text-stone-200{color:#D9D4C6!important}\n.hover\\:text-stone-200:hover{color:#D9D4C6!important}\n.border-stone-200{border-color:#D9D4C6!important}\n.hover\\:border-stone-200:hover{border-color:#D9D4C6!important}\n.focus\\:border-stone-200:focus{border-color:#D9D4C6!important}\n.bg-stone-100{background-color:#ECE8DD!important}\n.hover\\:bg-stone-100:hover{background-color:#ECE8DD!important}\n.text-stone-100{color:#ECE8DD!important}\n.hover\\:text-stone-100:hover{color:#ECE8DD!important}\n.border-stone-100{border-color:#ECE8DD!important}\n.hover\\:border-stone-100:hover{border-color:#ECE8DD!important}\n.focus\\:border-stone-100:focus{border-color:#ECE8DD!important}\n.bg-stone-50{background-color:#F3F0E8!important}\n.hover\\:bg-stone-50:hover{background-color:#F3F0E8!important}\n.text-stone-50{color:#F3F0E8!important}\n.hover\\:text-stone-50:hover{color:#F3F0E8!important}\n.border-stone-50{border-color:#F3F0E8!important}\n.hover\\:border-stone-50:hover{border-color:#F3F0E8!important}\n.focus\\:border-stone-50:focus{border-color:#F3F0E8!important}\n.bg-white{background-color:#FBF9F3!important}\n.bg-\\[\\#FAF8F5\\]{background-color:#F3F0E8!important}\n.bg-\\[\\#F5F3EC\\]{background-color:#F5F3EC!important}\n.bg-slate-950\\/70{background-color:rgba(26,26,23,.7)!important}\n.border-stone-200\\/30{border-color:rgba(217,212,198,.3)!important}";
 
 // =====================================================================
@@ -627,6 +629,14 @@ const contactHref = (type, value) => {
   if (type === 'phone') return 'tel:' + v.replace(/[^\d+]/g, '');
   if (type === 'whatsapp') return 'https://wa.me/' + v.replace(/\D/g, '');
   return /^https?:\/\//i.test(v) ? v : 'https://' + v;
+};
+// When must you start getting ready? plan start - travel time - getting-ready buffer (from your Profile estimator).
+const readyStartFor = (t, startMins, profile) => {
+  const serious = /serious|date night|business|interview|formal/i.test(`${t.meetingType || ''} ${t.title || ''}`);
+  const needsPrep = t.categoryColor !== 'work' || !!t.location;
+  const prep = needsPrep ? Number(serious ? profile.prepTimeSerious : profile.prepTimeCasual) || 0 : 0;
+  const travel = Number(t.travelTime) || 0;
+  return Math.max(0, startMins - travel - prep);
 };
 const REMINDER_DEFAULTS = { enabled: true, leadMins: 15, browser: false, plans: true, medicine: true, meals: false, admin: true, water: false, reading: false, mood: false, adminDays: 3, mealLead: 0, waterEvery: 120, readingTime: '20:00', moodTime: '20:00', quiet: false, quietFrom: '22:00', quietTo: '07:00' };
 const getReminderCfg = (p) => ({ ...REMINDER_DEFAULTS, ...((p && p.reminders) || {}) });
@@ -1388,7 +1398,7 @@ const placeRowToIdea = (r, cat, loc, i) => ({
   userRating: null, price: '', city: loc.city, sub1: cap1(r.kind), sub2: 'Overture Maps open data',
   deal: 'Opening hours not listed', distance: fmtDist(r.distance_km, loc.country), lat: r.lat, lon: r.lon, link: r.website || '', placeId: r.id, kind: r.kind
 });
-const dbIdeas = async ({ cat, loc, seen, n = 3, filters = [] }) => {
+const dbIdeas = async ({ cat, loc, seen, n = 3, filters = [], adventurous = false }) => {
   if (!cloud.enabled || cat === 'Trips') return [];
   const { lat, lon } = await resolveCoords(loc);
   const fetchAll = async (radiusKm) => {
@@ -1400,11 +1410,13 @@ const dbIdeas = async ({ cat, loc, seen, n = 3, filters = [] }) => {
     }
     return [...byId.values()].sort((a, b) => (b.r.score || 0) - (a.r.score || 0));
   };
-  let rows = await fetchAll(4);
+  let rows = await fetchAll(adventurous ? 12 : 4);
   if (rows.length < 8) rows = await fetchAll(15);
   const seenLocal = new Set();
   const fresh = rows.filter(({ r }) => { const k = String(r.name).toLowerCase(); if (NOT_A_PLACE.test(r.name) || seen.has(k) || seenLocal.has(k)) return false; seenLocal.add(k); return true; });
-  return fresh.slice(0, 16).sort(() => Math.random() - 0.5).slice(0, n).map(({ r, labels }, i) => ({ ...placeRowToIdea(r, cat, loc, i), matchLabels: labels }));
+  // Adventurous: skip the obvious top-ranked spots and pick from the less-trodden middle of the list.
+  const pool = adventurous ? fresh.slice(Math.floor(fresh.length * 0.3), Math.floor(fresh.length * 0.3) + 24) : fresh.slice(0, 16);
+  return pool.sort(() => Math.random() - 0.5).slice(0, n).map(({ r, labels }, i) => ({ ...placeRowToIdea(r, cat, loc, i), matchLabels: labels }));
 };
 const osmIdeas = async (args) => {
   try { const fromDb = await dbIdeas(args); if (fromDb.length) return fromDb; } catch (e) { /* places database unavailable: use the live search */ }
@@ -1693,6 +1705,69 @@ function ContourBg() {
 
 
 // Plain-English privacy notice. Edit the contact line by setting window.PACT_CONTACT in public/config.js (for example 'privacy@yourdomain.com').
+// ---- contacts import helpers ----
+const parseVcf = (txt) => {
+  const out = [];
+  String(txt || '').split(/BEGIN:VCARD/i).slice(1).forEach(card => {
+    const unfolded = card.replace(/\r?\n[ \t]/g, '');
+    const lines = unfolded.split(/\r?\n/);
+    let name = '', phone = '', email = '';
+    lines.forEach(l => {
+      const m = l.match(/^([A-Za-z]+)(?:;[^:]*)?:(.*)$/);
+      if (!m) return;
+      const k = m[1].toUpperCase(), v = m[2].trim();
+      if (k === 'FN' && !name) name = v;
+      else if (k === 'N' && !name) name = v.split(';').filter(Boolean).reverse().join(' ').trim();
+      else if (k === 'TEL' && !phone) phone = v;
+      else if (k === 'EMAIL' && !email) email = v;
+    });
+    if (name) out.push({ name, phone, email });
+  });
+  return out;
+};
+const splitCsvLine = (line) => {
+  const r = []; let cur = '', q = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (q) { if (c === '"' && line[i + 1] === '"') { cur += '"'; i++; } else if (c === '"') q = false; else cur += c; }
+    else if (c === '"') q = true; else if (c === ',') { r.push(cur); cur = ''; } else cur += c;
+  }
+  r.push(cur); return r.map(x => x.trim());
+};
+const parseCsvContacts = (txt) => {
+  const lines = String(txt || '').split(/\r?\n/).filter(l => l.trim());
+  if (lines.length < 2) return [];
+  const head = splitCsvLine(lines[0]).map(h => h.toLowerCase());
+  const idx = (re) => head.findIndex(h => re.test(h));
+  const iName = idx(/^(name|full name|display name)$/), iFirst = idx(/first/), iLast = idx(/last|family/), iPhone = idx(/phone|mobile|tel/), iMail = idx(/e-?mail/);
+  return lines.slice(1).map(l => {
+    const c = splitCsvLine(l);
+    const name = (iName >= 0 ? c[iName] : [iFirst >= 0 ? c[iFirst] : '', iLast >= 0 ? c[iLast] : ''].filter(Boolean).join(' ')) || '';
+    return { name: name.trim(), phone: iPhone >= 0 ? (c[iPhone] || '') : '', email: iMail >= 0 ? (c[iMail] || '') : '' };
+  }).filter(x => x.name);
+};
+const waDigits = (phone) => { let d = String(phone || '').replace(/[^\d+]/g, ''); if (d.startsWith('+')) d = d.slice(1); else if (d.startsWith('00')) d = d.slice(2); else if (d.startsWith('0')) d = '44' + d.slice(1); return d; };
+const shrinkImage = (file, size = 128) => new Promise((resolve, reject) => {
+  const fr = new FileReader();
+  fr.onerror = () => reject(new Error('read failed'));
+  fr.onload = () => {
+    const img = new Image();
+    img.onerror = () => reject(new Error('not an image'));
+    img.onload = () => {
+      const c = document.createElement('canvas'); c.width = size; c.height = size;
+      const g = c.getContext('2d'); const m = Math.min(img.width, img.height);
+      g.drawImage(img, (img.width - m) / 2, (img.height - m) / 2, m, m, 0, 0, size, size);
+      resolve(c.toDataURL('image/jpeg', 0.8));
+    };
+    img.src = String(fr.result);
+  };
+  fr.readAsDataURL(file);
+});
+const Avatar = ({ src, name, size = 36 }) => (
+  src ? <img src={src} alt="" style={{ width: size, height: size }} className="rounded-full object-cover shrink-0 border border-stone-300" />
+      : <div style={{ width: size, height: size, fontSize: size * 0.42 }} className="rounded-full bg-purple-800 text-white flex items-center justify-center shrink-0 font-medium">{(String(name || '?').trim()[0] || '?').toUpperCase()}</div>
+);
+
 const PrivacyNotice = ({ onClose }) => {
   const contact = (typeof window !== 'undefined' && window.PACT_CONTACT) || 'the person who invited you to use Pact';
   const cloudOn = cloud.enabled;
@@ -1890,10 +1965,18 @@ function AuthScreen({ onAuth, onGuest }) {
 function AppInner({ onReset }) {
   // --- NAVIGATION & CLOCK STATE ---
   const [activeTab, setActiveTab] = useState('home'); // 'home', 'schedule', 'ideas', 'skills' (Development), 'social', 'profile'
+  const [socialSub, setSocialSub] = useState('plans'); // 'plans','friends','people'
   const [profileSubTab, setProfileSubTab] = useState('settings'); // 'settings', 'friends', 'data'
   // --- real friends (Supabase): username, lookup, requests ---
   const [usernameMsg, setUsernameMsg] = useState('');
   const [friendQuery, setFriendQuery] = useState('');
+  const [friendBookQ, setFriendBookQ] = useState('');
+  const [taskEdit, setTaskEdit] = useState(null);   // { id,title,date,start,end,location } while changing a plan in Schedule
+  const [taskInviteId, setTaskInviteId] = useState(null);
+  const [myProfile, setMyProfile] = useState({ bio: '', avatar: '' });
+  const [profileMsg, setProfileMsg] = useState('');
+  const [importList, setImportList] = useState(null);   // null | [{name,phone,email,sel}]
+  const [contactEditId, setContactEditId] = useState(null);
   const [friendFound, setFriendFound] = useState(null);   // null | 'none' | { id, display_name, username, relation }
   const [friendMsg, setFriendMsg] = useState('');
   const [friendReqs, setFriendReqs] = useState([]);
@@ -1909,15 +1992,17 @@ function AppInner({ onReset }) {
   const [inviteBusy, setInviteBusy] = useState(false);
   const [editEvent, setEditEvent] = useState(null);    // { id, title, date, start, end, location }
   const sharedRef = useRef({ seen: null });
+  const startedParams = useRef(false);
   // --- Your People (stored with the rest of your data) ---
   const [people, setPeople] = useState([]);
   const [peopleFilter, setPeopleFilter] = useState('all');   // all | personal | business | blocked
-  const [personDraft, setPersonDraft] = useState({ name: '', kind: 'personal', relation: '', remindEvery: 30 });
+  const [personDraft, setPersonDraft] = useState({ name: '', kind: 'personal', relation: '', remindEvery: 30, phone: '', whatsapp: '', email: '' });
   const [reclaimedAt, setReclaimedAt] = useState('');
   const [selectedDateStr, setSelectedDateStr] = useState(() => todayDateStr());
 
   // --- AUTH & CALENDAR SYNC STATE ---
   const [authUser, setAuthUser] = useState(() => { if (cloud.enabled) return null; try { const v = store.get('roam:session'); return v ? JSON.parse(v) : null; } catch (e) { return null; } });
+  const authUserRef = useRef(null);
   const [authReady, setAuthReady] = useState(!cloud.enabled);
   const [syncStatus, setSyncStatus] = useState('idle'); // idle | saving | saved | offline | error
   const cloudRef = useRef({ version: null, timer: null, saving: false, pending: null, email: '', synced: '' });
@@ -1944,6 +2029,51 @@ function AppInner({ onReset }) {
     setToasts(prev => [...prev.slice(-3), { id, text, kind, action }]);
     if (kind !== 'reminder') setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 3500);
     return id;
+  };
+  // ---- Notification centre: invites, messages, new friends, plan changes ----
+  const [notifs, setNotifs] = useState([]);
+  const [bellOpen, setBellOpen] = useState(false);
+  const seenRef = useRef(null);
+  const seenKey = () => 'roam:seen:' + ((authUserRef.current && authUserRef.current.email) || '');
+  const seen = () => {
+    if (!seenRef.current) { let v = {}; try { v = JSON.parse(localStorage.getItem(seenKey()) || '{}') || {}; } catch (e) { v = {}; } seenRef.current = { req: v.req || null, fr: v.fr || null, unread: v.unread || null, sigs: v.sigs || null, invites: v.invites || null }; }
+    return seenRef.current;
+  };
+  const saveSeen = () => { try { localStorage.setItem(seenKey(), JSON.stringify(seenRef.current)); } catch (e) { /* ignore */ } };
+  const lastNotifRef = useRef([]);
+  const notify = (text, kind = 'info') => {
+    lastNotifRef.current = [...lastNotifRef.current.filter(x => Date.now() - x.at < 30000), { kind, text, at: Date.now() }];
+    setNotifs(prev => [{ id: Date.now() + Math.random(), text, kind, at: Date.now(), read: false }, ...prev].slice(0, 50));
+    pushToast(text, 'info');
+    try {
+      if (typeof Notification !== 'undefined' && Notification.permission === 'granted' && typeof document !== 'undefined' && document.visibilityState === 'hidden') {
+        const opts = { body: text, icon: '/icons/icon-192.png', tag: 'pact-' + kind };
+        if (navigator.serviceWorker && navigator.serviceWorker.ready) navigator.serviceWorker.ready.then(reg => reg.showNotification('Pact', opts)).catch(() => { try { new Notification('Pact', opts); } catch (e) { /* ignore */ } });
+        else new Notification('Pact', opts);
+      }
+    } catch (e) { /* ignore */ }
+  };
+  // ---- Voice: say what you want to add ----
+  const [voice, setVoice] = useState(null);   // null | { listening, text, err }
+  const recogRef = useRef(null);
+  const voiceSupported = () => typeof window !== 'undefined' && !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+  const startVoice = () => {
+    const SR = typeof window !== 'undefined' && (window.SpeechRecognition || window.webkitSpeechRecognition);
+    if (!SR) { setVoice({ listening: false, text: '', err: "Voice typing isn't available in this browser. In Chrome or Safari it works; otherwise you can type to Roamie instead." }); return; }
+    try { if (recogRef.current) recogRef.current.abort(); } catch (e) { /* ignore */ }
+    const r = new SR(); recogRef.current = r;
+    r.lang = 'en-GB'; r.interimResults = true; r.continuous = false;
+    r.onresult = (ev) => { let t = ''; for (let i = 0; i < ev.results.length; i++) t += ev.results[i][0].transcript; setVoice(v => ({ ...(v || {}), listening: true, text: t, err: '' })); };
+    r.onerror = (ev) => setVoice(v => ({ ...(v || {}), listening: false, err: ev.error === 'not-allowed' || ev.error === 'service-not-allowed' ? 'Microphone access is blocked. Allow it in your browser or phone settings, then try again.' : ev.error === 'no-speech' ? "I didn't hear anything. Tap the mic and try again." : 'Voice typing had a problem. Try again.' }));
+    r.onend = () => setVoice(v => (v ? { ...v, listening: false } : v));
+    setVoice({ listening: true, text: '', err: '' });
+    try { r.start(); } catch (e) { setVoice({ listening: false, text: '', err: 'Could not start the microphone.' }); }
+  };
+  const stopVoice = () => { try { if (recogRef.current) recogRef.current.stop(); } catch (e) { /* ignore */ } };
+  const closeVoice = () => { try { if (recogRef.current) recogRef.current.abort(); } catch (e) { /* ignore */ } setVoice(null); };
+  const submitVoice = () => {
+    const t = (voice && voice.text || '').trim(); if (!t) return;
+    closeVoice(); setRoamieOpen(true); submitRoamie(t);
   };
   const [ideaFresh, setIdeaFresh] = useState([]);
   const [favourites, setFavourites] = useState([]);
@@ -2155,6 +2285,17 @@ function AppInner({ onReset }) {
   // --- COMPREHENSIVE MULTI-MODE SMART PLANNER STATE ---
   const [plannerOpen, setPlannerOpen] = useState(false);
   const [showPrivacyNotice, setShowPrivacyNotice] = useState(false);
+  // Install as an app (home screen)
+  const [installEvt, setInstallEvt] = useState(null);
+  const isStandalone = typeof window !== 'undefined' && ((window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true);
+  const isIos = typeof navigator !== 'undefined' && /iphone|ipad|ipod/i.test(navigator.userAgent);
+  useEffect(() => {
+    const on = (e) => { e.preventDefault(); setInstallEvt(e); };
+    window.addEventListener('beforeinstallprompt', on);
+    window.addEventListener('appinstalled', () => setInstallEvt(null));
+    return () => window.removeEventListener('beforeinstallprompt', on);
+  }, []);
+  const installApp = async () => { if (!installEvt) return; installEvt.prompt(); try { await installEvt.userChoice; } catch (e) {} setInstallEvt(null); };
   const [plannerMode, setPlannerMode] = useState('event'); // 'event', 'task', 'activity', 'surprise'
   const [linkedTargetId, setLinkedTargetId] = useState(null);
   const [plannerResultsStep, setPlannerResultsStep] = useState(false);
@@ -2677,6 +2818,7 @@ function AppInner({ onReset }) {
 
   // --- SOCIAL & COMMUNITY TAB STATE ---
   const [communityGoalFilter, setCommunityGoalFilter] = useState('All');
+  const [communityQuery, setCommunityQuery] = useState('');
   const [expandedCommunityEventId, setExpandedCommunityEventId] = useState(null);
   const [sharedFriendPlans, setSharedFriendPlans] = useState([]);
 
@@ -3004,7 +3146,8 @@ function AppInner({ onReset }) {
     }
   };
 
-  const handleLoadMoreLiveIdeas = async () => {
+  const handleLoadMoreLiveIdeas = async (appendArg?) => {
+    const append = appendArg === true;
     setIsSearchingLiveIdeas(true);
     setIdeaNotice('');
     const cat = selectedIdeaCategory;
@@ -3062,9 +3205,11 @@ function AppInner({ onReset }) {
     }
     if (activeFilterDefs.length) added = added.filter(a => ideaMatchesFilters(a, activeFilterDefs));   // never show something that doesn't fit the chosen filters
     if (added.length) {
-      setIdeasFeed(prev => [...added, ...prev]);
+      setIdeasFeed(prev => append ? [...prev, ...added] : [...added, ...prev]);
       setIdeaFresh(added.map(a => a.id));
-      setIdeaNotice(`${added.length} new ${cat.toLowerCase()} idea${added.length === 1 ? '' : 's'} from ${from}, shown at the top.${webNote ? ' ' + webNote : ''}`);
+      setIdeaNotice(append ? '' : `${added.length} new ${cat.toLowerCase()} idea${added.length === 1 ? '' : 's'} from ${from}, shown at the top.${webNote ? ' ' + webNote : ''}`);
+    } else if (append) {
+      setIdeaNotice(`That's everything I can find for ${activeFilterLabels.length ? activeFilterLabels.join(' / ').toLowerCase() : cat.toLowerCase()} near ${loc.city} right now.${webNote ? ' ' + webNote : ''}`);
     } else if (activeFilterDefs.length) {
       setIdeaFresh([]);
       setIdeaNotice(`I couldn't find any new ${activeFilterLabels.join(' / ').toLowerCase()} near ${loc.city} right now. Try a different filter, clear the filters, or check back later.${webNote ? ' ' + webNote : ''}`);
@@ -3080,7 +3225,7 @@ function AppInner({ onReset }) {
       setIdeaNotice(`You've seen every ${cat.toLowerCase()} idea I have right now, so I reshuffled the order. ${webNote}`.trim());
     }
     setIsSearchingLiveIdeas(false);
-    try { const m = document.getElementById('pact-main'); if (m && m.scrollTo) m.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { /* ignore */ }
+    if (!append) { try { const m = document.getElementById('pact-main'); if (m && m.scrollTo) m.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { /* ignore */ } }
   };
 
   const filterKey = selectedIdeaCategory + '|' + activeFilterLabels.join(',');
@@ -3089,6 +3234,51 @@ function AppInner({ onReset }) {
     const have = ideasFeed.some(i => i.category === selectedIdeaCategory && String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase() && ideaMatchesFilters(i, activeFilterDefs));
     if (!have) handleLoadMoreLiveIdeas();
   }, [filterKey, activeTab]);
+  useEffect(() => { if (adventurousMode && activeTab === 'ideas') shuffleAdventure(); }, [filterKey]);
+  const [ideaShown, setIdeaShown] = useState(6);
+  useEffect(() => { setIdeaShown(6); }, [filterKey]);
+  const ideaListAll = ideasFeed
+    .filter(item => item.category === selectedIdeaCategory)
+    .filter(item => String(item.city || 'Manchester').toLowerCase() === loc.city.toLowerCase())
+    .filter(item => ideaMatchesFilters(item, activeFilterDefs));
+  const [ideaSearch, setIdeaSearch] = useState('');
+  const [ideaSearchRes, setIdeaSearchRes] = useState(null);   // null | { q, items, busy }
+  const runIdeaSearch = async () => {
+    const q = ideaSearch.trim().slice(0, 60); if (!q) { setIdeaSearchRes(null); return; }
+    setIdeaSearchRes({ q, items: [], busy: true });
+    let items = [];
+    try {
+      const { lat, lon } = await resolveCoords(loc);
+      if (cloud.enabled) {
+        try {
+          let rows = await cloud.placesNear({ lat, lon, radiusKm: 8, query: q, limit: 40 });
+          if (rows.length < 5) rows = await cloud.placesNear({ lat, lon, radiusKm: 25, query: q, limit: 40 });
+          items = rows.filter(r => !NOT_A_PLACE.test(r.name)).map((r, i) => placeRowToIdea(r, r.category || 'Food', loc, i));
+        } catch (e) { items = []; }
+      }
+      if (items.length < 3) {
+        try {
+          const safe = q.replace(/[^\w\s'&-]/g, '').trim();
+          if (safe) {
+            const els = await overpass(`[out:json][timeout:20];nwr["name"~"${safe}",i]["amenity"~"."](around:7000,${lat},${lon});out center 40;`);
+            const have = new Set(items.map(x => x.title.toLowerCase()));
+            els.map(e => ({ e, c: elCoords(e) })).filter(x => x.c.lat != null && x.e.tags && x.e.tags.name && !have.has(x.e.tags.name.toLowerCase())).slice(0, 20).forEach((x, i) => {
+              items.push({ id: Date.now() + 100 + i, category: 'Food', title: x.e.tags.name, desc: osmDesc(x.e.tags), rating: null, userRating: null, price: '', city: loc.city, sub1: osmKind(x.e.tags), sub2: 'OpenStreetMap', deal: '', distance: fmtDist(haversineKm(lat, lon, x.c.lat, x.c.lon), loc.country), lat: x.c.lat, lon: x.c.lon, link: x.e.tags.website || '' });
+            });
+          }
+        } catch (e) { /* live search unavailable */ }
+      }
+    } catch (e) { /* no coordinates */ }
+    const lq = q.toLowerCase();
+    const have2 = new Set(items.map(x => x.title.toLowerCase()));
+    ideasFeed.filter(i => String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase() && (i.title + ' ' + (i.desc || '') + ' ' + (i.sub1 || '')).toLowerCase().includes(lq) && !have2.has(i.title.toLowerCase())).forEach(i => items.push(i));
+    setIdeaSearchRes({ q, items: items.slice(0, 40), busy: false });
+  };
+  const seeMoreIdeas = async () => {
+    if (ideaShown < ideaListAll.length) { setIdeaShown(n => n + 6); return; }
+    setIdeaShown(n => n + 6);
+    await handleLoadMoreLiveIdeas(true);
+  };
   const getMatchedVenues = () => {
     const words = eventConfig.vibeKeywords.toLowerCase().split(/[\s,]+/).filter(Boolean);
     return reviewMatchedVenues.filter(v => String(v.city || 'Manchester').toLowerCase() === loc.city.toLowerCase()).map(venue => {
@@ -3849,30 +4039,48 @@ function AppInner({ onReset }) {
     if (!cloud.enabled || !authUser || !authUser.cloud) return;
     try {
       const [fr, rq] = await Promise.all([cloud.friends(), cloud.friendRequests()]);
+      { const sn = seen(); const inc = rq.filter(r => r.direction === 'incoming');
+        if (sn.req) inc.filter(r => !sn.req.includes(r.id)).forEach(r => notify(`${r.display_name || r.username} sent you a friend request.`, 'friend'));
+        sn.req = inc.map(r => r.id);
+        if (sn.fr) fr.filter(f => !sn.fr.includes(f.user_id)).forEach(f => notify(`${f.display_name || f.username} is now your friend.`, 'friend'));
+        sn.fr = fr.map(f => f.user_id); saveSeen(); }
       setFriendReqs(prev => (stableJson(prev) === stableJson(rq) ? prev : rq));
       setFriendsList(prev => {
         const real = fr.map(f => {
           const old = prev.find(x => x.userId === f.user_id);
           const handle = f.username ? '@' + f.username : '';
-          return old ? { ...old, name: f.display_name || old.name, handle } : { id: 'u_' + f.user_id, userId: f.user_id, name: f.display_name || f.username || 'Friend', handle, lastSeen: 'Not yet', type: 'Friend', status: 'Synced' };
+          return old ? { ...old, name: f.display_name || old.name, handle, bio: f.bio || '', avatar: f.avatar || '' } : { id: 'u_' + f.user_id, userId: f.user_id, name: f.display_name || f.username || 'Friend', handle, lastSeen: 'Not yet', type: 'Friend', status: 'Synced', bio: f.bio || '', avatar: f.avatar || '' };
         });
         const next = [...real, ...prev.filter(x => !x.userId)];
         return stableJson(next) === stableJson(prev) ? prev : next;
       });
     } catch (e) { /* offline or tables not set up: keep what we have */ }
+    try { const mp = await cloud.getMyProfile(); setMyProfile(prev => (prev.bio === mp.bio && prev.avatar === mp.avatar ? prev : { bio: mp.bio || '', avatar: mp.avatar || '' })); } catch (e) { /* profile columns not set up yet */ }
     await syncShared();
     await loadInbox();
   };
   const durationOf = (st, en) => Math.max(15, toMins(en || st) - toMins(st));
-  const loadInbox = async () => { try { const r = await cloud.inbox(); setInboxRows(prev => (stableJson(prev) === stableJson(r) ? prev : r)); } catch (e) { /* messages not set up yet */ } };
+  const loadInbox = async () => {
+    try {
+      const r = await cloud.inbox(); setInboxRows(prev => (stableJson(prev) === stableJson(r) ? prev : r));
+      const sn = seen();
+      if (sn.unread) r.forEach(row => { if ((row.unread || 0) > (sn.unread[row.user_id] || 0)) { const nm = String(row.display_name || row.username || ''); if (/ (invited you to|updated|cancelled) "/.test(String(row.last_body || '')) && lastNotifRef.current.some(x => (x.kind === 'invite' || x.kind === 'change') && Date.now() - x.at < 30000 && x.text.includes(nm))) return; const b = String(row.last_body || '').replace(/\s+/g, ' '); notify(`${row.display_name || row.username}: ${b.length > 60 ? b.slice(0, 57) + '...' : b || 'sent you a message'}`, 'message'); } });
+      sn.unread = Object.fromEntries(r.map(x => [x.user_id, x.unread || 0])); saveSeen();
+    } catch (e) { /* messages not set up yet */ }
+  };
   // Pull joint events and keep MY calendar in step with them: accepted events appear and follow the owner's edits; declined or cancelled ones disappear.
   const syncShared = async () => {
     if (!cloud.enabled || !authUser || !authUser.cloud) return;
     let evs; try { evs = await cloud.mySharedEvents(); } catch (e) { return; }
     setSharedEvents(prev => (stableJson(prev) === stableJson(evs) ? prev : evs));
     const invitedIds = evs.filter(e => !e.is_owner && e.my_status === 'invited').map(e => e.id);
-    if (sharedRef.current.seen) invitedIds.filter(id => !sharedRef.current.seen.includes(id)).forEach(id => { const e = evs.find(x => x.id === id); if (e) pushToast(`${e.owner_name} invited you to "${e.title}". Open Social to answer.`, 'info'); });
-    sharedRef.current.seen = invitedIds;
+    { const sn = seen();
+      if (sn.invites) invitedIds.filter(id => !sn.invites.includes(id)).forEach(id => { const e = evs.find(x => x.id === id); if (e) notify(`${e.owner_name} invited you to "${e.title}". Open Social to answer.`, 'invite'); });
+      sn.invites = invitedIds;
+      const sigs = {}; evs.forEach(e => { if (!e.is_owner && e.my_status === 'accepted') { const d = e.details || {}; sigs[e.id] = { sig: sharedSig({ title: e.title, date: d.date || '', startTime: d.start || '', endTime: d.end || d.start || '', location: d.location || '' }), title: e.title, who: e.owner_name }; } });
+      if (sn.sigs) { Object.keys(sigs).forEach(id => { if (sn.sigs[id] && sn.sigs[id].sig !== sigs[id].sig) notify(`${sigs[id].who} changed the plan "${sigs[id].title}". Check the new details in your schedule.`, 'change'); });
+        Object.keys(sn.sigs).forEach(id => { if (!sigs[id] && !evs.some(e => e.id === id && e.my_status === 'accepted')) notify(`"${sn.sigs[id].title}" is no longer on: it was cancelled or changed.`, 'change'); }); }
+      sn.sigs = sigs; saveSeen(); }
     const ids = new Set(evs.map(e => e.id));
     setTasks(prev => {
       let next = prev.slice(); let changed = false;
@@ -3937,8 +4145,9 @@ function AppInner({ onReset }) {
     try { await cloud.respondToEvent(eventId, status, note); pushToast(status === 'accepted' ? 'Added to your schedule.' : 'Declined.', status === 'accepted' ? 'success' : 'info'); await syncShared(); if (chatWith) loadChat(chatWith); }
     catch (e) { pushToast("Couldn't send your answer right now.", 'error'); }
   };
-  const sendPactInvite = async () => {
-    const t = tasks.find(x => String(x.id) === String(inviteDraft.taskId));
+  const sendPactInvite = async (tid?) => {
+    const useId = (typeof tid === 'string' || typeof tid === 'number') ? tid : inviteDraft.taskId;
+    const t = tasks.find(x => String(x.id) === String(useId));
     if (!t) { pushToast('Pick a plan first.', 'info'); return; }
     if (!inviteSel.length) { pushToast('Tap at least one friend to invite.', 'info'); return; }
     setInviteBusy(true);
@@ -3998,7 +4207,7 @@ function AppInner({ onReset }) {
     try { await cloud.removeFriend(fr.userId); setFriendsList(prev => prev.filter(x => x.id !== fr.id)); pushToast(`Removed ${fr.name}.`, 'info'); }
     catch (e) { pushToast("Couldn't remove them right now.", 'error'); }
   };
-  useEffect(() => { if (hydrated && authUser && authUser.cloud && (activeTab === 'social' || (activeTab === 'profile' && profileSubTab === 'friends') || activeTab === 'schedule')) { syncShared(); loadInbox(); } }, [activeTab, profileSubTab, hydrated]);
+  useEffect(() => { if (hydrated && authUser && authUser.cloud && (activeTab === 'social' || activeTab === 'schedule')) { if (activeTab === 'social') refreshFriends(); else { syncShared(); loadInbox(); } } }, [activeTab, socialSub, hydrated]);
   useEffect(() => {
     if (!hydrated || !authUser || !authUser.cloud) return undefined;
     claimHandle(accountInfo.username).catch(() => { /* friends tables not set up yet */ });
@@ -4255,6 +4464,20 @@ function AppInner({ onReset }) {
   };
 
   const shuffleAdventure = async () => {
+    // Adventurous within what you've picked: the chosen category and filters (e.g. an adventurous restaurant).
+    if (selectedIdeaCategory && selectedIdeaCategory !== 'Trips') {
+      setAdventureBusy(true);
+      let got = [];
+      try { got = await osmIdeas({ cat: selectedIdeaCategory, loc, seen: new Set(adventureSeen.map(x => String(x).toLowerCase())), n: 3, filters: activeFilterDefs, adventurous: true }); } catch (e) { got = []; }
+      if (activeFilterDefs.length) got = got.filter(a => ideaMatchesFilters(a, activeFilterDefs));
+      if (got.length) {
+        const picks = got.map((x, i) => ({ ...x, id: `adv_${Date.now()}_${i}`, userRating: null, adventurePick: true }));
+        setAdventurePicks(picks); setAdventureSeen(prev => [...prev, ...picks.map(x => x.title)]); setAdventureBusy(false);
+        return;
+      }
+      setAdventureBusy(false);
+      if (activeFilterDefs.length) { setAdventurePicks([]); return; }
+    }
     if (!loc.isHome) {
       // Not in Manchester: the built-in list is Manchester-only, so suggest real places near the profile location instead.
       setAdventureBusy(true);
@@ -4296,7 +4519,7 @@ function AppInner({ onReset }) {
   // --- REMINDERS: every planned activity, medicine and due admin item nudges you ---
   const reminderCfg = getReminderCfg(userProfile);
   const latestRef = useRef(null);
-  latestRef.current = { tasks, medications, lifeCadenceItems, reminderCfg, authUser, hydrated, dailyMeals, water, reading, moodLogs, todayMood, setupOpen: setupOpen || userProfile.onboarded === false };
+  latestRef.current = { profile: userProfile, tasks, medications, lifeCadenceItems, reminderCfg, authUser, hydrated, dailyMeals, water, reading, moodLogs, todayMood, setupOpen: setupOpen || userProfile.onboarded === false };
   const sendReminder = (title, body, date) => {
     pushToast(`${title}: ${body}`, 'reminder', date ? { label: 'View', date } : null);
     try {
@@ -4323,7 +4546,10 @@ function AppInner({ onReset }) {
     }
     if (C.plans) L.tasks.filter(t => t.date === todayS && t.status !== 'done' && t.startTime).forEach(t => {
       const st = toMins(t.startTime);
-      if (nowM >= st - lead && nowM < st) due(`t:${t.id}:pre`, t.title, `starts at ${t.startTime} (in ${st - nowM} min)${t.location ? ' at ' + t.location : ''}.${t.leaveByNote ? ' ' + t.leaveByNote : ''}`, todayS);
+      // The reminder lead time counts back from when you need to START GETTING READY, not from the start of the plan.
+      const readyAt = readyStartFor(t, st, L.profile);
+      const remindAt = readyAt - lead;
+      if (nowM >= remindAt && nowM < readyAt) due(`t:${t.id}:pre`, t.title, `starts at ${t.startTime}${t.location ? ' at ' + t.location : ''}. Start getting ready at ${fromMins(readyAt)} (in ${readyAt - nowM} min).`, todayS);
       else if (nowM >= st && nowM < st + 5) due(`t:${t.id}:now`, t.title, `starting now (${t.startTime}).`, todayS);
     });
     if (C.medicine) L.medications.filter(m => !m.taken && m.time).forEach(m => {
@@ -4374,11 +4600,25 @@ function AppInner({ onReset }) {
     } catch (e) { pushToast('Could not turn on device notifications.', 'info'); }
   };
 
+
+  useEffect(() => {
+    if (startedParams.current || !hydrated || !authUser || setupOpen) return;
+    startedParams.current = true;
+    try {
+      const q = new URLSearchParams(window.location.search);
+      if (q.get('tab') && ['home', 'schedule', 'ideas', 'skills', 'social', 'profile'].includes(q.get('tab'))) setActiveTab(q.get('tab'));
+      if (q.get('voice')) { setTimeout(() => startVoice(), 400); }
+      if (q.get('voice') || q.get('tab')) window.history.replaceState(null, '', window.location.pathname);
+    } catch (e) { /* ignore */ }
+  }, [hydrated, authUser, setupOpen]);
+  useEffect(() => { authUserRef.current = authUser; seenRef.current = null; try { setNotifs(JSON.parse(localStorage.getItem('roam:notifs:' + ((authUser && authUser.email) || '')) || '[]')); } catch (e) { setNotifs([]); } }, [authUser && authUser.email]);
+  useEffect(() => { try { if (authUser && authUser.email) localStorage.setItem('roam:notifs:' + authUser.email, JSON.stringify(notifs.slice(0, 50))); } catch (e) { /* ignore */ } }, [notifs]);
+
   // --- SIGN-IN GATE ---
-  if (!authUser && !authReady) return <div className="w-full max-w-md mx-auto bg-[#F5F3EC]" style={{ height: '100dvh' }} />;
+  if (!authUser && !authReady) return <div className="w-full max-w-md min-[600px]:max-w-[640px] min-[820px]:max-w-[820px] mx-auto bg-[#F5F3EC]" style={{ height: '100dvh' }} />;
   if (!authUser) {
     return (
-      <div className="w-full max-w-md mx-auto h-screen bg-[#F5F3EC] text-slate-900 flex flex-col relative font-sans overflow-hidden shadow-2xl border-x border-stone-200" style={{ height: '100dvh' }}>
+      <div className="w-full max-w-md min-[600px]:max-w-[640px] min-[820px]:max-w-[820px] mx-auto h-[100dvh] bg-[#F5F3EC] text-slate-900 flex flex-col relative font-sans overflow-hidden shadow-2xl border-x border-stone-200" style={{ height: '100dvh' }}>
       <ContourBg />
         <style dangerouslySetInnerHTML={{__html: ROAM_CSS}} />
         <style dangerouslySetInnerHTML={{__html: PACT_CSS}} />
@@ -4388,7 +4628,7 @@ function AppInner({ onReset }) {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto h-screen bg-[#F5F3EC] text-slate-900 flex flex-col relative font-sans overflow-hidden shadow-2xl border-x border-stone-200" style={{ height: '100dvh' }}>
+    <div className="w-full max-w-md min-[600px]:max-w-[640px] min-[820px]:max-w-[820px] mx-auto h-[100dvh] bg-[#F5F3EC] text-slate-900 flex flex-col relative font-sans overflow-hidden shadow-2xl border-x border-stone-200" style={{ height: '100dvh' }}>
       <ContourBg />
       
       {/* Bundled stylesheet (Tailwind build) so the design looks identical in any previewer */}
@@ -4570,7 +4810,12 @@ function AppInner({ onReset }) {
           >
             <User size={19} />
           </button>
-          <h1 className="font-pact absolute left-1/2 -translate-x-1/2 text-[38px] text-slate-900 select-none">PACT</h1>
+          <h1 className="font-pact absolute left-1/2 -translate-x-1/2 text-[38px] max-[359px]:text-[32px] text-slate-900 select-none">PACT</h1>
+          <div className="flex items-center gap-1.5">
+          <button data-bell onClick={() => { setBellOpen(o => !o); setNotifs(prev => prev.map(n => ({ ...n, read: true }))); }} className="relative w-11 h-11 border-[1.5px] border-slate-900 text-slate-900 flex items-center justify-center" title="Notifications" aria-label="Notifications">
+            <Bell size={19} />
+            {notifs.some(n => !n.read) && <span data-bell-dot className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 bg-rose-700 text-white text-[9px] flex items-center justify-center">{notifs.filter(n => !n.read).length}</span>}
+          </button>
           <button
             onClick={() => { setLinkedTargetId(null); setPlannerResultsStep(false); setScheduleConflictWarning(null); setPlannerOpen(true); }}
             className="w-11 h-11 bg-purple-900 hover:bg-purple-800 text-white flex items-center justify-center transition-all"
@@ -4579,8 +4824,28 @@ function AppInner({ onReset }) {
           >
             <Plus size={22} />
           </button>
+          </div>
         </div>
 
+
+        {bellOpen && (
+          <div data-bell-panel className="mb-2 bg-white border border-stone-300 shadow-lg max-h-80 overflow-y-auto">
+            <div className="px-3 py-2 flex justify-between items-center border-b border-stone-200">
+              <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Notifications</span>
+              <span className="flex gap-3 text-[10px] text-stone-500">{notifs.length > 0 && <button onClick={() => setNotifs([])} className="underline">Clear</button>}<button onClick={() => setBellOpen(false)} className="underline">Close</button></span>
+            </div>
+            {typeof Notification !== 'undefined' && Notification.permission === 'default' && (
+              <div className="px-3 py-2 bg-[#FAF8F5] border-b border-stone-200 text-[11px] text-stone-600 leading-snug">Want a phone alert when something arrives? <button data-notif-enable onClick={enableDeviceNotifications} className="underline text-purple-800">Turn on device alerts</button>. They show while Pact is open or running in the background; they can't wake a fully closed app yet.</div>
+            )}
+            {notifs.length === 0 && <p className="px-3 py-4 text-[11px] text-stone-500">Nothing yet. You'll see friend requests, messages, invites and plan changes here.</p>}
+            {notifs.map(n => (
+              <button key={n.id} data-notif-item onClick={() => { setBellOpen(false); setActiveTab('social'); setSocialSub(n.kind === 'message' || n.kind === 'friend' ? 'friends' : 'plans'); }} className="w-full text-left px-3 py-2 border-b border-stone-100 text-xs leading-snug hover:bg-stone-50">
+                {n.text}
+                <span className="block text-[9px] text-stone-400 mt-0.5">{new Date(n.at).toLocaleString([], { weekday: 'short', hour: '2-digit', minute: '2-digit' })}</span>
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Date Scroller (Shown on Today & Plan tabs) */}
         {showPrivacyNotice && <PrivacyNotice onClose={() => setShowPrivacyNotice(false)} />}
@@ -4641,6 +4906,11 @@ function AppInner({ onReset }) {
            ========================================================= */}
         {activeTab === 'home' && (
           <div className="flex flex-col gap-5 animate-in fade-in duration-300">
+
+            <button data-voice-home onClick={startVoice} className="flex items-center gap-3 p-3 bg-white border border-stone-200 text-left" style={{ order: -9 }}>
+              <span className="w-10 h-10 rounded-full bg-purple-900 text-white flex items-center justify-center shrink-0"><Mic size={18} /></span>
+              <span className="min-w-0"><span className="block text-xs font-medium text-slate-900">Add by voice</span><span className="block text-[10px] text-stone-500 leading-snug">Tap and say it, e.g. "gym tomorrow at 6pm"</span></span>
+            </button>
 
             <div className="pt-1 flex items-start justify-between gap-3" style={{ order: -10 }}>
               <div>
@@ -5787,6 +6057,54 @@ function AppInner({ onReset }) {
                           </div>
                         </div>
 
+                        {/* Change this plan / invite friends */}
+                        <div data-task-manage className="space-y-2">
+                          {!(taskEdit && taskEdit.id === task.id) ? (
+                            <div className="flex flex-wrap gap-1.5">
+                              <button data-task-change onClick={() => setTaskEdit({ id: task.id, title: task.title, date: task.date, start: task.startTime, end: task.endTime, location: task.location || '' })} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider font-medium">Change plan</button>
+                              <button data-task-invite onClick={() => { setTaskInviteId(taskInviteId === task.id ? null : task.id); setInviteSel([]); setInviteNote(''); }} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider font-medium">{task.sharedId ? 'Invite more friends' : 'Invite friends'}</button>
+                              {task.sharedId && <span className="text-[10px] text-purple-800 self-center">Shared plan{task.sharedRole === 'owner' ? ': changes you make update for everyone' : ': organised by someone else'}</span>}
+                            </div>
+                          ) : (
+                            <div data-task-edit-form className="p-2.5 bg-white border border-stone-200 space-y-1.5">
+                              {task.sharedId && task.sharedRole !== 'owner' && <p className="text-[10px] text-rose-700">This plan belongs to someone else, so a change here only affects the copy on your schedule until they update it.</p>}
+                              <input type="text" aria-label="Plan title" value={taskEdit.title} onChange={e => setTaskEdit({ ...taskEdit, title: e.target.value })} className="w-full bg-[#FAF8F5] border border-stone-300 px-2 py-1.5 text-xs" />
+                              <div className="grid grid-cols-3 gap-1.5">
+                                <input type="date" aria-label="Plan date" value={taskEdit.date} onChange={e => setTaskEdit({ ...taskEdit, date: e.target.value })} className="min-w-0 bg-[#FAF8F5] border border-stone-300 px-1.5 py-1.5 text-xs" />
+                                <input type="time" aria-label="Plan start" value={taskEdit.start} onChange={e => setTaskEdit({ ...taskEdit, start: e.target.value })} className="min-w-0 bg-[#FAF8F5] border border-stone-300 px-1.5 py-1.5 text-xs" />
+                                <input type="time" aria-label="Plan end" value={taskEdit.end} onChange={e => setTaskEdit({ ...taskEdit, end: e.target.value })} className="min-w-0 bg-[#FAF8F5] border border-stone-300 px-1.5 py-1.5 text-xs" />
+                              </div>
+                              <input type="text" aria-label="Plan location" placeholder="Location" value={taskEdit.location} onChange={e => setTaskEdit({ ...taskEdit, location: e.target.value })} className="w-full bg-[#FAF8F5] border border-stone-300 px-2 py-1.5 text-xs" />
+                              <div className="flex gap-1.5">
+                                <button data-task-save onClick={() => {
+                                  const ed = taskEdit; if (!ed.title.trim() || !ed.date || !ed.start) { pushToast('A plan needs a title, a date and a start time.', 'info'); return; }
+                                  const end = ed.end && toMins(ed.end) > toMins(ed.start) ? ed.end : fromMins(toMins(ed.start) + (task.duration || 60));
+                                  setTasks(prev => prev.map(x => x.id === task.id ? { ...x, title: ed.title.trim(), date: ed.date, startTime: ed.start, endTime: end, duration: Math.max(15, toMins(end) - toMins(ed.start)), location: ed.location.trim() } : x));
+                                  if (ed.date !== selectedDateStr) setSelectedDateStr(ed.date);
+                                  pushToast(task.sharedId && task.sharedRole === 'owner' ? 'Plan changed. Your friends will be told.' : 'Plan changed.', 'success');
+                                  setTaskEdit(null);
+                                }} className="px-2.5 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Save changes</button>
+                                <button onClick={() => setTaskEdit(null)} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Back</button>
+                              </div>
+                            </div>
+                          )}
+                          {taskInviteId === task.id && (
+                            <div data-task-invite-panel className="p-2.5 bg-white border border-stone-200 space-y-2">
+                              {task.sharedId && task.sharedRole !== 'owner' ? <p className="text-[10px] text-stone-600">Only the person who made this plan can invite more people.</p>
+                              : pactFriends.length === 0 ? <p className="text-[10px] text-stone-600">Add friends on Pact first (Social tab, Friend Book), then you can invite them here. Or use the Social tab to send a link to someone who isn't on Pact yet.</p>
+                              : (<>
+                                <div className="flex flex-wrap gap-1.5">
+                                  {pactFriends.map(f => (
+                                    <button key={f.userId} data-task-invite-friend={f.userId} aria-pressed={inviteSel.includes(f.userId)} onClick={() => setInviteSel(prev => prev.includes(f.userId) ? prev.filter(x => x !== f.userId) : [...prev, f.userId])} className={`px-2.5 py-1 text-[10px] border ${inviteSel.includes(f.userId) ? 'bg-purple-800 text-white border-purple-800' : 'bg-[#FAF8F5] border-stone-300'}`}>{f.name}</button>
+                                  ))}
+                                </div>
+                                <input type="text" aria-label="Add a note (optional)" placeholder="Add a note (optional)" value={inviteNote} onChange={e => setInviteNote(e.target.value)} className="w-full bg-[#FAF8F5] border border-stone-300 px-2 py-1.5 text-xs" />
+                                <button data-task-invite-send onClick={async () => { await sendPactInvite(task.id); setTaskInviteId(null); }} disabled={inviteBusy || inviteSel.length === 0} className="px-3 py-1.5 bg-rose-700 text-white text-[10px] uppercase tracking-wider disabled:opacity-50">Send invite</button>
+                              </>)}
+                            </div>
+                          )}
+                        </div>
+
                         {/* Rate Activity to Train Ideas Feed */}
                         <div className="p-2.5 bg-white border border-stone-200 space-y-2">
                           <div className="flex justify-between items-center">
@@ -5908,6 +6226,11 @@ function AppInner({ onReset }) {
               </div>
             )}
 
+            <div data-ideas-search className="flex gap-1.5">
+              <input data-ideas-search-input type="search" aria-label="Search places and ideas" placeholder={`Search ${loc.city}, e.g. sushi, climbing, bookshop`} value={ideaSearch} onChange={e => { setIdeaSearch(e.target.value); if (!e.target.value.trim()) setIdeaSearchRes(null); }} onKeyDown={e => { if (e.key === 'Enter') runIdeaSearch(); }} className="flex-1 min-w-0 bg-white border border-stone-300 px-3 py-2 text-xs" />
+              <button data-ideas-search-go onClick={runIdeaSearch} disabled={!ideaSearch.trim() || (ideaSearchRes && ideaSearchRes.busy)} className="px-3.5 bg-purple-900 text-white text-[10px] uppercase tracking-wider font-medium disabled:opacity-50">Search</button>
+            </div>
+
             {/* Category Bar */}
             <div className="flex gap-1.5 overflow-x-auto no-scrollbar pb-1">
               <button
@@ -5920,7 +6243,7 @@ function AppInner({ onReset }) {
               {ideaCategories.map(cat => (
                 <button
                   key={cat}
-                  onClick={() => { setShowFavs(false); setSelectedIdeaCategory(cat); }}
+                  onClick={() => { setShowFavs(false); setIdeaSearchRes(null); setIdeaSearch(''); setSelectedIdeaCategory(cat); }}
                   className={`px-3.5 py-1.5 text-xs uppercase tracking-wider font-medium border shrink-0 transition-all ${
                     selectedIdeaCategory === cat
                       ? 'bg-purple-900 text-white border-purple-900'
@@ -5933,7 +6256,7 @@ function AppInner({ onReset }) {
             </div>
 
             {/* Vibe Check & Feeling Adventurous Box */}
-            {!showFavs && <>
+            {!showFavs && !ideaSearchRes && <>
             <div className="p-4 bg-white border border-stone-200 space-y-3">
               <div className="flex justify-between items-center">
                 <div>
@@ -5948,7 +6271,7 @@ function AppInner({ onReset }) {
                     adventurousMode ? 'bg-rose-700 text-white border-rose-700' : 'bg-[#FAF8F5] text-rose-800 border-rose-300'
                   }`}
                 >
-                  <Sparkles size={11} /> Feeling Adventurous
+                  <Sparkles size={11} /> Adventurous {activeFilterLabels.length ? activeFilterLabels[0].toLowerCase() : selectedIdeaCategory.toLowerCase()}
                 </button>
               </div>
 
@@ -5970,21 +6293,13 @@ function AppInner({ onReset }) {
                   <button data-idea-filter-clear onClick={() => setActiveFilterLabels([])} className="px-2.5 py-1 text-xs border border-rose-300 text-rose-800 bg-white">&times; Clear filters</button>
                 )}
               </div>
-              <button
-                onClick={handleLoadMoreLiveIdeas}
-                disabled={isSearchingLiveIdeas}
-                className="mt-3 w-full py-2.5 bg-purple-900 hover:bg-purple-800 text-white text-[11px] uppercase tracking-widest font-medium flex items-center justify-center gap-2 transition-colors"
-              >
-                <RefreshCw size={13} className={isSearchingLiveIdeas ? 'animate-spin' : ''} />
-                {isSearchingLiveIdeas ? 'Finding new ideas...' : `Refresh ${selectedIdeaCategory} ideas${activeFilterLabels.length ? ' (' + activeFilterLabels.join(', ') + ')' : ''}`}
-              </button>
             </div>
 
             {/* Smart Pattern & Local Deals Banner */}
             <div className="p-3.5 bg-purple-900 text-white space-y-1">
               <div className="text-[10px] uppercase tracking-widest text-rose-300 font-medium">Ideas near you</div>
               <p className="text-xs leading-relaxed">
-                {loc.isHome ? 'These are example picks to get you started. Tap Refresh to search for real places near you. Check prices and offers with the venue.' : `Tap Refresh to search for real places near ${loc.city}. Check prices and offers with the venue.`}
+                {loc.isHome ? 'These are example picks to get you started. Scroll down and tap "See more" to find real places near you. Check prices and offers with the venue.' : `Tap "See more" at the bottom to find real places near ${loc.city}. Check prices and offers with the venue.`}
               </p>
             </div>
 
@@ -5992,11 +6307,11 @@ function AppInner({ onReset }) {
 
             {/* Filtered Ideas Cards */}
             <div className="space-y-3">
-              {!showFavs && !adventurousMode && !ideasFeed.some(i => i.category === selectedIdeaCategory && String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase()) && (
-                <div data-ideas-empty className="p-4 bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">No {selectedIdeaCategory.toLowerCase()} ideas for {loc.city} yet. Tap Refresh to find some near you.</div>
+              {!showFavs && !ideaSearchRes && !adventurousMode && !ideasFeed.some(i => i.category === selectedIdeaCategory && String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase()) && (
+                <div data-ideas-empty className="p-4 bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">No {selectedIdeaCategory.toLowerCase()} ideas for {loc.city} yet. Tap "See more" below to find some near you.</div>
               )}
-              {!showFavs && !adventurousMode && activeFilterDefs.length > 0 && ideasFeed.some(i => i.category === selectedIdeaCategory && String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase()) && !ideasFeed.some(i => i.category === selectedIdeaCategory && String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase() && ideaMatchesFilters(i, activeFilterDefs)) && (
-                <div data-ideas-nomatch className="p-4 bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">Nothing saved here matches {activeFilterLabels.join(' / ')} yet. Tap Refresh to find some near {loc.city}, or clear the filters.</div>
+              {!showFavs && !ideaSearchRes && !adventurousMode && activeFilterDefs.length > 0 && ideasFeed.some(i => i.category === selectedIdeaCategory && String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase()) && !ideasFeed.some(i => i.category === selectedIdeaCategory && String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase() && ideaMatchesFilters(i, activeFilterDefs)) && (
+                <div data-ideas-nomatch className="p-4 bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">Nothing saved here matches {activeFilterLabels.join(' / ')} yet. Tap "See more" below to find some near {loc.city}, or clear the filters.</div>
               )}
               {showFavs && favourites.length === 0 && (
                 <div data-fav-empty className="p-4 bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">Nothing saved yet. Tap the heart on any idea to keep it here.</div>
@@ -6008,7 +6323,7 @@ function AppInner({ onReset }) {
                 <div className="p-3 bg-rose-700 text-white flex items-center justify-between gap-2">
                   <div className="text-xs leading-snug">
                     <span className="text-[10px] uppercase tracking-widest text-rose-200 font-medium block">Feeling Adventurous</span>
-                    {loc.isHome ? '3 random things outside your usual routine.' : `3 random places near ${loc.city} to try something different.`}
+                    {`3 less-obvious ${activeFilterLabels.length ? activeFilterLabels.join(' / ').toLowerCase() : selectedIdeaCategory.toLowerCase()} picks near ${loc.city}, away from the usual favourites.`}
                   </div>
                   <button
                     onClick={shuffleAdventure}
@@ -6021,12 +6336,16 @@ function AppInner({ onReset }) {
               {adventurousMode && !adventureBusy && adventurePicks.length === 0 && !loc.isHome && (
                 <div className="p-3 bg-[#EDEAE0] text-[11px] text-slate-800">Couldn't find places near {loc.city} right now. Check your connection and tap Shuffle 3.</div>
               )}
-              {(showFavs ? favourites : adventurousMode
+              {ideaSearchRes && (
+                <div data-ideas-search-head className="flex justify-between items-center text-[11px] text-stone-600">
+                  <span>{ideaSearchRes.busy ? 'Searching...' : `${ideaSearchRes.items.length} result${ideaSearchRes.items.length === 1 ? '' : 's'} for "${ideaSearchRes.q}" near ${loc.city}`}</span>
+                  <button data-ideas-search-clear onClick={() => { setIdeaSearchRes(null); setIdeaSearch(''); }} className="underline text-purple-800">Clear search</button>
+                </div>
+              )}
+              {ideaSearchRes && !ideaSearchRes.busy && ideaSearchRes.items.length === 0 && <div data-ideas-search-empty className="p-4 bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">Nothing found for "{ideaSearchRes.q}" near {loc.city}. Try a simpler word, like "pizza" or "gym".</div>}
+              {(ideaSearchRes ? ideaSearchRes.items : showFavs ? favourites : adventurousMode
                 ? adventurePicks
-                : ideasFeed
-                    .filter(item => item.category === selectedIdeaCategory)
-                    .filter(item => String(item.city || 'Manchester').toLowerCase() === loc.city.toLowerCase())
-                    .filter(item => ideaMatchesFilters(item, activeFilterDefs))
+                : ideaListAll.slice(0, ideaShown)
               ).map(idea => (
                   <div
                     key={idea.id}
@@ -6141,6 +6460,11 @@ function AppInner({ onReset }) {
                   </div>
                 ))}
 
+              {!showFavs && !ideaSearchRes && !adventurousMode && (
+                <button data-ideas-more onClick={seeMoreIdeas} disabled={isSearchingLiveIdeas} className="w-full py-3 bg-white border border-purple-900 text-purple-900 text-[11px] uppercase tracking-widest font-medium">
+                  {isSearchingLiveIdeas ? 'Finding more...' : 'Tap to see more'}
+                </button>
+              )}
             </div>
           </div>
         )}
@@ -6659,6 +6983,17 @@ function AppInner({ onReset }) {
         {activeTab === 'social' && (
           <div className="space-y-4 animate-in fade-in duration-300">
 
+            <div data-social-subnav className="grid grid-cols-3 border border-stone-300 bg-white">
+              {[{ id: 'plans', label: 'Plans' }, { id: 'friends', label: 'Friend Book' }, { id: 'people', label: 'Your People' }].map(tab => (
+                <button key={tab.id} data-social-sub={tab.id} onClick={() => setSocialSub(tab.id)} className={`py-2 px-0.5 text-[10px] uppercase tracking-wider font-medium ${socialSub === tab.id ? 'bg-purple-900 text-white' : 'text-slate-700 hover:bg-stone-100'}`}>
+                  {tab.label}{tab.id === 'friends' && (friendReqs.filter(r => r.direction === 'incoming').length + unreadTotal) > 0 ? <span data-friend-badge className="ml-1.5 px-1.5 py-px bg-rose-700 text-white text-[9px] tracking-wider">{friendReqs.filter(r => r.direction === 'incoming').length + unreadTotal}</span> : null}
+                  {tab.id === 'plans' && pendingInvites.length > 0 ? <span className="ml-1.5 px-1.5 py-px bg-rose-700 text-white text-[9px] tracking-wider">{pendingInvites.length}</span> : null}
+                </button>
+              ))}
+            </div>
+
+            {socialSub === 'plans' && (<>
+
             {/* Invite a friend to a plan */}
             <div data-invite-card className="p-4 bg-white border border-stone-200 space-y-3">
               <div>
@@ -6705,11 +7040,12 @@ function AppInner({ onReset }) {
             </div>
 
             {/* Joint events: invites, who is coming, edits that sync to everyone */}
-            {sharedEvents.length > 0 && (
+            {(sharedEvents.length > 0 || sharedFriendPlans.length > 0) && (
               <div data-joint-events className="p-4 bg-white border border-stone-200 space-y-3">
                 <div>
                   <span className="text-[10px] uppercase tracking-widest text-rose-700 font-medium">Joint events{pendingInvites.length ? ` • ${pendingInvites.length} waiting` : ''}</span>
-                  <h3 className="font-editorial text-base font-normal">Plans you share with friends</h3>
+                  <h3 className="font-editorial text-base font-normal">Plans with friends</h3>
+                  <p className="text-[11px] text-stone-600 mt-1">Everything you share with friends, or that friends have shared with you, in one place.</p>
                 </div>
                 {sharedEvents.map(e => {
                   const d = e.details || {};
@@ -6754,16 +7090,6 @@ function AppInner({ onReset }) {
                     </div>
                   );
                 })}
-              </div>
-            )}
-
-            {/* Shared Friend Plans with 15m/30m/45m/60m Push Sync */}
-            <div className="p-4 bg-white border border-stone-200 space-y-3">
-              <div>
-                <span className="text-[10px] uppercase tracking-widest text-rose-700 font-medium">Plans with friends</span>
-                <h3 className="font-editorial text-base font-normal">Shared Plans with Friends</h3>
-              </div>
-
               {sharedFriendPlans.map(plan => (
                 <div key={plan.id} className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
                   <div className="flex justify-between items-start">
@@ -6798,68 +7124,331 @@ function AppInner({ onReset }) {
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
+            )}
 
-            {/* Community Events Hub */}
-            <div className="p-4 bg-white border border-stone-200 space-y-3">
+            {/* Community events: honest search links, no made-up listings */}
+            <div data-community className="p-4 bg-white border border-stone-200 space-y-3">
               <div>
-                <span className="text-[10px] uppercase tracking-widest text-blue-800 font-medium">Local Discovery</span>
-                <h3 className="font-editorial text-base font-normal">What do you want out of Community Events?</h3>
+                <span className="text-[10px] uppercase tracking-widest text-blue-800 font-medium">Find events near {loc.city}</span>
+                <h3 className="font-editorial text-base font-normal">What do you want out of an event?</h3>
+                <p className="text-[11px] text-stone-600 leading-snug mt-1">Pact doesn't list events itself, so it never shows anything out of date or made up. Pick a goal and it opens a live search for {loc.city} on the sites where local events are really posted.</p>
               </div>
-
-              <div className="flex flex-wrap gap-1.5">
-                {['All', 'Meet New Friends', 'Learn a New Skill', 'Creative Hangout'].map(goal => (
-                  <button
-                    key={goal}
-                    onClick={() => setCommunityGoalFilter(goal)}
-                    className={`px-2.5 py-1 text-[10px] uppercase tracking-wider font-medium border ${
-                      communityGoalFilter === goal ? 'bg-blue-800 text-white border-blue-800' : 'bg-[#FAF8F5] text-slate-700 border-stone-300'
-                    }`}
-                  >
-                    {goal}
-                  </button>
-                ))}
-              </div>
-
-              <div className="space-y-2.5">
-                {communityEvents
-                  .filter(ev => communityGoalFilter === 'All' || ev.goalTag === communityGoalFilter)
-                  .map(ev => {
-                    const isOpen = expandedCommunityEventId === ev.id;
-                    return (
-                      <div key={ev.id} className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
-                        <div
-                          onClick={() => setExpandedCommunityEventId(isOpen ? null : ev.id)}
-                          className="cursor-pointer flex justify-between items-start"
-                        >
-                          <div>
-                            <span className="text-[10px] uppercase tracking-wider text-purple-800 font-medium">
-                              {ev.goalTag} • {ev.attendees} Roamers Going
-                            </span>
-                            <h4 className="text-xs font-medium text-slate-900 mt-0.5">{ev.title}</h4>
-                            <div className="text-[11px] text-stone-500">{ev.date} • {ev.location}</div>
-                          </div>
-                          <span className="text-[10px] underline text-blue-800">{isOpen ? 'Hide' : 'Details'}</span>
+              {(() => {
+                const city = loc.city;
+                const uk = loc.country === 'United Kingdom';
+                const goals = [
+                  { id: 'Meet New Friends', terms: 'social meetup', tip: 'Group walks, language exchanges, board games, supper clubs.' },
+                  { id: 'Learn a New Skill', terms: 'workshop class', tip: 'Short courses, taster sessions, talks and workshops.' },
+                  { id: 'Creative Hangout', terms: 'art craft creative', tip: 'Life drawing, pottery, writing groups, craft nights.' }
+                ];
+                const links = (g) => [
+                  { label: 'Meetup', url: `https://www.meetup.com/find/?keywords=${encodeURIComponent(g.terms)}&location=${encodeURIComponent(city)}&source=EVENTS` },
+                  { label: 'Eventbrite', url: uk ? `https://www.eventbrite.co.uk/d/united-kingdom--${encodeURIComponent(city.toLowerCase().replace(/\s+/g, '-'))}/${encodeURIComponent(g.terms.split(' ')[0])}/` : `https://www.google.com/search?q=${encodeURIComponent(g.terms + ' events ' + city + ' site:eventbrite.com')}` },
+                  { label: 'Google', url: `https://www.google.com/search?q=${encodeURIComponent(g.terms + ' events in ' + city + ' this week')}` }
+                ];
+                return (
+                  <div className="space-y-2.5">
+                    {goals.map(g => (
+                      <div key={g.id} data-community-goal className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
+                        <div><div className="text-xs font-medium text-slate-900">{g.id}</div><div className="text-[11px] text-stone-500">{g.tip}</div></div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {links(g).map(l => <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer" className="px-2.5 py-1 border border-blue-800 text-blue-800 text-[10px] uppercase tracking-wider font-medium inline-flex items-center gap-1"><ExternalLink size={11} /> {l.label}</a>)}
                         </div>
+                      </div>
+                    ))}
+                    <div className="flex gap-1.5">
+                      <input data-community-q type="search" aria-label="Search events" placeholder="Something else, e.g. salsa, running club" value={communityQuery} onChange={e => setCommunityQuery(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && communityQuery.trim()) window.open(`https://www.google.com/search?q=${encodeURIComponent(communityQuery.trim() + ' events in ' + city)}`, '_blank', 'noopener'); }} className="flex-1 min-w-0 bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs" />
+                      <a data-community-go href={communityQuery.trim() ? `https://www.google.com/search?q=${encodeURIComponent(communityQuery.trim() + ' events in ' + city)}` : undefined} target="_blank" rel="noopener noreferrer" className={`px-3 py-1.5 bg-blue-800 text-white text-[10px] uppercase tracking-wider font-medium ${communityQuery.trim() ? '' : 'opacity-50 pointer-events-none'}`}>Search</a>
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+            </>)}
 
-                        {isOpen && (
-                          <div className="pt-2 border-t border-stone-200 space-y-2">
-                            <p className="text-xs text-slate-700 leading-relaxed">{ev.description}</p>
-                            <a
-                              href={ev.joinUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="w-full py-2 bg-rose-700 hover:bg-rose-800 text-white text-[10px] uppercase tracking-widest font-medium flex items-center justify-center gap-1.5"
-                            >
-                              <ExternalLink size={12} /> {ev.joinLabel}
-                            </a>
+            {socialSub === 'friends' && (
+              <div className="p-4 bg-white border border-stone-200 space-y-3">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Social Circle</span>
+                    <h3 className="font-editorial text-base font-normal">Friend Book & Beta Invites</h3>
+                  </div>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard?.writeText('Join me on Pact: ' + window.location.origin);
+                      setInviteCopied(true);
+                      setTimeout(() => setInviteCopied(false), 2500);
+                    }}
+                    className="px-2.5 py-1 bg-rose-700 text-white text-[10px] uppercase tracking-wider font-medium flex items-center gap-1"
+                  >
+                    <Share2 size={11} /> {inviteCopied ? 'Link Copied!' : 'Invite Link'}
+                  </button>
+                </div>
+
+                {authUser && authUser.cloud ? (
+                  <div data-friend-search className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
+                    <div className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Find a friend on Pact</div>
+                    <div className="flex gap-2">
+                      <input type="text" aria-label="Friend's username" placeholder="Their @username, e.g. @maya_lin" value={friendQuery} onChange={e => setFriendQuery(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') searchFriend(); }} className="flex-1 min-w-0 bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
+                      <button data-friend-find onClick={searchFriend} disabled={friendBusy || !friendQuery.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider font-medium disabled:opacity-50">{friendBusy ? '...' : 'Find'}</button>
+                    </div>
+                    <p className="text-[10px] text-stone-500 leading-snug">Your username: <strong>{accountInfo.username || '(not set)'}</strong>. Share it so friends can find you. They need to type it exactly.</p>
+                    {friendFound === 'none' && <p data-friend-none className="text-[11px] text-stone-600">No one found with that username. Check the spelling with them.</p>}
+                    {friendFound && friendFound !== 'none' && (
+                      <div data-friend-result className="p-2.5 bg-white border border-stone-200 flex justify-between items-center gap-2">
+                        <div className="flex items-center gap-2 min-w-0"><Avatar src={friendFound.avatar} name={friendFound.display_name || friendFound.username} size={32} /><div className="min-w-0"><div className="text-xs font-medium text-slate-900">{friendFound.display_name || friendFound.username} <span className="text-stone-400 font-normal">@{friendFound.username}</span></div>{friendFound.bio && <div className="text-[10px] text-stone-600 leading-snug">{friendFound.bio}</div>}</div></div>
+                        {friendFound.relation === 'friends' ? <span className="text-[10px] text-stone-500 uppercase tracking-wider">Already friends</span>
+                          : friendFound.relation === 'pending_out' ? <span className="text-[10px] text-stone-500 uppercase tracking-wider">Request sent</span>
+                          : <button data-friend-send onClick={() => sendFriendReq(friendFound.id)} disabled={friendBusy} className="px-2.5 py-1 bg-rose-700 text-white text-[10px] uppercase tracking-wider font-medium">{friendFound.relation === 'pending_in' ? 'Accept their request' : 'Send request'}</button>}
+                      </div>
+                    )}
+                    {friendMsg && <p data-friend-msg className="text-[11px] text-stone-600">{friendMsg}</p>}
+                    {friendReqs.filter(r => r.direction === 'incoming').map(r => (
+                      <div key={r.id} data-friend-request className="p-2.5 bg-white border border-rose-200 flex justify-between items-center gap-2">
+                        <div className="text-xs"><span className="font-medium text-slate-900">{r.display_name || r.username}</span> <span className="text-stone-400">@{r.username}</span> wants to be friends</div>
+                        <div className="flex gap-1.5 shrink-0">
+                          <button data-friend-accept onClick={() => answerFriendReq(r, true)} className="px-2 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Accept</button>
+                          <button data-friend-decline onClick={() => answerFriendReq(r, false)} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Decline</button>
+                        </div>
+                      </div>
+                    ))}
+                    {friendReqs.filter(r => r.direction === 'outgoing').length > 0 && <p className="text-[10px] text-stone-500">Waiting for a reply from: {friendReqs.filter(r => r.direction === 'outgoing').map(r => '@' + r.username).join(', ')}</p>}
+                  </div>
+                ) : (
+                  <p className="text-[11px] text-stone-500 leading-snug">Sign in with an account to find friends by username.</p>
+                )}
+
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Add someone who isn't on Pact yet (name)..."
+                    value={newFriendName}
+                    onChange={e => setNewFriendName(e.target.value)}
+                    className="flex-1 bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs"
+                  />
+                  <button
+                    onClick={() => {
+                      if (!newFriendName.trim()) return;
+                      setFriendsList(prev => [...prev, { id: Date.now(), name: newFriendName, handle: `@${newFriendName.toLowerCase().replace(/\s+/g, '')}`, lastSeen: 'Just added', type: 'Friend', status: 'Synced' }]);
+                      setNewFriendName('');
+                    }}
+                    className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider font-medium"
+                  >
+                    + Add
+                  </button>
+                </div>
+
+                {friendsList.length > 3 && <input data-friendbook-search type="search" aria-label="Search your friends" placeholder="Search your friends by name or @username" value={friendBookQ} onChange={e => setFriendBookQ(e.target.value)} className="w-full bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs" />}
+                {friendBookQ.trim() && friendsList.filter(fr => (fr.name + ' ' + fr.handle + ' ' + (fr.bio || '')).toLowerCase().includes(friendBookQ.trim().toLowerCase())).length === 0 && <p className="text-[11px] text-stone-500">No friends match that.</p>}
+                <div className="space-y-2">
+                  {friendsList.filter(fr => !friendBookQ.trim() || (fr.name + ' ' + fr.handle + ' ' + (fr.bio || '')).toLowerCase().includes(friendBookQ.trim().toLowerCase())).map(fr => (
+                    <div key={fr.id} data-friend-row className="p-2.5 bg-[#FAF8F5] border border-stone-200 flex justify-between items-center gap-2">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <Avatar src={fr.avatar} name={fr.name} size={36} />
+                        <div className="min-w-0">
+                          <div className="text-xs font-medium text-slate-900">{fr.name} <span className="text-stone-400 font-normal">{fr.handle}</span></div>
+                          {fr.bio ? <div data-friend-bio className="text-[10px] text-stone-600 leading-snug">{fr.bio}</div> : <div className="text-[10px] text-stone-500">{fr.type} • Last hangout: {fr.lastSeen}</div>}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1 shrink-0">
+                      {fr.userId && <button data-friend-message onClick={() => openChat(fr)} className="px-2.5 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Message{unreadBy[fr.userId] ? <span data-unread className="ml-1 px-1 bg-rose-600 text-white">{unreadBy[fr.userId]}</span> : null}</button>}
+                      <button data-friend-remove onClick={() => unfriend(fr)} aria-label={`Remove ${fr.name}`} className="px-2 py-1 text-[10px] text-stone-400 hover:text-rose-700">Remove</button>
+                      <button data-friend-invite onClick={() => { setInviteDraft({ taskId: '', friend: fr.name }); setInviteOut(null); setSocialSub('plans'); setActiveTab('social'); }} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider font-medium">Invite</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {chatWith && (
+                  <div data-chat className="border border-purple-300 bg-white">
+                    <div className="px-3 py-2 bg-purple-900 text-white flex justify-between items-center">
+                      <span className="text-xs font-medium">Chat with {chatWith.name} {chatWith.handle}</span>
+                      <button data-chat-close onClick={() => setChatWith(null)} className="text-[10px] uppercase tracking-wider text-purple-200 hover:text-white">Close</button>
+                    </div>
+                    <div className="p-3 space-y-2 max-h-72 overflow-y-auto bg-[#FAF8F5]">
+                      {chatMsgs.length === 0 && <p className="text-[11px] text-stone-500">No messages yet. Say hello, or invite them to a plan from the Social tab.</p>}
+                      {chatMsgs.map(m => m.kind === 'text' ? (
+                        <div key={m.id} data-chat-msg className={`flex ${m.mine ? 'justify-end' : 'justify-start'}`}>
+                          <div className={`max-w-[80%] px-2.5 py-1.5 text-xs leading-snug ${m.mine ? 'bg-purple-800 text-white' : 'bg-white border border-stone-200 text-slate-900'}`}>{m.body}</div>
+                        </div>
+                      ) : (
+                        <div key={m.id} data-chat-event className="p-2 bg-white border border-rose-200 text-[11px] leading-snug space-y-1.5">
+                          <div><span className="text-[9px] uppercase tracking-widest text-rose-700 font-medium">{m.kind === 'invite' ? 'Invite' : m.kind === 'update' ? 'Event updated' : m.kind === 'cancel' ? 'Cancelled' : 'Reply'}</span><br />{m.body}</div>
+                          {m.kind === 'invite' && !m.mine && m.my_status === 'invited' && m.activity_id && (
+                            <div className="flex gap-1.5">
+                              <button data-chat-accept onClick={() => answerEvent(m.activity_id, 'accepted')} className="px-2 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Accept</button>
+                              <button data-chat-decline onClick={() => answerEvent(m.activity_id, 'declined')} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Can't make it</button>
+                            </div>
+                          )}
+                          {m.kind === 'invite' && !m.mine && m.my_status && m.my_status !== 'invited' && <div className="text-[10px] text-stone-500">You {m.my_status === 'accepted' ? 'accepted' : 'declined'} this.</div>}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="p-2 flex gap-2 border-t border-stone-200">
+                      <input data-chat-input type="text" aria-label="Message" placeholder="Write a message..." value={chatText} onChange={e => setChatText(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') sendChat(); }} className="flex-1 min-w-0 bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs" />
+                      <button data-chat-send onClick={sendChat} disabled={!chatText.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider disabled:opacity-50">Send</button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {socialSub === 'people' && (() => {
+              const today = todayDateStr();
+              const shown = people.filter(x => peopleFilter === 'blocked' ? x.blocked : !x.blocked && (peopleFilter === 'all' || x.kind === peopleFilter))
+                .sort((a, b) => (personOverdue(b, today, addDaysStr) ?? -1) - (personOverdue(a, today, addDaysStr) ?? -1) || String(a.name).localeCompare(String(b.name)));
+              const blockedN = people.filter(x => x.blocked).length;
+              const addPerson = () => {
+                const nm = personDraft.name.trim(); if (!nm) return;
+                setPeople(prev => [...prev, { id: 'p_' + Date.now(), name: nm, kind: personDraft.kind, relation: personDraft.relation.trim(), remindEvery: Number(personDraft.remindEvery) || 0, lastContact: today, createdAt: today, blocked: false, notes: '', linkedUserId: '', phone: personDraft.phone.trim(), whatsapp: personDraft.whatsapp.trim(), email: personDraft.email.trim() }]);
+                setPersonDraft({ name: '', kind: personDraft.kind, relation: '', remindEvery: personDraft.remindEvery, phone: '', whatsapp: '', email: '' });
+              };
+              const addImported = () => {
+                const chosen = (importList || []).filter(x => x.sel);
+                if (!chosen.length) { setImportList(null); return; }
+                const have = new Set(people.map(x => String(x.name).trim().toLowerCase()));
+                const fresh = chosen.filter(x => !have.has(x.name.trim().toLowerCase()));
+                setPeople(prev => [...prev, ...fresh.map((x, i) => ({ id: 'p_' + Date.now() + '_' + i, name: x.name.trim(), kind: personDraft.kind, relation: '', remindEvery: Number(personDraft.remindEvery) || 0, lastContact: today, createdAt: today, blocked: false, notes: '', linkedUserId: '', phone: x.phone || '', whatsapp: '', email: x.email || '' }))]);
+                pushToast(`Added ${fresh.length} ${fresh.length === 1 ? 'person' : 'people'}${chosen.length > fresh.length ? ` (${chosen.length - fresh.length} already in your list)` : ''}.`, 'success');
+                setImportList(null);
+              };
+              const pickContacts = async () => {
+                try {
+                  const nav: any = navigator;
+                  const res = await nav.contacts.select(['name', 'tel', 'email'], { multiple: true });
+                  const list = (res || []).map(c => ({ name: (c.name && c.name[0]) || '', phone: (c.tel && c.tel[0]) || '', email: (c.email && c.email[0]) || '', sel: true })).filter(x => x.name);
+                  if (list.length) setImportList(list);
+                } catch (e) { /* cancelled */ }
+              };
+              const onContactFile = async (e) => {
+                const f = e.target.files && e.target.files[0]; if (!f) return;
+                const txt = await f.text();
+                const list = (/BEGIN:VCARD/i.test(txt) ? parseVcf(txt) : parseCsvContacts(txt)).map(x => ({ ...x, sel: true }));
+                if (!list.length) pushToast("Couldn't find any contacts in that file.", 'error'); else setImportList(list);
+                e.target.value = '';
+              };
+              const hasPicker = typeof navigator !== 'undefined' && !!(navigator as any).contacts && !!(navigator as any).contacts.select;
+              return (
+              <div data-people-tab className="p-4 bg-white border border-stone-200 space-y-3">
+                <div>
+                  <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Your People</span>
+                  <h3 className="font-editorial text-base font-normal">Personal & business connections</h3>
+                  <p className="text-[11px] text-stone-500 leading-snug mt-0.5">Keep track of people in your life. They don't need a Pact account. Choose how often you want a nudge to get in touch.</p>
+                </div>
+
+                <div data-import-bar className="flex flex-wrap gap-1.5">
+                  {hasPicker && <button data-import-picker onClick={pickContacts} className="px-2.5 py-1.5 bg-slate-900 text-white text-[10px] uppercase tracking-wider font-medium">Add from phone contacts</button>}
+                  <label className="px-2.5 py-1.5 border border-stone-400 text-[10px] uppercase tracking-wider font-medium cursor-pointer">{hasPicker ? 'Import a file' : 'Import contacts file (.vcf / .csv)'}<input data-import-file type="file" accept=".vcf,.csv,text/vcard,text/csv" className="hidden" onChange={onContactFile} /></label>
+                </div>
+                {!hasPicker && <p className="text-[10px] text-stone-500 leading-snug">Direct access to your phone contacts only works in Chrome on Android. On iPhone or desktop, export your contacts as a .vcf or .csv file (in the Contacts app or Google Contacts) and import it here. You choose who to add.</p>}
+                {importList && (
+                  <div data-import-preview className="p-3 bg-[#FAF8F5] border border-purple-300 space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Choose who to add ({importList.filter(x => x.sel).length}/{importList.length})</span>
+                      <span className="flex gap-2 text-[10px] underline text-stone-600"><button onClick={() => setImportList(importList.map(x => ({ ...x, sel: true })))}>All</button><button onClick={() => setImportList(importList.map(x => ({ ...x, sel: false })))}>None</button></span>
+                    </div>
+                    <div className="max-h-56 overflow-y-auto space-y-1">
+                      {importList.map((x, i) => (
+                        <label key={i} data-import-row className="flex items-center gap-2 text-xs bg-white border border-stone-200 px-2 py-1.5">
+                          <input type="checkbox" checked={x.sel} onChange={() => setImportList(importList.map((y, j) => j === i ? { ...y, sel: !y.sel } : y))} />
+                          <span className="min-w-0"><span className="font-medium">{x.name}</span><span className="block text-[10px] text-stone-500 truncate">{[x.phone, x.email].filter(Boolean).join(' • ')}</span></span>
+                        </label>
+                      ))}
+                    </div>
+                    <div className="flex gap-1.5"><button data-import-confirm onClick={addImported} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Add selected</button><button onClick={() => setImportList(null)} className="px-3 py-1.5 border border-stone-400 text-[10px] uppercase tracking-wider">Cancel</button></div>
+                  </div>
+                )}
+
+                <div className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
+                  <div className="grid grid-cols-2 gap-1">
+                    {[{ id: 'personal', label: 'Personal' }, { id: 'business', label: 'Business' }].map(k => (
+                      <button key={k.id} data-person-kind={k.id} onClick={() => setPersonDraft({ ...personDraft, kind: k.id })} className={`py-1.5 text-[10px] uppercase tracking-wider border ${personDraft.kind === k.id ? 'bg-purple-800 text-white border-purple-800' : 'bg-white border-stone-300'}`}>{k.label}</button>
+                    ))}
+                  </div>
+                  <input data-person-name type="text" aria-label="Name" placeholder="Name" value={personDraft.name} onChange={e => setPersonDraft({ ...personDraft, name: e.target.value })} onKeyDown={e => { if (e.key === 'Enter') addPerson(); }} className="w-full bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
+                  <input type="text" aria-label="Relationship" placeholder={personDraft.kind === 'business' ? 'e.g. Client, Recruiter, Mentor, Supplier' : 'e.g. Cousin, Old friend, Neighbour'} value={personDraft.relation} onChange={e => setPersonDraft({ ...personDraft, relation: e.target.value })} className="w-full bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
+                  <div className="grid grid-cols-3 gap-1.5">
+                    <input data-person-phone type="tel" aria-label="Phone" placeholder="Phone" value={personDraft.phone} onChange={e => setPersonDraft({ ...personDraft, phone: e.target.value })} className="min-w-0 bg-white border border-stone-300 px-2 py-1.5 text-xs" />
+                    <input data-person-whatsapp type="tel" aria-label="WhatsApp" placeholder="WhatsApp" value={personDraft.whatsapp} onChange={e => setPersonDraft({ ...personDraft, whatsapp: e.target.value })} className="min-w-0 bg-white border border-stone-300 px-2 py-1.5 text-xs" />
+                    <input data-person-email type="email" aria-label="Email" placeholder="Email" value={personDraft.email} onChange={e => setPersonDraft({ ...personDraft, email: e.target.value })} className="min-w-0 bg-white border border-stone-300 px-2 py-1.5 text-xs" />
+                  </div>
+                  <div className="flex gap-2">
+                    <select aria-label="How often to be reminded" value={personDraft.remindEvery} onChange={e => setPersonDraft({ ...personDraft, remindEvery: Number(e.target.value) })} className="flex-1 min-w-0 bg-white border border-stone-300 px-2 py-1.5 text-xs">
+                      {REMIND_OPTIONS.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
+                    </select>
+                    <button data-person-add onClick={addPerson} disabled={!personDraft.name.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider font-medium disabled:opacity-50">+ Add</button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-4 border border-stone-300">
+                  {[{ id: 'all', label: 'All' }, { id: 'personal', label: 'Personal' }, { id: 'business', label: 'Business' }, { id: 'blocked', label: `Blocked${blockedN ? ' (' + blockedN + ')' : ''}` }].map(f => (
+                    <button key={f.id} data-people-filter={f.id} onClick={() => setPeopleFilter(f.id)} className={`py-1.5 text-[10px] uppercase tracking-wider ${peopleFilter === f.id ? 'bg-slate-900 text-white' : 'hover:bg-stone-100'}`}>{f.label}</button>
+                  ))}
+                </div>
+
+                {shown.length === 0 && <p data-people-empty className="text-[11px] text-stone-500 leading-snug">{peopleFilter === 'blocked' ? 'No one is blocked.' : 'No one here yet. Add someone above.'}</p>}
+
+                <div className="space-y-2">
+                  {shown.map(pr => {
+                    const over = personOverdue(pr, today, addDaysStr);
+                    const since = daysBetweenStr(pr.lastContact || pr.createdAt || today, today);
+                    const next = pr.remindEvery ? daysBetweenStr(today, addDaysStr(pr.lastContact || pr.createdAt || today, pr.remindEvery)) : null;
+                    const linked = pactFriends.find(f => f.userId === pr.linkedUserId);
+                    return (
+                      <div key={pr.id} data-person-card className={`p-2.5 border space-y-2 ${pr.blocked ? 'bg-stone-100 border-stone-300 opacity-80' : over !== null ? 'bg-rose-50 border-rose-200' : 'bg-[#FAF8F5] border-stone-200'}`}>
+                        <div className="flex justify-between items-start gap-2">
+                          <div className="min-w-0">
+                            <div className="text-xs font-medium text-slate-900">{pr.name} <span className="ml-1 px-1.5 py-px bg-stone-200 text-stone-700 text-[9px] uppercase tracking-wider">{pr.kind === 'business' ? 'Business' : 'Personal'}</span>{linked && <span className="ml-1 px-1.5 py-px bg-purple-100 text-purple-900 text-[9px] uppercase tracking-wider">On Pact {linked.handle}</span>}</div>
+                            {pr.relation && <div className="text-[10px] text-stone-500">{pr.relation}</div>}
+                            <div className="text-[10px] text-stone-600 mt-0.5">Last in touch: {agoText(since)}{pr.blocked ? ' • Blocked: no reminders' : over !== null ? <span className="text-rose-700 font-medium"> • Time to reach out{over > 0 ? ` (${over} day${over === 1 ? '' : 's'} overdue)` : ''}</span> : next !== null ? (pr.snoozeUntil && pr.snoozeUntil > today ? ' • Snoozed' : ` • Next reminder in ${next} day${next === 1 ? '' : 's'}`) : ' • No reminders'}</div>
                           </div>
+                          <button data-person-delete aria-label={`Delete ${pr.name}`} onClick={() => setPeople(prev => prev.filter(x => x.id !== pr.id))} className="text-[10px] text-stone-400 hover:text-rose-700 shrink-0">Delete</button>
+                        </div>
+                        <div data-person-contact className="flex flex-wrap gap-1.5 items-center">
+                          {pr.phone && <a data-contact-call href={`tel:${pr.phone}`} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Call</a>}
+                          {(pr.whatsapp || pr.phone) && <a data-contact-wa href={`https://wa.me/${waDigits(pr.whatsapp || pr.phone)}`} target="_blank" rel="noopener noreferrer" className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">WhatsApp</a>}
+                          {pr.email && <a data-contact-mail href={`mailto:${pr.email}`} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Email</a>}
+                          <button data-contact-edit onClick={() => setContactEditId(contactEditId === pr.id ? null : pr.id)} className="px-2 py-1 text-[10px] underline text-stone-500">{(pr.phone || pr.whatsapp || pr.email) ? 'Edit contact info' : 'Add contact info'}</button>
+                        </div>
+                        {contactEditId === pr.id && (
+                          <div data-contact-form className="grid grid-cols-1 gap-1.5">
+                            <input type="tel" aria-label={`Phone for ${pr.name}`} placeholder="Phone" value={pr.phone || ''} onChange={e => updatePerson(pr.id, { phone: e.target.value })} className="bg-white border border-stone-300 px-2 py-1.5 text-xs" />
+                            <input type="tel" aria-label={`WhatsApp for ${pr.name}`} placeholder="WhatsApp (leave blank to use their phone)" value={pr.whatsapp || ''} onChange={e => updatePerson(pr.id, { whatsapp: e.target.value })} className="bg-white border border-stone-300 px-2 py-1.5 text-xs" />
+                            <input type="email" aria-label={`Email for ${pr.name}`} placeholder="Email" value={pr.email || ''} onChange={e => updatePerson(pr.id, { email: e.target.value })} className="bg-white border border-stone-300 px-2 py-1.5 text-xs" />
+                          </div>
+                        )}
+                        {!pr.blocked && (
+                          <div className="flex flex-wrap gap-1.5 items-center">
+                            <button data-person-contacted onClick={() => { updatePerson(pr.id, { lastContact: today, snoozeUntil: '' }); pushToast(`Logged: in touch with ${pr.name} today.`, 'success'); }} className="px-2 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">In touch today</button>
+                            <select data-person-freq aria-label={`How often to be reminded about ${pr.name}`} value={pr.remindEvery || 0} onChange={e => updatePerson(pr.id, { remindEvery: Number(e.target.value), snoozeUntil: '' })} className="bg-white border border-stone-300 px-1.5 py-1 text-[10px]">
+                              {REMIND_OPTIONS.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
+                            </select>
+                            <button data-person-block onClick={() => updatePerson(pr.id, { blocked: true })} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Block</button>
+                          </div>
+                        )}
+                        {pr.blocked ? (
+                          <button data-person-unblock onClick={() => updatePerson(pr.id, { blocked: false, lastContact: today })} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Unblock</button>
+                        ) : (
+                          <>
+                            {pactFriends.length > 0 && (
+                              <select data-person-link aria-label={`Link ${pr.name} to a Pact friend`} value={pr.linkedUserId || ''} onChange={e => updatePerson(pr.id, { linkedUserId: e.target.value })} className="w-full bg-white border border-stone-300 px-1.5 py-1 text-[10px]">
+                                <option value="">Not linked to a Pact user</option>
+                                {pactFriends.map(f => <option key={f.userId} value={f.userId}>Same person as {f.name} {f.handle}</option>)}
+                              </select>
+                            )}
+                            <input type="text" aria-label={`Notes about ${pr.name}`} placeholder="Notes (company, birthday, what to ask about...)" defaultValue={pr.notes || ''} onBlur={e => { if (e.target.value !== (pr.notes || '')) updatePerson(pr.id, { notes: e.target.value }); }} className="w-full bg-white border border-stone-200 px-2 py-1 text-[11px]" />
+                          </>
                         )}
                       </div>
                     );
                   })}
+                </div>
+                <p className="text-[10px] text-stone-500 leading-snug">Blocked people never trigger reminders. Finishing a plan you tagged with someone counts as being in touch.</p>
               </div>
-            </div>
+              );
+            })()}
+
           </div>
         )}
 
@@ -6870,11 +7459,9 @@ function AppInner({ onReset }) {
           <div className="space-y-4 animate-in fade-in duration-300">
 
             {/* Profile Sub-Navigation */}
-            <div className="grid grid-cols-4 border border-stone-300 bg-white">
+            <div className="grid grid-cols-2 border border-stone-300 bg-white">
               {[
                 { id: 'settings', label: 'Account' },
-                { id: 'friends', label: 'Friend Book' },
-                { id: 'people', label: 'Your People' },
                 { id: 'data', label: 'Data' }
               ].map(tab => (
                 <button
@@ -6884,13 +7471,26 @@ function AppInner({ onReset }) {
                     profileSubTab === tab.id ? 'bg-purple-900 text-white' : 'text-slate-700 hover:bg-stone-100'
                   }`}
                 >
-                  {tab.label}{tab.id === 'friends' && (friendReqs.filter(r => r.direction === 'incoming').length + unreadTotal) > 0 ? <span data-friend-badge className="ml-1.5 px-1.5 py-px bg-rose-700 text-white text-[9px] tracking-wider">{friendReqs.filter(r => r.direction === 'incoming').length + unreadTotal}</span> : null}
-                </button>
+                  {tab.label}</button>
               ))}
             </div>
 
             {profileSubTab === 'settings' && (
               <div className="space-y-4">
+                {/* Install */}
+                {!isStandalone && (
+                  <div data-install-card className="p-4 bg-white border border-stone-200 space-y-2">
+                    <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Add Pact to your home screen</span>
+                    {installEvt ? (
+                      <button data-install-btn onClick={installApp} className="w-full py-2 bg-purple-900 text-white text-[11px] uppercase tracking-widest font-medium">Install Pact</button>
+                    ) : isIos ? (
+                      <p className="text-[11px] text-stone-600 leading-relaxed">On iPhone or iPad, open Pact in Safari, tap the Share button, then "Add to Home Screen".</p>
+                    ) : (
+                      <p className="text-[11px] text-stone-600 leading-relaxed">In Chrome, open the browser menu (three dots) and choose "Install app" or "Add to Home screen". On Samsung Internet, use the menu and "Add page to" then "Home screen".</p>
+                    )}
+                  </div>
+                )}
+
                 {/* Privacy & your data */}
                 <div className="p-4 bg-white border border-stone-200 space-y-2">
                   <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Privacy &amp; your data</span>
@@ -6925,6 +7525,30 @@ function AppInner({ onReset }) {
                       );
                     })}
                   </div>
+                </div>
+
+                {/* Profile picture and description (friends see these in their Friend Book) */}
+                <div data-profile-card className="p-4 bg-white border border-stone-200 space-y-3">
+                  <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Your profile</span>
+                  <div className="flex items-center gap-3">
+                    <Avatar src={myProfile.avatar} name={accountInfo.name} size={64} />
+                    <div className="space-y-1.5">
+                      <label className="inline-block px-3 py-1.5 border border-stone-400 text-[10px] uppercase tracking-wider font-medium cursor-pointer">
+                        {myProfile.avatar ? 'Change picture' : 'Add picture'}
+                        <input data-avatar-input type="file" accept="image/*" className="hidden" onChange={async e => { const f = e.target.files && e.target.files[0]; if (!f) return; try { const d = await shrinkImage(f); setMyProfile(prev => ({ ...prev, avatar: d })); setProfileMsg(''); } catch (err) { setProfileMsg("That file couldn't be used as a picture."); } e.target.value = ''; }} />
+                      </label>
+                      {myProfile.avatar && <button onClick={() => setMyProfile(prev => ({ ...prev, avatar: '' }))} className="block text-[10px] text-stone-500 underline">Remove picture</button>}
+                    </div>
+                  </div>
+                  <textarea data-bio-input aria-label="A short description of you" rows={3} maxLength={280} placeholder="A short description friends will see (up to 280 characters)" value={myProfile.bio} onChange={e => { setMyProfile(prev => ({ ...prev, bio: e.target.value })); setProfileMsg(''); }} className="w-full bg-[#FAF8F5] border border-stone-300 px-2.5 py-2 text-xs" />
+                  <div className="flex items-center gap-2">
+                    <button data-profile-save onClick={async () => {
+                      if (!authUser || !authUser.cloud) { setProfileMsg('Sign in with an account to share your picture and description with friends.'); return; }
+                      try { const r = await cloud.setMyProfile(myProfile.bio, myProfile.avatar); setProfileMsg(r === 'ok' ? 'Saved. Your friends can now see it.' : r === 'picture_too_big' ? 'That picture is too large. Try a different one.' : 'Could not save. Try again.'); } catch (e) { setProfileMsg("Couldn't save. If this keeps happening, the latest database update hasn't been run yet."); }
+                    }} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider font-medium">Save profile</button>
+                    {profileMsg && <span data-profile-msg className="text-[11px] text-stone-600">{profileMsg}</span>}
+                  </div>
+                  <p className="text-[10px] text-stone-500 leading-snug">Only your friends on Pact can see your picture and description.</p>
                 </div>
 
                 {/* Account Details & Sign-Up */}
@@ -7091,7 +7715,7 @@ function AppInner({ onReset }) {
                   </div>
                   <div data-reminder-cats className="space-y-1.5">
                     {[
-                      { k: 'plans', label: 'Plans & activities', hint: 'before and at the start' },
+                      { k: 'plans', label: 'Plans & activities', hint: 'before you need to start getting ready, and at the start' },
                       { k: 'medicine', label: 'Medicine', hint: 'at the scheduled time' },
                       { k: 'meals', label: 'Meals', hint: 'at each meal time' },
                       { k: 'admin', label: 'Life admin', hint: 'before items are due' },
@@ -7106,7 +7730,7 @@ function AppInner({ onReset }) {
                         </div>
                         {reminderCfg[c.k] && c.k === 'plans' && (
                           <select value={reminderCfg.leadMins} aria-label="Reminder lead time" onChange={e => setReminderCfg({ leadMins: Number(e.target.value) })} className="mt-1.5 bg-white border border-stone-300 px-2 py-1 text-xs">
-                            {[5, 10, 15, 30, 45, 60, 90].map(m => <option key={m} value={m}>{m} min before</option>)}
+                            {[5, 10, 15, 30, 45, 60, 90].map(m => <option key={m} value={m}>{m} min before getting ready</option>)}
                           </select>
                         )}
                         {reminderCfg[c.k] && c.k === 'meals' && (
@@ -7244,217 +7868,6 @@ function AppInner({ onReset }) {
                 </div>
               </div>
             )}
-
-            {profileSubTab === 'friends' && (
-              <div className="p-4 bg-white border border-stone-200 space-y-3">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Social Circle</span>
-                    <h3 className="font-editorial text-base font-normal">Friend Book & Beta Invites</h3>
-                  </div>
-                  <button
-                    onClick={() => {
-                      navigator.clipboard?.writeText('Join me on Pact: ' + window.location.origin);
-                      setInviteCopied(true);
-                      setTimeout(() => setInviteCopied(false), 2500);
-                    }}
-                    className="px-2.5 py-1 bg-rose-700 text-white text-[10px] uppercase tracking-wider font-medium flex items-center gap-1"
-                  >
-                    <Share2 size={11} /> {inviteCopied ? 'Link Copied!' : 'Invite Link'}
-                  </button>
-                </div>
-
-                {authUser && authUser.cloud ? (
-                  <div data-friend-search className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
-                    <div className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Find a friend on Pact</div>
-                    <div className="flex gap-2">
-                      <input type="text" aria-label="Friend's username" placeholder="Their @username, e.g. @maya_lin" value={friendQuery} onChange={e => setFriendQuery(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') searchFriend(); }} className="flex-1 min-w-0 bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
-                      <button data-friend-find onClick={searchFriend} disabled={friendBusy || !friendQuery.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider font-medium disabled:opacity-50">{friendBusy ? '...' : 'Find'}</button>
-                    </div>
-                    <p className="text-[10px] text-stone-500 leading-snug">Your username: <strong>{accountInfo.username || '(not set)'}</strong>. Share it so friends can find you. They need to type it exactly.</p>
-                    {friendFound === 'none' && <p data-friend-none className="text-[11px] text-stone-600">No one found with that username. Check the spelling with them.</p>}
-                    {friendFound && friendFound !== 'none' && (
-                      <div data-friend-result className="p-2.5 bg-white border border-stone-200 flex justify-between items-center gap-2">
-                        <div className="text-xs font-medium text-slate-900">{friendFound.display_name || friendFound.username} <span className="text-stone-400 font-normal">@{friendFound.username}</span></div>
-                        {friendFound.relation === 'friends' ? <span className="text-[10px] text-stone-500 uppercase tracking-wider">Already friends</span>
-                          : friendFound.relation === 'pending_out' ? <span className="text-[10px] text-stone-500 uppercase tracking-wider">Request sent</span>
-                          : <button data-friend-send onClick={() => sendFriendReq(friendFound.id)} disabled={friendBusy} className="px-2.5 py-1 bg-rose-700 text-white text-[10px] uppercase tracking-wider font-medium">{friendFound.relation === 'pending_in' ? 'Accept their request' : 'Send request'}</button>}
-                      </div>
-                    )}
-                    {friendMsg && <p data-friend-msg className="text-[11px] text-stone-600">{friendMsg}</p>}
-                    {friendReqs.filter(r => r.direction === 'incoming').map(r => (
-                      <div key={r.id} data-friend-request className="p-2.5 bg-white border border-rose-200 flex justify-between items-center gap-2">
-                        <div className="text-xs"><span className="font-medium text-slate-900">{r.display_name || r.username}</span> <span className="text-stone-400">@{r.username}</span> wants to be friends</div>
-                        <div className="flex gap-1.5 shrink-0">
-                          <button data-friend-accept onClick={() => answerFriendReq(r, true)} className="px-2 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Accept</button>
-                          <button data-friend-decline onClick={() => answerFriendReq(r, false)} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Decline</button>
-                        </div>
-                      </div>
-                    ))}
-                    {friendReqs.filter(r => r.direction === 'outgoing').length > 0 && <p className="text-[10px] text-stone-500">Waiting for a reply from: {friendReqs.filter(r => r.direction === 'outgoing').map(r => '@' + r.username).join(', ')}</p>}
-                  </div>
-                ) : (
-                  <p className="text-[11px] text-stone-500 leading-snug">Sign in with an account to find friends by username.</p>
-                )}
-
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    placeholder="Add someone who isn't on Pact yet (name)..."
-                    value={newFriendName}
-                    onChange={e => setNewFriendName(e.target.value)}
-                    className="flex-1 bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs"
-                  />
-                  <button
-                    onClick={() => {
-                      if (!newFriendName.trim()) return;
-                      setFriendsList(prev => [...prev, { id: Date.now(), name: newFriendName, handle: `@${newFriendName.toLowerCase().replace(/\s+/g, '')}`, lastSeen: 'Just added', type: 'Friend', status: 'Synced' }]);
-                      setNewFriendName('');
-                    }}
-                    className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider font-medium"
-                  >
-                    + Add
-                  </button>
-                </div>
-
-                <div className="space-y-2">
-                  {friendsList.map(fr => (
-                    <div key={fr.id} className="p-2.5 bg-[#FAF8F5] border border-stone-200 flex justify-between items-center">
-                      <div>
-                        <div className="text-xs font-medium text-slate-900">{fr.name} <span className="text-stone-400 font-normal">{fr.handle}</span></div>
-                        <div className="text-[10px] text-stone-500">{fr.type} • Last hangout: {fr.lastSeen}</div>
-                      </div>
-                      <div className="flex items-center gap-1 shrink-0">
-                      {fr.userId && <button data-friend-message onClick={() => openChat(fr)} className="px-2.5 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Message{unreadBy[fr.userId] ? <span data-unread className="ml-1 px-1 bg-rose-600 text-white">{unreadBy[fr.userId]}</span> : null}</button>}
-                      <button data-friend-remove onClick={() => unfriend(fr)} aria-label={`Remove ${fr.name}`} className="px-2 py-1 text-[10px] text-stone-400 hover:text-rose-700">Remove</button>
-                      <button data-friend-invite onClick={() => { setInviteDraft({ taskId: '', friend: fr.name }); setInviteOut(null); setActiveTab('social'); }} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider font-medium">Invite</button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {chatWith && (
-                  <div data-chat className="border border-purple-300 bg-white">
-                    <div className="px-3 py-2 bg-purple-900 text-white flex justify-between items-center">
-                      <span className="text-xs font-medium">Chat with {chatWith.name} {chatWith.handle}</span>
-                      <button data-chat-close onClick={() => setChatWith(null)} className="text-[10px] uppercase tracking-wider text-purple-200 hover:text-white">Close</button>
-                    </div>
-                    <div className="p-3 space-y-2 max-h-72 overflow-y-auto bg-[#FAF8F5]">
-                      {chatMsgs.length === 0 && <p className="text-[11px] text-stone-500">No messages yet. Say hello, or invite them to a plan from the Social tab.</p>}
-                      {chatMsgs.map(m => m.kind === 'text' ? (
-                        <div key={m.id} data-chat-msg className={`flex ${m.mine ? 'justify-end' : 'justify-start'}`}>
-                          <div className={`max-w-[80%] px-2.5 py-1.5 text-xs leading-snug ${m.mine ? 'bg-purple-800 text-white' : 'bg-white border border-stone-200 text-slate-900'}`}>{m.body}</div>
-                        </div>
-                      ) : (
-                        <div key={m.id} data-chat-event className="p-2 bg-white border border-rose-200 text-[11px] leading-snug space-y-1.5">
-                          <div><span className="text-[9px] uppercase tracking-widest text-rose-700 font-medium">{m.kind === 'invite' ? 'Invite' : m.kind === 'update' ? 'Event updated' : m.kind === 'cancel' ? 'Cancelled' : 'Reply'}</span><br />{m.body}</div>
-                          {m.kind === 'invite' && !m.mine && m.my_status === 'invited' && m.activity_id && (
-                            <div className="flex gap-1.5">
-                              <button data-chat-accept onClick={() => answerEvent(m.activity_id, 'accepted')} className="px-2 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Accept</button>
-                              <button data-chat-decline onClick={() => answerEvent(m.activity_id, 'declined')} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Can't make it</button>
-                            </div>
-                          )}
-                          {m.kind === 'invite' && !m.mine && m.my_status && m.my_status !== 'invited' && <div className="text-[10px] text-stone-500">You {m.my_status === 'accepted' ? 'accepted' : 'declined'} this.</div>}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="p-2 flex gap-2 border-t border-stone-200">
-                      <input data-chat-input type="text" aria-label="Message" placeholder="Write a message..." value={chatText} onChange={e => setChatText(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') sendChat(); }} className="flex-1 min-w-0 bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs" />
-                      <button data-chat-send onClick={sendChat} disabled={!chatText.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider disabled:opacity-50">Send</button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {profileSubTab === 'people' && (() => {
-              const today = todayDateStr();
-              const shown = people.filter(x => peopleFilter === 'blocked' ? x.blocked : !x.blocked && (peopleFilter === 'all' || x.kind === peopleFilter))
-                .sort((a, b) => (personOverdue(b, today, addDaysStr) ?? -1) - (personOverdue(a, today, addDaysStr) ?? -1) || String(a.name).localeCompare(String(b.name)));
-              const blockedN = people.filter(x => x.blocked).length;
-              const addPerson = () => {
-                const nm = personDraft.name.trim(); if (!nm) return;
-                setPeople(prev => [...prev, { id: 'p_' + Date.now(), name: nm, kind: personDraft.kind, relation: personDraft.relation.trim(), remindEvery: Number(personDraft.remindEvery) || 0, lastContact: today, createdAt: today, blocked: false, notes: '', linkedUserId: '' }]);
-                setPersonDraft({ name: '', kind: personDraft.kind, relation: '', remindEvery: personDraft.remindEvery });
-              };
-              return (
-              <div data-people-tab className="p-4 bg-white border border-stone-200 space-y-3">
-                <div>
-                  <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Your People</span>
-                  <h3 className="font-editorial text-base font-normal">Personal & business connections</h3>
-                  <p className="text-[11px] text-stone-500 leading-snug mt-0.5">Keep track of people in your life. They don't need a Pact account. Choose how often you want a nudge to get in touch.</p>
-                </div>
-
-                <div className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
-                  <div className="grid grid-cols-2 gap-1">
-                    {[{ id: 'personal', label: 'Personal' }, { id: 'business', label: 'Business' }].map(k => (
-                      <button key={k.id} data-person-kind={k.id} onClick={() => setPersonDraft({ ...personDraft, kind: k.id })} className={`py-1.5 text-[10px] uppercase tracking-wider border ${personDraft.kind === k.id ? 'bg-purple-800 text-white border-purple-800' : 'bg-white border-stone-300'}`}>{k.label}</button>
-                    ))}
-                  </div>
-                  <input data-person-name type="text" aria-label="Name" placeholder="Name" value={personDraft.name} onChange={e => setPersonDraft({ ...personDraft, name: e.target.value })} onKeyDown={e => { if (e.key === 'Enter') addPerson(); }} className="w-full bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
-                  <input type="text" aria-label="Relationship" placeholder={personDraft.kind === 'business' ? 'e.g. Client, Recruiter, Mentor, Supplier' : 'e.g. Cousin, Old friend, Neighbour'} value={personDraft.relation} onChange={e => setPersonDraft({ ...personDraft, relation: e.target.value })} className="w-full bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
-                  <div className="flex gap-2">
-                    <select aria-label="How often to be reminded" value={personDraft.remindEvery} onChange={e => setPersonDraft({ ...personDraft, remindEvery: Number(e.target.value) })} className="flex-1 min-w-0 bg-white border border-stone-300 px-2 py-1.5 text-xs">
-                      {REMIND_OPTIONS.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
-                    </select>
-                    <button data-person-add onClick={addPerson} disabled={!personDraft.name.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider font-medium disabled:opacity-50">+ Add</button>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-4 border border-stone-300">
-                  {[{ id: 'all', label: 'All' }, { id: 'personal', label: 'Personal' }, { id: 'business', label: 'Business' }, { id: 'blocked', label: `Blocked${blockedN ? ' (' + blockedN + ')' : ''}` }].map(f => (
-                    <button key={f.id} data-people-filter={f.id} onClick={() => setPeopleFilter(f.id)} className={`py-1.5 text-[10px] uppercase tracking-wider ${peopleFilter === f.id ? 'bg-slate-900 text-white' : 'hover:bg-stone-100'}`}>{f.label}</button>
-                  ))}
-                </div>
-
-                {shown.length === 0 && <p data-people-empty className="text-[11px] text-stone-500 leading-snug">{peopleFilter === 'blocked' ? 'No one is blocked.' : 'No one here yet. Add someone above.'}</p>}
-
-                <div className="space-y-2">
-                  {shown.map(pr => {
-                    const over = personOverdue(pr, today, addDaysStr);
-                    const since = daysBetweenStr(pr.lastContact || pr.createdAt || today, today);
-                    const next = pr.remindEvery ? daysBetweenStr(today, addDaysStr(pr.lastContact || pr.createdAt || today, pr.remindEvery)) : null;
-                    const linked = pactFriends.find(f => f.userId === pr.linkedUserId);
-                    return (
-                      <div key={pr.id} data-person-card className={`p-2.5 border space-y-2 ${pr.blocked ? 'bg-stone-100 border-stone-300 opacity-80' : over !== null ? 'bg-rose-50 border-rose-200' : 'bg-[#FAF8F5] border-stone-200'}`}>
-                        <div className="flex justify-between items-start gap-2">
-                          <div className="min-w-0">
-                            <div className="text-xs font-medium text-slate-900">{pr.name} <span className="ml-1 px-1.5 py-px bg-stone-200 text-stone-700 text-[9px] uppercase tracking-wider">{pr.kind === 'business' ? 'Business' : 'Personal'}</span>{linked && <span className="ml-1 px-1.5 py-px bg-purple-100 text-purple-900 text-[9px] uppercase tracking-wider">On Pact {linked.handle}</span>}</div>
-                            {pr.relation && <div className="text-[10px] text-stone-500">{pr.relation}</div>}
-                            <div className="text-[10px] text-stone-600 mt-0.5">Last in touch: {agoText(since)}{pr.blocked ? ' • Blocked: no reminders' : over !== null ? <span className="text-rose-700 font-medium"> • Time to reach out{over > 0 ? ` (${over} day${over === 1 ? '' : 's'} overdue)` : ''}</span> : next !== null ? (pr.snoozeUntil && pr.snoozeUntil > today ? ' • Snoozed' : ` • Next reminder in ${next} day${next === 1 ? '' : 's'}`) : ' • No reminders'}</div>
-                          </div>
-                          <button data-person-delete aria-label={`Delete ${pr.name}`} onClick={() => setPeople(prev => prev.filter(x => x.id !== pr.id))} className="text-[10px] text-stone-400 hover:text-rose-700 shrink-0">Delete</button>
-                        </div>
-                        {!pr.blocked && (
-                          <div className="flex flex-wrap gap-1.5 items-center">
-                            <button data-person-contacted onClick={() => { updatePerson(pr.id, { lastContact: today, snoozeUntil: '' }); pushToast(`Logged: in touch with ${pr.name} today.`, 'success'); }} className="px-2 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">In touch today</button>
-                            <select data-person-freq aria-label={`How often to be reminded about ${pr.name}`} value={pr.remindEvery || 0} onChange={e => updatePerson(pr.id, { remindEvery: Number(e.target.value), snoozeUntil: '' })} className="bg-white border border-stone-300 px-1.5 py-1 text-[10px]">
-                              {REMIND_OPTIONS.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
-                            </select>
-                            <button data-person-block onClick={() => updatePerson(pr.id, { blocked: true })} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Block</button>
-                          </div>
-                        )}
-                        {pr.blocked ? (
-                          <button data-person-unblock onClick={() => updatePerson(pr.id, { blocked: false, lastContact: today })} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Unblock</button>
-                        ) : (
-                          <>
-                            {pactFriends.length > 0 && (
-                              <select data-person-link aria-label={`Link ${pr.name} to a Pact friend`} value={pr.linkedUserId || ''} onChange={e => updatePerson(pr.id, { linkedUserId: e.target.value })} className="w-full bg-white border border-stone-300 px-1.5 py-1 text-[10px]">
-                                <option value="">Not linked to a Pact user</option>
-                                {pactFriends.map(f => <option key={f.userId} value={f.userId}>Same person as {f.name} {f.handle}</option>)}
-                              </select>
-                            )}
-                            <input type="text" aria-label={`Notes about ${pr.name}`} placeholder="Notes (company, birthday, what to ask about...)" defaultValue={pr.notes || ''} onBlur={e => { if (e.target.value !== (pr.notes || '')) updatePerson(pr.id, { notes: e.target.value }); }} className="w-full bg-white border border-stone-200 px-2 py-1 text-[11px]" />
-                          </>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-                <p className="text-[10px] text-stone-500 leading-snug">Blocked people never trigger reminders. Finishing a plan you tagged with someone counts as being in touch.</p>
-              </div>
-              );
-            })()}
 
             {profileSubTab === 'data' && (
               <div className="p-4 bg-white border border-stone-200 space-y-4">
@@ -8080,8 +8493,26 @@ function AppInner({ onReset }) {
         <span className="text-[13px] font-medium tracking-wider uppercase">Roamie</span>
       </button>
 
+      {voice && (
+        <div data-voice-sheet className="fixed inset-x-0 bottom-0 z-50 flex justify-center" role="dialog" aria-label="Add by voice">
+          <div className="w-full max-w-md min-[600px]:max-w-[640px] bg-white border-t-2 border-purple-900 shadow-2xl p-4 space-y-3" style={{ paddingBottom: 'calc(16px + env(safe-area-inset-bottom, 0px))' }}>
+            <div className="flex justify-between items-center">
+              <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Add by voice</span>
+              <button onClick={closeVoice} aria-label="Close" className="text-stone-400"><X size={16} /></button>
+            </div>
+            <p className="text-[11px] text-stone-600 leading-snug">Say something like "dinner with Sam on Friday at 7pm" or "dentist tomorrow at 9". Check the words, then tap Add it.</p>
+            <div className="flex items-center gap-2">
+              <button data-voice-mic onClick={() => (voice.listening ? stopVoice() : startVoice())} aria-label={voice.listening ? 'Stop listening' : 'Start listening'} className={`w-12 h-12 shrink-0 flex items-center justify-center text-white rounded-full ${voice.listening ? 'bg-rose-700 animate-pulse' : 'bg-purple-900'}`}><Mic size={20} /></button>
+              <input data-voice-text type="text" aria-label="What you said" placeholder={voice.listening ? 'Listening...' : 'Tap the mic, or type here'} value={voice.text || ''} onChange={e => setVoice({ ...voice, text: e.target.value })} onKeyDown={e => { if (e.key === 'Enter') submitVoice(); }} className="flex-1 min-w-0 bg-[#FAF8F5] border border-stone-300 px-2.5 py-2 text-sm" />
+            </div>
+            {voice.err && <p data-voice-err className="text-[11px] text-rose-700 leading-snug">{voice.err}</p>}
+            <button data-voice-add onClick={submitVoice} disabled={!(voice.text || '').trim()} className="w-full py-2.5 bg-purple-900 text-white text-[11px] uppercase tracking-widest font-medium disabled:opacity-50">Add it</button>
+          </div>
+        </div>
+      )}
+
       {roamieOpen && (
-        <div className="fixed inset-x-0 mx-auto max-w-md bg-white border-t-2 border-purple-900 shadow-2xl z-40 p-4 space-y-3 overflow-y-auto" style={{ bottom: 'calc(64px + env(safe-area-inset-bottom, 0px))', maxHeight: 'calc(100dvh - 140px)' }}>
+        <div className="fixed inset-x-0 mx-auto max-w-md min-[600px]:max-w-[640px] min-[820px]:max-w-[820px] bg-white border-t-2 border-purple-900 shadow-2xl z-40 p-4 space-y-3 overflow-y-auto" style={{ bottom: 'calc(64px + env(safe-area-inset-bottom, 0px))', maxHeight: 'calc(100dvh - 140px)' }}>
           <div className="flex justify-between items-center border-b border-stone-200 pb-2">
             <div className="flex items-center gap-2">
               <div className="w-6 h-6 bg-purple-900 text-white flex items-center justify-center">
@@ -8211,6 +8642,7 @@ function AppInner({ onReset }) {
                   onChange={e => setRoamieInput(e.target.value)}
                   className="flex-1 bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs outline-none"
                 />
+                <button type="button" data-roamie-mic onClick={() => { setRoamieOpen(false); startVoice(); }} aria-label="Speak to add" className="px-2.5 border border-stone-300 text-purple-900"><Mic size={14} /></button>
                 <button type="submit" className="px-3 bg-purple-900 text-white">
                   <Send size={13} />
                 </button>

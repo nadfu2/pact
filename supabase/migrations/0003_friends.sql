@@ -35,6 +35,7 @@ begin
 end $$;
 
 -- Exact-match lookup. relation = none | friends | pending_out | pending_in.
+drop function if exists public.find_user(text);
 create or replace function public.find_user(p_username text)
 returns table (id uuid, display_name text, username text, relation text)
 language sql stable security definer set search_path = public as $$
@@ -96,6 +97,7 @@ begin
 end $$;
 
 -- Pending requests you received (incoming) or sent (outgoing)
+drop function if exists public.my_friend_requests();
 create or replace function public.my_friend_requests()
 returns table (id uuid, direction text, user_id uuid, display_name text, username text, created_at timestamptz)
 language sql stable security definer set search_path = public as $$
@@ -109,6 +111,7 @@ language sql stable security definer set search_path = public as $$
 $$;
 
 -- Your real (accepted) friends
+drop function if exists public.my_friends();
 create or replace function public.my_friends()
 returns table (user_id uuid, display_name text, username text)
 language sql stable security definer set search_path = public as $$
