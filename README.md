@@ -1,0 +1,99 @@
+# Pact: source
+
+React 18 single-page app (one big component file) built with Tailwind 3 and esbuild. No framework, no router. Accounts and data sync through Supabase when it is configured (see "Turn on the backend"); with no Supabase settings it runs exactly as before, with everything stored in the browser.
+
+## Run it
+```
+npm install
+npm run dev      # http://localhost:8765, rebuilds on save
+npm run build    # outputs dist/, drag that folder onto Netlify
+```
+`npm run build` reproduces the shipped bundle byte for byte.
+
+Note: the build step writes the compiled Tailwind CSS into `src/App.tsx` (the `ROAM_CSS` constant, one very long line). Don't hand-edit that line, and don't let your editor reformat it. Keep `@import` first inside `PACT_CSS`.
+
+## Demo edition (blank start)
+`public/config.js` sets `window.PACT_BLANK = true`, so every new account starts empty: no sample plans, targets, meals, friends, mood or medication entries. Only what the person enters in the setup run appears. Remove that line to start new accounts with the pre-filled sample week instead. Still present in the blank edition: the app's built-in Ideas suggestions (hidden outside Manchester), Roamie's greeting, and the "My first area / My first skill" placeholders in Development.
+
+## Turn on the backend (Supabase)
+1. Create a project at supabase.com. In the SQL editor, run `supabase/migrations/0001_init.sql`.
+2. Authentication -> URL Configuration: set **Site URL** to your Netlify address (confirmation and reset emails link there). For quick testing you can switch off Authentication -> Providers -> Email -> "Confirm email"; leave it on before wider testing.
+3. Project Settings -> API: copy the project URL and the **anon** key into `public/config.js`. (The anon key is meant to be public. Never put the service role key there.)
+4. Netlify -> Site settings -> Environment variables: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (used only by `delete-account.js`), plus `ALLOWED_ORIGIN` set to your site address.
+5. Deploy from GitHub or `netlify deploy --prod` (drag-and-drop does not reliably deploy functions, and "Delete account" needs one).
+
+How sync behaves: every change is saved on the device straight away and to Supabase about a second later. The server rejects a save from a device that has not seen the newest version, and that device then loads the newer data and says so (the newer data wins). Returning to the app also checks for newer data. If the server is unreachable, changes stay on the device and sync when it is back. Someone who used Pact before accounts were online has their on-device data carried up the first time they sign in to a new, empty account.
+
+## Deploy on Cloudflare Pages (free, deploys automatically from GitHub)
+1. Put this folder in a **private** GitHub repository (`.gitignore` already skips node_modules and dist). The publishable key in `public/config.js` is fine to commit. **Never commit the secret / service_role key or the Gemini key.**
+2. Cloudflare dashboard -> Workers & Pages -> Create -> Pages -> Connect to Git -> pick the repo.
+3. Build settings: **Build command** `npm run build`, **Build output directory** `dist`. The `functions/` folder is picked up automatically. `.node-version` pins Node 22.
+4. Settings -> Variables and Secrets (Production): add `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `ALLOWED_ORIGIN` (your new `https://....pages.dev` address) as plain variables, and `SUPABASE_SERVICE_ROLE_KEY` and (optional) `GEMINI_API_KEY` as **Secrets**. Redeploy after adding them.
+5. Supabase -> Authentication -> URL Configuration: change **Site URL** to the new address.
+6. From now on, every push to `main` deploys. The app calls `/api/*`; on Cloudflare those are `functions/api/*.js`, on Netlify the same paths are redirected to `netlify/functions` (see `public/netlify.toml`), so both hosts work.
+
+## Layout
+- `src/App.tsx`: the entire app (~7,200 lines). Module-level helpers come first (data, parsers, keyless search, location, invites), then the `App` component (state, effects, handlers), then the JSX.
+- `public/index.html`: also contains the hidden Netlify Forms markup for bug reports.
+- `public/netlify/functions/gemini.js`: optional server-side Gemini proxy (needs `GEMINI_API_KEY`).
+- `src/cloud.js`: Supabase sign-in and data sync (all backend calls from the app live here).
+- `public/config.js`: public Supabase settings.
+- `functions/api/*.js`: the same three functions for Cloudflare Pages (`ical`, `gemini`, `delete-account`).
+- `public/netlify/functions/delete-account.js`: deletes the signed-in user's account and data.
+- `supabase/migrations/0001_init.sql`: database tables and row-level security.
+- `public/netlify/functions/ical.js`: fetches a public .ics link server-side (browsers block it with CORS).
+
+## Where the backend plugs in (the seams)
+Everything below is client-only today. These are the exact places to replace.
+
+| Concern | Today | Where in `App.tsx` | Backend replacement |
+|---|---|---|---|
+| Storage | `store.get/set/del` wrapper over localStorage, with an in-memory fallback | `const store` (~line 841) | **Done:** kept as the on-device cache; Supabase is the source of truth when configured. |
+| Accounts | email + PBKDF2 hash saved in `roam:accounts`; session in `roam:session` | `hashPassword`, `readAccounts`, sign-in/sign-up handlers (~line 1330) | **Done** (`cloud.js`, `AuthScreen`): Supabase auth when configured. |
+| User data | One JSON blob per user, key `roam:data:<email>`, autosaved on change | the autosave `useEffect` and the hydrate effect (~line 3270 to 3300) | **Done:** blob in `user_state` (versioned). Split into tables later. |
+| Friend invites | Link with base64 JSON in the URL hash (`#invite=`), accepted on the receiver's device | `makeInviteLink`, `PENDING_INVITE`, `acceptInvite` | `invites` table, in-app inbox, accept/decline endpoints, shared plans. |
+| Friends list | Local array `friendsList` | state in `App` | `friendships` table linked to real users. |
+| Reminders | `setInterval` in the open tab, toasts only | `latestRef` effect (~line 3447) | Web Push (VAPID) plus a scheduled function that sends due reminders. |
+| Bug reports | Netlify Forms POST to `/`, copy kept in `roam:reports` | `submitBugReport` (~line 2289) | `POST /api/reports`. |
+| Calendar sync | Pasted .ics URL, fetched through `ical` function, re-parsed in the browser | ICS parser block, `functions/ical.js` | OAuth with Google/Microsoft, server-side sync. |
+| Web search | Browser calls OpenStreetMap, Wikipedia and Open-Meteo directly; optional Gemini via function or personal key | "KEYLESS LIVE SEARCH" block (~line 960), `callGeminiWithSearch` | Optional: move to server for caching and rate limits. |
+
+## Data blob (what `roam:data:<email>` holds)
+`tasks, weeklyTargets, userProfile, accountInfo, moodLogs, todayMood, todayMoodReason, medications, mealBatches, dailyMeals, mealHistoryLogs, lifeCadenceItems, ideasFeed, favourites, skillForest, friendsList, customCategories, calendarSources, roamieMessages, homeLayout, homeNotes, water, countdown, reading`
+
+Notes for the schema:
+- `userProfile` holds name/status, week hours, load, `location` ({city, region, country, lat, lon}), `reminders` (per-category toggles, lead time, quiet hours), `onboarded`.
+- A task is `{id, title, date 'YYYY-MM-DD', start 'HH:MM', end 'HH:MM', ...}`. The planner works out clashes from date and times, so keep those fields exact.
+- Dates are local-time strings, not UTC timestamps. Store the user's time zone server-side before building reminders.
+
+## Other browser-only keys
+`roam:gemini-key` (optional personal key), `roam:pending-invite`, `roam:textscale`, `roam:reports`. Only the first is sensitive.
+
+## Suggested order
+1. ~~Auth plus data sync~~ (done).
+2. Invites and friends as real records.
+3. Web Push reminders.
+4. Calendar OAuth.
+
+## Known limits
+- The keyless search services (Overpass, Wikipedia, Open-Meteo, Nominatim, Photon) are free and rate-limited. Fine for testing, proxy and cache them before real traffic.
+- Curated Manchester ideas are sample data and are hidden for other cities. Offers are deliberately not shown because none are verified.
+
+## Places database (more Ideas suggestions)
+
+Ideas, Surprise Me and "what's near me" questions in Roamie read from a `places` table in Supabase first, and only fall back to the live OpenStreetMap search if the table is empty or unreachable.
+
+1. **Create the table.** Supabase dashboard → SQL Editor → paste `supabase/migrations/0002_places.sql` → Run. (Run `0001_init.sql` first if you haven't.)
+2. **Fill it with a city** (on your own computer, Python 3.9+):
+   ```
+   pip install overturemaps
+   python tools/import_places.py --city manchester --inspect     # optional: preview the category labels first
+   export SUPABASE_URL=https://YOUR-PROJECT.supabase.co
+   export SUPABASE_SERVICE_ROLE_KEY=sb_secret_...                # Supabase → Project Settings → API Keys (the secret key; never put it in the app)
+   python tools/import_places.py --city manchester --load
+   ```
+   Cities available: `manchester`, `peterborough`, `london`, `jakarta` (or `all`). Re-running a city refreshes it. Add a city by adding a line to `CITIES` in the script.
+   No Python? Run it without `--load` to get `places_<city>.csv`, then use Table Editor → `places` → Import CSV.
+3. **Attribution.** Overture's licence requires a credit. The app shows "Overture Maps open data" on each idea; also add "Place data © Overture Maps Foundation" to your About/footer.
+
+Good to know: open data has no ratings, prices, photos or opening hours, and some places will be closed or missing. Pact users' own star ratings are saved per place and start showing once 3 people have rated it. Jakarta coverage is thinner than the UK cities.
