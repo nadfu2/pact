@@ -318,6 +318,14 @@ const roamieBrain = (q0, env) => {
   const first = (env.userName || '').split(' ')[0];
   const webish = /\b(best|near|nearby|open now|opening|weather|forecast|train times|bus times|how do|how to|what is|what's the|who is|where can|where is|price of|cost of|review|reviews|news|latest|compare|recipe|directions)\b/.test(lower);
 
+  // ---- date / time / identity / chit-chat ----
+  if (/\b(what('?s| is) (the )?(date|day)( today)?|what day is it|what date is it|today'?s date)\b/.test(lower)) return { text: `It's ${longDate(todayStr)}.` };
+  if (/\b(what('?s| is) the time|what time is it|time now|current time)\b/.test(lower)) return { text: `It's ${fromMins(nowMins)} now.` };
+  if (/\b(who are you|what are you|your name|what should i call you)\b/.test(lower)) return { text: "I'm Roamie, your planning assistant inside Pact. I can read your plans, find free time, add, move or cancel things, and answer questions about places near you." };
+  if (/\b(how are you|how'?s it going|you ok|you alright|how do you do)\b/.test(lower)) return { text: "I'm good, thanks! What shall we sort out? I can check your day, find free time or book something in." };
+  if (/^(ok|okay|cool|nice|great|lovely|perfect|brilliant|good|sweet|fab|lol|haha|yes|yeah|yep|no|nope|nvm|never ?mind)[\s!.]*$/.test(lower)) return { text: "No problem. Anything else I can help with?" };
+  if (/^(good ?night|night|bye|goodbye|see ya|see you|cya|later)\b/.test(lower)) return { text: "Speak soon! I'll keep your plans safe." };
+
   // ---- small talk ----
   if (/^(hi|hello|hey|hiya|yo|good (morning|afternoon|evening))\b[\s!.,]*$/.test(lower)) {
     return { text: `Hi${first ? ' ' + first : ''}! I can read your plans, find clash-free time, add or cancel things, and check your fridge, targets and energy. Try: "What's on tomorrow?", "When am I free on Friday?" or "Book climbing on Thursday at 6pm".` };
@@ -1146,7 +1154,14 @@ const THEME_PALETTES = {
   ember: { name: 'Autumn Ember', hint: 'Burnt orange & chestnut', nh: 22, ns: 28, p: [18, 76], s: [350, 52], t: [38, 82] },
   maple: { name: 'Maple', hint: 'Burgundy & rust', nh: 355, ns: 22, p: [354, 58], s: [20, 68], t: [40, 72] },
   harvest: { name: 'Harvest', hint: 'Mustard & olive', nh: 42, ns: 24, p: [40, 82], s: [85, 38], t: [16, 62] },
-  woodland: { name: 'Woodland', hint: 'Moss & copper', nh: 96, ns: 14, p: [96, 36], s: [28, 55], t: [42, 60] }
+  woodland: { name: 'Woodland', hint: 'Moss & copper', nh: 96, ns: 14, p: [96, 36], s: [28, 55], t: [42, 60] },
+  mocha: { name: 'Mocha', hint: 'Coffee & caramel', nh: 28, ns: 20, p: [28, 55], s: [12, 45], t: [42, 70] },
+  plum: { name: 'Plum', hint: 'Aubergine & rose', nh: 300, ns: 18, p: [305, 40], s: [335, 55], t: [20, 65] },
+  rosewood: { name: 'Rosewood', hint: 'Dusky pink & clay', nh: 345, ns: 20, p: [346, 45], s: [10, 50], t: [28, 55] },
+  teal: { name: 'Deep Teal', hint: 'Sea green & sand', nh: 185, ns: 18, p: [184, 55], s: [165, 40], t: [38, 70] },
+  midnight: { name: 'Midnight', hint: 'Indigo & violet', nh: 235, ns: 22, p: [240, 55], s: [270, 45], t: [330, 55] },
+  sage: { name: 'Sage', hint: 'Soft green & stone', nh: 130, ns: 10, p: [140, 28], s: [90, 30], t: [30, 45] },
+  graphite: { name: 'Graphite', hint: 'Neutral grey, minimal', nh: 220, ns: 5, p: [220, 12], s: [220, 8], t: [0, 35] }
 };
 const THEME_STEPS = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'];
 const THEME_RAMPS = {
@@ -1224,6 +1239,41 @@ const applyTheme = (theme) => {
 if (typeof window !== 'undefined') applyTheme(readStoredTheme());
 
 // ---------- Ideas filters: each chip maps to real place kinds (database) and OpenStreetMap tags (live search) ----------
+// Event planner: turn the words you type ("anniversary", "ramen", "climbing") into the kinds of place to look for.
+const FAST_FOOD = /\b(kfc|mcdonald'?s|burger king|subway|domino'?s|pizza hut|papa john'?s|greggs|five guys|wendy'?s|taco bell|popeyes|little caesars|chicken cottage|dixy|wimpy)\b/i;
+const PLANNER_RULES = [
+  { re: /anniversar|romantic|candlelit|intimate|date night|date|proposal|valentine|fine dining|special occasion|elegant|upscale|fancy|cosy dinner|candle/, cat: 'Food', kinds: ['restaurant'], label: 'restaurants', formal: true },
+  { re: /birthday|celebrat|party|group dinner|big group|family meal|family|graduation/, cat: 'Food', kinds: ['restaurant', 'pub', 'bar'], label: 'restaurants and bars', formal: true },
+  { re: /brunch|breakfast|coffee|cafe|bakery|pastry|cake|tea\b|afternoon tea/, cat: 'Food', kinds: ['cafe', 'bakery'], label: 'cafes and bakeries' },
+  { re: /cocktail|drinks|\bbar\b|wine|pub\b|beer|brewery|nightlife|night out/, cat: 'Food', kinds: ['bar', 'pub'], label: 'bars and pubs' },
+  { re: /dessert|ice cream|gelato|sweet|chocolate|waffle|crepe/, cat: 'Food', kinds: ['dessert', 'cafe'], label: 'dessert spots' },
+  { re: /dinner|lunch|restaurant|food|eat|meal|business dinner|networking/, cat: 'Food', kinds: ['restaurant'], label: 'restaurants' },
+  { re: /walk|stroll|park|garden|picnic|nature|hike|scenic|outdoor|fresh air|sunset|view/, cat: 'Outdoor', kinds: ['park', 'garden', 'nature', 'trail', 'viewpoint'], label: 'parks and outdoor spots' },
+  { re: /museum|gallery|exhibition|art visit|heritage|history/, cat: 'Indoor', kinds: ['museum', 'gallery'], label: 'museums and galleries' },
+  { re: /cinema|film|movie/, cat: 'Indoor', kinds: ['cinema'], label: 'cinemas' },
+  { re: /theatre|theater|show|comedy|concert|gig|live music|musical/, cat: 'Indoor', kinds: ['theatre'], label: 'theatres and venues' },
+  { re: /pottery|art cafe|craft|paint|workshop|creative/, cat: 'Indoor', kinds: ['arts_centre', 'cafe'], label: 'creative spaces' },
+  { re: /bowling|arcade|escape|games|mini golf|crazy golf|laser/, cat: 'Indoor', kinds: ['fun_venue'], label: 'games venues' },
+  { re: /climb|boulder|movement/, cat: 'Sports', kinds: ['climbing'], label: 'climbing walls' },
+  { re: /gym|workout|fitness|training/, cat: 'Sports', kinds: ['gym'], label: 'gyms' },
+  { re: /swim|pool/, cat: 'Sports', kinds: ['pool'], label: 'pools' },
+  { re: /shop|shopping|vintage|thrift|bookshop|records/, cat: 'Shopping', kinds: ['bookshop', 'vintage_shop', 'clothes', 'record_shop'], label: 'shops' }
+];
+const CUISINES = ['pizza', 'burger', 'sushi', 'ramen', 'japanese', 'italian', 'indian', 'curry', 'thai', 'chinese', 'mexican', 'vegan', 'vegetarian', 'steak', 'seafood', 'korean', 'turkish', 'lebanese', 'greek', 'spanish', 'tapas', 'french', 'vietnamese', 'persian', 'ethiopian', 'indonesian', 'german', 'halal', 'kebab', 'noodle'];
+const plannerIntent = (cfg, mode) => {
+  const vibe = String(cfg.vibeKeywords || '').toLowerCase();
+  const base = mode === 'activity' ? String(cfg.activityDropdown || '').toLowerCase() : String(cfg.eventType || '').toLowerCase();
+  const find = (txt) => PLANNER_RULES.find(r => r.re.test(txt));
+  // what you typed wins; the dropdown only fills in when your words don't say
+  const rule = find(vibe) || find(base + ' ' + vibe);
+  const cuisines = CUISINES.filter(c => new RegExp('\\b' + c, 'i').test(vibe));
+  const out = { cat: rule ? rule.cat : null, kinds: rule ? rule.kinds : [], queries: cuisines, label: rule ? rule.label : '', formal: !!(rule && rule.formal) || /romantic|anniversar|date|proposal|fine dining|elegant/.test(vibe + ' ' + base) };
+  if (cuisines.length && !out.cat) { out.cat = 'Food'; out.kinds = ['restaurant']; out.label = 'restaurants'; }
+  if (cuisines.length) out.label = cuisines.join(' / ') + ' ' + (out.label || 'places');
+  out.key = [out.cat, out.kinds.join(','), out.queries.join(',')].join('|');
+  out.mapped = !!out.cat;
+  return out;
+};
 const NOT_A_PLACE = /\b(auctions?|auctioneers?|bidding|ebay|garden cent(?:re|er)s?|landscap\w*|nurser(?:y|ies)|funeral|crematorium|cemetery|storage|estate agents?|pawn\w*|wholesale|scaffolding|plumbing|recruitment)\b/i;
 const IDEA_FILTERS = {
   Food: [
@@ -1881,11 +1931,7 @@ function AppInner({ onReset }) {
     }
   });
 
-  const [friendsList, setFriendsList] = useState([
-    { id: 1, name: 'Yasho', handle: '@yasho_m', lastSeen: '11 days ago', type: 'Close Friend', status: 'Synced' },
-    { id: 2, name: 'Maya Lin', handle: '@mayalin', lastSeen: '3 days ago', type: 'Study Partner', status: 'Synced' },
-    { id: 3, name: 'Samir Patel', handle: '@samirp', lastSeen: '2 weeks ago', type: 'Climbing Buddy', status: 'Invited' }
-  ]);
+  const [friendsList, setFriendsList] = useState([]);
   const [newFriendName, setNewFriendName] = useState('');
   const [inviteCopied, setInviteCopied] = useState(false);
 
@@ -2017,48 +2063,6 @@ function AppInner({ onReset }) {
       rating: null,
       reviewNote: '',
       withPerson: null,
-      meetingType: 'Friendly'
-    },
-    {
-      id: 102,
-      title: 'Bouldering Session @ Depot Manchester',
-      duration: 90,
-      status: 'pending',
-      startTime: '18:00',
-      endTime: '19:30',
-      date: shiftSeed('2026-11-16'),
-      type: 'physical',
-      categoryColor: 'leisure',
-      location: 'Depot Climbing (M17 1AW)',
-      transportMode: 'Metrolink Trafford Line',
-      travelTime: 25,
-      distance: '2.3 mi',
-      leaveByNote: 'Start getting ready at 17:10 • Catch 17:35 Cornbrook Tram',
-      notes: 'Remember chalk bag and brush.',
-      rating: null,
-      reviewNote: '',
-      withPerson: 'Samir Patel',
-      meetingType: 'Friendly'
-    },
-    {
-      id: 103,
-      title: 'Catch up Coffee & Architecture Walk',
-      duration: 60,
-      status: 'pending',
-      startTime: '13:00',
-      endTime: '14:00',
-      date: shiftSeed('2026-11-17'),
-      type: 'social',
-      categoryColor: 'social',
-      location: 'Pollen Bakery Marina (M4 6WX)',
-      transportMode: 'New Islington Tram',
-      travelTime: 15,
-      distance: '0.9 mi',
-      leaveByNote: 'Leave by 12:45 via Metrolink Blue Line',
-      notes: 'Pick up sourdough loaf for the week.',
-      rating: null,
-      reviewNote: '',
-      withPerson: 'Yasho',
       meetingType: 'Friendly'
     }
   ]);
@@ -2606,26 +2610,7 @@ function AppInner({ onReset }) {
   // --- SOCIAL & COMMUNITY TAB STATE ---
   const [communityGoalFilter, setCommunityGoalFilter] = useState('All');
   const [expandedCommunityEventId, setExpandedCommunityEventId] = useState(null);
-  const [sharedFriendPlans, setSharedFriendPlans] = useState([
-    {
-      id: 'sp1',
-      friend: 'Yasho',
-      title: 'Catch up Coffee & Architecture Walk',
-      day: 'Tue 17 Nov',
-      time: '13:00',
-      location: 'Pollen Bakery Marina',
-      syncStatus: 'On your calendar'
-    },
-    {
-      id: 'sp2',
-      friend: 'Samir Patel',
-      title: 'Friday Bouldering',
-      day: 'Fri 20 Nov',
-      time: '18:30',
-      location: 'Depot Climbing Manchester',
-      syncStatus: 'On your calendar'
-    }
-  ]);
+  const [sharedFriendPlans, setSharedFriendPlans] = useState([]);
 
   const communityEventsAll = [
     {
@@ -2861,9 +2846,51 @@ function AppInner({ onReset }) {
     return callGeminiWithSearch(full, system, schema, true);
   };
 
-  const handleRefreshMoreVenues = async () => {
-    setVenueRefreshOffset(prev => prev + 3);
+  const venueIntent = plannerIntent(eventConfig, plannerMode);
+  const handleRefreshMoreVenues = async (first = false) => {
+    if (first !== true) setVenueRefreshOffset(prev => prev + 3);
     setIsSearchingLiveVenues(true);
+    const intent = plannerIntent(eventConfig, plannerMode);
+    const asVenue = (r, idx, snippet, transport) => ({
+      id: `${intent.key}_${r.id || r.name}_${idx}`, intentKey: intent.key, city: loc.city, name: r.name, postcode: r.postcode || loc.city, price: eventConfig.budget, rating: null,
+      dietaryAvailable: eventConfig.dietary, reviewKeywords: [...String(eventConfig.vibeKeywords || '').toLowerCase().split(/[\s,]+/).filter(Boolean), ...intent.kinds, ...intent.queries],
+      reviewSnippet: snippet, transportNote: transport
+    });
+    // 1) the places database and the live map search, always using the keywords and type you chose
+    if (intent.mapped) {
+      try {
+        const have = new Set(reviewMatchedVenues.filter(v => v.intentKey === intent.key).map(v => String(v.name).toLowerCase()));
+        const { lat, lon } = await resolveCoords(loc);
+        const okName = (nm) => !NOT_A_PLACE.test(nm) && !(intent.formal && FAST_FOOD.test(nm)) && !have.has(String(nm).toLowerCase());
+        let found = [];
+        if (cloud.enabled) {
+          const seenId = new Set();
+          const queries = intent.queries.length ? intent.queries : [null];
+          for (const q of queries) {
+            for (const radius of [4, 12]) {
+              const rows = await cloud.placesNear({ lat, lon, radiusKm: radius, categories: [intent.cat], kinds: intent.kinds, query: q, limit: 40 });
+              rows.forEach(r => { if (!seenId.has(r.id) && okName(r.name)) { seenId.add(r.id); found.push(r); } });
+              if (found.length >= 6) break;
+            }
+          }
+          found = found.sort((a, b) => ((b.quality || 0) - (a.quality || 0)) || (a.distance_km - b.distance_km)).slice(0, 12);
+          if (found.length > 3 && have.size) found = found.sort(() => Math.random() - 0.5);
+          found = found.slice(0, 6);
+        }
+        if (found.length) {
+          const kindWord = (r) => String(r.kind || '').replace(/_/g, ' ');
+          setReviewMatchedVenues(prev => [...found.map((r, idx) => asVenue(r, idx, `${kindWord(r) ? kindWord(r)[0].toUpperCase() + kindWord(r).slice(1) : 'Place'}${r.address ? ' · ' + r.address : ''}`, `${fmtDist(r.distance_km, loc.country)} from ${loc.isHome ? 'you' : 'the centre'}`)), ...prev]);
+          setVenueRefreshOffset(0); setIsSearchingLiveVenues(false); return;
+        }
+        const live = await osmIdeasLive({ cat: intent.cat, loc, seen: have, n: 5, filters: [{ kinds: intent.kinds, query: intent.queries[0] || null }] });
+        const liveOk = live.filter(m => okName(m.title));
+        if (liveOk.length) {
+          setReviewMatchedVenues(prev => [...liveOk.map((m, idx) => asVenue({ id: m.id, name: m.title, postcode: loc.city }, idx, `${m.desc} (OpenStreetMap)`, `${m.distance} from ${loc.isHome ? 'you' : 'the centre'}`)), ...prev]);
+          setVenueRefreshOffset(0); setIsSearchingLiveVenues(false); return;
+        }
+      } catch (e0) { /* fall through to the AI search below */ }
+      if (!(await geminiReady())) { setIsSearchingLiveVenues(false); return; }
+    }
     try {
       const schema = {
         type: "ARRAY",
@@ -2887,7 +2914,7 @@ function AppInner({ onReset }) {
         const parsed = JSON.parse(res.text);
         if (Array.isArray(parsed) && parsed.length > 0) {
           const formatted = parsed.map((v, idx) => ({
-            id: `live_${Date.now()}_${idx}`,
+            id: `live_${Date.now()}_${idx}`, intentKey: intent.key,
             city: loc.city,
             name: v.name,
             postcode: v.postcode || eventConfig.postcode,
@@ -2903,19 +2930,7 @@ function AppInner({ onReset }) {
         }
       }
     } catch (e) {
-      // No Gemini: use real places from OpenStreetMap near you.
-      try {
-        const have = new Set(reviewMatchedVenues.map(v => String(v.name).toLowerCase()));
-        const more = await osmIdeas({ cat: 'Food', loc, seen: have, n: 3 });
-        if (more.length) {
-          setReviewMatchedVenues(prev => [...more.map((m, idx) => ({
-            id: `osm_${Date.now()}_${idx}`, city: loc.city, name: m.title, postcode: loc.city, price: eventConfig.budget, rating: 4.5,
-            dietaryAvailable: eventConfig.dietary, reviewKeywords: eventConfig.vibeKeywords.toLowerCase().split(/\s+/),
-            reviewSnippet: `${m.desc} (OpenStreetMap)`, transportNote: `${m.distance} from the centre`
-          })), ...prev]);
-          setVenueRefreshOffset(0);
-        }
-      } catch (e2) { /* keep the existing list */ }
+      // Nothing more to show for these keywords; the list stays as it is.
     } finally {
       setIsSearchingLiveVenues(false);
     }
@@ -3009,11 +3024,13 @@ function AppInner({ onReset }) {
       const dietaryMatches = eventConfig.dietary.filter(d => venue.dietaryAvailable.includes(d));
       const score = matchedHits.length * 3 + dietaryMatches.length * 2 + (venue.price === eventConfig.budget ? 2 : 0);
       return { ...venue, matchedHits, dietaryMatches, score };
-    }).sort((a, b) => b.score - a.score);
+    }).filter(v => !venueIntent.mapped || v.intentKey === venueIntent.key || (!v.intentKey && v.matchedHits.length > 0 && (!venueIntent.formal || !FAST_FOOD.test(v.name))))
+      .sort((a, b) => ((b.intentKey === venueIntent.key ? 1 : 0) - (a.intentKey === venueIntent.key ? 1 : 0)) || (b.score - a.score));
   };
 
   const displayedPlannerVenues = (() => {
     const allSorted = getMatchedVenues();
+    if (!allSorted.length) return [];
     const start = venueRefreshOffset % Math.max(1, allSorted.length);
     const slice = allSorted.slice(start, start + 4);
     return slice.length < 4 ? [...slice, ...allSorted.slice(0, 4 - slice.length)] : slice;
@@ -3091,6 +3108,7 @@ function AppInner({ onReset }) {
   const handleConfirmAddPlan = () => {
     if (plannerMode === 'event' || plannerMode === 'activity') {
       const chosenVenue = selectedVenueMatch || displayedPlannerVenues[0];
+      if (!chosenVenue) return;
       const [h, m] = eventConfig.startTime.split(':').map(Number);
       const endMins = h * 60 + m + Number(eventConfig.duration);
       const endH = String(Math.floor(endMins / 60) % 24).padStart(2, '0');
@@ -3414,7 +3432,10 @@ function AppInner({ onReset }) {
       setRoamieMessages(prev => [...prev, { sender: 'roamie', text, sources: sources ? sources.slice(0, 3) : [] }]);
     } catch (err) {
       const msg = String((err && err.message) || '');
-      const reason = msg === 'NO_ANSWER'
+      const aiOn = await geminiReady();
+      const reason = !aiOn
+        ? "My smart mode isn't switched on for this site yet (the owner needs to add the GEMINI_API_KEY in Cloudflare), so I can only handle planner requests, places, weather and encyclopedia lookups right now."
+        : msg === 'NO_ANSWER'
         ? "I couldn't find a clear answer to that. Try rephrasing, or ask about a place near you, the weather, or a topic."
         : "I couldn't reach the search services just now. Check your connection and try again. Planner questions still work offline.";
       setRoamieMessages(prev => [...prev, { sender: 'roamie', text: roamieOfflineReply(reason), sources: [] }]);
@@ -3697,7 +3718,7 @@ function AppInner({ onReset }) {
 
   // Apply a saved data blob to the app state
   const applySaved = (saved) => {
-    if (saved.tasks) setTasks(saved.tasks);
+    if (saved.tasks) setTasks(saved.tasks.filter(t => !((t.withPerson === 'Yasho' && t.title === 'Catch up Coffee & Architecture Walk') || (t.withPerson === 'Samir Patel' && /^Bouldering Session @ Depot/.test(t.title)))));
     if (saved.weeklyTargets) setWeeklyTargets(saved.weeklyTargets);
     if (saved.userProfile) setUserProfile({ onboarded: true, ...saved.userProfile });
     if (saved.accountInfo) setAccountInfo(saved.accountInfo);
@@ -3712,7 +3733,8 @@ function AppInner({ onReset }) {
     if (saved.ideasFeed) setIdeasFeed(saved.ideasFeed);
     if (Array.isArray(saved.favourites)) setFavourites(saved.favourites);
     if (saved.skillForest) setSkillForest(saved.skillForest);
-    if (saved.friendsList) setFriendsList(saved.friendsList);
+    // old saved accounts may still hold the three demo friends from early versions: remove them
+    if (saved.friendsList) setFriendsList(saved.friendsList.filter(f => f.userId || !['@yasho_m', '@mayalin', '@samirp'].includes(String(f.handle || '').toLowerCase())));
     if (Array.isArray(saved.people)) setPeople(saved.people);
     if (saved.customCategories) setCustomCategories(saved.customCategories);
     if (saved.calendarSources) setCalendarSources(saved.calendarSources);
@@ -6806,7 +6828,7 @@ function AppInner({ onReset }) {
                     ))}
                   </div>
                   <div className="space-y-1.5">
-                    {['ember', 'maple', 'harvest', 'woodland', 'classic'].map(id => {
+                    {['ember', 'maple', 'harvest', 'woodland', 'mocha', 'plum', 'rosewood', 'teal', 'midnight', 'sage', 'graphite', 'classic'].map(id => {
                       const pal = THEME_PALETTES[id];
                       const dk = resolveThemeMode(themeNow.mode) === 'dark';
                       const sw = [`hsl(${pal.nh} ${pal.ns}% ${dk ? 10 : 94}%)`, `hsl(${pal.p[0]} ${pal.p[1]}% ${dk ? 40 : 38}%)`, `hsl(${pal.s[0]} ${pal.s[1]}% ${dk ? 40 : 38}%)`, `hsl(${pal.t[0]} ${pal.t[1]}% ${dk ? 45 : 48}%)`];
@@ -7602,10 +7624,10 @@ function AppInner({ onReset }) {
                 )}
 
                 <button
-                  onClick={() => setPlannerResultsStep(true)}
+                  onClick={() => { setPlannerResultsStep(true); setSelectedVenueMatch(null); handleRefreshMoreVenues(true); }}
                   className="w-full py-2.5 bg-purple-900 hover:bg-purple-800 text-white text-xs uppercase tracking-widest font-medium"
                 >
-                  Search AI Review Matches Near {eventConfig.postcode}
+                  Find places near {eventConfig.postcode} for "{eventConfig.vibeKeywords}"
                 </button>
               </div>
             )}
@@ -7618,7 +7640,7 @@ function AppInner({ onReset }) {
                     Top places near <strong>{eventConfig.postcode}</strong> matching <em>"{eventConfig.vibeKeywords}"</em>:
                   </div>
                   <button
-                    onClick={handleRefreshMoreVenues}
+                    onClick={() => handleRefreshMoreVenues()}
                     disabled={isSearchingLiveVenues}
                     className="px-2.5 py-1 bg-blue-800 hover:bg-blue-900 text-white text-[10px] uppercase tracking-wider font-medium flex items-center gap-1 shrink-0"
                   >
@@ -7627,9 +7649,14 @@ function AppInner({ onReset }) {
                   </button>
                 </div>
 
+                {displayedPlannerVenues.length === 0 && (
+                  <div data-planner-empty className="p-3 bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">
+                    {isSearchingLiveVenues ? 'Searching...' : `I couldn't find ${venueIntent.label || 'places'} near ${loc.city} for "${eventConfig.vibeKeywords}" yet. Press Refresh / More, or try different keywords.`}
+                  </div>
+                )}
                 <div className="space-y-2.5">
                   {displayedPlannerVenues.map(venue => {
-                    const isSelected = (selectedVenueMatch?.id || displayedPlannerVenues[0].id) === venue.id;
+                    const isSelected = (selectedVenueMatch?.id || displayedPlannerVenues[0]?.id) === venue.id;
                     return (
                       <div
                         key={venue.id}
@@ -7641,7 +7668,7 @@ function AppInner({ onReset }) {
                         <div className="flex justify-between items-start">
                           <div>
                             <h4 className="text-xs font-medium text-slate-900">{venue.name}</h4>
-                            <div className="text-[10px] text-stone-500">{venue.postcode} • {venue.price} • ★ {venue.rating}</div>
+                            <div className="text-[10px] text-stone-500">{venue.postcode} • {venue.price}{venue.rating ? ` • ★ ${venue.rating}` : ''}</div>
                           </div>
                           <span className="px-2 py-0.5 bg-purple-800 text-white text-[9px] uppercase tracking-wider">
                             Review Match
@@ -7667,7 +7694,8 @@ function AppInner({ onReset }) {
                   </button>
                   <button
                     onClick={handleConfirmAddPlan}
-                    className="flex-1 py-2 bg-purple-900 text-white text-xs uppercase tracking-widest font-medium"
+                    disabled={displayedPlannerVenues.length === 0}
+                    className="flex-1 py-2 bg-purple-900 disabled:opacity-40 text-white text-xs uppercase tracking-widest font-medium"
                   >
                     Add Selected Venue to Weekly Schedule
                   </button>
