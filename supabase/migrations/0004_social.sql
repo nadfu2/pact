@@ -1,0 +1,200 @@
+-- Pact 0004: messages between friends, event invites, and joint events that stay in sync.
+-- Run after 0001, 0002 and 0003. Builds on shared_activities / activity_participants from 0001:
+--   * a joint event is a shared_activities row; its OWNER edits it, invited friends read the latest version
+--   * details jsonb holds { date 'YYYY-MM-DD', start 'HH:MM', end 'HH:MM', location, notes } (local clock times)
+-- Privacy: only linked (accepted) friends can message or invite each other; blocked people are refused silently.
+
+create table if not exists public.messages (
+  id          uuid primary key default gen_random_uuid(),
+  from_id     uuid not null references auth.users(id) on delete cascade,
+  to_id       uuid not null references auth.users(id) on delete cascade,
+  body        text not null check (char_length(body) between 1 and 2000),
+  kind        text not null default 'text' check (kind in ('text','invite','update','cancel','reply')),
+  activity_id uuid references public.shared_activities(id) on delete set null,
+  created_at  timestamptz not null default now(),
+  read_at     timestamptz,
+  check (from_id <> to_id)
+);
+create index if not exists messages_to_idx   on public.messages (to_id, created_at desc);
+create index if not exists messages_pair_idx on public.messages (from_id, to_id, created_at desc);
+alter table public.messages enable row level security;
+drop policy if exists messages_party_read on public.messages;
+create policy messages_party_read on public.messages for select using (from_id = auth.uid() or to_id = auth.uid());
+revoke all on public.messages from anon, authenticated;
+grant select on public.messages to authenticated;          -- all writes go through the functions below
+
+-- internal: post a message if the two are linked friends and not blocked
+create or replace function public._post_message(p_from uuid, p_to uuid, p_body text, p_kind text, p_activity uuid) returns boolean
+language plpgsql security definer set search_path = public as $$
+begin
+  if p_from is null or p_to is null or p_from = p_to then return false; end if;
+  if not public.are_linked(p_from, p_to) or public.is_blocked_between(p_from, p_to) then return false; end if;
+  insert into public.messages (from_id, to_id, body, kind, activity_id) values (p_from, p_to, left(p_body, 2000), p_kind, p_activity);
+  return true;
+end $$;
+revoke all on function public._post_message(uuid, uuid, text, text, uuid) from public, anon, authenticated;
+
+create or replace function public._name_of(p_user uuid) returns text
+language sql stable security definer set search_path = public as $$
+  select coalesce(nullif(display_name, ''), username, 'Someone') from public.profiles where id = p_user;
+$$;
+revoke all on function public._name_of(uuid) from public, anon, authenticated;
+
+-- sent | not_friends | invalid
+create or replace function public.send_message(p_to uuid, p_body text) returns text
+language plpgsql security definer set search_path = public as $$
+declare b text := btrim(coalesce(p_body, ''));
+begin
+  if auth.uid() is null or b = '' then return 'invalid'; end if;
+  if not public._post_message(auth.uid(), p_to, b, 'text', null) then return 'not_friends'; end if;
+  return 'sent';
+end $$;
+
+-- The conversation with one friend, newest first (client reverses it)
+create or replace function public.conversation(p_user uuid, p_limit integer default 100)
+returns table (id uuid, mine boolean, body text, kind text, activity_id uuid, created_at timestamptz,
+               event_title text, event_details jsonb, my_status text)
+language sql stable security definer set search_path = public as $$
+  select m.id, (m.from_id = auth.uid()), m.body, m.kind, m.activity_id, m.created_at,
+         a.title, a.details,
+         (select pp.status from public.activity_participants pp where pp.activity_id = m.activity_id and pp.user_id = auth.uid())
+  from public.messages m
+  left join public.shared_activities a on a.id = m.activity_id
+  where auth.uid() is not null
+    and ((m.from_id = auth.uid() and m.to_id = p_user) or (m.from_id = p_user and m.to_id = auth.uid()))
+    and public.are_linked(auth.uid(), p_user) and not public.is_blocked_between(auth.uid(), p_user)
+  order by m.created_at desc
+  limit greatest(1, least(coalesce(p_limit, 100), 300));
+$$;
+
+-- One row per friend you have talked to: last message and unread count
+create or replace function public.inbox()
+returns table (user_id uuid, display_name text, username text, last_body text, last_at timestamptz, unread integer)
+language sql stable security definer set search_path = public as $$
+  select p.id, p.display_name, p.username, lm.body, lm.created_at,
+         (select count(*)::int from public.messages u where u.to_id = auth.uid() and u.from_id = p.id and u.read_at is null)
+  from public.contacts c
+  join public.profiles p on p.id = c.linked_user_id
+  join lateral (select m.body, m.created_at from public.messages m
+                 where (m.from_id = auth.uid() and m.to_id = p.id) or (m.from_id = p.id and m.to_id = auth.uid())
+                 order by m.created_at desc limit 1) lm on true
+  where c.owner_id = auth.uid() and not public.is_blocked_between(auth.uid(), p.id)
+  order by lm.created_at desc;
+$$;
+
+create or replace function public.mark_read(p_user uuid) returns void
+language sql security definer set search_path = public as $$
+  update public.messages set read_at = now() where to_id = auth.uid() and from_id = p_user and read_at is null;
+$$;
+
+-- internal: add one friend to an event and send the invite message
+create or replace function public._invite(p_activity uuid, p_owner uuid, p_user uuid, p_note text) returns boolean
+language plpgsql security definer set search_path = public as $$
+declare cid uuid; t text;
+begin
+  if not public.are_linked(p_owner, p_user) or public.is_blocked_between(p_owner, p_user) then return false; end if;
+  select id into cid from public.contacts where owner_id = p_owner and linked_user_id = p_user;
+  if cid is null then return false; end if;
+  insert into public.activity_participants (activity_id, contact_id, user_id, status) values (p_activity, cid, p_user, 'invited')
+    on conflict (activity_id, contact_id) do nothing;
+  if not found then return false; end if;
+  select title into t from public.shared_activities where id = p_activity;
+  perform public._post_message(p_owner, p_user,
+    public._name_of(p_owner) || ' invited you to "' || t || '"' || case when btrim(coalesce(p_note, '')) <> '' then ': ' || btrim(p_note) else '' end,
+    'invite', p_activity);
+  return true;
+end $$;
+revoke all on function public._invite(uuid, uuid, uuid, text) from public, anon, authenticated;
+
+-- Make a joint event and invite friends (non-friends are skipped). Returns the event id.
+create or replace function public.create_shared_event(p_title text, p_details jsonb, p_invitees uuid[], p_note text default '')
+returns uuid language plpgsql security definer set search_path = public as $$
+declare eid uuid; u uuid;
+begin
+  if auth.uid() is null or btrim(coalesce(p_title, '')) = '' then raise exception 'invalid'; end if;
+  insert into public.shared_activities (owner_id, title, details)
+    values (auth.uid(), left(btrim(p_title), 200), coalesce(p_details, '{}'::jsonb)) returning id into eid;
+  foreach u in array coalesce(p_invitees, '{}') loop perform public._invite(eid, auth.uid(), u, p_note); end loop;
+  return eid;
+end $$;
+
+-- Owner adds more friends to an existing event: invited | already | invalid
+create or replace function public.invite_to_event(p_activity uuid, p_user uuid, p_note text default '') returns text
+language plpgsql security definer set search_path = public as $$
+begin
+  if not exists (select 1 from public.shared_activities where id = p_activity and owner_id = auth.uid()) then return 'invalid'; end if;
+  if public._invite(p_activity, auth.uid(), p_user, p_note) then return 'invited'; end if;
+  return case when exists (select 1 from public.activity_participants where activity_id = p_activity and user_id = p_user) then 'already' else 'invalid' end;
+end $$;
+
+-- Invited person answers: accepted | declined. The owner gets a message with the reply (and an optional note).
+create or replace function public.respond_to_event(p_activity uuid, p_status text, p_note text default '') returns text
+language plpgsql security definer set search_path = public as $$
+declare a public.shared_activities; me uuid := auth.uid();
+begin
+  if p_status not in ('accepted', 'declined') then return 'invalid'; end if;
+  select * into a from public.shared_activities where id = p_activity;
+  if not found or public.is_blocked_between(a.owner_id, me) then return 'invalid'; end if;
+  update public.activity_participants set status = p_status where activity_id = p_activity and user_id = me;
+  if not found then return 'invalid'; end if;
+  perform public._post_message(me, a.owner_id,
+    public._name_of(me) || (case when p_status = 'accepted' then ' is coming to "' else ' can''t make "' end) || a.title || '"'
+      || case when btrim(coalesce(p_note, '')) <> '' then ': ' || btrim(p_note) else '' end,
+    'reply', p_activity);
+  return p_status;
+end $$;
+
+-- Owner edits the event. Everyone invited (who has not declined) is messaged and sees the new version. Returns how many were told.
+create or replace function public.update_shared_event(p_id uuid, p_title text, p_details jsonb) returns integer
+language plpgsql security definer set search_path = public as $$
+declare a public.shared_activities; n integer := 0; r record; nt text; nd jsonb; summary text;
+begin
+  select * into a from public.shared_activities where id = p_id and owner_id = auth.uid();
+  if not found then return 0; end if;
+  nt := left(btrim(coalesce(nullif(p_title, ''), a.title)), 200); nd := coalesce(p_details, a.details);
+  if nt is not distinct from a.title and nd is not distinct from a.details then return 0; end if;
+  update public.shared_activities set title = nt, details = nd where id = p_id;
+  summary := nullif(concat_ws(', ', nd->>'date', nullif(concat_ws('-', nd->>'start', nd->>'end'), ''), nd->>'location'), '');
+  for r in select user_id from public.activity_participants where activity_id = p_id and user_id is not null and status <> 'declined' loop
+    if public._post_message(auth.uid(), r.user_id, public._name_of(auth.uid()) || ' updated "' || nt || '"' || coalesce(': ' || summary, ''), 'update', p_id) then n := n + 1; end if;
+  end loop;
+  return n;
+end $$;
+
+-- Owner cancels the event for everyone
+create or replace function public.delete_shared_event(p_id uuid) returns void
+language plpgsql security definer set search_path = public as $$
+declare a public.shared_activities; r record;
+begin
+  select * into a from public.shared_activities where id = p_id and owner_id = auth.uid();
+  if not found then return; end if;
+  for r in select user_id from public.activity_participants where activity_id = p_id and user_id is not null loop
+    perform public._post_message(auth.uid(), r.user_id, public._name_of(auth.uid()) || ' cancelled "' || a.title || '"', 'cancel', null);
+  end loop;
+  delete from public.shared_activities where id = p_id;
+end $$;
+
+-- Every joint event you own or were invited to (not blocked), with who is coming
+create or replace function public.my_shared_events()
+returns table (id uuid, owner_id uuid, owner_name text, title text, details jsonb, updated_at timestamptz,
+               is_owner boolean, my_status text, participants jsonb)
+language sql stable security definer set search_path = public as $$
+  select a.id, a.owner_id, public._name_of(a.owner_id), a.title, a.details, a.updated_at,
+         (a.owner_id = auth.uid()),
+         (select pp.status from public.activity_participants pp where pp.activity_id = a.id and pp.user_id = auth.uid()),
+         coalesce((select jsonb_agg(jsonb_build_object('user_id', pp.user_id, 'name', public._name_of(pp.user_id), 'status', pp.status) order by pp.status)
+                     from public.activity_participants pp where pp.activity_id = a.id and pp.user_id is not null), '[]'::jsonb)
+  from public.shared_activities a
+  where auth.uid() is not null
+    and (a.owner_id = auth.uid()
+         or (exists (select 1 from public.activity_participants pp where pp.activity_id = a.id and pp.user_id = auth.uid())
+             and not public.is_blocked_between(a.owner_id, auth.uid())))
+  order by a.created_at desc;
+$$;
+
+revoke all on function public.send_message(uuid, text), public.conversation(uuid, integer), public.inbox(), public.mark_read(uuid),
+  public.create_shared_event(text, jsonb, uuid[], text), public.invite_to_event(uuid, uuid, text), public.respond_to_event(uuid, text, text),
+  public.update_shared_event(uuid, text, jsonb), public.delete_shared_event(uuid), public.my_shared_events() from public, anon;
+grant execute on function public.send_message(uuid, text), public.conversation(uuid, integer), public.inbox(), public.mark_read(uuid),
+  public.create_shared_event(text, jsonb, uuid[], text), public.invite_to_event(uuid, uuid, text), public.respond_to_event(uuid, text, text),
+  public.update_shared_event(uuid, text, jsonb), public.delete_shared_event(uuid), public.my_shared_events() to authenticated;

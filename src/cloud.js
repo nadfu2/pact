@@ -107,6 +107,91 @@ export const cloud = {
     try { await sb.rpc('rate_place', { p_place: placeId, p_rating: rating || 0 }); } catch (e) { /* ignore */ }
   },
 
+  // ---- Friends (see supabase/migrations/0003_friends.sql) ----
+  async claimUsername(username) {
+    const { data, error } = await sb.rpc('claim_username', { p_username: username });
+    if (error) throw new Error(error.message || 'username unavailable');
+    return data;   // ok | taken | invalid | not_signed_in
+  },
+  async findUser(username) {
+    const { data, error } = await sb.rpc('find_user', { p_username: username });
+    if (error) throw new Error(error.message || 'search unavailable');
+    return (data && data[0]) || null;   // { id, display_name, username, relation }
+  },
+  async sendFriendRequest(userId) {
+    const { data, error } = await sb.rpc('send_friend_request', { p_user: userId });
+    if (error) throw new Error(error.message || 'request failed');
+    return data;   // sent | accepted | already_friends | invalid
+  },
+  async respondFriendRequest(requestId, accept) {
+    const { data, error } = await sb.rpc('respond_friend_request', { p_id: requestId, p_accept: !!accept });
+    if (error) throw new Error(error.message || 'request failed');
+    return data;
+  },
+  async friendRequests() {
+    const { data, error } = await sb.rpc('my_friend_requests');
+    if (error) throw new Error(error.message || 'requests unavailable');
+    return data || [];
+  },
+  async friends() {
+    const { data, error } = await sb.rpc('my_friends');
+    if (error) throw new Error(error.message || 'friends unavailable');
+    return data || [];
+  },
+  async removeFriend(userId) {
+    const { error } = await sb.rpc('remove_friend', { p_user: userId });
+    if (error) throw new Error(error.message || 'could not remove');
+  },
+
+  // ---- Messages and joint events (see supabase/migrations/0004_social.sql) ----
+  async sendMessage(toUser, body) {
+    const { data, error } = await sb.rpc('send_message', { p_to: toUser, p_body: body });
+    if (error) throw new Error(error.message || 'send failed');
+    return data;   // sent | not_friends | invalid
+  },
+  async conversation(userId, limit = 100) {
+    const { data, error } = await sb.rpc('conversation', { p_user: userId, p_limit: limit });
+    if (error) throw new Error(error.message || 'messages unavailable');
+    return data || [];   // newest first
+  },
+  async inbox() {
+    const { data, error } = await sb.rpc('inbox');
+    if (error) throw new Error(error.message || 'inbox unavailable');
+    return data || [];
+  },
+  async markRead(userId) {
+    try { await sb.rpc('mark_read', { p_user: userId }); } catch (e) { /* ignore */ }
+  },
+  async createSharedEvent(title, details, inviteeIds, note) {
+    const { data, error } = await sb.rpc('create_shared_event', { p_title: title, p_details: details, p_invitees: inviteeIds, p_note: note || '' });
+    if (error) throw new Error(error.message || 'could not create the event');
+    return data;   // event id
+  },
+  async inviteToEvent(eventId, userId, note) {
+    const { data, error } = await sb.rpc('invite_to_event', { p_activity: eventId, p_user: userId, p_note: note || '' });
+    if (error) throw new Error(error.message || 'could not invite');
+    return data;   // invited | already | invalid
+  },
+  async respondToEvent(eventId, status, note) {
+    const { data, error } = await sb.rpc('respond_to_event', { p_activity: eventId, p_status: status, p_note: note || '' });
+    if (error) throw new Error(error.message || 'could not answer');
+    return data;
+  },
+  async updateSharedEvent(eventId, title, details) {
+    const { data, error } = await sb.rpc('update_shared_event', { p_id: eventId, p_title: title, p_details: details });
+    if (error) throw new Error(error.message || 'could not update');
+    return data;   // how many people were told
+  },
+  async deleteSharedEvent(eventId) {
+    const { error } = await sb.rpc('delete_shared_event', { p_id: eventId });
+    if (error) throw new Error(error.message || 'could not cancel');
+  },
+  async mySharedEvents() {
+    const { data, error } = await sb.rpc('my_shared_events');
+    if (error) throw new Error(error.message || 'events unavailable');
+    return data || [];
+  },
+
   // Permanently deletes the account and all its data (server function, needs the service role key).
   async deleteAccount() {
     const { data } = await sb.auth.getSession();

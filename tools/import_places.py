@@ -23,7 +23,7 @@ Overture's current schema (Sept 2026 onwards) describes categories with `taxonom
 the old `categories` field was removed. This script reads the new fields and falls back to the old one.
 Data: Overture Maps Foundation (CDLA Permissive / Apache 2.0 for Foursquare-sourced records). Keep the credit line.
 """
-import argparse, csv, json, os, shutil, subprocess, sys, urllib.error, urllib.parse, urllib.request
+import argparse, csv, json, os, re, shutil, subprocess, sys, urllib.error, urllib.parse, urllib.request
 from collections import Counter
 
 # bbox = west, south, east, north. min_conf = drop places Overture is less sure exist.
@@ -65,6 +65,8 @@ RULES = [
     ('Sports', 'sports_centre', ['sports_centre', 'sports_center', 'sports_club', 'sports_complex', 'tennis', 'golf_course', 'leisure_centre', 'recreation_center']),
     ('Shopping', 'bookshop',  ['bookstore', 'book_store', 'bookshop']),
     ('Shopping', 'vintage_shop', ['thrift', 'vintage', 'second_hand', 'consignment', 'antique', 'antiques', 'flea']),
+    ('Shopping', 'clothes',   ['clothing', 'fashion', 'boutique', 'shoe_store', 'shoes', 'menswear', 'womens_clothing', 'mens_clothing', 'sneaker']),
+    ('Shopping', 'homeware',  ['furniture', 'home_goods', 'homewares', 'home_decor', 'home_decoration', 'interior_design', 'kitchen_supply', 'houseware', 'lighting_store']),
     ('Shopping', 'record_shop', ['record', 'records', 'vinyl', 'music_store']),
     ('Shopping', 'craft_shop', ['craft', 'art_supply', 'art_supplies', 'hobby']),
     ('Shopping', 'gift_shop', ['gift']),
@@ -72,7 +74,12 @@ RULES = [
 ]
 # Labels containing any of these are never imported (they contain a keyword above but are not what we want).
 EXCLUDE = [['parking'], ['car', 'park'], ['trailer', 'park'], ['rv', 'park'], ['garden', 'center'], ['garden', 'centre'], ['garden', 'supply'],
-           ['airport'], ['hotel'], ['lodging'], ['hospital'], ['school'], ['pet', 'store'], ['barber']]
+           ['airport'], ['hotel'], ['lodging'], ['hospital'], ['school'], ['pet', 'store'], ['barber'],
+           ['auction'], ['auction', 'house'], ['landscaping'], ['landscape'], ['nursery'], ['garden', 'furniture'], ['greenhouse'], ['funeral'], ['cemetery'],
+           ['storage'], ['real', 'estate'], ['car', 'dealer'], ['automotive'], ['pawn'], ['wholesale'], ['warehouse'], ['office'], ['printing'], ['laundry'], ['dentist'],
+           ['salon'], ['insurance'], ['bank'], ['church'], ['mosque'], ['temple']]
+# A place whose NAME contains one of these is never imported (catches auction houses, garden centres etc. whatever their label says).
+BAD_NAME = re.compile(r'\b(auctions?|auctioneers?|bidding|ebay|garden cent(?:re|er)s?|landscap\w*|nursery|nurseries|funeral|crematorium|cemetery|storage|estate agents?|pawn\w*|wholesale|scaffolding|plumbing|recruitment)\b', re.I)
 
 
 def tokens(label):
@@ -95,6 +102,23 @@ def labels_of(props):
     out += list(tx.get('alternates') or [])
     if old.get('primary'): out.append(old['primary'])
     out += list(old.get('alternate') or [])
+    seen, res = set(), []
+    for l in out:
+        if l and l not in seen:
+            seen.add(l); res.append(l)
+    return res
+
+
+def core_labels(props):
+    """Only the place's own main label(s) and its parents. The long list of 'alternate' labels is ignored on purpose:
+    that list is where an auction house ends up tagged as a garden."""
+    tx = props.get('taxonomy') or {}
+    old = props.get('categories') or {}
+    out = []
+    if tx.get('primary'): out.append(tx['primary'])
+    if props.get('basic_category'): out.append(props['basic_category'])
+    out += list(reversed(tx.get('hierarchy') or []))
+    if old.get('primary'): out.append(old['primary'])
     seen, res = set(), []
     for l in out:
         if l and l not in seen:
@@ -157,8 +181,10 @@ def transform(path, city_key):
             conf = 0.5 if conf is None else float(conf)
             if conf < cfg['min_conf']:
                 stats['low confidence'] += 1; continue
+            if BAD_NAME.search(name):
+                stats['name looks like a business, not a place to visit'] += 1; continue
             labels = labels_of(props)
-            hit = classify(labels)
+            hit = classify(core_labels(props) or labels)
             if not hit:
                 stats['not a kind we suggest'] += 1
                 if labels: unmapped[labels[0]] += 1

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { cloud } from './cloud.js';
+import { findSkillPlan, planMilestones, planResources, skillPlanLabel } from './skills.js';
 import {
   Home,
   Clock,
@@ -47,7 +48,7 @@ import {
 
 
 // Pre-compiled Tailwind CSS for this app, so it renders the same regardless of the host's Tailwind version.
-const ROAM_CSS = "*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:\"\"}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width:640px){.container{max-width:640px}}@media (min-width:768px){.container{max-width:768px}}@media (min-width:1024px){.container{max-width:1024px}}@media (min-width:1280px){.container{max-width:1280px}}@media (min-width:1536px){.container{max-width:1536px}}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.inset-x-0{left:0;right:0}.inset-x-3{left:.75rem;right:.75rem}.-top-2{top:-.5rem}.bottom-16{bottom:4rem}.bottom-20{bottom:5rem}.bottom-24{bottom:6rem}.left-1{left:.25rem}.left-1\\/2{left:50%}.left-\\[30\\%\\]{left:30%}.right-4{right:1rem}.right-\\[30\\%\\]{right:30%}.top-0{top:0}.top-2{top:.5rem}.z-0{z-index:0}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-40{z-index:40}.z-50{z-index:50}.m-3{margin:.75rem}.mx-auto{margin-left:auto;margin-right:auto}.-mt-1{margin-top:-.25rem}.mb-0{margin-bottom:0}.mb-0\\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.ml-1{margin-left:.25rem}.ml-1\\.5{margin-left:.375rem}.ml-2{margin-left:.5rem}.ml-8{margin-left:2rem}.mr-1{margin-right:.25rem}.mt-0{margin-top:0}.mt-0\\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-4{margin-top:1rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.contents{display:contents}.hidden{display:none}.h-0{height:0}.h-0\\.5{height:.125rem}.h-1{height:.25rem}.h-1\\.5{height:.375rem}.h-10{height:2.5rem}.h-11{height:2.75rem}.h-12{height:3rem}.h-2{height:.5rem}.h-24{height:6rem}.h-3{height:.75rem}.h-3\\.5{height:.875rem}.h-4{height:1rem}.h-44{height:11rem}.h-5{height:1.25rem}.h-52{height:13rem}.h-56{height:14rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-full{height:100%}.h-screen{height:100vh}.max-h-\\[88vh\\]{max-height:88vh}.min-h-full{min-height:100%}.w-1{width:.25rem}.w-1\\.5{width:.375rem}.w-11{width:2.75rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-16{width:4rem}.w-3{width:.75rem}.w-3\\.5{width:.875rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-full{width:100%}.min-w-0{min-width:0}.min-w-\\[140px\\]{min-width:140px}.min-w-\\[160px\\]{min-width:160px}.min-w-\\[30\\%\\]{min-width:30%}.max-w-\\[230px\\]{max-width:230px}.max-w-\\[48\\%\\]{max-width:48%}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1{--tw-translate-x:-0.25rem}.-translate-x-1,.-translate-x-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-x-1\\/2{--tw-translate-x:-50%}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}@keyframes spin{to{transform:rotate(1turn)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid-cols-7{grid-template-columns:repeat(7,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.items-stretch{align-items:stretch}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0{gap:0}.gap-0\\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-5{gap:1.25rem}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-stone-200>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(231 229 228/var(--tw-divide-opacity,1))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.rounded{border-radius:.25rem}.rounded-\\[14px\\]{border-radius:14px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.border{border-width:1px}.border-2{border-width:2px}.border-\\[1\\.5px\\]{border-width:1.5px}.border-x{border-left-width:1px;border-right-width:1px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-l-2{border-left-width:2px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-t-2{border-top-width:2px}.border-dashed{border-style:dashed}.border-amber-600{--tw-border-opacity:1;border-color:rgb(217 119 6/var(--tw-border-opacity,1))}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254/var(--tw-border-opacity,1))}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254/var(--tw-border-opacity,1))}.border-blue-300{--tw-border-opacity:1;border-color:rgb(147 197 253/var(--tw-border-opacity,1))}.border-blue-400{--tw-border-opacity:1;border-color:rgb(96 165 250/var(--tw-border-opacity,1))}.border-blue-50{--tw-border-opacity:1;border-color:rgb(239 246 255/var(--tw-border-opacity,1))}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity,1))}.border-blue-600{--tw-border-opacity:1;border-color:rgb(37 99 235/var(--tw-border-opacity,1))}.border-blue-700{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.border-blue-800{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.border-blue-900{--tw-border-opacity:1;border-color:rgb(30 58 138/var(--tw-border-opacity,1))}.border-blue-950{--tw-border-opacity:1;border-color:rgb(23 37 84/var(--tw-border-opacity,1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183/var(--tw-border-opacity,1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255/var(--tw-border-opacity,1))}.border-purple-200{--tw-border-opacity:1;border-color:rgb(233 213 255/var(--tw-border-opacity,1))}.border-purple-300{--tw-border-opacity:1;border-color:rgb(216 180 254/var(--tw-border-opacity,1))}.border-purple-400{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.border-purple-50{--tw-border-opacity:1;border-color:rgb(250 245 255/var(--tw-border-opacity,1))}.border-purple-500{--tw-border-opacity:1;border-color:rgb(168 85 247/var(--tw-border-opacity,1))}.border-purple-600{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.border-purple-700{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.border-purple-900{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.border-purple-950{--tw-border-opacity:1;border-color:rgb(59 7 100/var(--tw-border-opacity,1))}.border-rose-100{--tw-border-opacity:1;border-color:rgb(255 228 230/var(--tw-border-opacity,1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211/var(--tw-border-opacity,1))}.border-rose-300{--tw-border-opacity:1;border-color:rgb(253 164 175/var(--tw-border-opacity,1))}.border-rose-400{--tw-border-opacity:1;border-color:rgb(251 113 133/var(--tw-border-opacity,1))}.border-rose-50{--tw-border-opacity:1;border-color:rgb(255 241 242/var(--tw-border-opacity,1))}.border-rose-500{--tw-border-opacity:1;border-color:rgb(244 63 94/var(--tw-border-opacity,1))}.border-rose-600{--tw-border-opacity:1;border-color:rgb(225 29 72/var(--tw-border-opacity,1))}.border-rose-700{--tw-border-opacity:1;border-color:rgb(190 18 60/var(--tw-border-opacity,1))}.border-rose-800{--tw-border-opacity:1;border-color:rgb(159 18 57/var(--tw-border-opacity,1))}.border-rose-900{--tw-border-opacity:1;border-color:rgb(136 19 55/var(--tw-border-opacity,1))}.border-rose-950{--tw-border-opacity:1;border-color:rgb(76 5 25/var(--tw-border-opacity,1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225/var(--tw-border-opacity,1))}.border-slate-400{--tw-border-opacity:1;border-color:rgb(148 163 184/var(--tw-border-opacity,1))}.border-slate-50{--tw-border-opacity:1;border-color:rgb(248 250 252/var(--tw-border-opacity,1))}.border-slate-500{--tw-border-opacity:1;border-color:rgb(100 116 139/var(--tw-border-opacity,1))}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity,1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59/var(--tw-border-opacity,1))}.border-slate-900{--tw-border-opacity:1;border-color:rgb(15 23 42/var(--tw-border-opacity,1))}.border-slate-950{--tw-border-opacity:1;border-color:rgb(2 6 23/var(--tw-border-opacity,1))}.border-stone-100{--tw-border-opacity:1;border-color:rgb(245 245 244/var(--tw-border-opacity,1))}.border-stone-200{--tw-border-opacity:1;border-color:rgb(231 229 228/var(--tw-border-opacity,1))}.border-stone-200\\/30{border-color:hsla(20,6%,90%,.3)}.border-stone-300{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.border-stone-400{--tw-border-opacity:1;border-color:rgb(168 162 158/var(--tw-border-opacity,1))}.border-stone-50{--tw-border-opacity:1;border-color:rgb(250 250 249/var(--tw-border-opacity,1))}.border-stone-500{--tw-border-opacity:1;border-color:rgb(120 113 108/var(--tw-border-opacity,1))}.border-stone-600{--tw-border-opacity:1;border-color:rgb(87 83 78/var(--tw-border-opacity,1))}.border-stone-700{--tw-border-opacity:1;border-color:rgb(68 64 60/var(--tw-border-opacity,1))}.border-stone-800{--tw-border-opacity:1;border-color:rgb(41 37 36/var(--tw-border-opacity,1))}.border-stone-900{--tw-border-opacity:1;border-color:rgb(28 25 23/var(--tw-border-opacity,1))}.border-stone-950{--tw-border-opacity:1;border-color:rgb(12 10 9/var(--tw-border-opacity,1))}.border-transparent{border-color:transparent}.bg-\\[\\#EDEAE0\\]{--tw-bg-opacity:1;background-color:rgb(237 234 224/var(--tw-bg-opacity,1))}.bg-\\[\\#F5F3EC\\]{--tw-bg-opacity:1;background-color:rgb(245 243 236/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F5\\]{--tw-bg-opacity:1;background-color:rgb(250 248 245/var(--tw-bg-opacity,1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235/var(--tw-bg-opacity,1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0/var(--tw-bg-opacity,1))}.bg-black\\/40{background-color:rgba(0,0,0,.4)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254/var(--tw-bg-opacity,1))}.bg-blue-200{--tw-bg-opacity:1;background-color:rgb(191 219 254/var(--tw-bg-opacity,1))}.bg-blue-300{--tw-bg-opacity:1;background-color:rgb(147 197 253/var(--tw-bg-opacity,1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250/var(--tw-bg-opacity,1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.bg-blue-800{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.bg-blue-900{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84/var(--tw-bg-opacity,1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105/var(--tw-bg-opacity,1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255/var(--tw-bg-opacity,1))}.bg-purple-200{--tw-bg-opacity:1;background-color:rgb(233 213 255/var(--tw-bg-opacity,1))}.bg-purple-300{--tw-bg-opacity:1;background-color:rgb(216 180 254/var(--tw-bg-opacity,1))}.bg-purple-400{--tw-bg-opacity:1;background-color:rgb(192 132 252/var(--tw-bg-opacity,1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255/var(--tw-bg-opacity,1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234/var(--tw-bg-opacity,1))}.bg-purple-700{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.bg-purple-800{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.bg-purple-900{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.bg-purple-950{--tw-bg-opacity:1;background-color:rgb(59 7 100/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-200{--tw-bg-opacity:1;background-color:rgb(254 205 211/var(--tw-bg-opacity,1))}.bg-rose-300{--tw-bg-opacity:1;background-color:rgb(253 164 175/var(--tw-bg-opacity,1))}.bg-rose-400{--tw-bg-opacity:1;background-color:rgb(251 113 133/var(--tw-bg-opacity,1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242/var(--tw-bg-opacity,1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94/var(--tw-bg-opacity,1))}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-rose-700{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.bg-rose-800{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.bg-rose-900{--tw-bg-opacity:1;background-color:rgb(136 19 55/var(--tw-bg-opacity,1))}.bg-rose-950{--tw-bg-opacity:1;background-color:rgb(76 5 25/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225/var(--tw-bg-opacity,1))}.bg-slate-400{--tw-bg-opacity:1;background-color:rgb(148 163 184/var(--tw-bg-opacity,1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.bg-slate-500{--tw-bg-opacity:1;background-color:rgb(100 116 139/var(--tw-bg-opacity,1))}.bg-slate-600{--tw-bg-opacity:1;background-color:rgb(71 85 105/var(--tw-bg-opacity,1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23/var(--tw-bg-opacity,1))}.bg-slate-950\\/70{background-color:rgba(2,6,23,.7)}.bg-stone-100{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.bg-stone-200{--tw-bg-opacity:1;background-color:rgb(231 229 228/var(--tw-bg-opacity,1))}.bg-stone-300{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.bg-stone-400{--tw-bg-opacity:1;background-color:rgb(168 162 158/var(--tw-bg-opacity,1))}.bg-stone-50{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.bg-stone-500{--tw-bg-opacity:1;background-color:rgb(120 113 108/var(--tw-bg-opacity,1))}.bg-stone-600{--tw-bg-opacity:1;background-color:rgb(87 83 78/var(--tw-bg-opacity,1))}.bg-stone-700{--tw-bg-opacity:1;background-color:rgb(68 64 60/var(--tw-bg-opacity,1))}.bg-stone-800{--tw-bg-opacity:1;background-color:rgb(41 37 36/var(--tw-bg-opacity,1))}.bg-stone-900{--tw-bg-opacity:1;background-color:rgb(28 25 23/var(--tw-bg-opacity,1))}.bg-stone-950{--tw-bg-opacity:1;background-color:rgb(12 10 9/var(--tw-bg-opacity,1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.p-1{padding:.25rem}.p-1\\.5{padding:.375rem}.p-2{padding:.5rem}.p-2\\.5{padding:.625rem}.p-3{padding:.75rem}.p-3\\.5{padding:.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-0{padding-left:0;padding-right:0}.px-0\\.5{padding-left:.125rem;padding-right:.125rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-0{padding-top:0;padding-bottom:0}.py-0\\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-px{padding-top:1px;padding-bottom:1px}.pb-0{padding-bottom:0}.pb-0\\.5{padding-bottom:.125rem}.pb-1{padding-bottom:.25rem}.pb-2{padding-bottom:.5rem}.pb-28{padding-bottom:7rem}.pb-3{padding-bottom:.75rem}.pb-3\\.5{padding-bottom:.875rem}.pb-8{padding-bottom:2rem}.pl-3{padding-left:.75rem}.pl-3\\.5{padding-left:.875rem}.pr-1{padding-right:.25rem}.pr-4{padding-right:1rem}.pt-0{padding-top:0}.pt-1{padding-top:.25rem}.pt-1\\.5{padding-top:.375rem}.pt-2{padding-top:.5rem}.pt-4{padding-top:1rem}.pt-5{padding-top:1.25rem}.pt-6{padding-top:1.5rem}.pt-7{padding-top:1.75rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-\\[10px\\]{font-size:10px}.text-\\[11px\\]{font-size:11px}.text-\\[13px\\]{font-size:13px}.text-\\[28px\\]{font-size:28px}.text-\\[38px\\]{font-size:38px}.text-\\[44px\\]{font-size:44px}.text-\\[52px\\]{font-size:52px}.text-\\[8\\.5px\\]{font-size:8.5px}.text-\\[9px\\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-light{font-weight:300}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.normal-case{text-transform:none}.italic{font-style:italic}.leading-\\[0\\.92\\]{line-height:.92}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-normal{letter-spacing:0}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-blue-100{--tw-text-opacity:1;color:rgb(219 234 254/var(--tw-text-opacity,1))}.text-blue-200{--tw-text-opacity:1;color:rgb(191 219 254/var(--tw-text-opacity,1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-blue-50{--tw-text-opacity:1;color:rgb(239 246 255/var(--tw-text-opacity,1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235/var(--tw-text-opacity,1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216/var(--tw-text-opacity,1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175/var(--tw-text-opacity,1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138/var(--tw-text-opacity,1))}.text-blue-950{--tw-text-opacity:1;color:rgb(23 37 84/var(--tw-text-opacity,1))}.text-purple-100{--tw-text-opacity:1;color:rgb(243 232 255/var(--tw-text-opacity,1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255/var(--tw-text-opacity,1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252/var(--tw-text-opacity,1))}.text-purple-50{--tw-text-opacity:1;color:rgb(250 245 255/var(--tw-text-opacity,1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247/var(--tw-text-opacity,1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234/var(--tw-text-opacity,1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206/var(--tw-text-opacity,1))}.text-purple-800{--tw-text-opacity:1;color:rgb(107 33 168/var(--tw-text-opacity,1))}.text-purple-900{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.text-purple-950{--tw-text-opacity:1;color:rgb(59 7 100/var(--tw-text-opacity,1))}.text-rose-100{--tw-text-opacity:1;color:rgb(255 228 230/var(--tw-text-opacity,1))}.text-rose-200{--tw-text-opacity:1;color:rgb(254 205 211/var(--tw-text-opacity,1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-50{--tw-text-opacity:1;color:rgb(255 241 242/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57/var(--tw-text-opacity,1))}.text-rose-900{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.text-rose-950{--tw-text-opacity:1;color:rgb(76 5 25/var(--tw-text-opacity,1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-50{--tw-text-opacity:1;color:rgb(248 250 252/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23/var(--tw-text-opacity,1))}.text-stone-100{--tw-text-opacity:1;color:rgb(245 245 244/var(--tw-text-opacity,1))}.text-stone-200{--tw-text-opacity:1;color:rgb(231 229 228/var(--tw-text-opacity,1))}.text-stone-300{--tw-text-opacity:1;color:rgb(214 211 209/var(--tw-text-opacity,1))}.text-stone-400{--tw-text-opacity:1;color:rgb(168 162 158/var(--tw-text-opacity,1))}.text-stone-50{--tw-text-opacity:1;color:rgb(250 250 249/var(--tw-text-opacity,1))}.text-stone-500{--tw-text-opacity:1;color:rgb(120 113 108/var(--tw-text-opacity,1))}.text-stone-600{--tw-text-opacity:1;color:rgb(87 83 78/var(--tw-text-opacity,1))}.text-stone-700{--tw-text-opacity:1;color:rgb(68 64 60/var(--tw-text-opacity,1))}.text-stone-800{--tw-text-opacity:1;color:rgb(41 37 36/var(--tw-text-opacity,1))}.text-stone-900{--tw-text-opacity:1;color:rgb(28 25 23/var(--tw-text-opacity,1))}.text-stone-950{--tw-text-opacity:1;color:rgb(12 10 9/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.text-white\\/80{color:hsla(0,0%,100%,.8)}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.opacity-0{opacity:0}.opacity-70{opacity:.7}.opacity-75{opacity:.75}.opacity-80{opacity:.8}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-2xl,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.shadow-sm,.shadow-xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.\\[out\\:json\\]{out:json}.\\[timeout\\:20\\]{timeout:20}#root,body,html{margin:0;height:100%;background:#f5f3ec;color-scheme:light}.file\\:mr-2::file-selector-button{margin-right:.5rem}.file\\:border-0::file-selector-button{border-width:0}.file\\:bg-purple-900::file-selector-button{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.file\\:px-2\\.5::file-selector-button{padding-left:.625rem;padding-right:.625rem}.file\\:py-1\\.5::file-selector-button{padding-top:.375rem;padding-bottom:.375rem}.file\\:text-\\[10px\\]::file-selector-button{font-size:10px}.file\\:uppercase::file-selector-button{text-transform:uppercase}.file\\:tracking-wider::file-selector-button{letter-spacing:.05em}.file\\:text-white::file-selector-button{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:border-blue-800:hover{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.hover\\:border-purple-400:hover{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.hover\\:border-purple-600:hover{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.hover\\:border-purple-700:hover{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.hover\\:border-purple-800:hover{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.hover\\:border-purple-900:hover{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.hover\\:bg-blue-50:hover{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.hover\\:bg-blue-600:hover{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.hover\\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.hover\\:bg-blue-800:hover{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.hover\\:bg-blue-900:hover{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.hover\\:bg-purple-700:hover{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.hover\\:bg-purple-800:hover{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.hover\\:bg-purple-900:hover{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.hover\\:bg-rose-600:hover{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.hover\\:bg-rose-700:hover{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.hover\\:bg-rose-800:hover{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.hover\\:bg-stone-100:hover{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.hover\\:bg-stone-300:hover{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.hover\\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.hover\\:bg-white\\/10:hover{background-color:hsla(0,0%,100%,.1)}.hover\\:text-purple-900:hover{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.hover\\:text-rose-700:hover{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.hover\\:text-rose-900:hover{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.hover\\:text-slate-700:hover{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.hover\\:text-slate-900:hover{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.hover\\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:opacity-100:hover{opacity:1}.focus\\:border-stone-300:focus{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.disabled\\:opacity-30:disabled{opacity:.3}.disabled\\:opacity-40:disabled{opacity:.4}@media (min-width:640px){.sm\\:items-center{align-items:center}}";
+const ROAM_CSS = "*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:\"\"}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width:640px){.container{max-width:640px}}@media (min-width:768px){.container{max-width:768px}}@media (min-width:1024px){.container{max-width:1024px}}@media (min-width:1280px){.container{max-width:1280px}}@media (min-width:1536px){.container{max-width:1536px}}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.visible{visibility:visible}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.inset-x-0{left:0;right:0}.inset-x-3{left:.75rem;right:.75rem}.-top-2{top:-.5rem}.bottom-16{bottom:4rem}.bottom-20{bottom:5rem}.bottom-24{bottom:6rem}.left-1{left:.25rem}.left-1\\/2{left:50%}.left-\\[30\\%\\]{left:30%}.right-4{right:1rem}.right-\\[30\\%\\]{right:30%}.top-0{top:0}.top-2{top:.5rem}.z-0{z-index:0}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-40{z-index:40}.z-50{z-index:50}.m-3{margin:.75rem}.mx-auto{margin-left:auto;margin-right:auto}.-mt-1{margin-top:-.25rem}.mb-0{margin-bottom:0}.mb-0\\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.ml-1{margin-left:.25rem}.ml-1\\.5{margin-left:.375rem}.ml-2{margin-left:.5rem}.ml-8{margin-left:2rem}.mr-1{margin-right:.25rem}.mt-0{margin-top:0}.mt-0\\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-4{margin-top:1rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.contents{display:contents}.\\!hidden{display:none!important}.hidden{display:none}.h-0{height:0}.h-0\\.5{height:.125rem}.h-1{height:.25rem}.h-1\\.5{height:.375rem}.h-10{height:2.5rem}.h-11{height:2.75rem}.h-12{height:3rem}.h-2{height:.5rem}.h-24{height:6rem}.h-3{height:.75rem}.h-3\\.5{height:.875rem}.h-4{height:1rem}.h-44{height:11rem}.h-5{height:1.25rem}.h-52{height:13rem}.h-56{height:14rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-full{height:100%}.h-screen{height:100vh}.max-h-72{max-height:18rem}.max-h-\\[88vh\\]{max-height:88vh}.min-h-full{min-height:100%}.w-1{width:.25rem}.w-1\\.5{width:.375rem}.w-11{width:2.75rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-16{width:4rem}.w-3{width:.75rem}.w-3\\.5{width:.875rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-full{width:100%}.min-w-0{min-width:0}.min-w-\\[140px\\]{min-width:140px}.min-w-\\[160px\\]{min-width:160px}.min-w-\\[30\\%\\]{min-width:30%}.max-w-\\[230px\\]{max-width:230px}.max-w-\\[48\\%\\]{max-width:48%}.max-w-\\[80\\%\\]{max-width:80%}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1{--tw-translate-x:-0.25rem}.-translate-x-1,.-translate-x-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-x-1\\/2{--tw-translate-x:-50%}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}@keyframes spin{to{transform:rotate(1turn)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid-cols-7{grid-template-columns:repeat(7,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.items-stretch{align-items:stretch}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0{gap:0}.gap-0\\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-5{gap:1.25rem}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-stone-200>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(231 229 228/var(--tw-divide-opacity,1))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.rounded{border-radius:.25rem}.rounded-\\[14px\\]{border-radius:14px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.border{border-width:1px}.border-2{border-width:2px}.border-\\[1\\.5px\\]{border-width:1.5px}.border-x{border-left-width:1px;border-right-width:1px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-l-2{border-left-width:2px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-t-2{border-top-width:2px}.border-dashed{border-style:dashed}.border-amber-600{--tw-border-opacity:1;border-color:rgb(217 119 6/var(--tw-border-opacity,1))}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254/var(--tw-border-opacity,1))}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254/var(--tw-border-opacity,1))}.border-blue-300{--tw-border-opacity:1;border-color:rgb(147 197 253/var(--tw-border-opacity,1))}.border-blue-400{--tw-border-opacity:1;border-color:rgb(96 165 250/var(--tw-border-opacity,1))}.border-blue-50{--tw-border-opacity:1;border-color:rgb(239 246 255/var(--tw-border-opacity,1))}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity,1))}.border-blue-600{--tw-border-opacity:1;border-color:rgb(37 99 235/var(--tw-border-opacity,1))}.border-blue-700{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.border-blue-800{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.border-blue-900{--tw-border-opacity:1;border-color:rgb(30 58 138/var(--tw-border-opacity,1))}.border-blue-950{--tw-border-opacity:1;border-color:rgb(23 37 84/var(--tw-border-opacity,1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183/var(--tw-border-opacity,1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255/var(--tw-border-opacity,1))}.border-purple-200{--tw-border-opacity:1;border-color:rgb(233 213 255/var(--tw-border-opacity,1))}.border-purple-300{--tw-border-opacity:1;border-color:rgb(216 180 254/var(--tw-border-opacity,1))}.border-purple-400{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.border-purple-50{--tw-border-opacity:1;border-color:rgb(250 245 255/var(--tw-border-opacity,1))}.border-purple-500{--tw-border-opacity:1;border-color:rgb(168 85 247/var(--tw-border-opacity,1))}.border-purple-600{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.border-purple-700{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.border-purple-900{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.border-purple-950{--tw-border-opacity:1;border-color:rgb(59 7 100/var(--tw-border-opacity,1))}.border-rose-100{--tw-border-opacity:1;border-color:rgb(255 228 230/var(--tw-border-opacity,1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211/var(--tw-border-opacity,1))}.border-rose-300{--tw-border-opacity:1;border-color:rgb(253 164 175/var(--tw-border-opacity,1))}.border-rose-400{--tw-border-opacity:1;border-color:rgb(251 113 133/var(--tw-border-opacity,1))}.border-rose-50{--tw-border-opacity:1;border-color:rgb(255 241 242/var(--tw-border-opacity,1))}.border-rose-500{--tw-border-opacity:1;border-color:rgb(244 63 94/var(--tw-border-opacity,1))}.border-rose-600{--tw-border-opacity:1;border-color:rgb(225 29 72/var(--tw-border-opacity,1))}.border-rose-700{--tw-border-opacity:1;border-color:rgb(190 18 60/var(--tw-border-opacity,1))}.border-rose-800{--tw-border-opacity:1;border-color:rgb(159 18 57/var(--tw-border-opacity,1))}.border-rose-900{--tw-border-opacity:1;border-color:rgb(136 19 55/var(--tw-border-opacity,1))}.border-rose-950{--tw-border-opacity:1;border-color:rgb(76 5 25/var(--tw-border-opacity,1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225/var(--tw-border-opacity,1))}.border-slate-400{--tw-border-opacity:1;border-color:rgb(148 163 184/var(--tw-border-opacity,1))}.border-slate-50{--tw-border-opacity:1;border-color:rgb(248 250 252/var(--tw-border-opacity,1))}.border-slate-500{--tw-border-opacity:1;border-color:rgb(100 116 139/var(--tw-border-opacity,1))}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity,1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59/var(--tw-border-opacity,1))}.border-slate-900{--tw-border-opacity:1;border-color:rgb(15 23 42/var(--tw-border-opacity,1))}.border-slate-950{--tw-border-opacity:1;border-color:rgb(2 6 23/var(--tw-border-opacity,1))}.border-stone-100{--tw-border-opacity:1;border-color:rgb(245 245 244/var(--tw-border-opacity,1))}.border-stone-200{--tw-border-opacity:1;border-color:rgb(231 229 228/var(--tw-border-opacity,1))}.border-stone-200\\/30{border-color:hsla(20,6%,90%,.3)}.border-stone-300{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.border-stone-400{--tw-border-opacity:1;border-color:rgb(168 162 158/var(--tw-border-opacity,1))}.border-stone-50{--tw-border-opacity:1;border-color:rgb(250 250 249/var(--tw-border-opacity,1))}.border-stone-500{--tw-border-opacity:1;border-color:rgb(120 113 108/var(--tw-border-opacity,1))}.border-stone-600{--tw-border-opacity:1;border-color:rgb(87 83 78/var(--tw-border-opacity,1))}.border-stone-700{--tw-border-opacity:1;border-color:rgb(68 64 60/var(--tw-border-opacity,1))}.border-stone-800{--tw-border-opacity:1;border-color:rgb(41 37 36/var(--tw-border-opacity,1))}.border-stone-900{--tw-border-opacity:1;border-color:rgb(28 25 23/var(--tw-border-opacity,1))}.border-stone-950{--tw-border-opacity:1;border-color:rgb(12 10 9/var(--tw-border-opacity,1))}.border-transparent{border-color:transparent}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255/var(--tw-border-opacity,1))}.bg-\\[\\#EDEAE0\\]{--tw-bg-opacity:1;background-color:rgb(237 234 224/var(--tw-bg-opacity,1))}.bg-\\[\\#F5F3EC\\]{--tw-bg-opacity:1;background-color:rgb(245 243 236/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F5\\]{--tw-bg-opacity:1;background-color:rgb(250 248 245/var(--tw-bg-opacity,1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235/var(--tw-bg-opacity,1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0/var(--tw-bg-opacity,1))}.bg-black\\/40{background-color:rgba(0,0,0,.4)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254/var(--tw-bg-opacity,1))}.bg-blue-200{--tw-bg-opacity:1;background-color:rgb(191 219 254/var(--tw-bg-opacity,1))}.bg-blue-300{--tw-bg-opacity:1;background-color:rgb(147 197 253/var(--tw-bg-opacity,1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250/var(--tw-bg-opacity,1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.bg-blue-800{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.bg-blue-900{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84/var(--tw-bg-opacity,1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105/var(--tw-bg-opacity,1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255/var(--tw-bg-opacity,1))}.bg-purple-200{--tw-bg-opacity:1;background-color:rgb(233 213 255/var(--tw-bg-opacity,1))}.bg-purple-300{--tw-bg-opacity:1;background-color:rgb(216 180 254/var(--tw-bg-opacity,1))}.bg-purple-400{--tw-bg-opacity:1;background-color:rgb(192 132 252/var(--tw-bg-opacity,1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255/var(--tw-bg-opacity,1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234/var(--tw-bg-opacity,1))}.bg-purple-700{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.bg-purple-800{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.bg-purple-900{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.bg-purple-950{--tw-bg-opacity:1;background-color:rgb(59 7 100/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-200{--tw-bg-opacity:1;background-color:rgb(254 205 211/var(--tw-bg-opacity,1))}.bg-rose-300{--tw-bg-opacity:1;background-color:rgb(253 164 175/var(--tw-bg-opacity,1))}.bg-rose-400{--tw-bg-opacity:1;background-color:rgb(251 113 133/var(--tw-bg-opacity,1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242/var(--tw-bg-opacity,1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94/var(--tw-bg-opacity,1))}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-rose-700{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.bg-rose-800{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.bg-rose-900{--tw-bg-opacity:1;background-color:rgb(136 19 55/var(--tw-bg-opacity,1))}.bg-rose-950{--tw-bg-opacity:1;background-color:rgb(76 5 25/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225/var(--tw-bg-opacity,1))}.bg-slate-400{--tw-bg-opacity:1;background-color:rgb(148 163 184/var(--tw-bg-opacity,1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.bg-slate-500{--tw-bg-opacity:1;background-color:rgb(100 116 139/var(--tw-bg-opacity,1))}.bg-slate-600{--tw-bg-opacity:1;background-color:rgb(71 85 105/var(--tw-bg-opacity,1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23/var(--tw-bg-opacity,1))}.bg-slate-950\\/70{background-color:rgba(2,6,23,.7)}.bg-stone-100{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.bg-stone-200{--tw-bg-opacity:1;background-color:rgb(231 229 228/var(--tw-bg-opacity,1))}.bg-stone-300{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.bg-stone-400{--tw-bg-opacity:1;background-color:rgb(168 162 158/var(--tw-bg-opacity,1))}.bg-stone-50{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.bg-stone-500{--tw-bg-opacity:1;background-color:rgb(120 113 108/var(--tw-bg-opacity,1))}.bg-stone-600{--tw-bg-opacity:1;background-color:rgb(87 83 78/var(--tw-bg-opacity,1))}.bg-stone-700{--tw-bg-opacity:1;background-color:rgb(68 64 60/var(--tw-bg-opacity,1))}.bg-stone-800{--tw-bg-opacity:1;background-color:rgb(41 37 36/var(--tw-bg-opacity,1))}.bg-stone-900{--tw-bg-opacity:1;background-color:rgb(28 25 23/var(--tw-bg-opacity,1))}.bg-stone-950{--tw-bg-opacity:1;background-color:rgb(12 10 9/var(--tw-bg-opacity,1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.p-1{padding:.25rem}.p-1\\.5{padding:.375rem}.p-2{padding:.5rem}.p-2\\.5{padding:.625rem}.p-3{padding:.75rem}.p-3\\.5{padding:.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-0{padding-left:0;padding-right:0}.px-0\\.5{padding-left:.125rem;padding-right:.125rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-0{padding-top:0;padding-bottom:0}.py-0\\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-px{padding-top:1px;padding-bottom:1px}.pb-0{padding-bottom:0}.pb-0\\.5{padding-bottom:.125rem}.pb-1{padding-bottom:.25rem}.pb-2{padding-bottom:.5rem}.pb-28{padding-bottom:7rem}.pb-3{padding-bottom:.75rem}.pb-3\\.5{padding-bottom:.875rem}.pb-8{padding-bottom:2rem}.pl-3{padding-left:.75rem}.pl-3\\.5{padding-left:.875rem}.pr-1{padding-right:.25rem}.pr-4{padding-right:1rem}.pt-0{padding-top:0}.pt-1{padding-top:.25rem}.pt-1\\.5{padding-top:.375rem}.pt-2{padding-top:.5rem}.pt-4{padding-top:1rem}.pt-5{padding-top:1.25rem}.pt-6{padding-top:1.5rem}.pt-7{padding-top:1.75rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-\\[10px\\]{font-size:10px}.text-\\[11px\\]{font-size:11px}.text-\\[13px\\]{font-size:13px}.text-\\[28px\\]{font-size:28px}.text-\\[38px\\]{font-size:38px}.text-\\[44px\\]{font-size:44px}.text-\\[52px\\]{font-size:52px}.text-\\[8\\.5px\\]{font-size:8.5px}.text-\\[9px\\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-light{font-weight:300}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.normal-case{text-transform:none}.italic{font-style:italic}.leading-\\[0\\.92\\]{line-height:.92}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-normal{letter-spacing:0}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-black{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.text-blue-100{--tw-text-opacity:1;color:rgb(219 234 254/var(--tw-text-opacity,1))}.text-blue-200{--tw-text-opacity:1;color:rgb(191 219 254/var(--tw-text-opacity,1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-blue-50{--tw-text-opacity:1;color:rgb(239 246 255/var(--tw-text-opacity,1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235/var(--tw-text-opacity,1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216/var(--tw-text-opacity,1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175/var(--tw-text-opacity,1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138/var(--tw-text-opacity,1))}.text-blue-950{--tw-text-opacity:1;color:rgb(23 37 84/var(--tw-text-opacity,1))}.text-purple-100{--tw-text-opacity:1;color:rgb(243 232 255/var(--tw-text-opacity,1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255/var(--tw-text-opacity,1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252/var(--tw-text-opacity,1))}.text-purple-50{--tw-text-opacity:1;color:rgb(250 245 255/var(--tw-text-opacity,1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247/var(--tw-text-opacity,1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234/var(--tw-text-opacity,1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206/var(--tw-text-opacity,1))}.text-purple-800{--tw-text-opacity:1;color:rgb(107 33 168/var(--tw-text-opacity,1))}.text-purple-900{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.text-purple-950{--tw-text-opacity:1;color:rgb(59 7 100/var(--tw-text-opacity,1))}.text-rose-100{--tw-text-opacity:1;color:rgb(255 228 230/var(--tw-text-opacity,1))}.text-rose-200{--tw-text-opacity:1;color:rgb(254 205 211/var(--tw-text-opacity,1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-50{--tw-text-opacity:1;color:rgb(255 241 242/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57/var(--tw-text-opacity,1))}.text-rose-900{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.text-rose-950{--tw-text-opacity:1;color:rgb(76 5 25/var(--tw-text-opacity,1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-50{--tw-text-opacity:1;color:rgb(248 250 252/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23/var(--tw-text-opacity,1))}.text-stone-100{--tw-text-opacity:1;color:rgb(245 245 244/var(--tw-text-opacity,1))}.text-stone-200{--tw-text-opacity:1;color:rgb(231 229 228/var(--tw-text-opacity,1))}.text-stone-300{--tw-text-opacity:1;color:rgb(214 211 209/var(--tw-text-opacity,1))}.text-stone-400{--tw-text-opacity:1;color:rgb(168 162 158/var(--tw-text-opacity,1))}.text-stone-50{--tw-text-opacity:1;color:rgb(250 250 249/var(--tw-text-opacity,1))}.text-stone-500{--tw-text-opacity:1;color:rgb(120 113 108/var(--tw-text-opacity,1))}.text-stone-600{--tw-text-opacity:1;color:rgb(87 83 78/var(--tw-text-opacity,1))}.text-stone-700{--tw-text-opacity:1;color:rgb(68 64 60/var(--tw-text-opacity,1))}.text-stone-800{--tw-text-opacity:1;color:rgb(41 37 36/var(--tw-text-opacity,1))}.text-stone-900{--tw-text-opacity:1;color:rgb(28 25 23/var(--tw-text-opacity,1))}.text-stone-950{--tw-text-opacity:1;color:rgb(12 10 9/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.text-white\\/80{color:hsla(0,0%,100%,.8)}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.opacity-0{opacity:0}.opacity-70{opacity:.7}.opacity-75{opacity:.75}.opacity-80{opacity:.8}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-2xl,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.shadow-sm,.shadow-xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.\\[out\\:json\\]{out:json}.\\[timeout\\:20\\]{timeout:20}#root,body,html{margin:0;height:100%;background:#f5f3ec;color-scheme:light}.file\\:mr-2::file-selector-button{margin-right:.5rem}.file\\:border-0::file-selector-button{border-width:0}.file\\:bg-purple-900::file-selector-button{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.file\\:px-2\\.5::file-selector-button{padding-left:.625rem;padding-right:.625rem}.file\\:py-1\\.5::file-selector-button{padding-top:.375rem;padding-bottom:.375rem}.file\\:text-\\[10px\\]::file-selector-button{font-size:10px}.file\\:uppercase::file-selector-button{text-transform:uppercase}.file\\:tracking-wider::file-selector-button{letter-spacing:.05em}.file\\:text-white::file-selector-button{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:border-blue-800:hover{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.hover\\:border-purple-400:hover{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.hover\\:border-purple-600:hover{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.hover\\:border-purple-700:hover{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.hover\\:border-purple-800:hover{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.hover\\:border-purple-900:hover{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.hover\\:bg-blue-50:hover{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.hover\\:bg-blue-600:hover{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.hover\\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.hover\\:bg-blue-800:hover{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.hover\\:bg-blue-900:hover{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.hover\\:bg-purple-700:hover{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.hover\\:bg-purple-800:hover{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.hover\\:bg-purple-900:hover{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.hover\\:bg-rose-600:hover{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.hover\\:bg-rose-700:hover{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.hover\\:bg-rose-800:hover{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.hover\\:bg-stone-100:hover{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.hover\\:bg-stone-300:hover{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.hover\\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.hover\\:bg-white\\/10:hover{background-color:hsla(0,0%,100%,.1)}.hover\\:text-purple-900:hover{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.hover\\:text-rose-700:hover{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.hover\\:text-rose-900:hover{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.hover\\:text-slate-700:hover{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.hover\\:text-slate-900:hover{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.hover\\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:opacity-100:hover{opacity:1}.focus\\:border-stone-300:focus{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.disabled\\:opacity-30:disabled{opacity:.3}.disabled\\:opacity-40:disabled{opacity:.4}.disabled\\:opacity-50:disabled{opacity:.5}@media (min-width:640px){.sm\\:items-center{align-items:center}}";
 const PACT_CSS = "\n@import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..900&family=Bodoni+Moda:opsz,wght@6..96,500;6..96,700&display=swap');\nhtml, body { margin: 0; height: 100%; overflow: hidden; overscroll-behavior: none; }\nbody { position: fixed; inset: 0; width: 100%; }\n.font-sans, .font-sans input, .font-sans textarea, .font-sans select, .font-sans button { font-family: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif; font-variation-settings: 'wdth' 90; }\n.font-sans { font-weight: 500; }\n.font-light, .font-normal { font-weight: 500 !important; }\n.font-medium { font-weight: 700 !important; }\n.font-semibold { font-weight: 800 !important; }\n.font-editorial { font-family: 'Archivo', sans-serif; font-weight: 900 !important; font-variation-settings: 'wdth' 75; text-transform: uppercase; letter-spacing: -0.01em !important; line-height: 1.08; }\n.font-pact { font-family: 'Bodoni Moda', 'Didot', Georgia, serif; font-weight: 500 !important; text-transform: uppercase; letter-spacing: 1px; line-height: 1; }\n.font-mono { font-family: 'Archivo', sans-serif !important; font-weight: 800; font-variation-settings: 'wdth' 80; font-variant-numeric: tabular-nums; }\n.no-scrollbar::-webkit-scrollbar { display: none; }\n.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }\nbutton { border-radius: 12px; }\ninput, textarea, select { border-radius: 10px; }\ndiv.border:not([class*=\"rounded\"]), form.border:not([class*=\"rounded\"]), label.border:not([class*=\"rounded\"]), section.border:not([class*=\"rounded\"]) { border-radius: 16px; }\ndiv[class*=\"bg-purple-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]), div[class*=\"bg-slate-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]), div[class*=\"bg-blue-9\"]:not([class*=\"rounded\"]) { border-radius: 16px; }\n.shadow-sm, .shadow-xl { box-shadow: none !important; }\n.border-l-4 { border-radius: 4px; }\n@keyframes pact-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-4px) } }\n.pact-bob { animation: pact-bob 3.2s ease-in-out infinite; }\n@media (prefers-reduced-motion: reduce) { .pact-bob { animation: none; } }\n.bg-purple-950{background-color:#12251C!important}\n.hover\\:bg-purple-950:hover{background-color:#12251C!important}\n.text-purple-950{color:#12251C!important}\n.hover\\:text-purple-950:hover{color:#12251C!important}\n.border-purple-950{border-color:#12251C!important}\n.hover\\:border-purple-950:hover{border-color:#12251C!important}\n.focus\\:border-purple-950:focus{border-color:#12251C!important}\n.bg-purple-900{background-color:#1F3A2E!important}\n.hover\\:bg-purple-900:hover{background-color:#1F3A2E!important}\n.text-purple-900{color:#1F3A2E!important}\n.hover\\:text-purple-900:hover{color:#1F3A2E!important}\n.border-purple-900{border-color:#1F3A2E!important}\n.hover\\:border-purple-900:hover{border-color:#1F3A2E!important}\n.focus\\:border-purple-900:focus{border-color:#1F3A2E!important}\n.bg-purple-800{background-color:#2C4A3B!important}\n.hover\\:bg-purple-800:hover{background-color:#2C4A3B!important}\n.text-purple-800{color:#2C4A3B!important}\n.hover\\:text-purple-800:hover{color:#2C4A3B!important}\n.border-purple-800{border-color:#2C4A3B!important}\n.hover\\:border-purple-800:hover{border-color:#2C4A3B!important}\n.focus\\:border-purple-800:focus{border-color:#2C4A3B!important}\n.bg-purple-700{background-color:#3F6B55!important}\n.hover\\:bg-purple-700:hover{background-color:#3F6B55!important}\n.text-purple-700{color:#3F6B55!important}\n.hover\\:text-purple-700:hover{color:#3F6B55!important}\n.border-purple-700{border-color:#3F6B55!important}\n.hover\\:border-purple-700:hover{border-color:#3F6B55!important}\n.focus\\:border-purple-700:focus{border-color:#3F6B55!important}\n.bg-purple-600{background-color:#4F7A63!important}\n.hover\\:bg-purple-600:hover{background-color:#4F7A63!important}\n.text-purple-600{color:#4F7A63!important}\n.hover\\:text-purple-600:hover{color:#4F7A63!important}\n.border-purple-600{border-color:#4F7A63!important}\n.hover\\:border-purple-600:hover{border-color:#4F7A63!important}\n.focus\\:border-purple-600:focus{border-color:#4F7A63!important}\n.bg-purple-500{background-color:#5F8C73!important}\n.hover\\:bg-purple-500:hover{background-color:#5F8C73!important}\n.text-purple-500{color:#5F8C73!important}\n.hover\\:text-purple-500:hover{color:#5F8C73!important}\n.border-purple-500{border-color:#5F8C73!important}\n.hover\\:border-purple-500:hover{border-color:#5F8C73!important}\n.focus\\:border-purple-500:focus{border-color:#5F8C73!important}\n.bg-purple-400{background-color:#8FB09D!important}\n.hover\\:bg-purple-400:hover{background-color:#8FB09D!important}\n.text-purple-400{color:#8FB09D!important}\n.hover\\:text-purple-400:hover{color:#8FB09D!important}\n.border-purple-400{border-color:#8FB09D!important}\n.hover\\:border-purple-400:hover{border-color:#8FB09D!important}\n.focus\\:border-purple-400:focus{border-color:#8FB09D!important}\n.bg-purple-300{background-color:#B5CABD!important}\n.hover\\:bg-purple-300:hover{background-color:#B5CABD!important}\n.text-purple-300{color:#B5CABD!important}\n.hover\\:text-purple-300:hover{color:#B5CABD!important}\n.border-purple-300{border-color:#B5CABD!important}\n.hover\\:border-purple-300:hover{border-color:#B5CABD!important}\n.focus\\:border-purple-300:focus{border-color:#B5CABD!important}\n.bg-purple-200{background-color:#D5E0D8!important}\n.hover\\:bg-purple-200:hover{background-color:#D5E0D8!important}\n.text-purple-200{color:#D5E0D8!important}\n.hover\\:text-purple-200:hover{color:#D5E0D8!important}\n.border-purple-200{border-color:#D5E0D8!important}\n.hover\\:border-purple-200:hover{border-color:#D5E0D8!important}\n.focus\\:border-purple-200:focus{border-color:#D5E0D8!important}\n.bg-purple-100{background-color:#E6EDE8!important}\n.hover\\:bg-purple-100:hover{background-color:#E6EDE8!important}\n.text-purple-100{color:#E6EDE8!important}\n.hover\\:text-purple-100:hover{color:#E6EDE8!important}\n.border-purple-100{border-color:#E6EDE8!important}\n.hover\\:border-purple-100:hover{border-color:#E6EDE8!important}\n.focus\\:border-purple-100:focus{border-color:#E6EDE8!important}\n.bg-purple-50{background-color:#F0F4F1!important}\n.hover\\:bg-purple-50:hover{background-color:#F0F4F1!important}\n.text-purple-50{color:#F0F4F1!important}\n.hover\\:text-purple-50:hover{color:#F0F4F1!important}\n.border-purple-50{border-color:#F0F4F1!important}\n.hover\\:border-purple-50:hover{border-color:#F0F4F1!important}\n.focus\\:border-purple-50:focus{border-color:#F0F4F1!important}\n.bg-rose-950{background-color:#3A1F10!important}\n.hover\\:bg-rose-950:hover{background-color:#3A1F10!important}\n.text-rose-950{color:#3A1F10!important}\n.hover\\:text-rose-950:hover{color:#3A1F10!important}\n.border-rose-950{border-color:#3A1F10!important}\n.hover\\:border-rose-950:hover{border-color:#3A1F10!important}\n.focus\\:border-rose-950:focus{border-color:#3A1F10!important}\n.bg-rose-900{background-color:#6B3A1E!important}\n.hover\\:bg-rose-900:hover{background-color:#6B3A1E!important}\n.text-rose-900{color:#6B3A1E!important}\n.hover\\:text-rose-900:hover{color:#6B3A1E!important}\n.border-rose-900{border-color:#6B3A1E!important}\n.hover\\:border-rose-900:hover{border-color:#6B3A1E!important}\n.focus\\:border-rose-900:focus{border-color:#6B3A1E!important}\n.bg-rose-800{background-color:#8A4A27!important}\n.hover\\:bg-rose-800:hover{background-color:#8A4A27!important}\n.text-rose-800{color:#8A4A27!important}\n.hover\\:text-rose-800:hover{color:#8A4A27!important}\n.border-rose-800{border-color:#8A4A27!important}\n.hover\\:border-rose-800:hover{border-color:#8A4A27!important}\n.focus\\:border-rose-800:focus{border-color:#8A4A27!important}\n.bg-rose-700{background-color:#A65F37!important}\n.hover\\:bg-rose-700:hover{background-color:#A65F37!important}\n.text-rose-700{color:#A65F37!important}\n.hover\\:text-rose-700:hover{color:#A65F37!important}\n.border-rose-700{border-color:#A65F37!important}\n.hover\\:border-rose-700:hover{border-color:#A65F37!important}\n.focus\\:border-rose-700:focus{border-color:#A65F37!important}\n.bg-rose-600{background-color:#B5683A!important}\n.hover\\:bg-rose-600:hover{background-color:#B5683A!important}\n.text-rose-600{color:#B5683A!important}\n.hover\\:text-rose-600:hover{color:#B5683A!important}\n.border-rose-600{border-color:#B5683A!important}\n.hover\\:border-rose-600:hover{border-color:#B5683A!important}\n.focus\\:border-rose-600:focus{border-color:#B5683A!important}\n.bg-rose-500{background-color:#C77E52!important}\n.hover\\:bg-rose-500:hover{background-color:#C77E52!important}\n.text-rose-500{color:#C77E52!important}\n.hover\\:text-rose-500:hover{color:#C77E52!important}\n.border-rose-500{border-color:#C77E52!important}\n.hover\\:border-rose-500:hover{border-color:#C77E52!important}\n.focus\\:border-rose-500:focus{border-color:#C77E52!important}\n.bg-rose-400{background-color:#D9945F!important}\n.hover\\:bg-rose-400:hover{background-color:#D9945F!important}\n.text-rose-400{color:#D9945F!important}\n.hover\\:text-rose-400:hover{color:#D9945F!important}\n.border-rose-400{border-color:#D9945F!important}\n.hover\\:border-rose-400:hover{border-color:#D9945F!important}\n.focus\\:border-rose-400:focus{border-color:#D9945F!important}\n.bg-rose-300{background-color:#E6B38C!important}\n.hover\\:bg-rose-300:hover{background-color:#E6B38C!important}\n.text-rose-300{color:#E6B38C!important}\n.hover\\:text-rose-300:hover{color:#E6B38C!important}\n.border-rose-300{border-color:#E6B38C!important}\n.hover\\:border-rose-300:hover{border-color:#E6B38C!important}\n.focus\\:border-rose-300:focus{border-color:#E6B38C!important}\n.bg-rose-200{background-color:#F0D1B8!important}\n.hover\\:bg-rose-200:hover{background-color:#F0D1B8!important}\n.text-rose-200{color:#F0D1B8!important}\n.hover\\:text-rose-200:hover{color:#F0D1B8!important}\n.border-rose-200{border-color:#F0D1B8!important}\n.hover\\:border-rose-200:hover{border-color:#F0D1B8!important}\n.focus\\:border-rose-200:focus{border-color:#F0D1B8!important}\n.bg-rose-100{background-color:#F6E4D5!important}\n.hover\\:bg-rose-100:hover{background-color:#F6E4D5!important}\n.text-rose-100{color:#F6E4D5!important}\n.hover\\:text-rose-100:hover{color:#F6E4D5!important}\n.border-rose-100{border-color:#F6E4D5!important}\n.hover\\:border-rose-100:hover{border-color:#F6E4D5!important}\n.focus\\:border-rose-100:focus{border-color:#F6E4D5!important}\n.bg-rose-50{background-color:#FAF1EA!important}\n.hover\\:bg-rose-50:hover{background-color:#FAF1EA!important}\n.text-rose-50{color:#FAF1EA!important}\n.hover\\:text-rose-50:hover{color:#FAF1EA!important}\n.border-rose-50{border-color:#FAF1EA!important}\n.hover\\:border-rose-50:hover{border-color:#FAF1EA!important}\n.focus\\:border-rose-50:focus{border-color:#FAF1EA!important}\n.bg-blue-950{background-color:#14282B!important}\n.hover\\:bg-blue-950:hover{background-color:#14282B!important}\n.text-blue-950{color:#14282B!important}\n.hover\\:text-blue-950:hover{color:#14282B!important}\n.border-blue-950{border-color:#14282B!important}\n.hover\\:border-blue-950:hover{border-color:#14282B!important}\n.focus\\:border-blue-950:focus{border-color:#14282B!important}\n.bg-blue-900{background-color:#1E3F44!important}\n.hover\\:bg-blue-900:hover{background-color:#1E3F44!important}\n.text-blue-900{color:#1E3F44!important}\n.hover\\:text-blue-900:hover{color:#1E3F44!important}\n.border-blue-900{border-color:#1E3F44!important}\n.hover\\:border-blue-900:hover{border-color:#1E3F44!important}\n.focus\\:border-blue-900:focus{border-color:#1E3F44!important}\n.bg-blue-800{background-color:#2A5359!important}\n.hover\\:bg-blue-800:hover{background-color:#2A5359!important}\n.text-blue-800{color:#2A5359!important}\n.hover\\:text-blue-800:hover{color:#2A5359!important}\n.border-blue-800{border-color:#2A5359!important}\n.hover\\:border-blue-800:hover{border-color:#2A5359!important}\n.focus\\:border-blue-800:focus{border-color:#2A5359!important}\n.bg-blue-700{background-color:#3A6A70!important}\n.hover\\:bg-blue-700:hover{background-color:#3A6A70!important}\n.text-blue-700{color:#3A6A70!important}\n.hover\\:text-blue-700:hover{color:#3A6A70!important}\n.border-blue-700{border-color:#3A6A70!important}\n.hover\\:border-blue-700:hover{border-color:#3A6A70!important}\n.focus\\:border-blue-700:focus{border-color:#3A6A70!important}\n.bg-blue-600{background-color:#4C7F85!important}\n.hover\\:bg-blue-600:hover{background-color:#4C7F85!important}\n.text-blue-600{color:#4C7F85!important}\n.hover\\:text-blue-600:hover{color:#4C7F85!important}\n.border-blue-600{border-color:#4C7F85!important}\n.hover\\:border-blue-600:hover{border-color:#4C7F85!important}\n.focus\\:border-blue-600:focus{border-color:#4C7F85!important}\n.bg-blue-500{background-color:#639499!important}\n.hover\\:bg-blue-500:hover{background-color:#639499!important}\n.text-blue-500{color:#639499!important}\n.hover\\:text-blue-500:hover{color:#639499!important}\n.border-blue-500{border-color:#639499!important}\n.hover\\:border-blue-500:hover{border-color:#639499!important}\n.focus\\:border-blue-500:focus{border-color:#639499!important}\n.bg-blue-400{background-color:#8FB2B6!important}\n.hover\\:bg-blue-400:hover{background-color:#8FB2B6!important}\n.text-blue-400{color:#8FB2B6!important}\n.hover\\:text-blue-400:hover{color:#8FB2B6!important}\n.border-blue-400{border-color:#8FB2B6!important}\n.hover\\:border-blue-400:hover{border-color:#8FB2B6!important}\n.focus\\:border-blue-400:focus{border-color:#8FB2B6!important}\n.bg-blue-300{background-color:#A8C4C6!important}\n.hover\\:bg-blue-300:hover{background-color:#A8C4C6!important}\n.text-blue-300{color:#A8C4C6!important}\n.hover\\:text-blue-300:hover{color:#A8C4C6!important}\n.border-blue-300{border-color:#A8C4C6!important}\n.hover\\:border-blue-300:hover{border-color:#A8C4C6!important}\n.focus\\:border-blue-300:focus{border-color:#A8C4C6!important}\n.bg-blue-200{background-color:#CADCDD!important}\n.hover\\:bg-blue-200:hover{background-color:#CADCDD!important}\n.text-blue-200{color:#CADCDD!important}\n.hover\\:text-blue-200:hover{color:#CADCDD!important}\n.border-blue-200{border-color:#CADCDD!important}\n.hover\\:border-blue-200:hover{border-color:#CADCDD!important}\n.focus\\:border-blue-200:focus{border-color:#CADCDD!important}\n.bg-blue-100{background-color:#E1ECED!important}\n.hover\\:bg-blue-100:hover{background-color:#E1ECED!important}\n.text-blue-100{color:#E1ECED!important}\n.hover\\:text-blue-100:hover{color:#E1ECED!important}\n.border-blue-100{border-color:#E1ECED!important}\n.hover\\:border-blue-100:hover{border-color:#E1ECED!important}\n.focus\\:border-blue-100:focus{border-color:#E1ECED!important}\n.bg-blue-50{background-color:#EEF4F5!important}\n.hover\\:bg-blue-50:hover{background-color:#EEF4F5!important}\n.text-blue-50{color:#EEF4F5!important}\n.hover\\:text-blue-50:hover{color:#EEF4F5!important}\n.border-blue-50{border-color:#EEF4F5!important}\n.hover\\:border-blue-50:hover{border-color:#EEF4F5!important}\n.focus\\:border-blue-50:focus{border-color:#EEF4F5!important}\n.bg-slate-950{background-color:#0F0F0D!important}\n.hover\\:bg-slate-950:hover{background-color:#0F0F0D!important}\n.text-slate-950{color:#0F0F0D!important}\n.hover\\:text-slate-950:hover{color:#0F0F0D!important}\n.border-slate-950{border-color:#0F0F0D!important}\n.hover\\:border-slate-950:hover{border-color:#0F0F0D!important}\n.focus\\:border-slate-950:focus{border-color:#0F0F0D!important}\n.bg-slate-900{background-color:#1A1A17!important}\n.hover\\:bg-slate-900:hover{background-color:#1A1A17!important}\n.text-slate-900{color:#1A1A17!important}\n.hover\\:text-slate-900:hover{color:#1A1A17!important}\n.border-slate-900{border-color:#1A1A17!important}\n.hover\\:border-slate-900:hover{border-color:#1A1A17!important}\n.focus\\:border-slate-900:focus{border-color:#1A1A17!important}\n.bg-slate-800{background-color:#2A2A26!important}\n.hover\\:bg-slate-800:hover{background-color:#2A2A26!important}\n.text-slate-800{color:#2A2A26!important}\n.hover\\:text-slate-800:hover{color:#2A2A26!important}\n.border-slate-800{border-color:#2A2A26!important}\n.hover\\:border-slate-800:hover{border-color:#2A2A26!important}\n.focus\\:border-slate-800:focus{border-color:#2A2A26!important}\n.bg-slate-700{background-color:#3E3D37!important}\n.hover\\:bg-slate-700:hover{background-color:#3E3D37!important}\n.text-slate-700{color:#3E3D37!important}\n.hover\\:text-slate-700:hover{color:#3E3D37!important}\n.border-slate-700{border-color:#3E3D37!important}\n.hover\\:border-slate-700:hover{border-color:#3E3D37!important}\n.focus\\:border-slate-700:focus{border-color:#3E3D37!important}\n.bg-slate-600{background-color:#55534B!important}\n.hover\\:bg-slate-600:hover{background-color:#55534B!important}\n.text-slate-600{color:#55534B!important}\n.hover\\:text-slate-600:hover{color:#55534B!important}\n.border-slate-600{border-color:#55534B!important}\n.hover\\:border-slate-600:hover{border-color:#55534B!important}\n.focus\\:border-slate-600:focus{border-color:#55534B!important}\n.bg-slate-500{background-color:#6B6960!important}\n.hover\\:bg-slate-500:hover{background-color:#6B6960!important}\n.text-slate-500{color:#6B6960!important}\n.hover\\:text-slate-500:hover{color:#6B6960!important}\n.border-slate-500{border-color:#6B6960!important}\n.hover\\:border-slate-500:hover{border-color:#6B6960!important}\n.focus\\:border-slate-500:focus{border-color:#6B6960!important}\n.bg-slate-400{background-color:#8A877D!important}\n.hover\\:bg-slate-400:hover{background-color:#8A877D!important}\n.text-slate-400{color:#8A877D!important}\n.hover\\:text-slate-400:hover{color:#8A877D!important}\n.border-slate-400{border-color:#8A877D!important}\n.hover\\:border-slate-400:hover{border-color:#8A877D!important}\n.focus\\:border-slate-400:focus{border-color:#8A877D!important}\n.bg-slate-300{background-color:#B5B1A5!important}\n.hover\\:bg-slate-300:hover{background-color:#B5B1A5!important}\n.text-slate-300{color:#B5B1A5!important}\n.hover\\:text-slate-300:hover{color:#B5B1A5!important}\n.border-slate-300{border-color:#B5B1A5!important}\n.hover\\:border-slate-300:hover{border-color:#B5B1A5!important}\n.focus\\:border-slate-300:focus{border-color:#B5B1A5!important}\n.bg-slate-200{background-color:#D6D1C4!important}\n.hover\\:bg-slate-200:hover{background-color:#D6D1C4!important}\n.text-slate-200{color:#D6D1C4!important}\n.hover\\:text-slate-200:hover{color:#D6D1C4!important}\n.border-slate-200{border-color:#D6D1C4!important}\n.hover\\:border-slate-200:hover{border-color:#D6D1C4!important}\n.focus\\:border-slate-200:focus{border-color:#D6D1C4!important}\n.bg-slate-100{background-color:#E7E3D8!important}\n.hover\\:bg-slate-100:hover{background-color:#E7E3D8!important}\n.text-slate-100{color:#E7E3D8!important}\n.hover\\:text-slate-100:hover{color:#E7E3D8!important}\n.border-slate-100{border-color:#E7E3D8!important}\n.hover\\:border-slate-100:hover{border-color:#E7E3D8!important}\n.focus\\:border-slate-100:focus{border-color:#E7E3D8!important}\n.bg-slate-50{background-color:#F1EEE6!important}\n.hover\\:bg-slate-50:hover{background-color:#F1EEE6!important}\n.text-slate-50{color:#F1EEE6!important}\n.hover\\:text-slate-50:hover{color:#F1EEE6!important}\n.border-slate-50{border-color:#F1EEE6!important}\n.hover\\:border-slate-50:hover{border-color:#F1EEE6!important}\n.focus\\:border-slate-50:focus{border-color:#F1EEE6!important}\n.bg-stone-950{background-color:#1A1A17!important}\n.hover\\:bg-stone-950:hover{background-color:#1A1A17!important}\n.text-stone-950{color:#1A1A17!important}\n.hover\\:text-stone-950:hover{color:#1A1A17!important}\n.border-stone-950{border-color:#1A1A17!important}\n.hover\\:border-stone-950:hover{border-color:#1A1A17!important}\n.focus\\:border-stone-950:focus{border-color:#1A1A17!important}\n.bg-stone-900{background-color:#25241F!important}\n.hover\\:bg-stone-900:hover{background-color:#25241F!important}\n.text-stone-900{color:#25241F!important}\n.hover\\:text-stone-900:hover{color:#25241F!important}\n.border-stone-900{border-color:#25241F!important}\n.hover\\:border-stone-900:hover{border-color:#25241F!important}\n.focus\\:border-stone-900:focus{border-color:#25241F!important}\n.bg-stone-800{background-color:#33322B!important}\n.hover\\:bg-stone-800:hover{background-color:#33322B!important}\n.text-stone-800{color:#33322B!important}\n.hover\\:text-stone-800:hover{color:#33322B!important}\n.border-stone-800{border-color:#33322B!important}\n.hover\\:border-stone-800:hover{border-color:#33322B!important}\n.focus\\:border-stone-800:focus{border-color:#33322B!important}\n.bg-stone-700{background-color:#47453D!important}\n.hover\\:bg-stone-700:hover{background-color:#47453D!important}\n.text-stone-700{color:#47453D!important}\n.hover\\:text-stone-700:hover{color:#47453D!important}\n.border-stone-700{border-color:#47453D!important}\n.hover\\:border-stone-700:hover{border-color:#47453D!important}\n.focus\\:border-stone-700:focus{border-color:#47453D!important}\n.bg-stone-600{background-color:#5C5A52!important}\n.hover\\:bg-stone-600:hover{background-color:#5C5A52!important}\n.text-stone-600{color:#5C5A52!important}\n.hover\\:text-stone-600:hover{color:#5C5A52!important}\n.border-stone-600{border-color:#5C5A52!important}\n.hover\\:border-stone-600:hover{border-color:#5C5A52!important}\n.focus\\:border-stone-600:focus{border-color:#5C5A52!important}\n.bg-stone-500{background-color:#6B6960!important}\n.hover\\:bg-stone-500:hover{background-color:#6B6960!important}\n.text-stone-500{color:#6B6960!important}\n.hover\\:text-stone-500:hover{color:#6B6960!important}\n.border-stone-500{border-color:#6B6960!important}\n.hover\\:border-stone-500:hover{border-color:#6B6960!important}\n.focus\\:border-stone-500:focus{border-color:#6B6960!important}\n.bg-stone-400{background-color:#8A877D!important}\n.hover\\:bg-stone-400:hover{background-color:#8A877D!important}\n.text-stone-400{color:#8A877D!important}\n.hover\\:text-stone-400:hover{color:#8A877D!important}\n.border-stone-400{border-color:#8A877D!important}\n.hover\\:border-stone-400:hover{border-color:#8A877D!important}\n.focus\\:border-stone-400:focus{border-color:#8A877D!important}\n.bg-stone-300{background-color:#CFCABD!important}\n.hover\\:bg-stone-300:hover{background-color:#CFCABD!important}\n.text-stone-300{color:#CFCABD!important}\n.hover\\:text-stone-300:hover{color:#CFCABD!important}\n.border-stone-300{border-color:#CFCABD!important}\n.hover\\:border-stone-300:hover{border-color:#CFCABD!important}\n.focus\\:border-stone-300:focus{border-color:#CFCABD!important}\n.bg-stone-200{background-color:#D9D4C6!important}\n.hover\\:bg-stone-200:hover{background-color:#D9D4C6!important}\n.text-stone-200{color:#D9D4C6!important}\n.hover\\:text-stone-200:hover{color:#D9D4C6!important}\n.border-stone-200{border-color:#D9D4C6!important}\n.hover\\:border-stone-200:hover{border-color:#D9D4C6!important}\n.focus\\:border-stone-200:focus{border-color:#D9D4C6!important}\n.bg-stone-100{background-color:#ECE8DD!important}\n.hover\\:bg-stone-100:hover{background-color:#ECE8DD!important}\n.text-stone-100{color:#ECE8DD!important}\n.hover\\:text-stone-100:hover{color:#ECE8DD!important}\n.border-stone-100{border-color:#ECE8DD!important}\n.hover\\:border-stone-100:hover{border-color:#ECE8DD!important}\n.focus\\:border-stone-100:focus{border-color:#ECE8DD!important}\n.bg-stone-50{background-color:#F3F0E8!important}\n.hover\\:bg-stone-50:hover{background-color:#F3F0E8!important}\n.text-stone-50{color:#F3F0E8!important}\n.hover\\:text-stone-50:hover{color:#F3F0E8!important}\n.border-stone-50{border-color:#F3F0E8!important}\n.hover\\:border-stone-50:hover{border-color:#F3F0E8!important}\n.focus\\:border-stone-50:focus{border-color:#F3F0E8!important}\n.bg-white{background-color:#FBF9F3!important}\n.bg-\\[\\#FAF8F5\\]{background-color:#F3F0E8!important}\n.bg-\\[\\#F5F3EC\\]{background-color:#F5F3EC!important}\n.bg-slate-950\\/70{background-color:rgba(26,26,23,.7)!important}\n.border-stone-200\\/30{border-color:rgba(217,212,198,.3)!important}";
 
 // =====================================================================
@@ -107,6 +108,20 @@ const overlapWith = (date, startMins, durMins, ctx) =>
 // =============================================================
 // DATES: today, week starts, demo-data shifting
 // =============================================================
+const nowHHMM = () => { const d = new Date(); return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`; };
+const cleanHandle = (t) => String(t || '').toLowerCase().replace(/^@+/, '').replace(/[^a-z0-9_]/g, '_').slice(0, 24);
+// ---------- Your People: personal / business connections you want to stay in touch with ----------
+const REMIND_OPTIONS = [{ v: 0, l: 'Never remind me' }, { v: 7, l: 'Every week' }, { v: 14, l: 'Every 2 weeks' }, { v: 30, l: 'Every month' }, { v: 90, l: 'Every 3 months' }, { v: 180, l: 'Every 6 months' }, { v: 365, l: 'Every year' }];
+const daysBetweenStr = (a, b) => Math.round((new Date(b + 'T00:00:00') - new Date(a + 'T00:00:00')) / 86400000);
+const agoText = (d) => d <= 0 ? 'today' : d === 1 ? 'yesterday' : d < 14 ? `${d} days ago` : d < 60 ? `${Math.round(d / 7)} weeks ago` : d < 700 ? `${Math.round(d / 30)} months ago` : `${Math.round(d / 365)} years ago`;
+// days overdue (0 = due today) or null when no reminder is due (blocked, never remind, snoozed, or not due yet)
+const personOverdue = (p, today, addDays) => {
+  if (!p || p.blocked || !p.remindEvery) return null;
+  if (p.snoozeUntil && p.snoozeUntil > today) return null;
+  const over = daysBetweenStr(addDays(p.lastContact || p.createdAt || today, p.remindEvery), today);
+  return over >= 0 ? over : null;
+};
+const sharedSig = (t) => JSON.stringify([t.title || '', t.date || '', t.startTime || '', t.endTime || '', t.location || '']);
 const todayDateStr = () => fmtDateObj(new Date());
 const mondayOf = (dateStr) => { const d = new Date(dateStr + 'T12:00:00'); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return fmtDateObj(d); };
 const daysBetween = (a, b) => Math.round((new Date(b + 'T12:00:00') - new Date(a + 'T12:00:00')) / 86400000);
@@ -232,7 +247,66 @@ const extractTitle = (q) => {
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
 
-const roamieBrain = (q, env) => {
+// Turns everyday, chatty, typo-ridden English into the plain phrasing the planner logic understands.
+const NUM_WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12 };
+const roamieNormalise = (raw, baseStr) => {
+  let t = ' ' + String(raw || '').toLowerCase().replace(/[\u2018\u2019]/g, "'").replace(/\s+/g, ' ').trim() + ' ';
+  const sub = (re, to) => { t = t.replace(re, to); };
+  // slang, typos, text-speak
+  sub(/\b(tmrw|tmr|tmrrw|tomorow|tommorow|tommorrow|tomoz|2morrow|2moro|2mrw|tmw)\b/g, 'tomorrow');
+  sub(/\b(tonite|2nite|tnite)\b/g, 'tonight');
+  sub(/\b(wknd|weekned|weeknd)\b/g, 'weekend');
+  sub(/\b(sched|shedule|schedual|scedule)\b/g, 'schedule');
+  sub(/\b(calender|calandar|calendr)\b/g, 'calendar');
+  sub(/\b(appt|appts|apt)\b/g, 'appointment');
+  sub(/\b(pls|plz|plss|pleeease|please)\b/g, ' ');
+  sub(/\b(rn|right now)\b/g, ' now ');
+  sub(/\bgonna\b/g, 'going to'); sub(/\bwanna\b/g, 'want to'); sub(/\bgotta\b/g, 'have to'); sub(/\blemme\b/g, 'let me'); sub(/\bgimme\b/g, 'give me');
+  sub(/\bwhats\b/g, "what's"); sub(/\bwhens\b/g, "when's"); sub(/\bim\b/g, "i'm"); sub(/\bive\b/g, "i've"); sub(/\bidk\b/g, "i don't know"); sub(/\bdont\b/g, "don't"); sub(/\bcant\b/g, "can't");
+  sub(/\bu\b/g, 'you'); sub(/\bur\b/g, 'your'); sub(/\bthx\b/g, 'thanks'); sub(/\bhw\b/g, 'how');
+  sub(/\b(mon|tue|wed|thu|fri|sat|sun)day\b/g, '$1day');
+  sub(/\b(sunday|monday|tuesday|wednesday|thursday|friday|saturday)s\b/g, '$1');
+  sub(/\b(thurs|thur)\b/g, 'thu'); sub(/\btues\b/g, 'tue');
+  // number words in times / durations ("seven pm", "half seven", "quarter past 3", "an hour and a half")
+  const NW = Object.keys(NUM_WORDS).join('|');
+  sub(new RegExp('\\bhalf (?:past )?(' + NW + ')\\b', 'g'), (_, w) => ` ${NUM_WORDS[w]}:30 `);
+  sub(new RegExp('\\bquarter past (' + NW + ')\\b', 'g'), (_, w) => ` ${NUM_WORDS[w]}:15 `);
+  sub(new RegExp('\\bquarter to (' + NW + ')\\b', 'g'), (_, w) => ` ${NUM_WORDS[w] - 1 || 12}:45 `);
+  sub(new RegExp('\\b(' + NW + ')\\s*(am|pm|o\'?clock)\\b', 'g'), (_, w, ap) => ` ${NUM_WORDS[w]}${ap === "o'clock" || ap === 'oclock' ? '' : ' ' + ap} `);
+  sub(new RegExp('\\bat (' + NW + ')\\b', 'g'), (_, w) => ` at ${NUM_WORDS[w]} `);
+  sub(new RegExp('\\b(' + NW + ') (hours?|hrs?|minutes?|mins?)\\b', 'g'), (_, w, u) => ` ${NUM_WORDS[w]} ${u} `);
+  sub(/\b(\d{1,2})(?::(\d{2}))?\s*ish\b/g, (_, h, m) => ` ${h}${m ? ':' + m : ''} `);
+  sub(/\ban hour and a half\b|\b1\.5 hours?\b|\bhour and a half\b/g, ' 90 minutes ');
+  sub(/\b(\d{1,2})\s*o'?clock\b/g, ' at $1 ');
+  sub(/\b(\d{1,2})\s*(?:in the )?(evening|night)\b/g, (_, h) => ` ${h} pm `);
+  sub(/\b(\d{1,2})\s*in the morning\b/g, ' $1 am ');
+  sub(/\b(\d{1,2})\s*in the afternoon\b/g, ' $1 pm ');
+  sub(/\bmidday\b/g, 'noon');
+  // relative days: "in 3 days", "a week on friday", "this coming friday", "the 5th"
+  let m;
+  if ((m = t.match(/\bin (\d{1,2}|a|one|two|three|four|five|six|seven) days?\b/))) {
+    const n = /^\d/.test(m[1]) ? +m[1] : (m[1] === 'a' ? 1 : NUM_WORDS[m[1]]);
+    if (baseStr && n >= 1 && n <= 60) t = t.replace(m[0], ' ' + addDaysStr(baseStr, n) + ' ');
+  }
+  sub(/\b(this coming|coming|upcoming)\b/g, 'this');
+  sub(/\bthe (\d{1,2})(st|nd|rd|th)\b(?! of)/g, (x, d, sfx) => baseStr ? ` ${MONTH_KEYS[+baseStr.slice(5, 7) - 1]} ${d} ` : x);
+  // chatty openers that hide the real intent
+  sub(/^ (?:hey |hi |hello |ok |okay |so |um+ |uh+ |right |oh |ah |hmm+ |yo )+(?:roamie |ro )?/, ' ');
+  sub(/(?<!what )(?<!how )(?<!who )\b(?:could|can|would|will) you (?:please )?(?:help me |possibly )?/g, ' ');
+  sub(/\b(?:i was wondering|i wonder|do you know|let me know|tell me|can you tell me|i need to know|i'd like to know|i want to know) (?:if |whether |when |what |about )?/g, (x) => /when/.test(x) ? ' when ' : /what/.test(x) ? ' what ' : ' ');
+  sub(/\b(?:i'm |am i |i am )?(?:thinking of|thinking about|looking to|hoping to|planning to|trying to|want to|going to|need to|have to|fancy|feel like|in the mood to)\b/g, ' ');
+  sub(/\b(?:need|want|require) (?:some |a bit of |a little |an? )?(?:time|space|a slot|a gap) (?:for|to|on)\b/g, ' add ');
+  // everyday phrasings for "what's on"
+  sub(/\b(?:what am i up to|what'?s up|what'?s happening|what have i got on|what've i got on|do i have anything(?: on| planned)?|have i got anything(?: on| planned)?|anything on|anything planned|am i doing anything|got anything on|what'?s the plan|what'?s the plans|how'?s my (?:day|week)|how busy am i|how busy is|what'?s my day like|what'?s my week like|what do i have on)\b/g, " what's on ");
+  // everyday phrasings for "am I free"
+  sub(/\b(?:am i free|i'm free|are there any (?:free )?(?:gaps|slots|spaces)|is there (?:any )?(?:space|room|a gap|a slot)|have i got (?:any )?(?:time|space)|do i have (?:any )?(?:time|space)|do i have a (?:gap|slot)|is anything free|what'?s free|where can i fit)\b/g, ' when am i free ');
+  // "i've got/have a X (day/time)" statements become a booking
+  sub(/^ (?:i'?ve got|i have|i've|i got|got|there'?s|there is|i'?m having|i'?m going to|i'?m meeting|i'?m seeing|i'?m off to) (?:a |an |my |the |to )?(?=[a-z])/, ' add ');
+  return t.replace(/\s+/g, ' ').trim();
+};
+
+const roamieBrain = (q0, env) => {
+  const q = roamieNormalise(q0, env.todayStr);
   const lower = q.toLowerCase().trim();
   const todayStr = env.todayStr;
   const baseNow = env.now;
@@ -253,13 +327,46 @@ const roamieBrain = (q, env) => {
     return { text: 'I can: (1) tell you what is on any day, (2) find free, clash-free times, (3) add or cancel plans for you ("book gym tomorrow at 7am for an hour"), (4) check your weekly targets, energy cap, fridge stock and next skill milestone, and (5) search the web for places, travel and anything else.' };
   }
 
+  // ---- move / reschedule ----
+  if (/\b(move|reschedule|push|shift|postpone|change)\b/.test(lower) && /\b(to|until|till|back|forward|later|earlier)\b/.test(lower)) {
+    const stopM = new Set(['move', 'reschedule', 'push', 'shift', 'postpone', 'change', 'my', 'the', 'a', 'an', 'to', 'until', 'till', 'back', 'forward', 'later', 'earlier', 'on', 'at', 'from', 'for', 'tomorrow', 'today', 'tonight', 'morning', 'afternoon', 'evening', 'noon', 'time', 'plan', 'session', 'it', 'that', 'this', 'next', 'week', 'weekend', 'one', 'by', 'hour', 'hours', 'minutes', 'mins', 'min', 'am', 'pm']);
+    const afterTo = lower.split(/\b(?:to|until|till)\b/);
+    const nameWords = (afterTo[0] || lower).replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(w => w.length > 2 && !stopM.has(w) && !new RegExp('^' + WEEKDAY_RE + '$').test(w));
+    const fresh = env.tasks.filter(t => t.date >= todayStr && t.status !== 'done');
+    const hits = fresh.filter(t => nameWords.some(w => t.title.toLowerCase().includes(w)));
+    if (!nameWords.length) return { text: 'Which plan should I move, and to when? For example: "Move gym to Friday at 6pm".' };
+    if (hits.length === 0) return { text: `I couldn't find a plan called that coming up. Tell me its name and the new time, e.g. "Move climbing to Friday at 6pm".` };
+    if (hits.length > 1) return { text: `That matches ${hits.length} plans: ${hits.slice(0, 5).map(h => `"${h.title}" (${prettyDate(h.date)})`).join(', ')}. Which one should I move?` };
+    const t0 = hits[0];
+    const target = afterTo.length > 1 ? afterTo.slice(1).join(' ') : lower;
+    const pd = parseDayFromText(target, todayStr);
+    const newDate = pd ? pd.date : t0.date;
+    const newStart = parseTimeFromText(target);
+    if (!pd && newStart === null) return { text: `When should I move "${t0.title}" to? Give me a day and/or time, e.g. "Friday at 6pm".` };
+    const minutes = t0.duration || (toMins(t0.endTime) - toMins(t0.startTime)) || 60;
+    const start = newStart !== null ? newStart : toMins(t0.startTime);
+    const others = env.tasks.filter(x => x.id !== t0.id);
+    const clashes = overlapWith(newDate, start, minutes, { ...ctx, tasks: others });
+    if (clashes.length) {
+      const gaps = getFreeGaps(newDate, { ...ctx, tasks: others }, minutes);
+      return { text: `${fromMins(start)} on ${prettyDate(newDate)} clashes with "${clashes[0].label}". ${gaps.length ? 'Clash-free windows: ' + listFreeText(gaps) + '.' : 'That day is full.'} Pick another time and I'll move it.` };
+    }
+    return { text: `Done, I've moved "${t0.title}" to ${prettyDate(newDate)}, ${fromMins(start)}–${fromMins(start + minutes)}.`, updateTask: { ...t0, date: newDate, startTime: fromMins(start), endTime: fromMins(start + minutes) }, openDate: newDate };
+  }
+
   // ---- cancel ----
   if (/\b(cancel|delete|remove|scrap|drop)\b/.test(lower) && !/\b(account|data|target)\b/.test(lower)) {
-    const date = day || env.selectedDateStr;
+    let date = day || env.selectedDateStr;
     const stop = new Set(['cancel', 'delete', 'remove', 'scrap', 'drop', 'my', 'the', 'a', 'an', 'on', 'at', 'for', 'please', 'tomorrow', 'today', 'tonight', 'session', 'plan', 'from', 'planner', 'schedule', 'calendar', 'roamie']);
     const words = lower.replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(w => w.length > 2 && !stop.has(w) && !new RegExp('^' + WEEKDAY_RE + '$').test(w));
-    const pool = env.tasks.filter(t => t.date === date);
-    const hits = pool.filter(t => words.some(w => t.title.toLowerCase().includes(w)));
+    let pool = env.tasks.filter(t => t.date === date);
+    let hits = pool.filter(t => words.some(w => t.title.toLowerCase().includes(w)));
+    if (!day && !hits.length) {   // no day given: look across everything coming up
+      const upcoming = env.tasks.filter(t => t.date >= todayStr);
+      const wide = upcoming.filter(t => words.some(w => t.title.toLowerCase().includes(w)));
+      if (wide.length === 1) { hits = wide; date = wide[0].date; }
+      else if (wide.length > 1) return { text: `That matches ${wide.length} plans: ${wide.slice(0, 5).map(h => `"${h.title}" (${prettyDate(h.date)})`).join(', ')}. Which one should I cancel?` };
+    }
     if (hits.length === 1) {
       return { text: `Done, I've removed "${hits[0].title}" (${hits[0].startTime}–${hits[0].endTime}) from ${prettyDate(date)}.`, removeTaskId: hits[0].id, openDate: date };
     }
@@ -390,7 +497,7 @@ const roamieBrain = (q, env) => {
   }
 
   // ---- energy ----
-  if (/\b(energy|tired|exhausted|burnout|burnt out|burned out|pacing|cap|mood|overwhelmed)\b/.test(lower)) {
+  if (/\b(energy|tired|exhausted|knackered|shattered|drained|wiped|worn out|zonked|fried|stressed|burnout|burnt out|burned out|pacing|cap|mood|overwhelmed|rough day|low)\b/.test(lower)) {
     const cap = env.dailyCap;
     const today = env.tasks.filter(t => t.date === todayStr).length;
     return { text: `${env.todayMood ? `You logged "${env.todayMood}" today. ` : "You haven't logged your energy today (do it on the Home tab). "}Your pacing cap is ${cap} plan${cap === 1 ? '' : 's'} a day and you have ${today} today${today > cap ? ', which is over your cap, so consider moving one.' : '.'}` };
@@ -402,6 +509,29 @@ const roamieBrain = (q, env) => {
     const next = (sk.steps || []).find(s => !s.done);
     const done = (sk.steps || []).filter(s => s.done).length;
     return { text: `Your active skill is "${sk.name}" (${done}/${(sk.steps || []).length} milestones done). ${next ? `Next milestone: ${next.title}.` : 'All milestones are complete! Add a new one in Development.'} ${sk.goal ? 'Goal: ' + sk.goal : ''}` };
+  }
+
+  // ---- "what time is my X" / "when is my X" ----
+  {
+    const mt = lower.match(/^(?:what time|when|where)(?:'s| is| are| was)?(?: is| are)? (?:my |the |our )?(.+?)\??$/);
+    if (mt && !/\b(free|open|closed|sunset|sunrise|next)\b/.test(mt[1])) {
+      const ws = mt[1].replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(w => w.length > 2 && !['the', 'and', 'for', 'with', 'tomorrow', 'today', 'tonight'].includes(w));
+      const found = ws.length ? env.tasks.filter(t => t.date >= todayStr && ws.some(w => t.title.toLowerCase().includes(w))).sort((a, b) => (a.date + a.startTime).localeCompare(b.date + b.startTime)) : [];
+      if (found.length) return { text: found.slice(0, 3).map(t => `"${t.title}" is ${prettyDate(t.date)}, ${t.startTime}–${t.endTime}${t.location ? ' at ' + t.location : ''}.`).join('\n'), openDate: found[0].date };
+    }
+  }
+
+  // ---- bare "gym tomorrow 7am" style statements are treated as a booking ----
+  {
+    const hasWhen = !!day || parseTimeFromText(lower) !== null;
+    const talky = /^(what|when|where|why|how|who|which|is|are|do (?=i|you|we|they|my)|does|did|can|could|should|would|will|tell|show|give|list|find|any)\b|\?/.test(lower);
+    if (hasWhen && !talky && !webish) {
+      const title = extractTitle(q).replace(/^((go(ing)?( to)?|do(ing)?|have|having|get|some|a bit of|a little|bit of)\s+)+/i, '').trim();
+      if (title.length >= 3 && title.split(' ').length <= 8) {
+        const t = title.charAt(0).toUpperCase() + title.slice(1);
+        return roamieBrain('add ' + t + ' ' + q.replace(/^.*?(?=\b(?:today|tomorrow|tonight|on |at |next |this |in the |\d))/i, ''), env);
+      }
+    }
   }
 
   // ---- ideas ----
@@ -416,6 +546,8 @@ const roamieBrain = (q, env) => {
 
   return null;
 };
+
+if (typeof window !== 'undefined') window.__roamie = { roamieBrain, roamieNormalise };
 
 // A friendly answer for when the live AI can't be reached and the question isn't about the planner itself.
 const roamieOfflineReply = (reason) =>
@@ -891,8 +1023,23 @@ const normCity = (t) => String(t || '').toLowerCase().normalize('NFD').replace(/
 const cityFallback = (q) => { const n = normCity(q); if (!n) return []; return CITY_FALLBACK.filter(c => normCity(c.city).startsWith(n) || normCity(c.city + ' ' + c.country).includes(n)).slice(0, 5); };
 const dedupeLoc = (arr) => { const seen = new Set(); return arr.filter(x => { const k = normCity(x.city) + '|' + normCity(x.country); if (!x.city || seen.has(k)) return false; seen.add(k); return true; }); };
 // Tries several free lookups in turn (any one working is enough), then a built-in list of big cities so typing a city never dead-ends.
+const UK_POSTCODE = /^[A-Za-z]{1,2}\d[A-Za-z\d]?\s*\d[A-Za-z]{2}$/;
+// UK postcode -> exact point (free postcodes.io service). Returns [] if it isn't a UK postcode or can't be found.
+const lookupPostcode = async (q) => {
+  const pc = String(q || '').trim();
+  if (!UK_POSTCODE.test(pc)) return [];
+  try {
+    const j = await fetchJSON(`https://api.postcodes.io/postcodes/${encodeURIComponent(pc.replace(/\s+/g, ''))}`, {}, 7000);
+    const r = j && j.result; if (!r || r.latitude == null) return [];
+    const region = r.region || '';
+    const city = region === 'London' ? 'London' : (r.admin_district || r.parish || r.admin_county || '');
+    return city ? [{ city, region: region === 'London' ? '' : (r.admin_county || region), country: 'United Kingdom', lat: r.latitude, lon: r.longitude, postcode: r.postcode }] : [];
+  } catch (e) { return []; }
+};
 const geocodeCity = async (q) => {
   const enc = encodeURIComponent(q);
+  const pcHit = await lookupPostcode(q);
+  if (pcHit.length) return pcHit;
   const tries = [
     async () => { const j = await fetchJSON(`https://geocoding-api.open-meteo.com/v1/search?name=${enc}&count=5&language=en&format=json`, {}, 7000); return (j.results || []).map(x => ({ city: x.name, region: x.admin1 || '', country: x.country || '', lat: x.latitude, lon: x.longitude })); },
     async () => { const j = await fetchJSON(`https://photon.komoot.io/api/?q=${enc}&limit=6&lang=en`, {}, 7000); return (j.features || []).filter(f => f.geometry && f.properties && f.properties.name).map(f => ({ city: f.properties.name, region: f.properties.state || '', country: f.properties.country || '', lat: f.geometry.coordinates[1], lon: f.geometry.coordinates[0] })); },
@@ -943,9 +1090,9 @@ function LocationPicker({ value, onChange }) {
   };
   return (
     <div data-location-picker className="space-y-2">
-      <div className="flex items-center gap-2 bg-white border border-stone-300 px-3 py-2 text-sm"><MapPin size={14} className="text-purple-900 shrink-0" /><span data-location-current className="font-medium">{[cur.city, cur.region && cur.region !== cur.city ? cur.region : '', cur.country].filter(Boolean).join(', ')}</span></div>
+      <div className="flex items-center gap-2 bg-white border border-stone-300 px-3 py-2 text-sm"><MapPin size={14} className="text-purple-900 shrink-0" /><span data-location-current className="font-medium">{[cur.city, cur.region && cur.region !== cur.city ? cur.region : '', cur.country].filter(Boolean).join(', ')}{cur.postcode ? ` (${cur.postcode})` : ''}</span></div>
       <div className="flex gap-2">
-        <input type="text" aria-label="Search for your city" placeholder="Search for a city or town" value={q} onChange={e => setQ(e.target.value)} className="flex-1 min-w-0 bg-white border border-stone-300 px-3 py-2 text-xs" />
+        <input type="text" aria-label="Search for your city or postcode" placeholder="City, town or postcode" value={q} onChange={e => setQ(e.target.value)} className="flex-1 min-w-0 bg-white border border-stone-300 px-3 py-2 text-xs" />
         <button type="button" data-location-use onClick={async () => { const t = q.trim(); if (!t) return; if (results.length) { pick(results[0]); return; } setBusy(true); let r = []; try { r = await geocodeCity(t); } catch (e) { r = []; } setBusy(false); pick(r.length ? r[0] : { city: t, region: '', country: '' }); }} disabled={!q.trim()} className="px-3 py-2 border border-stone-400 text-[10px] uppercase tracking-wider font-medium shrink-0 disabled:opacity-40">Use this</button>
       </div>
       {results.length > 0 && (
@@ -992,6 +1139,131 @@ const overpass = async (ql) => {
   }
   throw err || new Error('overpass');
 };
+// ---------- Colour themes: palette (colour scheme) x mode (light / dark / auto) ----------
+// Works by re-mapping the Tailwind colour classes the app already uses, so every screen follows the theme.
+const THEME_PALETTES = {
+  classic: { name: 'Classic', hint: 'Original blue', nh: 215, ns: 14, p: [221, 70], s: [271, 55], t: [347, 65] },
+  ember: { name: 'Autumn Ember', hint: 'Burnt orange & chestnut', nh: 22, ns: 28, p: [18, 76], s: [350, 52], t: [38, 82] },
+  maple: { name: 'Maple', hint: 'Burgundy & rust', nh: 355, ns: 22, p: [354, 58], s: [20, 68], t: [40, 72] },
+  harvest: { name: 'Harvest', hint: 'Mustard & olive', nh: 42, ns: 24, p: [40, 82], s: [85, 38], t: [16, 62] },
+  woodland: { name: 'Woodland', hint: 'Moss & copper', nh: 96, ns: 14, p: [96, 36], s: [28, 55], t: [42, 60] }
+};
+const THEME_STEPS = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'];
+const THEME_RAMPS = {
+  light: {
+    col: { bg: [97, 94, 88, 80, 70, 58, 48, 40, 33, 26, 18], text: [97, 94, 88, 80, 68, 55, 46, 40, 33, 26, 18], border: [95, 92, 86, 78, 68, 58, 48, 40, 34, 28, 20] },
+    neu: { bg: [96, 93, 88, 80, 68, 55, 42, 32, 24, 17, 11], text: [97, 94, 88, 80, 54, 42, 34, 28, 22, 15, 10], border: [95, 92, 87, 79, 68, 55, 42, 32, 24, 17, 11] }
+  },
+  dark: {
+    col: { bg: [13, 16, 21, 28, 36, 42, 38, 34, 30, 26, 20], text: [96, 92, 86, 78, 72, 66, 68, 72, 78, 84, 90], border: [18, 22, 28, 34, 42, 48, 44, 40, 36, 30, 24] },
+    neu: { bg: [14, 17, 21, 28, 36, 44, 36, 34, 32, 30, 26], text: [96, 93, 88, 80, 58, 64, 72, 80, 88, 93, 96], border: [16, 19, 24, 31, 40, 48, 44, 40, 34, 30, 26] }
+  }
+};
+const FIXED_FAMILIES = { emerald: [160, 70], green: [140, 55], amber: [38, 88], yellow: [48, 85], orange: [24, 85], red: [0, 70], sky: [200, 75], indigo: [239, 60], teal: [175, 60], pink: [330, 65], violet: [262, 60], cyan: [188, 70] };
+const resolveThemeMode = (mode) => mode === 'dark' ? 'dark' : mode === 'auto' ? ((typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light') : 'light';
+const buildThemeCss = (paletteId, mode) => {
+  const pal = THEME_PALETTES[paletteId] || THEME_PALETTES.classic;
+  const m = resolveThemeMode(mode);
+  if (paletteId === 'classic' && m === 'light') return '';   // the original look: no overrides
+  const hsl = (h, sat, l) => `hsl(${h} ${sat}% ${l}%)`;
+  const ramps = THEME_RAMPS[m];
+  const rules = [];
+  const PROPS = { bg: 'background-color', text: 'color', border: 'border-color' };
+  const VARIANTS = [['', ''], ['hover\\:', ':hover'], ['focus\\:', ':focus'], ['active\\:', ':active'], ['disabled\\:', ':disabled']];
+  const emit = (family, hue, sat, kind) => {
+    const r = ramps[kind === 'neu' ? 'neu' : 'col'];
+    for (const [prop, css] of Object.entries(PROPS)) {
+      THEME_STEPS.forEach((step, i) => {
+        // neutrals get a faint palette tint; dark-mode neutral buttons (600+) take the primary accent colour
+        let v;
+        if (kind === 'neu') v = (m === 'dark' && prop === 'bg' && i >= 6) ? hsl(pal.p[0], pal.p[1], r[prop][i]) : hsl(pal.nh, pal.ns, r[prop][i]);
+        else v = hsl(hue, sat, r[prop][i]);
+        for (const [pre, post] of VARIANTS) rules.push(`html[data-pact-theme] .${pre}${prop}-${family}-${step}${post}{${css}:${v}!important}`);
+      });
+    }
+    rules.push(`html[data-pact-theme] .divide-${family}-200>:not([hidden])~:not([hidden]){border-color:${hsl(kind === 'neu' ? pal.nh : hue, kind === 'neu' ? pal.ns : sat, ramps[kind === 'neu' ? 'neu' : 'col'].border[2])}!important}`);
+  };
+  emit('slate', 0, 0, 'neu'); emit('stone', 0, 0, 'neu');
+  emit('blue', pal.p[0], pal.p[1], 'col'); emit('purple', pal.s[0], pal.s[1], 'col'); emit('rose', pal.t[0], pal.t[1], 'col');
+  if (m === 'dark') for (const [f, [h, sa]] of Object.entries(FIXED_FAMILIES)) emit(f, h, sa, 'col');
+  // surfaces
+  const L = m === 'dark' ? { page: 9, card: 13, soft: 16, soft2: 19, line: 24, fg: 92 } : { page: 95, card: 99, soft: 97, soft2: 91, line: 87, fg: 15 };
+  const page = hsl(pal.nh, pal.ns, L.page), card = hsl(pal.nh, pal.ns, L.card), soft = hsl(pal.nh, pal.ns, L.soft), soft2 = hsl(pal.nh, pal.ns, L.soft2);
+  rules.push(`html[data-pact-theme] .bg-white{background-color:${card}!important}`);
+  rules.push(`html[data-pact-theme] .bg-\\[\\#FAF8F5\\]{background-color:${soft}!important}`);
+  rules.push(`html[data-pact-theme] .bg-\\[\\#F5F3EC\\]{background-color:${page}!important}`);
+  rules.push(`html[data-pact-theme] .bg-\\[\\#EDEAE0\\]{background-color:${soft2}!important}`);
+  rules.push(`html[data-pact-theme] .hover\\:bg-white:hover{background-color:${soft}!important}`);
+  rules.push(`html[data-pact-theme] [data-pact-glass]{background:${hsl(pal.nh, pal.ns, L.page).replace(')', ' / .86)')}!important}`);
+  rules.push(`html[data-pact-theme] [data-pact-glass="nav"]{background:${hsl(pal.nh, pal.ns, L.page).replace(')', ' / .97)')}!important}`);
+  rules.push(`html[data-pact-theme] .border-white{border-color:${card}!important}`);
+  rules.push(`html[data-pact-theme],html[data-pact-theme] body{background:${m === 'dark' ? hsl(pal.nh, pal.ns, 6) : hsl(pal.nh, pal.ns, 90)}!important;color-scheme:${m}}`);
+  rules.push(`html[data-pact-theme] .bg-black\\/40,html[data-pact-theme] .bg-slate-950\\/70{background-color:rgba(0,0,0,${m === 'dark' ? '.65' : '.4'})!important}`);
+  if (m === 'dark') {
+    rules.push(`html[data-pact-theme] input,html[data-pact-theme] textarea,html[data-pact-theme] select{color:${hsl(pal.nh, pal.ns, 92)}}`);
+    rules.push(`html[data-pact-theme] ::placeholder{color:${hsl(pal.nh, pal.ns, 52)}!important}`);
+    rules.push(`html[data-pact-theme] option{background:${card};color:${hsl(pal.nh, pal.ns, 92)}}`);
+    rules.push(`html[data-pact-theme] .text-black{color:${hsl(pal.nh, pal.ns, 92)}!important}`);
+  }
+  return rules.join('\n');
+};
+const THEME_KEY = 'pact_theme_v1';
+const readStoredTheme = () => { try { const t = JSON.parse(localStorage.getItem(THEME_KEY) || 'null'); if (t && THEME_PALETTES[t.palette]) return t; } catch (e) {} return { palette: 'classic', mode: 'light' }; };
+const applyTheme = (theme) => {
+  if (typeof document === 'undefined') return;
+  const t = theme && THEME_PALETTES[theme.palette] ? theme : { palette: 'classic', mode: 'light' };
+  let el = document.getElementById('pact-theme-css');
+  const css = buildThemeCss(t.palette, t.mode);
+  if (!css) { if (el) el.remove(); document.documentElement.removeAttribute('data-pact-theme'); return; }
+  if (!el) { el = document.createElement('style'); el.id = 'pact-theme-css'; document.head.appendChild(el); }
+  el.textContent = css;
+  document.documentElement.setAttribute('data-pact-theme', t.palette + '-' + resolveThemeMode(t.mode));
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', resolveThemeMode(t.mode) === 'dark' ? '#1a1310' : '#f1ece3');
+};
+if (typeof window !== 'undefined') applyTheme(readStoredTheme());
+
+// ---------- Ideas filters: each chip maps to real place kinds (database) and OpenStreetMap tags (live search) ----------
+const NOT_A_PLACE = /\b(auctions?|auctioneers?|bidding|ebay|garden cent(?:re|er)s?|landscap\w*|nurser(?:y|ies)|funeral|crematorium|cemetery|storage|estate agents?|pawn\w*|wholesale|scaffolding|plumbing|recruitment)\b/i;
+const IDEA_FILTERS = {
+  Food: [
+    { label: 'Bakery & Brunch', kinds: ['bakery', 'cafe'] }, { label: 'Restaurants', kinds: ['restaurant'] }, { label: 'Pubs & Bars', kinds: ['pub', 'bar'] },
+    { label: 'Desserts', kinds: ['dessert'] }, { label: 'Pizza', query: 'pizza' }, { label: 'Vegan & Veggie', query: 'vegan' }, { label: 'Japanese & Ramen', query: 'japanese' }
+  ],
+  Indoor: [
+    { label: 'Museums & Galleries', kinds: ['museum', 'gallery'] }, { label: 'Cinema & Theatre', kinds: ['cinema', 'theatre'] }, { label: 'Study & Reading', kinds: ['library'] },
+    { label: 'Art & Craft Cafe', kinds: ['arts_centre'] }, { label: 'Fun & Games', kinds: ['fun_venue'] }
+  ],
+  Outdoor: [
+    { label: 'Parks & Gardens', kinds: ['park', 'garden'], legacy: ['Urban Nature', 'Botanical Trail'] }, { label: 'Nature & Trails', kinds: ['nature', 'trail'] }, { label: 'Viewpoints & Beaches', kinds: ['viewpoint', 'beach'] }
+  ],
+  Sports: [
+    { label: 'Climbing', kinds: ['climbing'] }, { label: 'Gyms', kinds: ['gym'] }, { label: 'Swimming', kinds: ['pool'] }, { label: 'Sports centres', kinds: ['sports_centre'] }
+  ],
+  Shopping: [
+    { label: 'Books & Records', kinds: ['bookshop', 'record_shop'] }, { label: 'Clothes & Vintage', kinds: ['clothes', 'vintage_shop'] },
+    { label: 'Homeware & Art', kinds: ['homeware', 'craft_shop', 'gift_shop'] }, { label: 'Markets', kinds: ['market'] }
+  ],
+  Trips: [{ label: 'Day Trip (Train)' }, { label: 'Future Getaway (Flight)' }]
+};
+const KIND_OSM = {
+  cafe: ['["amenity"="cafe"]'], bakery: ['["shop"="bakery"]'], restaurant: ['["amenity"="restaurant"]'], pub: ['["amenity"="pub"]'], bar: ['["amenity"="bar"]'], dessert: ['["amenity"="ice_cream"]'],
+  museum: ['["tourism"="museum"]'], gallery: ['["tourism"="gallery"]'], arts_centre: ['["amenity"="arts_centre"]'], cinema: ['["amenity"="cinema"]'], theatre: ['["amenity"="theatre"]'], library: ['["amenity"="library"]'],
+  fun_venue: ['["leisure"~"^(amusement_arcade|bowling_alley|escape_game|miniature_golf)$"]'],
+  park: ['["leisure"="park"]'], garden: ['["leisure"="garden"]'], nature: ['["leisure"="nature_reserve"]'], viewpoint: ['["tourism"="viewpoint"]'], beach: ['["natural"="beach"]'],
+  climbing: ['["sport"="climbing"]'], gym: ['["leisure"="fitness_centre"]'], pool: ['["leisure"="swimming_pool"]'], sports_centre: ['["leisure"="sports_centre"]'],
+  bookshop: ['["shop"="books"]'], record_shop: ['["shop"="records"]'], vintage_shop: ['["shop"~"^(second_hand|antiques)$"]'], clothes: ['["shop"~"^(clothes|boutique|shoes)$"]'],
+  homeware: ['["shop"~"^(furniture|houseware|interior_decoration)$"]'], craft_shop: ['["shop"~"^(craft|art)$"]'], gift_shop: ['["shop"="gift"]'], market: ['["amenity"="marketplace"]']
+};
+const OSM_KIND_BY_LABEL = { cafe: 'cafe', bakery: 'bakery', restaurant: 'restaurant', pub: 'pub', bar: 'bar', 'ice cream': 'dessert', museum: 'museum', gallery: 'gallery', 'arts centre': 'arts_centre', cinema: 'cinema', theatre: 'theatre', library: 'library',
+  park: 'park', garden: 'garden', 'nature reserve': 'nature', viewpoint: 'viewpoint', beach: 'beach', climbing: 'climbing', 'fitness centre': 'gym', 'swimming pool': 'pool', 'sports centre': 'sports_centre',
+  books: 'bookshop', records: 'record_shop', 'second hand': 'vintage_shop', antiques: 'vintage_shop', clothes: 'clothes', boutique: 'clothes', shoes: 'clothes', furniture: 'homeware', houseware: 'homeware', 'interior decoration': 'homeware',
+  craft: 'craft_shop', art: 'craft_shop', gift: 'gift_shop', marketplace: 'market', 'amusement arcade': 'fun_venue', 'bowling alley': 'fun_venue', 'escape game': 'fun_venue', 'miniature golf': 'fun_venue' };
+const filterDefs = (cat, labels) => (IDEA_FILTERS[cat] || []).filter(f => (labels || []).includes(f.label));
+const ideaMatchesFilters = (item, defs) => {
+  if (!defs.length) return true;
+  return defs.some(f => (item.matchLabels && item.matchLabels.includes(f.label)) || (f.kinds && item.kind && f.kinds.includes(item.kind)) || item.sub1 === f.label || (f.legacy || []).includes(item.sub1));
+};
 const OSM_FILTERS = {
   Food: ['["amenity"~"^(restaurant|cafe|pub|ice_cream)$"]', '["shop"="bakery"]'],
   Indoor: ['["tourism"~"^(museum|gallery)$"]', '["amenity"~"^(cinema|theatre|arts_centre|library)$"]'],
@@ -1023,7 +1295,7 @@ const wikiSummary = async (wikiTag) => {
   const j = await fetchJSON(`https://${lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(String(title).replace(/ /g, '_'))}`, {}, 8000);
   return { text: String(j.extract || '').split(/(?<=\.)\s/)[0].slice(0, 190), url: (j.content_urls && j.content_urls.desktop && j.content_urls.desktop.page) || '' };
 };
-const osmIdeasLive = async ({ cat, loc, seen, n = 3 }) => {
+const osmIdeasLive = async ({ cat, loc, seen, n = 3, filters: fdefs = [] }) => {
   const { lat, lon } = await resolveCoords(loc);
   if (cat === 'Trips') {
     const els = await overpass(`[out:json][timeout:20];node["place"~"^(town|village|city)$"]["name"](around:60000,${lat},${lon});out 120;`);
@@ -1037,17 +1309,23 @@ const osmIdeasLive = async ({ cat, loc, seen, n = 3 }) => {
     }
     return out;
   }
-  const filters = OSM_FILTERS[cat] || OSM_FILTERS.Food;
+  let filters = OSM_FILTERS[cat] || OSM_FILTERS.Food;
+  if (fdefs.length) {
+    const tagged = fdefs.flatMap(f => [...(f.kinds || []).flatMap(k => KIND_OSM[k] || []), ...(f.query ? [`["cuisine"~"${f.query}",i]`, `["name"~"${f.query}",i]["amenity"~"^(restaurant|cafe|fast_food|pub|bar)$"]`] : [])]);
+    if (tagged.length) filters = tagged;
+  }
   let els = await overpass(placeQL(filters, lat, lon, 3000, 80));
   if (els.length < 6) els = await overpass(placeQL(filters, lat, lon, 8000, 80));
   const rich = (t) => (t.opening_hours ? 1 : 0) + (t.website || t['contact:website'] ? 1 : 0) + (t.cuisine ? 1 : 0);
   const seenLocal = new Set();
   const cands = els.map(e => ({ e, c: elCoords(e) })).filter(x => x.c.lat != null && x.e.tags && x.e.tags.name).map(x => ({ ...x, km: haversineKm(lat, lon, x.c.lat, x.c.lon) }))
-    .filter(x => { const k = x.e.tags.name.toLowerCase(); if (seen.has(k) || seenLocal.has(k)) return false; seenLocal.add(k); return true; })
+    .filter(x => { const k = x.e.tags.name.toLowerCase(); if (NOT_A_PLACE.test(x.e.tags.name) || seen.has(k) || seenLocal.has(k)) return false; seenLocal.add(k); return true; })
     .sort((a, b) => rich(b.e.tags) - rich(a.e.tags) || a.km - b.km).slice(0, 14).sort(() => Math.random() - 0.5).slice(0, n);
   return cands.map(({ e, c, km }, i) => {
     const t = e.tags;
-    return { id: Date.now() + i, category: cat, title: t.name, desc: osmDesc(t), rating: null, userRating: null, price: '', city: loc.city, sub1: osmKind(t), sub2: 'OpenStreetMap', deal: t.opening_hours ? 'Open ' + String(t.opening_hours).slice(0, 40) : 'Opening hours not listed', distance: fmtDist(km, loc.country), lat: c.lat, lon: c.lon, link: t.website || t['contact:website'] || '' };
+    const kind = OSM_KIND_BY_LABEL[osmKind(t).toLowerCase()] || '';
+    const matchLabels = fdefs.filter(f => (f.kinds && f.kinds.includes(kind)) || f.query).map(f => f.label);
+    return { kind, matchLabels, id: Date.now() + i, category: cat, title: t.name, desc: osmDesc(t), rating: null, userRating: null, price: '', city: loc.city, sub1: osmKind(t), sub2: 'OpenStreetMap', deal: t.opening_hours ? 'Open ' + String(t.opening_hours).slice(0, 40) : 'Opening hours not listed', distance: fmtDist(km, loc.country), lat: c.lat, lon: c.lon, link: t.website || t['contact:website'] || '' };
   });
 };
 // ---------- PACT PLACES DATABASE (Overture open data in Supabase) ----------
@@ -1058,16 +1336,25 @@ const placeRowToIdea = (r, cat, loc, i) => ({
   desc: [cap1(r.kind), r.address].filter(Boolean).join(' · '),
   rating: r.rating_count >= 3 && r.rating_avg ? Math.round(r.rating_avg * 10) / 10 : null,   // only show a rating once Pact users have really rated it
   userRating: null, price: '', city: loc.city, sub1: cap1(r.kind), sub2: 'Overture Maps open data',
-  deal: 'Opening hours not listed', distance: fmtDist(r.distance_km, loc.country), lat: r.lat, lon: r.lon, link: r.website || '', placeId: r.id
+  deal: 'Opening hours not listed', distance: fmtDist(r.distance_km, loc.country), lat: r.lat, lon: r.lon, link: r.website || '', placeId: r.id, kind: r.kind
 });
-const dbIdeas = async ({ cat, loc, seen, n = 3 }) => {
+const dbIdeas = async ({ cat, loc, seen, n = 3, filters = [] }) => {
   if (!cloud.enabled || cat === 'Trips') return [];
   const { lat, lon } = await resolveCoords(loc);
-  let rows = await cloud.placesNear({ lat, lon, radiusKm: 4, categories: [cat], limit: 80 });
-  if (rows.length < 8) rows = await cloud.placesNear({ lat, lon, radiusKm: 15, categories: [cat], limit: 80 });
+  const fetchAll = async (radiusKm) => {
+    if (!filters.length) return (await cloud.placesNear({ lat, lon, radiusKm, categories: [cat], limit: 80 })).map(r => ({ r, labels: [] }));
+    const byId = new Map();
+    for (const f of filters) {
+      const rows = await cloud.placesNear({ lat, lon, radiusKm, categories: [cat], kinds: f.kinds || null, query: f.query || null, limit: 60 });
+      rows.forEach(r => { const cur = byId.get(r.id); if (cur) cur.labels.push(f.label); else byId.set(r.id, { r, labels: [f.label] }); });
+    }
+    return [...byId.values()].sort((a, b) => (b.r.score || 0) - (a.r.score || 0));
+  };
+  let rows = await fetchAll(4);
+  if (rows.length < 8) rows = await fetchAll(15);
   const seenLocal = new Set();
-  const fresh = rows.filter(r => { const k = String(r.name).toLowerCase(); if (seen.has(k) || seenLocal.has(k)) return false; seenLocal.add(k); return true; });
-  return fresh.slice(0, 16).sort(() => Math.random() - 0.5).slice(0, n).map((r, i) => placeRowToIdea(r, cat, loc, i));
+  const fresh = rows.filter(({ r }) => { const k = String(r.name).toLowerCase(); if (NOT_A_PLACE.test(r.name) || seen.has(k) || seenLocal.has(k)) return false; seenLocal.add(k); return true; });
+  return fresh.slice(0, 16).sort(() => Math.random() - 0.5).slice(0, n).map(({ r, labels }, i) => ({ ...placeRowToIdea(r, cat, loc, i), matchLabels: labels }));
 };
 const osmIdeas = async (args) => {
   try { const fromDb = await dbIdeas(args); if (fromDb.length) return fromDb; } catch (e) { /* places database unavailable: use the live search */ }
@@ -1487,7 +1774,29 @@ function AppInner({ onReset }) {
   // --- NAVIGATION & CLOCK STATE ---
   const [activeTab, setActiveTab] = useState('home'); // 'home', 'schedule', 'ideas', 'skills' (Development), 'social', 'profile'
   const [profileSubTab, setProfileSubTab] = useState('settings'); // 'settings', 'friends', 'data'
-  const [simulatedClock, setSimulatedClock] = useState('10:30');
+  // --- real friends (Supabase): username, lookup, requests ---
+  const [usernameMsg, setUsernameMsg] = useState('');
+  const [friendQuery, setFriendQuery] = useState('');
+  const [friendFound, setFriendFound] = useState(null);   // null | 'none' | { id, display_name, username, relation }
+  const [friendMsg, setFriendMsg] = useState('');
+  const [friendReqs, setFriendReqs] = useState([]);
+  const [friendBusy, setFriendBusy] = useState(false);
+  // --- messages + joint events ---
+  const [sharedEvents, setSharedEvents] = useState([]);
+  const [inboxRows, setInboxRows] = useState([]);
+  const [chatWith, setChatWith] = useState(null);      // a friend entry (with userId)
+  const [chatMsgs, setChatMsgs] = useState([]);
+  const [chatText, setChatText] = useState('');
+  const [inviteSel, setInviteSel] = useState([]);      // Pact user ids to invite
+  const [inviteNote, setInviteNote] = useState('');
+  const [inviteBusy, setInviteBusy] = useState(false);
+  const [editEvent, setEditEvent] = useState(null);    // { id, title, date, start, end, location }
+  const sharedRef = useRef({ seen: null });
+  // --- Your People (stored with the rest of your data) ---
+  const [people, setPeople] = useState([]);
+  const [peopleFilter, setPeopleFilter] = useState('all');   // all | personal | business | blocked
+  const [personDraft, setPersonDraft] = useState({ name: '', kind: 'personal', relation: '', remindEvery: 30 });
+  const [reclaimedAt, setReclaimedAt] = useState('');
   const [selectedDateStr, setSelectedDateStr] = useState(() => todayDateStr());
 
   // --- AUTH & CALENDAR SYNC STATE ---
@@ -1923,8 +2232,25 @@ function AppInner({ onReset }) {
   const IDEA_CATEGORIES_BASE = ['Food', 'Indoor', 'Outdoor', 'Sports', 'Shopping', 'Trips'];
   const ideaCategories = (() => { const mine = (userProfile.interests || []).filter(c => IDEA_CATEGORIES_BASE.includes(c)); return [...mine, ...IDEA_CATEGORIES_BASE.filter(c => !mine.includes(c))]; })();
   const [selectedIdeaCategory, setSelectedIdeaCategory] = useState('Food');
-  const [ideaSubFilter1, setIdeaSubFilter1] = useState(null);
+  // Colour theme: saved with the account and remembered on this device.
+  const themeNow = userProfile.theme || readStoredTheme();
+  useEffect(() => {
+    applyTheme(themeNow);
+    try { localStorage.setItem(THEME_KEY, JSON.stringify(themeNow)); } catch (e) {}
+    if (themeNow.mode !== 'auto' || !window.matchMedia) return;
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const fn = () => applyTheme(themeNow);
+    mq.addEventListener ? mq.addEventListener('change', fn) : mq.addListener(fn);
+    return () => { mq.removeEventListener ? mq.removeEventListener('change', fn) : mq.removeListener(fn); };
+  }, [themeNow.palette, themeNow.mode]);
+  const setTheme = (patch) => setUserProfile(prev => ({ ...prev, theme: { ...(prev.theme || readStoredTheme()), ...patch } }));
+  // Filter chips are remembered per category (saved with your account) until you clear them.
+  const activeFilterLabels = (userProfile.ideaFilters && userProfile.ideaFilters[selectedIdeaCategory]) || [];
+  const activeFilterDefs = filterDefs(selectedIdeaCategory, activeFilterLabels);
+  const setActiveFilterLabels = (labels) => setUserProfile(prev => ({ ...prev, ideaFilters: { ...(prev.ideaFilters || {}), [selectedIdeaCategory]: labels } }));
+  const toggleIdeaFilter = (label) => setActiveFilterLabels(activeFilterLabels.includes(label) ? activeFilterLabels.filter(x => x !== label) : [...activeFilterLabels, label]);
   const [adventurousMode, setAdventurousMode] = useState(false);
+  const [adventureBusy, setAdventureBusy] = useState(false);
   const [userPreferenceBoost, setUserPreferenceBoost] = useState(null);
 
   const [ideasFeed, setIdeasFeed] = useState([
@@ -1961,14 +2287,7 @@ function AppInner({ onReset }) {
     { id: 27, category: 'Trips', title: 'Copenhagen Design & Bakery Weekend', desc: 'Explore Louisiana Museum, cycling bridges and cardamom buns.', rating: 4.9, userRating: null, price: '£54 Return Flights', sub1: 'Future Getaway (Flight)', sub2: 'In 8 Weeks', deal: 'Direct flight from MAN T1', distance: '1h 55m Flight', dest: 'Copenhagen' }
   ]);
 
-  const ideaSubFilterOptions = {
-    Food: ['Bakery & Brunch', 'Dinner & Small Plates', 'Japanese & Ramen'],
-    Indoor: ['Art & Craft Cafe', 'Study & Reading'],
-    Outdoor: ['Urban Nature', 'Botanical Trail'],
-    Sports: ['Indoor', 'Outdoor'],
-    Shopping: ['Homeware & Art', 'Clothes & Vintage'],
-    Trips: ['Day Trip (Train)', 'Future Getaway (Flight)']
-  };
+  const ideaSubFilterOptions = Object.fromEntries(Object.entries(IDEA_FILTERS).map(([k, v]) => [k, v.map(f => f.label)]));
 
   // --- SKILLS TAB: LIVING BRANCHING TREE ---
   const [skillTreeDomain, setSkillTreeDomain] = useState('work');
@@ -2343,6 +2662,16 @@ function AppInner({ onReset }) {
       joinUrl: 'https://www.meetup.com/'
     }
   ];
+  // Reminder banner: the most overdue person in Your People (not blocked, reminders on, not snoozed).
+  const nudgeFriend = (() => {
+    const today = todayDateStr(); let best = null;
+    for (const pr of people) {
+      const over = personOverdue(pr, today, addDaysStr); if (over === null) continue;
+      if (!best || over > best.over) best = { id: pr.id, name: pr.name, over, days: daysBetweenStr(pr.lastContact || pr.createdAt || today, today) };
+    }
+    return best;
+  })();
+  const updatePerson = (id, patch) => setPeople(prev => prev.map(x => x.id === id ? { ...x, ...patch } : x));
   const communityEvents = ((typeof window !== 'undefined' && window.PACT_BLANK === true) || !getLoc(userProfile).isHome) ? [] : communityEventsAll;
 
   const handlePushSharedPlan = (planId, minutesToAdd) => {
@@ -2601,7 +2930,7 @@ function AppInner({ onReset }) {
     let webNote = '';
     let osmUsed = false;
     try {
-      const fromDb = await dbIdeas({ cat, loc, seen: seenTitles, n: 3 });
+      const fromDb = await dbIdeas({ cat, loc, seen: seenTitles, n: 3, filters: activeFilterDefs });
       if (fromDb.length) { added = fromDb; osmUsed = true; }
     } catch (e) { /* places database unavailable: fall through to AI / live search */ }
     try {
@@ -2620,15 +2949,15 @@ function AppInner({ onReset }) {
       };
       const avoid = ideasFeed.filter(i => i.category === cat).map(i => i.title).slice(0, 14).join('; ');
       const prompt = (cat === 'Trips'
-        ? `Give 3 real, specific trip ideas from ${loc.label} ${ideaSubFilter1 ? `of type "${ideaSubFilter1}"` : '(mix of day trips by train and getaways by flight)'}. For sub1 use exactly "Day Trip (Train)" or "Future Getaway (Flight)". Put the destination town/city name in destination.`
-        : `Give 3 real, specific places or events in ${loc.label} for category "${cat}" ${ideaSubFilter1 ? `focusing on "${ideaSubFilter1}"` : ''}.`)
+        ? `Give 3 real, specific trip ideas from ${loc.label} ${activeFilterLabels.length ? `of type "${activeFilterLabels.join('" or "')}"` : '(mix of day trips by train and getaways by flight)'}. For sub1 use exactly "Day Trip (Train)" or "Future Getaway (Flight)". Put the destination town/city name in destination.`
+        : `Give 3 real, specific places or events in ${loc.label} for category "${cat}" ${activeFilterLabels.length ? `focusing on "${activeFilterLabels.join('" or "')}"` : ''}.`)
         + ` Do not repeat any of these: ${avoid}.`;
       const res = await callGrounded(prompt, `You are an insider ${loc.city} lifestyle curator. Return a JSON array.`, schema);
       const parsed = JSON.parse(res.text || '[]');
       if (Array.isArray(parsed)) {
         added = [...added, ...parsed.filter(p => p && p.title && !seenTitles.has(String(p.title).toLowerCase())).slice(0, 3 - added.length).map((item, i) => ({
           id: Date.now() + i, category: cat, title: item.title, desc: item.desc || '', rating: 4.8, userRating: null,
-          price: item.price || (loc.cur ? loc.cur.repeat(2) : '$$'), city: loc.city, sub1: ideaSubFilter1 || item.sub1 || cat, sub2: 'Live Web Discovery',
+          price: item.price || (loc.cur ? loc.cur.repeat(2) : '$$'), city: loc.city, sub1: activeFilterLabels[0] || item.sub1 || cat, matchLabels: activeFilterLabels, sub2: 'Live Web Discovery',
           deal: '', distance: item.distance || '1.0 mi', dest: item.destination || undefined
         }))];
       }
@@ -2637,22 +2966,25 @@ function AppInner({ onReset }) {
     }
     if (added.length < 3) {
       try {
-        const more = await osmIdeas({ cat, loc, seen: new Set([...seenTitles, ...added.map(a => a.title.toLowerCase())]), n: 3 - added.length });
+        const more = await osmIdeas({ cat, loc, seen: new Set([...seenTitles, ...added.map(a => a.title.toLowerCase())]), n: 3 - added.length, filters: activeFilterDefs });
         if (more.length) { added = [...added, ...more]; osmUsed = true; }
       } catch (e) { webNote = webNote || "Couldn't reach the places search just now."; }
     }
     let from = added.length ? (osmUsed ? (added.some(a => a.placeId) ? 'the Pact places database near ' + loc.city : 'OpenStreetMap near ' + loc.city) : 'live web search') : '';
     if (added.length < 3 && loc.isHome) {
       const pool = EXTRA_IDEAS.filter(x => x.category === cat && !seenTitles.has(x.title.toLowerCase()) && !added.some(a => a.title === x.title));
-      const preferred = ideaSubFilter1 ? pool.filter(x => x.sub1 === ideaSubFilter1) : pool;
-      const pick = [...preferred, ...pool.filter(x => !preferred.includes(x))].slice(0, 3 - added.length).map((x, i) => ({ ...x, id: Date.now() + 50 + i, sub2: x.sub2 }));
+      const preferred = activeFilterDefs.length ? pool.filter(x => ideaMatchesFilters(x, activeFilterDefs)) : pool;
+      const pick = (activeFilterDefs.length ? preferred : [...preferred, ...pool.filter(x => !preferred.includes(x))]).slice(0, 3 - added.length).map((x, i) => ({ ...x, id: Date.now() + 50 + i, sub2: x.sub2 }));
       if (pick.length) { added = [...added, ...pick]; from = from ? from + ' and the curated list' : 'the curated list'; }
     }
+    if (activeFilterDefs.length) added = added.filter(a => ideaMatchesFilters(a, activeFilterDefs));   // never show something that doesn't fit the chosen filters
     if (added.length) {
-      if (ideaSubFilter1 && added.some(a => a.sub1 !== ideaSubFilter1)) setIdeaSubFilter1(null);
       setIdeasFeed(prev => [...added, ...prev]);
       setIdeaFresh(added.map(a => a.id));
       setIdeaNotice(`${added.length} new ${cat.toLowerCase()} idea${added.length === 1 ? '' : 's'} from ${from}, shown at the top.${webNote ? ' ' + webNote : ''}`);
+    } else if (activeFilterDefs.length) {
+      setIdeaFresh([]);
+      setIdeaNotice(`I couldn't find any new ${activeFilterLabels.join(' / ').toLowerCase()} near ${loc.city} right now. Try a different filter, clear the filters, or check back later.${webNote ? ' ' + webNote : ''}`);
     } else {
       // Nothing new anywhere: reshuffle what is there so the list visibly changes.
       setIdeasFeed(prev => {
@@ -2860,12 +3192,14 @@ function AppInner({ onReset }) {
 
   const handleCompleteTaskWithClockCheck = (task) => {
     const [endH, endM] = task.endTime.split(':').map(Number);
-    const [nowH, nowM] = simulatedClock.split(':').map(Number);
+    const [nowH, nowM] = nowHHMM().split(':').map(Number);
     const scheduledEndMins = endH * 60 + endM;
     const actualNowMins = nowH * 60 + nowM;
     const diff = scheduledEndMins - actualNowMins;
 
     setTasks(prev => prev.map(t => t.id === task.id ? { ...t, status: 'completed' } : t));
+    if (task.withPerson) setPeople(prev => prev.map(x => String(x.name).trim().toLowerCase() === String(task.withPerson).trim().toLowerCase() ? { ...x, lastContact: todayDateStr(), snoozeUntil: '' } : x));
+    setReclaimedAt(nowHHMM());
     if (diff > 0 && diff <= 120) {
       setReclaimedMinutes(diff);
     } else {
@@ -2910,23 +3244,23 @@ function AppInner({ onReset }) {
   const skillSig = (sk) => [sk.name, sk.goal, sk.timeframe].join('|');
   const editSkillMeta = (sk, patch) => patchSkill(sk.id, { suggestSig: sk.suggestSig || skillSig(sk), ...patch });
   const [skillSuggest, setSkillSuggest] = useState({ skillId: '', busy: false, items: null, source: '' });
+  const SUGGEST_DAYS = { '1 Week': 7, '2 Weeks': 14, '3 Weeks': 21, '4 Weeks': 28, '1 Month': 30, '6 Weeks': 42, '2 Months': 60, '3 Months': 90, '6 Months': 180, '1 Year': 365, 'Ongoing': 60 };
+  const suggestTarget = (d) => d <= 1 ? '1 day' : d <= 2 ? '2 days' : d <= 3 ? '3 days' : d <= 10 ? '1 Week' : d <= 17 ? '2 Weeks' : d <= 24 ? '3 Weeks' : '1 Month';
   const localSuggest = (sk) => {
     const n = { '1 Week': 3, '2 Weeks': 4, '3 Weeks': 5, '4 Weeks': 5, '1 Month': 5, '6 Weeks': 6, '2 Months': 6, '3 Months': 7, '6 Months': 8, '1 Year': 8, 'Ongoing': 6 }[sk.timeframe] || 5;
-    const t = (sk.name || 'this skill').trim();
-    const g = (sk.goal || '').trim();
-    const base = [
-      [`Learn the basics of ${t}`, 0.15], [`Do a first small practice exercise in ${t}`, 0.3], [`Practise ${t} in three short sessions`, 0.45],
-      [g ? `Build something small toward: ${g}` : `Build a small project using ${t}`, 0.65], [`Get feedback on your ${t}`, 0.8], [`Fix your weakest spots in ${t}`, 0.9],
-      [`Show or share what you made with ${t}`, 0.95], [`Set the next goal after ${t}`, 1]
-    ];
-    const pick = base.slice(0, Math.max(2, Math.min(n, base.length)));
-    const days = { '1 Week': 7, '2 Weeks': 14, '3 Weeks': 21, '4 Weeks': 28, '1 Month': 30, '6 Weeks': 42, '2 Months': 60, '3 Months': 90, '6 Months': 180, '1 Year': 365, 'Ongoing': 60 }[sk.timeframe] || 30;
-    const toTarget = (d) => d <= 1 ? '1 day' : d <= 2 ? '2 days' : d <= 3 ? '3 days' : d <= 10 ? '1 Week' : d <= 17 ? '2 Weeks' : d <= 24 ? '3 Weeks' : '1 Month';
-    return pick.map(([title, f], i) => ({ title, target: toTarget(Math.max(1, Math.round((days * f) / pick.length))) }));
+    const plan = findSkillPlan(sk.name, sk.goal);
+    return planMilestones(plan, (sk.name || 'this skill').trim(), n, SUGGEST_DAYS[sk.timeframe] || 30, suggestTarget);
   };
   const updateSuggestions = async (sk) => {
     setSkillSuggest({ skillId: sk.id, busy: true, items: null, source: '' });
     let items = null, source = 'template';
+    const plan = findSkillPlan(sk.name, sk.goal);
+    if (plan) {
+      const have0 = new Set(sk.steps.filter(x => x.done).map(x => x.title.trim().toLowerCase()));
+      items = localSuggest(sk).filter(it => !have0.has(it.title.trim().toLowerCase()));
+      if (items.length >= 2) { source = 'plan:' + skillPlanLabel(plan); setSkillSuggest({ skillId: sk.id, busy: false, items, source }); patchSkill(sk.id, { suggestSig: skillSig(sk) }); return; }
+      items = null;
+    }
     try {
       const schema = { type: 'ARRAY', items: { type: 'OBJECT', properties: { title: { type: 'STRING' }, target: { type: 'STRING' } }, propertyOrdering: ['title', 'target'] } };
       const done = sk.steps.filter(x => x.done).map(x => x.title).join('; ');
@@ -2995,24 +3329,26 @@ function AppInner({ onReset }) {
     return { wkStart, wkEnd, doneSteps: doneSteps.sort((a, b) => a.date.localeCompare(b.date)), sessions, sessionsDone, mins, progress, next };
   })();
 
+  // Courses: real providers and real links for this skill, from the Pact skills library (nothing invented).
   const leafAlignedCourses = (() => {
-    const exactMatches = courseSuggestions.filter(c => c.skillId === activeSkill?.id);
-    if (exactMatches.length > 0) return exactMatches;
     if (!activeSkill) return [];
-    return [{
-      id: `dyn_${activeSkill.id}`,
-      domain: skillTreeDomain,
-      skillId: activeSkill.id,
-      title: `${activeSkill.name}: Practical Project & Fundamentals Masterclass`,
-      provider: `Curated for "${activeSkill.name}" Leaf • Coursera / Local Guild`,
-      cost: 'Free Audit / £25 Cert',
-      url: `https://www.google.com/search?q=${encodeURIComponent(activeSkill.name + ' course workshop ' + loc.city)}`,
-      selectedSlot: 'Wed 18:30',
-      availableSlots: ['Tue 18:30', 'Wed 18:30', 'Sat 11:00'],
-      dismissOpen: false,
-      swappedNote: null
-    }];
+    const plan = findSkillPlan(activeSkill.name, activeSkill.goal);
+    const hidden = new Set(activeSkill.hiddenResources || []);
+    return planResources(plan, activeSkill.name, loc.city, loc.country).filter(r => !hidden.has(r.id)).map(r => ({ ...r, curated: !!plan }));
   })();
+  const planStudySession = (res) => {
+    const today = todayDateStr();
+    let date = today, start = null;
+    for (let i = 0; i < 7 && start === null; i++) {
+      date = addDaysStr(today, i);
+      const from = i === 0 ? Math.max(9 * 60, roundUpTo(new Date().getHours() * 60 + new Date().getMinutes() + 15, 15)) : 9 * 60;
+      const gaps = getFreeGaps(date, calCtx, 45, { from, to: 22 * 60 });
+      if (gaps.length) start = roundUpTo(gaps[0].s, 5);
+    }
+    if (start === null) { pushToast('No free 45-minute window in the next week. Free some time and try again.', 'error'); return; }
+    setTasks(prev => [...prev, { id: Date.now(), title: `Learn: ${activeSkill.name}`, duration: 45, status: 'pending', startTime: fromMins(start), endTime: fromMins(start + 45), date, type: 'analytical', categoryColor: 'work', location: res.provider, transportMode: 'Online / Local', travelTime: 0, distance: '0 mi', leaveByNote: '', notes: `${res.title} (${res.url})`, rating: null, reviewNote: '', withPerson: null, meetingType: 'Business' }]);
+    pushToast(`Added a 45-minute "${activeSkill.name}" session on ${prettyDate(date)} at ${fromMins(start)}.`, 'success');
+  };
 
   const getCategoryColorHex = (catId) => {
     const found = customCategories.find(c => c.id === catId);
@@ -3040,6 +3376,7 @@ function AppInner({ onReset }) {
     if (local) {
       if (local.task) setTasks(prev => [...prev, local.task]);
       if (local.removeTaskId) setTasks(prev => prev.filter(t => t.id !== local.removeTaskId));
+      if (local.updateTask) setTasks(prev => prev.map(t => t.id === local.updateTask.id ? local.updateTask : t));
       setRoamieMessages(prev => [...prev, { sender: 'roamie', text: local.text, sources: [], action: local.openDate ? { label: `View ${prettyDate(local.openDate)}`, date: local.openDate } : null }]);
       return;
     }
@@ -3071,7 +3408,7 @@ function AppInner({ onReset }) {
       Never claim you booked or added anything. Tell the user they can say "book <thing> on <day> at <time>" and you will add it to the planner.`;
       const history = roamieMessages.slice(-6).map(m => `${m.sender === 'user' ? 'User' : 'Roamie'}: ${m.text}`).join('\n');
       let answer = null;
-      if (await geminiReady()) { try { answer = await callGeminiWithSearch(`Conversation so far:\n${history}\n\nUser: ${q}`, systemPrompt, null, true); } catch (e) { answer = null; } }
+      if (await geminiReady()) { try { answer = await callGeminiWithSearch(`Conversation so far:\n${history}\n\nUser: ${q}\n(The user writes casual, everyday English with slang and typos; interpret their intent generously.)`, systemPrompt, null, true); } catch (e) { answer = null; } }
       if (!answer) answer = await keylessAnswer(q, loc);
       const { text, sources } = answer;
       setRoamieMessages(prev => [...prev, { sender: 'roamie', text, sources: sources ? sources.slice(0, 3) : [] }]);
@@ -3203,7 +3540,7 @@ function AppInner({ onReset }) {
     const starter = (domain) => ({ branches: [{ id: 'b_first_' + domain, name: 'My first area', x: 110, y: 120, skills: [{ id: 's_first_' + domain, name: 'My first skill', goal: 'What do you want to get good at?', timeframe: '1 Month', x: 110, y: 45, steps: [{ id: 'st_first_' + domain, title: 'Add your first milestone', done: false, comment: '' }] }] }] });
     setTasks([]); setWeeklyTargets([]); setMoodLogs([]); setMedications([]); setMealBatches([]); setMealHistoryLogs([]);
     setDailyMeals(prev => prev.map(m => ({ ...m, eaten: false, detail: '', selectedBatchId: '', mode: 'Cooked New' })));
-    setLifeCadenceItems([]); setFriendsList([]); setSharedFriendPlans([]); setCourseSuggestions([]);
+    setLifeCadenceItems([]); setFriendsList([]); setPeople([]); setSharedFriendPlans([]); setCourseSuggestions([]);
     setSkillForest({ work: starter('work'), personal: starter('personal') });
     setSelectedBranchId('b_first_work'); setSelectedSkillId('s_first_work');
   };
@@ -3376,6 +3713,7 @@ function AppInner({ onReset }) {
     if (Array.isArray(saved.favourites)) setFavourites(saved.favourites);
     if (saved.skillForest) setSkillForest(saved.skillForest);
     if (saved.friendsList) setFriendsList(saved.friendsList);
+    if (Array.isArray(saved.people)) setPeople(saved.people);
     if (saved.customCategories) setCustomCategories(saved.customCategories);
     if (saved.calendarSources) setCalendarSources(saved.calendarSources);
     if (saved.roamieMessages) setRoamieMessages(saved.roamieMessages);
@@ -3392,6 +3730,186 @@ function AppInner({ onReset }) {
   };
   const readLocalBlob = (email) => { try { return JSON.parse(store.get('roam:data:' + email) || 'null'); } catch (e) { return null; } };
   const hasContent = (o) => !!o && typeof o === 'object' && Object.keys(o).length > 0;
+
+  // Claim a unique @username for this account (adds digits if someone already has it).
+  const claimHandle = async (raw) => {
+    let h = cleanHandle(raw);
+    if (h.length < 3) h = (cleanHandle(String((authUser && authUser.email) || 'pact').split('@')[0]) + '_user').slice(0, 24);
+    let r = await cloud.claimUsername(h);
+    for (let i = 0; i < 5 && r === 'taken'; i++) { const alt = h.slice(0, 20) + '_' + Math.floor(100 + Math.random() * 900); r = await cloud.claimUsername(alt); if (r === 'ok') h = alt; }
+    if (r === 'ok') setAccountInfo(prev => (prev.username === '@' + h ? prev : { ...prev, username: '@' + h }));
+    return r;
+  };
+  const saveHandle = async (raw) => {
+    if (!authUser || !authUser.cloud) return;
+    const h = cleanHandle(raw);
+    try {
+      const r = await cloud.claimUsername(h);
+      setUsernameMsg(r === 'ok' ? `Friends can find you as @${h}.` : r === 'taken' ? 'That username is already taken. Try another.' : 'Use 3 to 24 letters, numbers or underscores.');
+      if (r === 'ok') setAccountInfo(prev => ({ ...prev, username: '@' + h }));
+    } catch (e) { setUsernameMsg("Couldn't save that right now. Try again."); }
+  };
+  const refreshFriends = async () => {
+    if (!cloud.enabled || !authUser || !authUser.cloud) return;
+    try {
+      const [fr, rq] = await Promise.all([cloud.friends(), cloud.friendRequests()]);
+      setFriendReqs(prev => (stableJson(prev) === stableJson(rq) ? prev : rq));
+      setFriendsList(prev => {
+        const real = fr.map(f => {
+          const old = prev.find(x => x.userId === f.user_id);
+          const handle = f.username ? '@' + f.username : '';
+          return old ? { ...old, name: f.display_name || old.name, handle } : { id: 'u_' + f.user_id, userId: f.user_id, name: f.display_name || f.username || 'Friend', handle, lastSeen: 'Not yet', type: 'Friend', status: 'Synced' };
+        });
+        const next = [...real, ...prev.filter(x => !x.userId)];
+        return stableJson(next) === stableJson(prev) ? prev : next;
+      });
+    } catch (e) { /* offline or tables not set up: keep what we have */ }
+    await syncShared();
+    await loadInbox();
+  };
+  const durationOf = (st, en) => Math.max(15, toMins(en || st) - toMins(st));
+  const loadInbox = async () => { try { const r = await cloud.inbox(); setInboxRows(prev => (stableJson(prev) === stableJson(r) ? prev : r)); } catch (e) { /* messages not set up yet */ } };
+  // Pull joint events and keep MY calendar in step with them: accepted events appear and follow the owner's edits; declined or cancelled ones disappear.
+  const syncShared = async () => {
+    if (!cloud.enabled || !authUser || !authUser.cloud) return;
+    let evs; try { evs = await cloud.mySharedEvents(); } catch (e) { return; }
+    setSharedEvents(prev => (stableJson(prev) === stableJson(evs) ? prev : evs));
+    const invitedIds = evs.filter(e => !e.is_owner && e.my_status === 'invited').map(e => e.id);
+    if (sharedRef.current.seen) invitedIds.filter(id => !sharedRef.current.seen.includes(id)).forEach(id => { const e = evs.find(x => x.id === id); if (e) pushToast(`${e.owner_name} invited you to "${e.title}". Open Social to answer.`, 'info'); });
+    sharedRef.current.seen = invitedIds;
+    const ids = new Set(evs.map(e => e.id));
+    setTasks(prev => {
+      let next = prev.slice(); let changed = false;
+      for (const e of evs) {
+        const d = e.details || {};
+        const srv = { title: e.title, date: d.date || '', startTime: d.start || '', endTime: d.end || d.start || '', location: d.location || '' };
+        const sig = sharedSig(srv);
+        const i = next.findIndex(t => t.sharedId === e.id);
+        if (e.is_owner) {
+          if (i >= 0 && sharedSig(next[i]) === next[i].sharedSig && sig !== next[i].sharedSig) { next[i] = { ...next[i], ...srv, duration: durationOf(srv.startTime, srv.endTime), sharedSig: sig }; changed = true; }
+        } else if (e.my_status === 'accepted') {
+          if (i < 0) {
+            next.push({ id: Date.now() + next.length, ...srv, duration: durationOf(srv.startTime, srv.endTime), status: 'pending', type: 'social', categoryColor: 'social', transportMode: 'Walk', travelTime: 10, distance: '', leaveByNote: '', notes: `Joint event with ${e.owner_name}`, rating: null, reviewNote: '', withPerson: e.owner_name, meetingType: 'Friendly', sharedId: e.id, sharedRole: 'guest', sharedSig: sig });
+            changed = true;
+          } else if (sig !== sharedSig(next[i])) { next[i] = { ...next[i], ...srv, duration: durationOf(srv.startTime, srv.endTime), sharedSig: sig }; changed = true; }
+        } else if (i >= 0) { next.splice(i, 1); changed = true; }   // declined, or invited but not accepted: not on my calendar
+      }
+      next = next.flatMap(t => {
+        if (!t.sharedId || ids.has(t.sharedId)) return [t];
+        changed = true;
+        if (t.sharedRole === 'owner') { const { sharedId, sharedRole, sharedSig: _s, ...rest } = t; return [rest]; }   // event gone: keep my own plan
+        return [];                                                                                                     // cancelled by the owner
+      });
+      return changed ? next : prev;
+    });
+  };
+  // Owner edits a plan that is shared: tell the server so everyone's calendar follows.
+  useEffect(() => {
+    if (!hydrated || !authUser || !authUser.cloud) return undefined;
+    const pending = tasks.filter(t => t.sharedId && t.sharedRole === 'owner' && sharedSig(t) !== t.sharedSig);
+    if (!pending.length) return undefined;
+    const id = setTimeout(async () => {
+      for (const t of pending) {
+        try {
+          await cloud.updateSharedEvent(t.sharedId, t.title, { date: t.date, start: t.startTime, end: t.endTime, location: t.location || '' });
+          const sg = sharedSig(t); setTasks(prev => prev.map(x => x.id === t.id ? { ...x, sharedSig: sg } : x));
+        } catch (e) { /* try again on the next change */ }
+      }
+    }, 1200);
+    return () => clearTimeout(id);
+  }, [tasks, hydrated]);
+  const pactFriends = friendsList.filter(f => f.userId);
+  const unreadBy = Object.fromEntries(inboxRows.map(r => [r.user_id, r.unread || 0]));
+  const unreadTotal = inboxRows.reduce((n, r) => n + (r.unread || 0), 0);
+  const pendingInvites = sharedEvents.filter(e => !e.is_owner && e.my_status === 'invited');
+  const loadChat = async (fr) => {
+    try { const rows = await cloud.conversation(fr.userId); setChatMsgs(rows.slice().reverse()); await cloud.markRead(fr.userId); loadInbox(); } catch (e) { /* ignore */ }
+  };
+  const openChat = (fr) => { setChatWith(fr); setChatMsgs([]); loadChat(fr); };
+  const sendChat = async () => {
+    const b = chatText.trim(); if (!b || !chatWith) return;
+    setChatText('');
+    try { const r = await cloud.sendMessage(chatWith.userId, b); if (r !== 'sent') pushToast("That message couldn't be sent. You can only message friends.", 'error'); await loadChat(chatWith); }
+    catch (e) { pushToast("Couldn't send that right now. Try again.", 'error'); }
+  };
+  useEffect(() => {
+    if (!chatWith) return undefined;
+    const id = setInterval(() => { if (typeof document === 'undefined' || document.visibilityState === 'visible') loadChat(chatWith); }, 8000);
+    return () => clearInterval(id);
+  }, [chatWith && chatWith.userId]);
+  const answerEvent = async (eventId, status, note) => {
+    try { await cloud.respondToEvent(eventId, status, note); pushToast(status === 'accepted' ? 'Added to your schedule.' : 'Declined.', status === 'accepted' ? 'success' : 'info'); await syncShared(); if (chatWith) loadChat(chatWith); }
+    catch (e) { pushToast("Couldn't send your answer right now.", 'error'); }
+  };
+  const sendPactInvite = async () => {
+    const t = tasks.find(x => String(x.id) === String(inviteDraft.taskId));
+    if (!t) { pushToast('Pick a plan first.', 'info'); return; }
+    if (!inviteSel.length) { pushToast('Tap at least one friend to invite.', 'info'); return; }
+    setInviteBusy(true);
+    try {
+      if (t.sharedId && t.sharedRole !== 'owner') { pushToast('Only the person who made this plan can invite more people.', 'info'); }
+      else if (t.sharedId) { for (const uid of inviteSel) await cloud.inviteToEvent(t.sharedId, uid, inviteNote); pushToast('Invite sent.', 'success'); }
+      else {
+        const eid = await cloud.createSharedEvent(t.title, { date: t.date, start: t.startTime, end: t.endTime, location: t.location || '' }, inviteSel, inviteNote);
+        setTasks(prev => prev.map(x => x.id === t.id ? { ...x, sharedId: eid, sharedRole: 'owner', sharedSig: sharedSig(t) } : x));
+        pushToast('Invite sent in Pact. They will see it in their Social tab and messages.', 'success');
+      }
+      setInviteSel([]); setInviteNote(''); await syncShared(); loadInbox();
+    } catch (e) { pushToast("Couldn't send that invite. Check your connection, and that the 0004 database update has been run.", 'error'); }
+    setInviteBusy(false);
+  };
+  const saveEventEdit = async () => {
+    const ed = editEvent; if (!ed || !ed.title.trim()) return;
+    const details = { date: ed.date, start: ed.start, end: ed.end || ed.start, location: ed.location || '' };
+    try {
+      const n = await cloud.updateSharedEvent(ed.id, ed.title.trim(), details);
+      setTasks(prev => prev.map(x => x.sharedId === ed.id ? { ...x, title: ed.title.trim(), date: ed.date, startTime: ed.start, endTime: ed.end || ed.start, duration: durationOf(ed.start, ed.end), location: ed.location || '', sharedSig: sharedSig({ title: ed.title.trim(), date: ed.date, startTime: ed.start, endTime: ed.end || ed.start, location: ed.location || '' }) } : x));
+      pushToast(n > 0 ? `Updated. ${n} ${n === 1 ? 'person was' : 'people were'} told.` : 'Updated.', 'success');
+      setEditEvent(null); await syncShared();
+    } catch (e) { pushToast("Couldn't save that change right now.", 'error'); }
+  };
+  const cancelEvent = async (e) => {
+    try { await cloud.deleteSharedEvent(e.id); setTasks(prev => prev.map(t => { if (t.sharedId !== e.id) return t; const { sharedId, sharedRole, sharedSig: _s, ...rest } = t; return rest; })); pushToast('Cancelled for everyone.', 'info'); await syncShared(); }
+    catch (er) { pushToast("Couldn't cancel that right now.", 'error'); }
+  };
+  const addEventToMySchedule = (e) => {
+    const d = e.details || {}; const srv = { title: e.title, date: d.date || '', startTime: d.start || '', endTime: d.end || d.start || '', location: d.location || '' };
+    setTasks(prev => prev.some(t => t.sharedId === e.id) ? prev : [...prev, { id: Date.now(), ...srv, duration: durationOf(srv.startTime, srv.endTime), status: 'pending', type: 'social', categoryColor: 'social', transportMode: 'Walk', travelTime: 10, distance: '', leaveByNote: '', notes: 'Joint event', rating: null, reviewNote: '', withPerson: null, meetingType: 'Friendly', sharedId: e.id, sharedRole: e.is_owner ? 'owner' : 'guest', sharedSig: sharedSig(srv) }]);
+  };
+  const searchFriend = async () => {
+    const h = cleanHandle(friendQuery);
+    if (h.length < 3) { setFriendMsg('Type their full username, like @maya_lin.'); setFriendFound(null); return; }
+    setFriendBusy(true); setFriendMsg(''); setFriendFound(null);
+    try { setFriendFound((await cloud.findUser(h)) || 'none'); } catch (e) { setFriendMsg("Couldn't search right now. Check your connection and try again."); }
+    setFriendBusy(false);
+  };
+  const sendFriendReq = async (id) => {
+    setFriendBusy(true);
+    try {
+      const r = await cloud.sendFriendRequest(id);
+      setFriendMsg(r === 'sent' ? 'Request sent. They will see it in their Friend Book.' : r === 'accepted' ? "You're now friends!" : r === 'already_friends' ? "You're already friends." : "Couldn't send that request.");
+      setFriendFound(null); setFriendQuery('');
+      await refreshFriends();
+    } catch (e) { setFriendMsg("Couldn't send that right now. Try again."); }
+    setFriendBusy(false);
+  };
+  const answerFriendReq = async (req, ok) => {
+    try { await cloud.respondFriendRequest(req.id, ok); pushToast(ok ? `You and ${req.display_name || 'them'} are now friends.` : 'Request declined.', ok ? 'success' : 'info'); await refreshFriends(); }
+    catch (e) { pushToast("Couldn't answer that right now.", 'error'); }
+  };
+  const unfriend = async (fr) => {
+    if (!fr.userId) { setFriendsList(prev => prev.filter(x => x.id !== fr.id)); return; }
+    try { await cloud.removeFriend(fr.userId); setFriendsList(prev => prev.filter(x => x.id !== fr.id)); pushToast(`Removed ${fr.name}.`, 'info'); }
+    catch (e) { pushToast("Couldn't remove them right now.", 'error'); }
+  };
+  useEffect(() => { if (hydrated && authUser && authUser.cloud && (activeTab === 'social' || (activeTab === 'profile' && profileSubTab === 'friends') || activeTab === 'schedule')) { syncShared(); loadInbox(); } }, [activeTab, profileSubTab, hydrated]);
+  useEffect(() => {
+    if (!hydrated || !authUser || !authUser.cloud) return undefined;
+    claimHandle(accountInfo.username).catch(() => { /* friends tables not set up yet */ });
+    refreshFriends();
+    const id = setInterval(() => { if (typeof document === 'undefined' || document.visibilityState === 'visible') refreshFriends(); }, 45000);
+    return () => clearInterval(id);
+  }, [hydrated, authUser && authUser.email]);
 
   // Load saved data after sign-in
   useEffect(() => {
@@ -3471,7 +3989,7 @@ function AppInner({ onReset }) {
     if (!authUser || authUser.guest || !hydrated) return;
     const blob = {
       tasks, weeklyTargets, userProfile, accountInfo, moodLogs, todayMood, todayMoodReason, medications, mealBatches,
-      dailyMeals, mealHistoryLogs, lifeCadenceItems, ideasFeed, favourites, skillForest, friendsList, customCategories, calendarSources,
+      dailyMeals, mealHistoryLogs, lifeCadenceItems, ideasFeed, favourites, skillForest, friendsList, people, customCategories, calendarSources,
       roamieMessages: roamieMessages.slice(-30), homeLayout, homeNotes, water, countdown, reading
     };
     store.set('roam:data:' + authUser.email, JSON.stringify(blob));
@@ -3483,7 +4001,7 @@ function AppInner({ onReset }) {
       c.timer = setTimeout(flushCloud, 1200);
     }
   }, [hydrated, tasks, weeklyTargets, userProfile, accountInfo, moodLogs, todayMood, todayMoodReason, medications, mealBatches,
-      dailyMeals, mealHistoryLogs, lifeCadenceItems, ideasFeed, favourites, skillForest, friendsList, customCategories, calendarSources, roamieMessages, homeLayout, homeNotes, water, countdown, reading]);
+      dailyMeals, mealHistoryLogs, lifeCadenceItems, ideasFeed, favourites, skillForest, friendsList, people, customCategories, calendarSources, roamieMessages, homeLayout, homeNotes, water, countdown, reading]);
 
   // Save when the app is backgrounded; check for newer data from another device when it comes back; retry when back online
   useEffect(() => {
@@ -3567,10 +4085,29 @@ function AppInner({ onReset }) {
     setSurpriseConfig(prev => ({ ...prev, showPopup: true }));
     const local = generateSurprise(surpriseConfig, surpriseSeen);
     const remember = (...keys) => setSurpriseSeen(prev => { const n = new Set(prev); keys.forEach(k => n.add(k)); return n; });
-    if (!local.exhausted) {
+    if (loc.isHome && !local.exhausted) {   // the built-in list is Manchester-only
       setSurprisePick(local);
       remember(local.actKey);
       return;
+    }
+    if (!loc.isHome) {
+      // Pick a real place near the profile location, matched to the chosen vibe.
+      setSurpriseLoading(true);
+      try {
+        const VIBE_CATS = { 'Adventurous & Quirky': ['Sports', 'Indoor', 'Outdoor'], 'Cozy & Cultural': ['Indoor', 'Food'], 'Creative & Hands-On': ['Indoor', 'Shopping'], 'Outdoor & Refreshing': ['Outdoor', 'Sports'] };
+        const cats = (VIBE_CATS[surpriseConfig.vibe] || ['Outdoor', 'Indoor']).slice().sort(() => Math.random() - 0.5);
+        const seenL = new Set([...surpriseSeen].map(x => String(x).toLowerCase()));
+        for (const c of cats) {
+          const got = await osmIdeas({ cat: c, loc, seen: seenL, n: 1 }).catch(() => []);
+          if (got.length) {
+            const g = got[0];
+            setSurprisePick({ key: 'near|' + g.title, actKey: g.title, title: g.title, duration: surpriseConfig.duration, location: osmAddressOf(g) || loc.city, desc: g.desc, transport: `${g.distance} from your location`, cost: surpriseConfig.budget, link: g.link || mapsDir(g.lat, g.lon) });
+            remember(g.title);
+            setSurpriseLoading(false);
+            return;
+          }
+        }
+      } catch (e) { /* fall through to the AI idea below */ }
     }
     // All built-in ideas used: ask Roamie's AI for a brand-new one, otherwise use a fresh twisted variant.
     setSurpriseLoading(true);
@@ -3621,7 +4158,22 @@ function AppInner({ onReset }) {
     }
   };
 
-  const shuffleAdventure = () => {
+  const shuffleAdventure = async () => {
+    if (!loc.isHome) {
+      // Not in Manchester: the built-in list is Manchester-only, so suggest real places near the profile location instead.
+      setAdventureBusy(true);
+      const picks = [];
+      const seenL = new Set(adventureSeen.map(x => String(x).toLowerCase()));
+      for (const cat of ['Sports', 'Indoor', 'Outdoor'].sort(() => Math.random() - 0.5)) {
+        let got = [];
+        try { got = await osmIdeas({ cat, loc, seen: new Set([...seenL, ...picks.map(x => String(x.title).toLowerCase())]), n: 1 }); } catch (e) { got = []; }
+        if (got.length) picks.push({ ...got[0], id: `adv_${Date.now()}_${picks.length}`, category: 'Adventure', userRating: null });
+      }
+      setAdventurePicks(picks);
+      setAdventureSeen(prev => [...prev, ...picks.map(x => x.title)]);
+      setAdventureBusy(false);
+      return;
+    }
     const history = [
       ...tasks.map(t => t.title),
       ...weeklyTargets.map(t => t.title),
@@ -3910,7 +4462,7 @@ function AppInner({ onReset }) {
       {/* =========================================================
           ULTRA-CLEAN SKINNY HEADER (No Logo, "Welcome back, [Name]")
          ========================================================= */}
-      <header className="pt-5 pb-2 sticky top-0 z-20 px-5 backdrop-blur-md" style={{ background: 'rgba(245,243,236,0.82)' }}>
+      <header data-pact-glass className="pt-5 pb-2 sticky top-0 z-20 px-5 backdrop-blur-md" style={{ background: 'rgba(245,243,236,0.82)' }}>
         <div className="relative flex justify-between items-center h-11 mb-2">
           <button
             onClick={() => setActiveTab('profile')}
@@ -4851,26 +5403,6 @@ function AppInner({ onReset }) {
               </button>
             </div>
 
-            {/* Phone Clock Simulator Bar */}
-            {selectedDateStr === todayDateStr() && (
-            <div className="p-3 bg-slate-900 text-white flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <Clock size={14} className="text-rose-400" />
-                <span className="text-[11px] uppercase tracking-wider">Live Phone Clock:</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <input
-                  type="time"
-                  value={simulatedClock}
-                  onChange={e => setSimulatedClock(e.target.value)}
-                  className="bg-slate-800 border border-slate-700 text-white px-2 py-0.5 text-xs font-mono"
-                />
-                <span className="text-[10px] text-stone-400">(Test early finish)</span>
-              </div>
-            </div>
-
-            )}
-
             {/* Context-Aware Reclaimed Time Prompt */}
             {reclaimedMinutes && (
               <div className="p-4 bg-purple-900 text-white space-y-2.5 border-l-4 border-rose-500">
@@ -4878,7 +5410,7 @@ function AppInner({ onReset }) {
                   <div>
                     <span className="text-[10px] uppercase tracking-widest text-rose-300 font-medium">Time Reclaimed!</span>
                     <h3 className="font-editorial text-base font-normal">
-                      You finished {reclaimedMinutes} mins early (at {simulatedClock})!
+                      You finished {reclaimedMinutes} mins early (at {reclaimedAt})!
                     </h3>
                   </div>
                   <button onClick={() => setReclaimedMinutes(null)} className="text-purple-200 hover:text-white">
@@ -4898,7 +5430,7 @@ function AppInner({ onReset }) {
                         title: userProfile.status === 'University Student' ? 'Campus Coffee & Snack Break' : 'Mindful Reset Walk',
                         duration: reclaimedMinutes,
                         status: 'pending',
-                        startTime: simulatedClock,
+                        startTime: reclaimedAt || nowHHMM(),
                         endTime: '11:00',
                         date: selectedDateStr,
                         type: 'social',
@@ -4931,15 +5463,15 @@ function AppInner({ onReset }) {
             )}
 
             {/* Social CRM Nudge Banner */}
-            {showSocialNudge && (
+            {showSocialNudge && nudgeFriend && (
               <div className="p-4 bg-rose-800 text-white space-y-3">
                 {socialNudgeStep === 'initial' && (
                   <>
                     <div className="flex justify-between items-start">
                       <div>
-                        <span className="text-[10px] uppercase tracking-widest text-rose-200 font-medium">Social CRM Nudge</span>
+                        <span className="text-[10px] uppercase tracking-widest text-rose-200 font-medium">Time to reach out</span>
                         <h3 className="font-editorial text-base font-normal mt-0.5">
-                          Hey! You haven't hung out with Yasho in 11 days.
+                          {nudgeFriend.days > 0 ? `It's been ${nudgeFriend.days} days since you were in touch with ${nudgeFriend.name}.` : `Time to get in touch with ${nudgeFriend.name}.`}
                         </h3>
                       </div>
                       <button onClick={() => setSocialNudgeStep('dismiss')} className="text-rose-200 hover:text-white">
@@ -4955,6 +5487,13 @@ function AppInner({ onReset }) {
                         Find a Free Block
                       </button>
                       <button
+                        data-nudge-contacted
+                        onClick={() => { updatePerson(nudgeFriend.id, { lastContact: todayDateStr(), snoozeUntil: '' }); pushToast(`Nice. Logged that you were in touch with ${nudgeFriend.name}.`, 'success'); }}
+                        className="px-3 py-1.5 bg-rose-900 text-rose-100 text-[10px] uppercase tracking-wider"
+                      >
+                        Already in touch
+                      </button>
+                      <button
                         onClick={() => setSocialNudgeStep('dismiss')}
                         className="px-3 py-1.5 bg-rose-900 text-rose-100 text-[10px] uppercase tracking-wider"
                       >
@@ -4966,7 +5505,7 @@ function AppInner({ onReset }) {
 
                 {socialNudgeStep === 'slots' && (
                   <div className="space-y-2">
-                    <div className="text-xs font-medium">Here are your best conflict-free blocks with Yasho:</div>
+                    <div className="text-xs font-medium">Here are your best conflict-free blocks with {nudgeFriend.name}:</div>
                     <div className="grid grid-cols-1 gap-1.5">
                       {(() => {
                         const out = [];
@@ -4982,7 +5521,7 @@ function AppInner({ onReset }) {
                           onClick={() => {
                             setTasks(prev => [...prev, {
                               id: Date.now(),
-                              title: 'Catch up with Yasho',
+                              title: `Catch up with ${nudgeFriend.name}`,
                               duration: 60,
                               status: 'pending',
                               startTime: slot.time,
@@ -4998,7 +5537,7 @@ function AppInner({ onReset }) {
                               notes: 'Scheduled via Social CRM Nudge',
                               rating: null,
                               reviewNote: '',
-                              withPerson: 'Yasho',
+                              withPerson: nudgeFriend.name,
                               meetingType: 'Friendly'
                             }]);
                             setSelectedDateStr(slot.date);
@@ -5016,16 +5555,16 @@ function AppInner({ onReset }) {
 
                 {socialNudgeStep === 'dismiss' && (
                   <div className="space-y-2">
-                    <div className="text-xs font-medium">Want Pact to remind you about Yasho at a later date?</div>
+                    <div className="text-xs font-medium">Want Pact to remind you about {nudgeFriend.name} at a later date?</div>
                     <div className="flex gap-2">
                       <button
-                        onClick={() => setShowSocialNudge(false)}
+                        onClick={() => { updatePerson(nudgeFriend.id, { snoozeUntil: addDaysStr(todayDateStr(), 7) }); setSocialNudgeStep('initial'); }}
                         className="px-3 py-1.5 bg-white text-rose-900 text-[10px] uppercase tracking-wider font-medium"
                       >
                         Remind Me Next Week
                       </button>
                       <button
-                        onClick={() => setShowSocialNudge(false)}
+                        onClick={() => { updatePerson(nudgeFriend.id, { remindEvery: 0 }); setSocialNudgeStep('initial'); }}
                         className="px-3 py-1.5 bg-rose-950 text-rose-200 text-[10px] uppercase tracking-wider"
                       >
                         Don't Remind Again
@@ -5131,7 +5670,7 @@ function AppInner({ onReset }) {
                         <div className="flex items-center justify-between gap-2">
                           <input
                             type="text"
-                            placeholder="Tag person (e.g. Yasho)..."
+                            placeholder="Tag a friend by name..."
                             value={task.withPerson || ''}
                             onChange={e => setTasks(tasks.map(t => t.id === task.id ? { ...t, withPerson: e.target.value } : t))}
                             className="flex-1 bg-white border border-stone-300 px-2 py-1 text-xs"
@@ -5257,7 +5796,7 @@ function AppInner({ onReset }) {
                   </p>
                 </div>
                 <button
-                  onClick={() => { setSelectedIdeaCategory('Outdoor'); setIdeaSubFilter1(null); }}
+                  onClick={() => { setSelectedIdeaCategory('Outdoor'); }}
                   className="px-2.5 py-1.5 bg-rose-700 text-white text-[10px] uppercase tracking-wider font-medium shrink-0"
                 >
                   View Outdoor
@@ -5284,7 +5823,7 @@ function AppInner({ onReset }) {
               {ideaCategories.map(cat => (
                 <button
                   key={cat}
-                  onClick={() => { setShowFavs(false); setSelectedIdeaCategory(cat); setIdeaSubFilter1(null); }}
+                  onClick={() => { setShowFavs(false); setSelectedIdeaCategory(cat); }}
                   className={`px-3.5 py-1.5 text-xs uppercase tracking-wider font-medium border shrink-0 transition-all ${
                     selectedIdeaCategory === cat
                       ? 'bg-purple-900 text-white border-purple-900'
@@ -5306,28 +5845,33 @@ function AppInner({ onReset }) {
                     What are you looking for in {selectedIdeaCategory}?
                   </h3>
                 </div>
-                {loc.isHome && <button
+                <button
                   onClick={() => { const next = !adventurousMode; setAdventurousMode(next); if (next) shuffleAdventure(); }}
                   className={`px-2.5 py-1 text-[10px] uppercase tracking-wider font-medium border flex items-center gap-1 ${
                     adventurousMode ? 'bg-rose-700 text-white border-rose-700' : 'bg-[#FAF8F5] text-rose-800 border-rose-300'
                   }`}
                 >
                   <Sparkles size={11} /> Feeling Adventurous
-                </button>}
+                </button>
               </div>
 
               <div className="flex flex-wrap gap-1.5">
                 {(ideaSubFilterOptions[selectedIdeaCategory] || []).map(sub => (
                   <button
                     key={sub}
-                    onClick={() => setIdeaSubFilter1(ideaSubFilter1 === sub ? null : sub)}
+                    data-idea-filter={sub}
+                    aria-pressed={activeFilterLabels.includes(sub)}
+                    onClick={() => toggleIdeaFilter(sub)}
                     className={`px-2.5 py-1 text-xs border transition-all ${
-                      ideaSubFilter1 === sub ? 'bg-blue-800 text-white border-blue-800' : 'bg-[#FAF8F5] text-slate-700 border-stone-200'
+                      activeFilterLabels.includes(sub) ? 'bg-blue-800 text-white border-blue-800' : 'bg-[#FAF8F5] text-slate-700 border-stone-200'
                     }`}
                   >
                     {sub}
                   </button>
                 ))}
+                {activeFilterLabels.length > 0 && (
+                  <button data-idea-filter-clear onClick={() => setActiveFilterLabels([])} className="px-2.5 py-1 text-xs border border-rose-300 text-rose-800 bg-white">&times; Clear filters</button>
+                )}
               </div>
             </div>
 
@@ -5345,6 +5889,9 @@ function AppInner({ onReset }) {
             <div className="space-y-3">
               {!showFavs && !adventurousMode && !ideasFeed.some(i => i.category === selectedIdeaCategory && String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase()) && (
                 <div data-ideas-empty className="p-4 bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">No {selectedIdeaCategory.toLowerCase()} ideas for {loc.city} yet. Tap Refresh to find some near you.</div>
+              )}
+              {!showFavs && !adventurousMode && activeFilterDefs.length > 0 && ideasFeed.some(i => i.category === selectedIdeaCategory && String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase()) && !ideasFeed.some(i => i.category === selectedIdeaCategory && String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase() && ideaMatchesFilters(i, activeFilterDefs)) && (
+                <div data-ideas-nomatch className="p-4 bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">Nothing saved here matches {activeFilterLabels.join(' / ')} yet. Tap Refresh to find some near {loc.city}, or clear the filters.</div>
               )}
               {showFavs && favourites.length === 0 && (
                 <div data-fav-empty className="p-4 bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">Nothing saved yet. Tap the heart on any idea to keep it here.</div>
@@ -5366,22 +5913,25 @@ function AppInner({ onReset }) {
                 <div className="p-3 bg-rose-700 text-white flex items-center justify-between gap-2">
                   <div className="text-xs leading-snug">
                     <span className="text-[10px] uppercase tracking-widest text-rose-200 font-medium block">Feeling Adventurous</span>
-                    3 random things outside your usual routine.
+                    {loc.isHome ? '3 random things outside your usual routine.' : `3 random places near ${loc.city} to try something different.`}
                   </div>
                   <button
                     onClick={shuffleAdventure}
                     className="shrink-0 px-2.5 py-1.5 bg-white text-rose-800 text-[10px] uppercase tracking-wider font-medium flex items-center gap-1"
                   >
-                    <Dices size={12} /> Shuffle 3
+                    <Dices size={12} /> {adventureBusy ? 'Finding...' : 'Shuffle 3'}
                   </button>
                 </div>
+              )}
+              {adventurousMode && !adventureBusy && adventurePicks.length === 0 && !loc.isHome && (
+                <div className="p-3 bg-[#EDEAE0] text-[11px] text-slate-800">Couldn't find places near {loc.city} right now. Check your connection and tap Shuffle 3.</div>
               )}
               {(showFavs ? favourites : adventurousMode
                 ? adventurePicks
                 : ideasFeed
                     .filter(item => item.category === selectedIdeaCategory)
                     .filter(item => String(item.city || 'Manchester').toLowerCase() === loc.city.toLowerCase())
-                    .filter(item => !ideaSubFilter1 || item.sub1 === ideaSubFilter1)
+                    .filter(item => ideaMatchesFilters(item, activeFilterDefs))
               ).map(idea => (
                   <div
                     key={idea.id}
@@ -5496,14 +6046,6 @@ function AppInner({ onReset }) {
                   </div>
                 ))}
 
-              <button
-                onClick={handleLoadMoreLiveIdeas}
-                disabled={isSearchingLiveIdeas}
-                className={`${adventurousMode || showFavs ? 'hidden ' : ''}w-full py-2.5 bg-slate-900 hover:bg-purple-900 text-white text-[11px] uppercase tracking-widest font-medium flex items-center justify-center gap-2 transition-colors`}
-              >
-                <RefreshCw size={13} className={isSearchingLiveIdeas ? 'animate-spin' : ''} />
-                {isSearchingLiveIdeas ? 'Finding new ideas...' : `Refresh ${selectedIdeaCategory} ideas`}
-              </button>
             </div>
           </div>
         )}
@@ -5873,7 +6415,7 @@ function AppInner({ onReset }) {
                         </div>
                         {sg && sg.items && (
                           <div className="space-y-1.5">
-                            <p className="text-[10px] text-stone-500">{sg.source === 'ai' ? 'Written by Roamie for this skill.' : 'Built from a template (live AI not available here).'} Your finished milestones are never touched.</p>
+                            <p className="text-[10px] text-stone-500">{sg.source.startsWith('plan:') ? `Built from the Pact ${sg.source.slice(5)} learning plan, with steps specific to this skill.` : sg.source === 'ai' ? 'Written by Roamie for this skill.' : 'No ready-made plan for this skill yet, so these are general steps. Edit them to fit.'} Your finished milestones are never touched.</p>
                             {sg.items.map((it, k) => (
                               <div key={k} data-suggestion className="flex items-center gap-2 bg-[#FAF8F5] border border-stone-200 px-2 py-1">
                                 <span className="flex-1 text-[11px] leading-snug">{it.title}{it.target ? <span className="text-stone-500"> · {it.target}</span> : null}</span>
@@ -5988,101 +6530,29 @@ function AppInner({ onReset }) {
                     Step 3 · Courses for "{activeSkill?.name}"
                   </span>
                 </div>
+                <p className="text-[10px] text-stone-500 leading-relaxed">These are links to real providers, not made-up courses. Check the price and reviews on the site before you pay for anything.</p>
                 {leafAlignedCourses.map(course => (
-                  <div key={course.id} className="p-3.5 bg-white border border-stone-200 space-y-2.5">
-                    {course.swappedNote && (
-                      <div className="px-2 py-1 bg-blue-900 text-white text-[10px] uppercase tracking-wider">
-                        {course.swappedNote}
-                      </div>
-                    )}
-                    <div className="flex justify-between items-start">
-                      <div>
+                  <div key={course.id} data-resource className="p-3.5 bg-white border border-stone-200 space-y-2">
+                    <div className="flex justify-between items-start gap-2">
+                      <div className="min-w-0">
                         <span className="text-[10px] uppercase tracking-wider text-stone-500">{course.provider}</span>
                         <h5 className="text-xs font-medium text-slate-900 mt-0.5">{course.title}</h5>
                       </div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 bg-[#FAF8F5] border border-stone-300">
-                        {course.cost}
-                      </span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 bg-[#FAF8F5] border border-stone-300 shrink-0 text-right">{course.cost}</span>
                     </div>
-
-                    <div className="space-y-1">
-                      <span className="text-[10px] text-stone-500">Suggested Weekly Upskilling Slots:</span>
-                      <div className="flex gap-1.5">
-                        {course.availableSlots.map(slot => (
-                          <button
-                            key={slot}
-                            onClick={() => setCourseSuggestions(courseSuggestions.map(c => c.id === course.id ? { ...c, selectedSlot: slot } : c))}
-                            className={`px-2 py-1 text-[10px] border ${
-                              course.selectedSlot === slot ? 'bg-purple-800 text-white border-purple-800' : 'bg-[#FAF8F5] text-slate-700 border-stone-300'
-                            }`}
-                          >
-                            {slot}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
+                    <p className="text-[11px] text-stone-600 leading-snug">{course.blurb}</p>
                     <div className="flex justify-between items-center pt-1">
                       <div className="flex gap-2">
-                        <a
-                          href={course.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          onClick={() => {
-                            setTasks(prev => [...prev, {
-                              id: Date.now(),
-                              title: `Course: ${course.title}`,
-                              duration: 60,
-                              status: 'pending',
-                              startTime: '18:30',
-                              endTime: '19:30',
-                              date: selectedDateStr,
-                              type: 'analytical',
-                              categoryColor: 'work',
-                              location: course.provider,
-                              transportMode: 'Online / Local',
-                              travelTime: 0,
-                              distance: '0 mi',
-                              leaveByNote: `Scheduled for ${course.selectedSlot}`,
-                              notes: `Booked via Skill Tree (${course.url})`,
-                              rating: null,
-                              reviewNote: '',
-                              withPerson: null,
-                              meetingType: 'Business'
-                            }]);
-                          }}
-                          className="px-3 py-1.5 bg-blue-800 hover:bg-blue-900 text-white text-[10px] uppercase tracking-wider font-medium flex items-center gap-1"
-                        >
-                          <ExternalLink size={11} /> Book & Add to Planner
-                        </a>
+                        <a href={course.url} target="_blank" rel="noreferrer" className="px-3 py-1.5 bg-blue-800 hover:bg-blue-900 text-white text-[10px] uppercase tracking-wider font-medium flex items-center gap-1"><ExternalLink size={11} /> Open</a>
+                        <button data-plan-session onClick={() => planStudySession(course)} className="px-3 py-1.5 border border-stone-400 text-[10px] uppercase tracking-wider font-medium">Plan a session</button>
                       </div>
-
-                      <button
-                        onClick={() => setCourseSuggestions(courseSuggestions.map(c => c.id === course.id ? { ...c, dismissOpen: !c.dismissOpen } : c))}
-                        className="text-[10px] text-rose-700 uppercase tracking-wider font-medium"
-                      >
-                        Dismiss / Swap
-                      </button>
+                      <button onClick={() => patchSkill(activeSkill.id, { hiddenResources: [...(activeSkill.hiddenResources || []), course.id] })} className="text-[10px] text-rose-700 uppercase tracking-wider font-medium">Not for me</button>
                     </div>
-
-                    {course.dismissOpen && (
-                      <div className="p-2.5 bg-[#FAF8F5] border border-stone-300 space-y-1.5">
-                        <div className="text-[10px] font-medium text-slate-800">Why isn't this course a fit?</div>
-                        <div className="grid grid-cols-1 gap-1">
-                          {dismissalReasons.map(r => (
-                            <button
-                              key={r.id}
-                              onClick={() => handleDismissCourseWithReason(course.id, r.id)}
-                              className="text-left px-2 py-1 bg-white hover:bg-purple-800 hover:text-white border border-stone-200 text-[11px] transition-colors"
-                            >
-                              {r.label}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
                   </div>
                 ))}
+                {(activeSkill && (activeSkill.hiddenResources || []).length > 0) && (
+                  <button onClick={() => patchSkill(activeSkill.id, { hiddenResources: [] })} className="text-[10px] text-stone-500 underline">Show hidden suggestions again</button>
+                )}
               </div>
             </div>
           </div>
@@ -6110,8 +6580,21 @@ function AppInner({ onReset }) {
                     {upcomingTasks.slice(0, 30).map(t => <option key={t.id} value={t.id}>{prettyDate(t.date)} {t.startTime} · {t.title}</option>)}
                   </select>
                   <input type="text" aria-label="Friend's name (optional)" list="pact-friend-names" placeholder="Friend's name (optional)" value={inviteDraft.friend} onChange={e => { setInviteDraft({ ...inviteDraft, friend: e.target.value }); setInviteOut(null); }} className="w-full bg-[#FAF8F5] border border-stone-300 px-2.5 py-2 text-xs" />
-                  <datalist id="pact-friend-names">{friendsList.map(f => <option key={f.id} value={f.name} />)}</datalist>
-                  <button data-invite-create onClick={createInvite} className="w-full py-2 bg-purple-900 text-white text-[11px] uppercase tracking-widest font-medium">Create invite</button>
+                  <datalist id="pact-friend-names">{[...friendsList.map(f => f.name), ...people.filter(x => !x.blocked).map(x => x.name)].filter((n, i, a) => n && a.indexOf(n) === i).map(n => <option key={n} value={n} />)}</datalist>
+                  {pactFriends.length > 0 && (
+                    <div data-pact-invite className="p-2.5 bg-[#FAF8F5] border border-stone-200 space-y-2">
+                      <div className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Send in Pact to your friends</div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {pactFriends.map(f => (
+                          <button key={f.userId} data-invite-friend={f.userId} aria-pressed={inviteSel.includes(f.userId)} onClick={() => setInviteSel(prev => prev.includes(f.userId) ? prev.filter(x => x !== f.userId) : [...prev, f.userId])} className={`px-2.5 py-1 text-[11px] border ${inviteSel.includes(f.userId) ? 'bg-purple-800 text-white border-purple-800' : 'bg-white border-stone-300'}`}>{f.name}</button>
+                        ))}
+                      </div>
+                      <input type="text" aria-label="Add a note (optional)" placeholder="Add a note (optional)" value={inviteNote} onChange={e => setInviteNote(e.target.value)} className="w-full bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
+                      <button data-invite-send-pact onClick={sendPactInvite} disabled={inviteBusy || !inviteDraft.taskId || inviteSel.length === 0} className="w-full py-2 bg-rose-700 text-white text-[11px] uppercase tracking-widest font-medium disabled:opacity-50">{inviteBusy ? 'Sending...' : 'Send invite in Pact'}</button>
+                      <p className="text-[10px] text-stone-500 leading-snug">It becomes a joint event: if you change it later, it updates on their calendar too.</p>
+                    </div>
+                  )}
+                  <button data-invite-create onClick={createInvite} className="w-full py-2 bg-purple-900 text-white text-[11px] uppercase tracking-widest font-medium">Or create a link to share</button>
                 </div>
               )}
               {inviteOut && (
@@ -6125,6 +6608,59 @@ function AppInner({ onReset }) {
                 </div>
               )}
             </div>
+
+            {/* Joint events: invites, who is coming, edits that sync to everyone */}
+            {sharedEvents.length > 0 && (
+              <div data-joint-events className="p-4 bg-white border border-stone-200 space-y-3">
+                <div>
+                  <span className="text-[10px] uppercase tracking-widest text-rose-700 font-medium">Joint events{pendingInvites.length ? ` • ${pendingInvites.length} waiting` : ''}</span>
+                  <h3 className="font-editorial text-base font-normal">Plans you share with friends</h3>
+                </div>
+                {sharedEvents.map(e => {
+                  const d = e.details || {};
+                  const hasLocal = tasks.some(t => t.sharedId === e.id);
+                  const editing = editEvent && editEvent.id === e.id;
+                  return (
+                    <div key={e.id} data-joint-event className={`p-2.5 border space-y-2 ${!e.is_owner && e.my_status === 'invited' ? 'bg-rose-50 border-rose-200' : 'bg-[#FAF8F5] border-stone-200'}`}>
+                      <div>
+                        <div className="text-xs font-medium text-slate-900">{e.title}</div>
+                        <div className="text-[10px] text-stone-600">{d.date ? prettyDate(d.date) : 'No date'}{d.start ? ` • ${d.start}${d.end && d.end !== d.start ? '–' + d.end : ''}` : ''}{d.location ? ` • ${d.location}` : ''}</div>
+                        <div className="text-[10px] text-stone-500">{e.is_owner ? 'You made this event' : `From ${e.owner_name}`}{(e.participants || []).length ? ' • ' + e.participants.map(pp => `${pp.name} (${pp.status})`).join(', ') : ''}</div>
+                      </div>
+                      {!e.is_owner && e.my_status === 'invited' && (
+                        <div className="flex gap-1.5">
+                          <button data-event-accept onClick={() => answerEvent(e.id, 'accepted')} className="px-2.5 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Accept</button>
+                          <button data-event-decline onClick={() => answerEvent(e.id, 'declined')} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Can't make it</button>
+                        </div>
+                      )}
+                      {!e.is_owner && e.my_status === 'accepted' && <div className="text-[10px] text-purple-800">On your schedule. It updates automatically if {e.owner_name} changes it.</div>}
+                      {e.is_owner && !editing && (
+                        <div className="flex flex-wrap gap-1.5">
+                          <button data-event-edit onClick={() => setEditEvent({ id: e.id, title: e.title, date: d.date || '', start: d.start || '', end: d.end || '', location: d.location || '' })} className="px-2.5 py-1 bg-slate-900 text-white text-[10px] uppercase tracking-wider">Edit for everyone</button>
+                          {!hasLocal && <button onClick={() => addEventToMySchedule(e)} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Add to my schedule</button>}
+                          <button data-event-cancel onClick={() => cancelEvent(e)} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider text-rose-700">Cancel for everyone</button>
+                        </div>
+                      )}
+                      {editing && (
+                        <div data-event-edit-form className="space-y-1.5">
+                          <input type="text" aria-label="Event title" value={editEvent.title} onChange={ev => setEditEvent({ ...editEvent, title: ev.target.value })} className="w-full bg-white border border-stone-300 px-2 py-1 text-xs" />
+                          <div className="grid grid-cols-3 gap-1.5">
+                            <input type="date" aria-label="Event date" value={editEvent.date} onChange={ev => setEditEvent({ ...editEvent, date: ev.target.value })} className="bg-white border border-stone-300 px-1.5 py-1 text-[11px]" />
+                            <input type="time" aria-label="Event start" value={editEvent.start} onChange={ev => setEditEvent({ ...editEvent, start: ev.target.value })} className="bg-white border border-stone-300 px-1.5 py-1 text-[11px]" />
+                            <input type="time" aria-label="Event end" value={editEvent.end} onChange={ev => setEditEvent({ ...editEvent, end: ev.target.value })} className="bg-white border border-stone-300 px-1.5 py-1 text-[11px]" />
+                          </div>
+                          <input type="text" aria-label="Event location" placeholder="Location" value={editEvent.location} onChange={ev => setEditEvent({ ...editEvent, location: ev.target.value })} className="w-full bg-white border border-stone-300 px-2 py-1 text-xs" />
+                          <div className="flex gap-1.5">
+                            <button data-event-save onClick={saveEventEdit} className="px-2.5 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Save and tell everyone</button>
+                            <button onClick={() => setEditEvent(null)} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Back</button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Shared Friend Plans with 15m/30m/45m/60m Push Sync */}
             <div className="p-4 bg-white border border-stone-200 space-y-3">
@@ -6239,26 +6775,53 @@ function AppInner({ onReset }) {
           <div className="space-y-4 animate-in fade-in duration-300">
 
             {/* Profile Sub-Navigation */}
-            <div className="grid grid-cols-3 border border-stone-300 bg-white">
+            <div className="grid grid-cols-4 border border-stone-300 bg-white">
               {[
-                { id: 'settings', label: 'Account & Prep' },
+                { id: 'settings', label: 'Account' },
                 { id: 'friends', label: 'Friend Book' },
-                { id: 'data', label: 'Data & CSV' }
+                { id: 'people', label: 'Your People' },
+                { id: 'data', label: 'Data' }
               ].map(tab => (
                 <button
                   key={tab.id}
                   onClick={() => setProfileSubTab(tab.id)}
-                  className={`py-2 text-[10px] uppercase tracking-widest font-medium ${
+                  className={`py-2 px-0.5 text-[9px] uppercase tracking-wider font-medium ${
                     profileSubTab === tab.id ? 'bg-purple-900 text-white' : 'text-slate-700 hover:bg-stone-100'
                   }`}
                 >
-                  {tab.label}
+                  {tab.label}{tab.id === 'friends' && (friendReqs.filter(r => r.direction === 'incoming').length + unreadTotal) > 0 ? <span data-friend-badge className="ml-1.5 px-1.5 py-px bg-rose-700 text-white text-[9px] tracking-wider">{friendReqs.filter(r => r.direction === 'incoming').length + unreadTotal}</span> : null}
                 </button>
               ))}
             </div>
 
             {profileSubTab === 'settings' && (
               <div className="space-y-4">
+                {/* Appearance */}
+                <div data-theme-card className="p-4 bg-white border border-stone-200 space-y-3">
+                  <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Appearance</span>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    {[['light', 'Light'], ['dark', 'Dark'], ['auto', 'Match my device']].map(([id, label]) => (
+                      <button key={id} data-theme-mode={id} aria-pressed={themeNow.mode === id} onClick={() => setTheme({ mode: id })}
+                        className={`px-2 py-2 text-[11px] border ${themeNow.mode === id ? 'bg-blue-800 text-white border-blue-800' : 'bg-[#FAF8F5] text-slate-700 border-stone-200'}`}>{label}</button>
+                    ))}
+                  </div>
+                  <div className="space-y-1.5">
+                    {['ember', 'maple', 'harvest', 'woodland', 'classic'].map(id => {
+                      const pal = THEME_PALETTES[id];
+                      const dk = resolveThemeMode(themeNow.mode) === 'dark';
+                      const sw = [`hsl(${pal.nh} ${pal.ns}% ${dk ? 10 : 94}%)`, `hsl(${pal.p[0]} ${pal.p[1]}% ${dk ? 40 : 38}%)`, `hsl(${pal.s[0]} ${pal.s[1]}% ${dk ? 40 : 38}%)`, `hsl(${pal.t[0]} ${pal.t[1]}% ${dk ? 45 : 48}%)`];
+                      return (
+                        <button key={id} data-theme-palette={id} aria-pressed={themeNow.palette === id} onClick={() => setTheme({ palette: id })}
+                          className={`w-full flex items-center gap-3 p-2 border text-left ${themeNow.palette === id ? 'border-blue-800 border-2' : 'border-stone-200'}`}>
+                          <span className="flex shrink-0 border border-stone-300">{sw.map((c, i) => <span key={i} style={{ background: c, width: 18, height: 26, display: 'block' }} />)}</span>
+                          <span className="flex-1 min-w-0"><span className="block text-xs font-medium text-slate-900">{pal.name}</span><span className="block text-[10px] text-stone-500">{pal.hint}</span></span>
+                          {themeNow.palette === id && <span className="text-[10px] uppercase tracking-wider text-blue-800 font-medium">On</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
                 {/* Account Details & Sign-Up */}
                 <div className="p-4 bg-white border border-stone-200 space-y-3">
                   <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Personal Account</span>
@@ -6275,8 +6838,10 @@ function AppInner({ onReset }) {
                       placeholder="Username (@handle)"
                       value={accountInfo.username}
                       onChange={e => setAccountInfo({ ...accountInfo, username: e.target.value })}
+                      onBlur={e => saveHandle(e.target.value)}
                       className="w-full bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs"
                     />
+                    {usernameMsg && <p data-username-msg className="text-[11px] text-stone-600 leading-snug">{usernameMsg}</p>}
                     {authUser && authUser.guest ? (
                       <input
                         type="email"
@@ -6594,10 +7159,43 @@ function AppInner({ onReset }) {
                   </button>
                 </div>
 
+                {authUser && authUser.cloud ? (
+                  <div data-friend-search className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
+                    <div className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Find a friend on Pact</div>
+                    <div className="flex gap-2">
+                      <input type="text" aria-label="Friend's username" placeholder="Their @username, e.g. @maya_lin" value={friendQuery} onChange={e => setFriendQuery(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') searchFriend(); }} className="flex-1 min-w-0 bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
+                      <button data-friend-find onClick={searchFriend} disabled={friendBusy || !friendQuery.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider font-medium disabled:opacity-50">{friendBusy ? '...' : 'Find'}</button>
+                    </div>
+                    <p className="text-[10px] text-stone-500 leading-snug">Your username: <strong>{accountInfo.username || '(not set)'}</strong>. Share it so friends can find you. They need to type it exactly.</p>
+                    {friendFound === 'none' && <p data-friend-none className="text-[11px] text-stone-600">No one found with that username. Check the spelling with them.</p>}
+                    {friendFound && friendFound !== 'none' && (
+                      <div data-friend-result className="p-2.5 bg-white border border-stone-200 flex justify-between items-center gap-2">
+                        <div className="text-xs font-medium text-slate-900">{friendFound.display_name || friendFound.username} <span className="text-stone-400 font-normal">@{friendFound.username}</span></div>
+                        {friendFound.relation === 'friends' ? <span className="text-[10px] text-stone-500 uppercase tracking-wider">Already friends</span>
+                          : friendFound.relation === 'pending_out' ? <span className="text-[10px] text-stone-500 uppercase tracking-wider">Request sent</span>
+                          : <button data-friend-send onClick={() => sendFriendReq(friendFound.id)} disabled={friendBusy} className="px-2.5 py-1 bg-rose-700 text-white text-[10px] uppercase tracking-wider font-medium">{friendFound.relation === 'pending_in' ? 'Accept their request' : 'Send request'}</button>}
+                      </div>
+                    )}
+                    {friendMsg && <p data-friend-msg className="text-[11px] text-stone-600">{friendMsg}</p>}
+                    {friendReqs.filter(r => r.direction === 'incoming').map(r => (
+                      <div key={r.id} data-friend-request className="p-2.5 bg-white border border-rose-200 flex justify-between items-center gap-2">
+                        <div className="text-xs"><span className="font-medium text-slate-900">{r.display_name || r.username}</span> <span className="text-stone-400">@{r.username}</span> wants to be friends</div>
+                        <div className="flex gap-1.5 shrink-0">
+                          <button data-friend-accept onClick={() => answerFriendReq(r, true)} className="px-2 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Accept</button>
+                          <button data-friend-decline onClick={() => answerFriendReq(r, false)} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Decline</button>
+                        </div>
+                      </div>
+                    ))}
+                    {friendReqs.filter(r => r.direction === 'outgoing').length > 0 && <p className="text-[10px] text-stone-500">Waiting for a reply from: {friendReqs.filter(r => r.direction === 'outgoing').map(r => '@' + r.username).join(', ')}</p>}
+                  </div>
+                ) : (
+                  <p className="text-[11px] text-stone-500 leading-snug">Sign in with an account to find friends by username.</p>
+                )}
+
                 <div className="flex gap-2">
                   <input
                     type="text"
-                    placeholder="Add friend by name or @handle..."
+                    placeholder="Add someone who isn't on Pact yet (name)..."
                     value={newFriendName}
                     onChange={e => setNewFriendName(e.target.value)}
                     className="flex-1 bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs"
@@ -6621,12 +7219,137 @@ function AppInner({ onReset }) {
                         <div className="text-xs font-medium text-slate-900">{fr.name} <span className="text-stone-400 font-normal">{fr.handle}</span></div>
                         <div className="text-[10px] text-stone-500">{fr.type} • Last hangout: {fr.lastSeen}</div>
                       </div>
+                      <div className="flex items-center gap-1 shrink-0">
+                      {fr.userId && <button data-friend-message onClick={() => openChat(fr)} className="px-2.5 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Message{unreadBy[fr.userId] ? <span data-unread className="ml-1 px-1 bg-rose-600 text-white">{unreadBy[fr.userId]}</span> : null}</button>}
+                      <button data-friend-remove onClick={() => unfriend(fr)} aria-label={`Remove ${fr.name}`} className="px-2 py-1 text-[10px] text-stone-400 hover:text-rose-700">Remove</button>
                       <button data-friend-invite onClick={() => { setInviteDraft({ taskId: '', friend: fr.name }); setInviteOut(null); setActiveTab('social'); }} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider font-medium">Invite</button>
+                      </div>
                     </div>
                   ))}
                 </div>
+
+                {chatWith && (
+                  <div data-chat className="border border-purple-300 bg-white">
+                    <div className="px-3 py-2 bg-purple-900 text-white flex justify-between items-center">
+                      <span className="text-xs font-medium">Chat with {chatWith.name} {chatWith.handle}</span>
+                      <button data-chat-close onClick={() => setChatWith(null)} className="text-[10px] uppercase tracking-wider text-purple-200 hover:text-white">Close</button>
+                    </div>
+                    <div className="p-3 space-y-2 max-h-72 overflow-y-auto bg-[#FAF8F5]">
+                      {chatMsgs.length === 0 && <p className="text-[11px] text-stone-500">No messages yet. Say hello, or invite them to a plan from the Social tab.</p>}
+                      {chatMsgs.map(m => m.kind === 'text' ? (
+                        <div key={m.id} data-chat-msg className={`flex ${m.mine ? 'justify-end' : 'justify-start'}`}>
+                          <div className={`max-w-[80%] px-2.5 py-1.5 text-xs leading-snug ${m.mine ? 'bg-purple-800 text-white' : 'bg-white border border-stone-200 text-slate-900'}`}>{m.body}</div>
+                        </div>
+                      ) : (
+                        <div key={m.id} data-chat-event className="p-2 bg-white border border-rose-200 text-[11px] leading-snug space-y-1.5">
+                          <div><span className="text-[9px] uppercase tracking-widest text-rose-700 font-medium">{m.kind === 'invite' ? 'Invite' : m.kind === 'update' ? 'Event updated' : m.kind === 'cancel' ? 'Cancelled' : 'Reply'}</span><br />{m.body}</div>
+                          {m.kind === 'invite' && !m.mine && m.my_status === 'invited' && m.activity_id && (
+                            <div className="flex gap-1.5">
+                              <button data-chat-accept onClick={() => answerEvent(m.activity_id, 'accepted')} className="px-2 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Accept</button>
+                              <button data-chat-decline onClick={() => answerEvent(m.activity_id, 'declined')} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Can't make it</button>
+                            </div>
+                          )}
+                          {m.kind === 'invite' && !m.mine && m.my_status && m.my_status !== 'invited' && <div className="text-[10px] text-stone-500">You {m.my_status === 'accepted' ? 'accepted' : 'declined'} this.</div>}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="p-2 flex gap-2 border-t border-stone-200">
+                      <input data-chat-input type="text" aria-label="Message" placeholder="Write a message..." value={chatText} onChange={e => setChatText(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') sendChat(); }} className="flex-1 min-w-0 bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs" />
+                      <button data-chat-send onClick={sendChat} disabled={!chatText.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider disabled:opacity-50">Send</button>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
+
+            {profileSubTab === 'people' && (() => {
+              const today = todayDateStr();
+              const shown = people.filter(x => peopleFilter === 'blocked' ? x.blocked : !x.blocked && (peopleFilter === 'all' || x.kind === peopleFilter))
+                .sort((a, b) => (personOverdue(b, today, addDaysStr) ?? -1) - (personOverdue(a, today, addDaysStr) ?? -1) || String(a.name).localeCompare(String(b.name)));
+              const blockedN = people.filter(x => x.blocked).length;
+              const addPerson = () => {
+                const nm = personDraft.name.trim(); if (!nm) return;
+                setPeople(prev => [...prev, { id: 'p_' + Date.now(), name: nm, kind: personDraft.kind, relation: personDraft.relation.trim(), remindEvery: Number(personDraft.remindEvery) || 0, lastContact: today, createdAt: today, blocked: false, notes: '', linkedUserId: '' }]);
+                setPersonDraft({ name: '', kind: personDraft.kind, relation: '', remindEvery: personDraft.remindEvery });
+              };
+              return (
+              <div data-people-tab className="p-4 bg-white border border-stone-200 space-y-3">
+                <div>
+                  <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Your People</span>
+                  <h3 className="font-editorial text-base font-normal">Personal & business connections</h3>
+                  <p className="text-[11px] text-stone-500 leading-snug mt-0.5">Keep track of people in your life. They don't need a Pact account. Choose how often you want a nudge to get in touch.</p>
+                </div>
+
+                <div className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
+                  <div className="grid grid-cols-2 gap-1">
+                    {[{ id: 'personal', label: 'Personal' }, { id: 'business', label: 'Business' }].map(k => (
+                      <button key={k.id} data-person-kind={k.id} onClick={() => setPersonDraft({ ...personDraft, kind: k.id })} className={`py-1.5 text-[10px] uppercase tracking-wider border ${personDraft.kind === k.id ? 'bg-purple-800 text-white border-purple-800' : 'bg-white border-stone-300'}`}>{k.label}</button>
+                    ))}
+                  </div>
+                  <input data-person-name type="text" aria-label="Name" placeholder="Name" value={personDraft.name} onChange={e => setPersonDraft({ ...personDraft, name: e.target.value })} onKeyDown={e => { if (e.key === 'Enter') addPerson(); }} className="w-full bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
+                  <input type="text" aria-label="Relationship" placeholder={personDraft.kind === 'business' ? 'e.g. Client, Recruiter, Mentor, Supplier' : 'e.g. Cousin, Old friend, Neighbour'} value={personDraft.relation} onChange={e => setPersonDraft({ ...personDraft, relation: e.target.value })} className="w-full bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
+                  <div className="flex gap-2">
+                    <select aria-label="How often to be reminded" value={personDraft.remindEvery} onChange={e => setPersonDraft({ ...personDraft, remindEvery: Number(e.target.value) })} className="flex-1 min-w-0 bg-white border border-stone-300 px-2 py-1.5 text-xs">
+                      {REMIND_OPTIONS.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
+                    </select>
+                    <button data-person-add onClick={addPerson} disabled={!personDraft.name.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider font-medium disabled:opacity-50">+ Add</button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-4 border border-stone-300">
+                  {[{ id: 'all', label: 'All' }, { id: 'personal', label: 'Personal' }, { id: 'business', label: 'Business' }, { id: 'blocked', label: `Blocked${blockedN ? ' (' + blockedN + ')' : ''}` }].map(f => (
+                    <button key={f.id} data-people-filter={f.id} onClick={() => setPeopleFilter(f.id)} className={`py-1.5 text-[10px] uppercase tracking-wider ${peopleFilter === f.id ? 'bg-slate-900 text-white' : 'hover:bg-stone-100'}`}>{f.label}</button>
+                  ))}
+                </div>
+
+                {shown.length === 0 && <p data-people-empty className="text-[11px] text-stone-500 leading-snug">{peopleFilter === 'blocked' ? 'No one is blocked.' : 'No one here yet. Add someone above.'}</p>}
+
+                <div className="space-y-2">
+                  {shown.map(pr => {
+                    const over = personOverdue(pr, today, addDaysStr);
+                    const since = daysBetweenStr(pr.lastContact || pr.createdAt || today, today);
+                    const next = pr.remindEvery ? daysBetweenStr(today, addDaysStr(pr.lastContact || pr.createdAt || today, pr.remindEvery)) : null;
+                    const linked = pactFriends.find(f => f.userId === pr.linkedUserId);
+                    return (
+                      <div key={pr.id} data-person-card className={`p-2.5 border space-y-2 ${pr.blocked ? 'bg-stone-100 border-stone-300 opacity-80' : over !== null ? 'bg-rose-50 border-rose-200' : 'bg-[#FAF8F5] border-stone-200'}`}>
+                        <div className="flex justify-between items-start gap-2">
+                          <div className="min-w-0">
+                            <div className="text-xs font-medium text-slate-900">{pr.name} <span className="ml-1 px-1.5 py-px bg-stone-200 text-stone-700 text-[9px] uppercase tracking-wider">{pr.kind === 'business' ? 'Business' : 'Personal'}</span>{linked && <span className="ml-1 px-1.5 py-px bg-purple-100 text-purple-900 text-[9px] uppercase tracking-wider">On Pact {linked.handle}</span>}</div>
+                            {pr.relation && <div className="text-[10px] text-stone-500">{pr.relation}</div>}
+                            <div className="text-[10px] text-stone-600 mt-0.5">Last in touch: {agoText(since)}{pr.blocked ? ' • Blocked: no reminders' : over !== null ? <span className="text-rose-700 font-medium"> • Time to reach out{over > 0 ? ` (${over} day${over === 1 ? '' : 's'} overdue)` : ''}</span> : next !== null ? (pr.snoozeUntil && pr.snoozeUntil > today ? ' • Snoozed' : ` • Next reminder in ${next} day${next === 1 ? '' : 's'}`) : ' • No reminders'}</div>
+                          </div>
+                          <button data-person-delete aria-label={`Delete ${pr.name}`} onClick={() => setPeople(prev => prev.filter(x => x.id !== pr.id))} className="text-[10px] text-stone-400 hover:text-rose-700 shrink-0">Delete</button>
+                        </div>
+                        {!pr.blocked && (
+                          <div className="flex flex-wrap gap-1.5 items-center">
+                            <button data-person-contacted onClick={() => { updatePerson(pr.id, { lastContact: today, snoozeUntil: '' }); pushToast(`Logged: in touch with ${pr.name} today.`, 'success'); }} className="px-2 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">In touch today</button>
+                            <select data-person-freq aria-label={`How often to be reminded about ${pr.name}`} value={pr.remindEvery || 0} onChange={e => updatePerson(pr.id, { remindEvery: Number(e.target.value), snoozeUntil: '' })} className="bg-white border border-stone-300 px-1.5 py-1 text-[10px]">
+                              {REMIND_OPTIONS.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
+                            </select>
+                            <button data-person-block onClick={() => updatePerson(pr.id, { blocked: true })} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Block</button>
+                          </div>
+                        )}
+                        {pr.blocked ? (
+                          <button data-person-unblock onClick={() => updatePerson(pr.id, { blocked: false, lastContact: today })} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Unblock</button>
+                        ) : (
+                          <>
+                            {pactFriends.length > 0 && (
+                              <select data-person-link aria-label={`Link ${pr.name} to a Pact friend`} value={pr.linkedUserId || ''} onChange={e => updatePerson(pr.id, { linkedUserId: e.target.value })} className="w-full bg-white border border-stone-300 px-1.5 py-1 text-[10px]">
+                                <option value="">Not linked to a Pact user</option>
+                                {pactFriends.map(f => <option key={f.userId} value={f.userId}>Same person as {f.name} {f.handle}</option>)}
+                              </select>
+                            )}
+                            <input type="text" aria-label={`Notes about ${pr.name}`} placeholder="Notes (company, birthday, what to ask about...)" defaultValue={pr.notes || ''} onBlur={e => { if (e.target.value !== (pr.notes || '')) updatePerson(pr.id, { notes: e.target.value }); }} className="w-full bg-white border border-stone-200 px-2 py-1 text-[11px]" />
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+                <p className="text-[10px] text-stone-500 leading-snug">Blocked people never trigger reminders. Finishing a plan you tagged with someone counts as being in touch.</p>
+              </div>
+              );
+            })()}
 
             {profileSubTab === 'data' && (
               <div className="p-4 bg-white border border-stone-200 space-y-4">
@@ -7389,7 +8112,7 @@ function AppInner({ onReset }) {
       {/* =========================================================
           BOTTOM 5-TAB NAVIGATION BAR
          ========================================================= */}
-      <nav className="border-t border-stone-300 px-1 pt-2 flex justify-between items-stretch z-20 relative backdrop-blur-md shrink-0" style={{ background: 'rgba(245,243,236,0.96)', paddingBottom: 'calc(0.5rem + env(safe-area-inset-bottom, 0px))', minHeight: 64 }}>
+      <nav data-pact-glass="nav" className="border-t border-stone-300 px-1 pt-2 flex justify-between items-stretch z-20 relative backdrop-blur-md shrink-0" style={{ background: 'rgba(245,243,236,0.96)', paddingBottom: 'calc(0.5rem + env(safe-area-inset-bottom, 0px))', minHeight: 64 }}>
         {[
           { id: 'home', label: 'Home', icon: Home },
           { id: 'schedule', label: 'Schedule', icon: Calendar },

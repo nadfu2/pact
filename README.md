@@ -92,8 +92,42 @@ Ideas, Surprise Me and "what's near me" questions in Roamie read from a `places`
    export SUPABASE_SERVICE_ROLE_KEY=sb_secret_...                # Supabase → Project Settings → API Keys (the secret key; never put it in the app)
    python tools/import_places.py --city manchester --load
    ```
-   Cities available: `manchester`, `peterborough`, `london`, `jakarta` (or `all`). Re-running a city refreshes it. Add a city by adding a line to `CITIES` in the script.
+   Cities available: `manchester`, `peterborough`, `london`, `jakarta`, `oldenburg`, `addisababa` (or `all`). Re-running a city refreshes it. Add a city by adding a line to `CITIES` in the script.
    No Python? Run it without `--load` to get `places_<city>.csv`, then use Table Editor → `places` → Import CSV.
 3. **Attribution.** Overture's licence requires a credit. The app shows "Overture Maps open data" on each idea; also add "Place data © Overture Maps Foundation" to your About/footer.
 
 Good to know: open data has no ratings, prices, photos or opening hours, and some places will be closed or missing. Pact users' own star ratings are saved per place and start showing once 3 people have rated it. Jakarta coverage is thinner than the UK cities.
+
+## Friends (find people by @username)
+
+1. Supabase -> SQL Editor -> paste `supabase/migrations/0003_friends.sql` -> Run (after 0001 and 0002).
+2. Each account claims a unique `@username` the first time it signs in (digits are added if it is taken). People can change it in Profile -> Account & Prep.
+3. Friend Book -> "Find a friend on Pact": type someone's exact username -> Send request. They see it (with a badge on the Friend Book tab) and tap Accept or Decline. Nobody can browse or list users, blocked people never appear, and a declined request cannot be re-sent.
+
+## Messages and joint events
+
+1. Supabase -> SQL Editor -> paste `supabase/migrations/0004_social.sql` -> Run (after 0001, 0002 and 0003).
+2. Friend Book -> **Message** on a friend opens a chat. Only linked friends can message each other.
+3. Social -> "Invite a friend": pick a plan, tap friends, **Send invite in Pact**. It becomes a joint event. They get a message and an invite card (Accept / Can't make it) in the chat and in Social -> Joint events.
+4. Accepting puts it on their schedule. If the person who made the event changes it (Social -> Joint events -> Edit for everyone), everyone invited is messaged and their calendar entry updates the next time Pact syncs (when the app opens, when you open Social/Friend Book/Schedule, and every 45 seconds while open). Cancelling removes it for everyone.
+5. Limits: times are clock times, so a friend in another time zone sees the same clock time. Only the person who made an event can change it. There are no phone push notifications yet; alerts show while Pact is open.
+
+## Your People
+Profile -> Your People. Personal and business contacts (no account needed), a reminder rhythm per person, Block (never remind), "In touch today", and an optional link to a Pact friend. The Schedule tab shows a "Time to reach out" banner for whoever is most overdue. Saved with the rest of your data.
+
+## Ideas filters
+Each Ideas category has filter chips (for example Shopping: Books & Records, Clothes & Vintage, Homeware & Art, Markets). Chips are multi-select, stay on across refreshes, and are saved with your account until you press "Clear filters". The chips map to real place kinds in the `places` table (and to OpenStreetMap tags for the live fallback), so "Clothes" only returns clothes shops. After changing `RULES` in `tools/import_places.py`, re-run `--load` for each city.
+
+Places whose name or main category shows they are not somewhere to visit (auction houses, garden centres, landscapers, storage and so on) are excluded by the importer and hidden in the app. `supabase/migrations/0005_cleanup.sql` hides any already loaded.
+
+## Roamie
+Roamie first rewrites everyday English (slang, typos, "tmrw", "half seven", "do I have anything on", "gym tmrw 7am") into plain requests, then handles: what's on, free time, add, move/reschedule, cancel, what time is X, targets, fridge, energy and ideas. Anything else goes to the live AI.
+
+## Themes
+Settings > Appearance: Light, Dark or Match my device, and five palettes (Autumn Ember, Maple, Harvest, Woodland, Classic). Implemented in `buildThemeCss` in `src/App.tsx` by re-mapping the Tailwind colour classes, so every screen follows. Saved per account and remembered on the device.
+
+## Development skills library
+`src/skills.js` holds skill-specific milestone ladders and links to reliable learning sites (Coursera, edX, Khan Academy, MIT OpenCourseWare, NHS, GOV.UK, JustinGuitar, parkrun and others). Nothing is an invented course. To add a skill, copy one entry in `PLANS` and change `match`, `steps` and `resources`. Skills with no entry get general steps plus search links.
+
+## Updating an existing install
+Run `supabase/RUN_IN_SUPABASE.sql` once in the Supabase SQL editor (it is safe to run more than once), upload the source to GitHub, then re-run `tools/import_places.py --city <name> --load` for each city.
