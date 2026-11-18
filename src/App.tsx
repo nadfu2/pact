@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { cloud } from './cloud.js';
 import { findSkillPlan, planMilestones, planResources, skillPlanLabel } from './skills.js';
+import { LogHome, LayoutPicker, JobWidget, DevStrip, homeStyleOf, LOG_HIDES } from './v9.jsx';
 import { SITUATIONS, SIT_HINTS, presetPatch, hasSit, comfortOf, ZOOM, LifePanel, EnergyCard, CalmHome, JobHunt, TermPanel, RotaPanel, BudgetCard, CirclePanel, priceNum, budgetLeft, budgetPass, dstr as gDstr } from './groups.jsx';
 import {
   ArrowLeft,
@@ -259,7 +260,9 @@ const extractTitle = (q) => {
   strip(/\b(morning|afternoon|evening|noon)\b/gi);
   strip(/[.,!?]/g);
   s = s.replace(/\s+/g, ' ').trim();
-  s = s.replace(/^(a|an|the|my|some|me|in|on|at|for|to|up)\s+/i, '').replace(/\s+(in|on|at|for|to|a|an|the|my|me)$/i, '').replace(/^(a|an|the|my|some)\s+/i, '').trim();
+  for (let k = 0; k < 4; k++) {
+    s = s.replace(/^[\s\-\u2013\u2014:;,]+|[\s\-\u2013\u2014:;,]+$/g, '').replace(/^(a|an|the|my|some|me|in|on|at|for|to|up|from|until|till|and|then)\s+/i, '').replace(/\s+(in|on|at|for|to|a|an|the|my|me|from|until|till|and|then|about)$/i, '').trim();
+  }
   if (s.length < 2) return '';
   return s.charAt(0).toUpperCase() + s.slice(1);
 };
@@ -333,6 +336,7 @@ const roamieBrain = (q0, env) => {
   const day = parsedDay ? parsedDay.date : null;
   const dur = parseDurationFromText(lower);
   const first = (env.userName || '').split(' ')[0];
+  if (/^(hey|hi|hiya|hello|howdy|yo|sup|morning|afternoon|evening|good (morning|afternoon|evening))\b[\s,!.]*(roamie|there|you|mate)?[\s,!.]*[\s!.?]*$/.test(String(q0 || '').toLowerCase().trim())) return { text: `Hi${first ? ' ' + first : ''}! What shall we sort out? Try "What's on tomorrow?", "When am I free on Friday?" or "Book gym on Thursday at 7am".` };
   const webish = /\b(best|near|nearby|open now|opening|weather|forecast|train times|bus times|how do|how to|what is|what's the|who is|where can|where is|price of|cost of|review|reviews|news|latest|compare|recipe|directions)\b/.test(lower);
 
   // ---- date / time / identity / chit-chat ----
@@ -2249,7 +2253,7 @@ function SparkLine({ pts, up }) {
   const w = 70, h = 24, d = pts.map((v, i) => Math.round(i * (w / (pts.length - 1))) + ',' + Math.round(22 - v * 20)).join(' ');
   return <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden="true"><polyline fill="none" stroke={up ? '#C8643C' : '#7C857F'} strokeWidth="1.6" points={d} /></svg>;
 }
-function SkillIndex({ branches, domain, onDomain, onOpen, invites, onAccept, onDecline, onPlan, onNew }) {
+function SkillIndex({ branches, domain, onDomain, onOpen, invites, onAccept, onDecline, onPlan, onNew, strip }) {
   const rows = branches.flatMap(b => b.skills.map(sk => ({ b, sk, ...skillStats(sk) }))).sort((a, c) => c.delta - a.delta || c.pct - a.pct);
   const top = rows[0];
   const pick = rows.find(r => r.next);
@@ -2265,6 +2269,7 @@ function SkillIndex({ branches, domain, onDomain, onOpen, invites, onAccept, onD
           <div className="flex gap-2" style={{ marginTop: 8 }}><button data-buddy-join onClick={() => onAccept(v)} style={{ height: 36, padding: '0 14px', border: 0, background: '#1F3A2E', color: '#F4EFE4', fontSize: 12, fontWeight: 600, borderRadius: 0 }}>Join them</button><button data-buddy-decline onClick={() => onDecline(v)} style={{ height: 36, padding: '0 14px', border: '1px solid #1B2A22', background: 'transparent', fontSize: 12, fontWeight: 600, borderRadius: 0 }}>Not now</button></div>
         </div>
       ))}
+      {strip}
       <div className="flex justify-between" style={{ marginTop: 14, borderTop: '3px solid #1B2A22', paddingTop: 6 }}>
         <span style={kickerRightStyle}>Skill</span><span style={kickerRightStyle}>Trend &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Done</span>
       </div>
@@ -2277,12 +2282,6 @@ function SkillIndex({ branches, domain, onDomain, onOpen, invites, onAccept, onD
           <div style={{ textAlign: 'right' }}><div style={{ fontWeight: 600, fontSize: 15, color: '#1B2A22' }}>{pct}%</div><div style={{ fontSize: 10, color: delta > 0 ? '#1F3A2E' : '#7C857F' }}>{delta > 0 ? '▲' : '▼'} {delta}</div></div>
         </button>
       ))}
-      {pick && (
-        <div data-editors-pick style={{ marginTop: 14, border: '3px double #1B2A22', padding: '12px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-          <div style={{ minWidth: 0 }}><div style={{ fontSize: 9, letterSpacing: '.2em', textTransform: 'uppercase', color: '#C8643C', fontWeight: 600 }}>Editor&rsquo;s pick</div><div style={{ fontSize: 13, marginTop: 3 }}>Finish {String(pick.next.title).slice(0, 38)}</div></div>
-          <button data-plan-slot onClick={onPlan} style={{ height: 36, padding: '0 14px', border: 0, background: '#1F3A2E', color: '#F4EFE4', borderRadius: 0, fontSize: 12, fontWeight: 600, whiteSpace: 'nowrap' }}>Plan a slot</button>
-        </div>
-      )}
       <button data-new-skill onClick={onNew} style={{ marginTop: 14, fontSize: 12, color: '#5A675F', background: 'none', border: 0, padding: 0 }}>+ List a new skill</button>
     </div>
   );
@@ -5201,7 +5200,8 @@ function AppInner({ onReset }) {
   };
 
   const widgetOrder = (id) => Math.max(0, homeLayout.order.indexOf(id));
-  const widgetHidden = (id) => homeLayout.hidden.includes(id);
+  const homeStyle = homeStyleOf(userProfile);
+  const widgetHidden = (id) => (homeStyle !== 'classic' && LOG_HIDES.includes(id)) || homeLayout.hidden.includes(id);
   const toggleWidget = (id) => setHomeLayout(p => ({ ...p, hidden: p.hidden.includes(id) ? p.hidden.filter(x => x !== id) : [...p.hidden, id] }));
   const moveWidget = (id, dir) => setHomeLayout(p => {
     const o = [...p.order];
@@ -5830,7 +5830,7 @@ function AppInner({ onReset }) {
         })()}
         {activeTab === 'home' && !(simpleView && !calmFull) && (
           <div className="np-skin flex flex-col gap-5 animate-in fade-in duration-300">
-            {(hasSit(userProfile, 'energy') || (userProfile.energyLog || {})[todayDateStr()]) && <EnergyCard profile={userProfile} patch={patchProfile} tasks={tasks} today={todayDateStr()} moveTask={moveTaskTomorrow} pushToast={pushToast} />}
+            {(homeStyle === 'classic' ? (hasSit(userProfile, 'energy') || (userProfile.energyLog || {})[todayDateStr()]) : (userProfile.energyLog || {})[todayDateStr()] === 'low') && <EnergyCard profile={userProfile} patch={patchProfile} tasks={tasks} today={todayDateStr()} moveTask={moveTaskTomorrow} pushToast={pushToast} />}
             {simpleView && <button data-calm-back onClick={() => setCalmFull(false)} className="text-left text-[13px] underline" style={{ order: -20, color: '#5A675F', borderRadius: 0 }}>&larr; Back to the calm Today</button>}
 
             <button data-voice-home onClick={startVoice} className="lg-breathe flex items-center gap-3 px-3 py-2 min-h-[56px] bg-transparent border-[1.5px] border-slate-900 rounded-[28px] text-left" style={{ order: -9 }}>
@@ -5876,6 +5876,8 @@ function AppInner({ onReset }) {
                   </div>
                   <button onClick={() => setWidgetPanelOpen(false)} aria-label="Close widget menu" className="text-stone-400 hover:text-slate-900"><X size={16} /></button>
                 </div>
+                <LayoutPicker profile={userProfile} patch={patchProfile} jobsOn={(hasSit(userProfile, 'jobs') || ((userProfile.jobs && userProfile.jobs.apps) || []).length > 0) ? userProfile.jobWidget !== false : userProfile.jobWidget === true} openFeedback={() => { setWidgetPanelOpen(false); setRoamieOpen(true); setRoamieBugMode(true); }} />
+                <div className="text-[10px] uppercase tracking-widest text-stone-600 font-medium pt-3 border-t border-stone-300">More widgets</div>
                 {homeLayout.order.map(id => {
                   const w = HOME_WIDGETS.find(x => x.id === id);
                   if (!w) return null;
@@ -5904,6 +5906,13 @@ function AppInner({ onReset }) {
                 })}
               </div>
             )}
+
+            {homeStyle !== 'classic' && (() => {
+              const jobsAvail = hasSit(userProfile, 'jobs') || ((userProfile.jobs && userProfile.jobs.apps) || []).length > 0;
+              const jobsOn = jobsAvail ? userProfile.jobWidget !== false : userProfile.jobWidget === true;
+              return <LogHome variant={homeStyle} profile={userProfile} patch={patchProfile} today={todayDateStr()} water={water} setWater={setWater} waterGoal={WATER_GOAL} reading={reading} setReading={setReading} notes={homeNotes} setNotes={setHomeNotes} targets={weeklyTargets} setTargets={setWeeklyTargets} onPlan={() => { setPlannerMode('task'); setPlannerResultsStep(false); setPlannerOpen(true); }}
+                jobSlot={jobsOn ? <JobWidget profile={userProfile} patch={patchProfile} pushToast={pushToast} ai={(p, sys, schema) => callGeminiWithSearch(p, sys, schema, true)} onOpenTab={() => setActiveTab('skills')} /> : null} />;
+            })()}
 
             {/* 1. WEEKLY TARGETS WIDGET */}
             <div style={{ order: widgetOrder('targets') }} className={widgetHidden('targets') ? 'hidden' : ''}>
@@ -7399,69 +7408,6 @@ function AppInner({ onReset }) {
               </div>
             </div>
 
-            {/* WEEKLY DEVELOPMENT SUMMARY */}
-            <div style={{ order: 2 }} className={`${skillOpen ? 'hidden' : ''} p-4 bg-white border border-stone-300 space-y-3`} data-dev-summary>
-              <div className="flex justify-between items-center gap-2">
-                <div>
-                  <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Weekly summary</span>
-                  <h3 className="font-editorial text-lg font-normal">{devSummary.wkStart === mondayOf(todayDateStr()) ? 'This week in Development' : 'Development recap'}</h3>
-                  <div className="text-[11px] text-stone-600">{shortDate(devSummary.wkStart)} – {shortDate(devSummary.wkEnd)}</div>
-                </div>
-                <div className="flex gap-1">
-                  <button aria-label="Previous summary week" onClick={() => setDevWeekStart(addDaysStr(devWeekStart, -7))} className="w-8 h-8 border border-stone-300 flex items-center justify-center"><ChevronLeft size={14} /></button>
-                  <button aria-label="Next summary week" onClick={() => setDevWeekStart(addDaysStr(devWeekStart, 7))} disabled={devWeekStart >= mondayOf(todayDateStr())} className="w-8 h-8 border border-stone-300 flex items-center justify-center disabled:opacity-40"><ChevronRight size={14} /></button>
-                </div>
-              </div>
-              <div className="grid grid-cols-3 gap-2 text-center">
-                <div className="p-2 bg-[#EDEAE0]"><div className="font-editorial text-xl">{devSummary.doneSteps.length}</div><div className="text-[9px] uppercase tracking-wider text-stone-600">Milestones done</div></div>
-                <div className="p-2 bg-[#EDEAE0]"><div className="font-editorial text-xl">{devSummary.sessionsDone.length}<span className="text-xs text-stone-500">/{devSummary.sessions.length}</span></div><div className="text-[9px] uppercase tracking-wider text-stone-600">Study sessions</div></div>
-                <div className="p-2 bg-[#EDEAE0]"><div className="font-editorial text-xl">{(devSummary.mins / 60).toFixed(1)}h</div><div className="text-[9px] uppercase tracking-wider text-stone-600">Time studied</div></div>
-              </div>
-              {devSummary.doneSteps.length === 0 && devSummary.sessions.length === 0 ? (
-                <div className="p-3 bg-[#FAF8F5] border border-dashed border-stone-300 text-[11px] text-stone-700">
-                  Nothing logged {devSummary.wkStart === mondayOf(todayDateStr()) ? 'yet this week' : 'that week'}. Tick off a milestone below or book a study block and it will show up here.
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  <p className="text-xs text-slate-800 leading-relaxed">
-                    {devSummary.doneSteps.length > 0 ? `You completed ${devSummary.doneSteps.length} milestone${devSummary.doneSteps.length === 1 ? '' : 's'}` : 'No milestones completed'}
-                    {devSummary.sessions.length > 0 ? `, finished ${devSummary.sessionsDone.length} of ${devSummary.sessions.length} study session${devSummary.sessions.length === 1 ? '' : 's'}` : ''}
-                    {devSummary.mins > 0 ? ` and put in ${(devSummary.mins / 60).toFixed(1)} hours` : ''}.
-                  </p>
-                  {devSummary.doneSteps.map((d, i) => (
-                    <div key={i} className="flex items-start gap-2 text-[11px]">
-                      <span className="w-4 h-4 bg-purple-800 text-white flex items-center justify-center shrink-0 mt-0.5"><Check size={10} /></span>
-                      <span className="flex-1 text-slate-900"><strong>{d.title}</strong> <span className="text-stone-500">in {d.skill} · {prettyDate(d.date)}</span></span>
-                    </div>
-                  ))}
-                  {devSummary.sessions.map(t => (
-                    <div key={t.id} className="flex items-start gap-2 text-[11px]">
-                      <span className={`w-4 h-4 flex items-center justify-center shrink-0 mt-0.5 border ${t.status === 'done' ? 'bg-blue-800 border-blue-800 text-white' : 'border-stone-400 text-transparent'}`}><Check size={10} /></span>
-                      <span className="flex-1 text-slate-900">{t.title} <span className="text-stone-500">· {prettyDate(t.date)} {t.startTime} · {t.duration} min{t.status === 'done' ? '' : ' (planned)'}</span></span>
-                    </div>
-                  ))}
-                  {devSummary.progress.length > 0 && (
-                    <div className="space-y-1.5 pt-1">
-                      <div className="text-[10px] uppercase tracking-wider text-stone-600 font-medium">Skills you worked on</div>
-                      {devSummary.progress.map(p => (
-                        <div key={p.name}>
-                          <div className="flex justify-between text-[11px]"><span className="font-medium text-slate-900">{p.name} <span className="text-stone-500">({p.area})</span></span><span className="text-stone-600">{p.done}/{p.total}{p.gained ? ` · +${p.gained} this week` : ''}</span></div>
-                          <div className="h-1.5 bg-[#EDEAE0]"><div className="h-1.5 bg-purple-900" style={{ width: (p.total ? Math.round((p.done / p.total) * 100) : 0) + '%' }} /></div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-              {devSummary.wkStart === mondayOf(todayDateStr()) && devSummary.next.length > 0 && (
-                <div className="pt-1 border-t border-stone-200 space-y-1">
-                  <div className="text-[10px] uppercase tracking-wider text-stone-600 font-medium">Up next</div>
-                  {devSummary.next.map((n, i) => <div key={i} className="text-[11px] text-slate-800">{n.step.title} <span className="text-stone-500">({n.skill})</span></div>)}
-                  <button onClick={() => { setPlannerMode('task'); setPlannerResultsStep(false); setPlannerOpen(true); }} className="text-[10px] uppercase tracking-wider text-purple-900 underline font-medium">Book a study block</button>
-                </div>
-              )}
-            </div>
-
             <div className="space-y-3">
               <div className="hidden">
                 <div>
@@ -7497,7 +7443,7 @@ function AppInner({ onReset }) {
               </div>
 
               {/* Interactive SVG Branching Tree Visualization */}
-              {!skillOpen && <SkillIndex branches={currentForest.branches} domain={skillTreeDomain}
+              {!skillOpen && <SkillIndex strip={<DevStrip s={devSummary} current={devSummary.wkStart === mondayOf(todayDateStr())} range={`${shortDate(devSummary.wkStart)} – ${shortDate(devSummary.wkEnd)}`} pd={prettyDate} onPrev={() => setDevWeekStart(addDaysStr(devWeekStart, -7))} onNext={() => setDevWeekStart(addDaysStr(devWeekStart, 7))} nextOff={devWeekStart >= mondayOf(todayDateStr())} onPlan={() => { setPlannerMode('task'); setPlannerResultsStep(false); setPlannerOpen(true); }} />} branches={currentForest.branches} domain={skillTreeDomain}
                 onDomain={(d) => { setSkillTreeDomain(d); const b0 = skillForest[d].branches[0]; if (b0) { setSelectedBranchId(b0.id); if (b0.skills[0]) setSelectedSkillId(b0.skills[0].id); } }}
                 invites={(buddies || []).filter(v => v.status === 'invited' && !v.is_owner)}
                 onOpen={(bid, sid) => { setSelectedBranchId(bid); setSelectedSkillId(sid); setSkillOpen(true); try { document.getElementById('pact-main').scrollTo({ top: 0 }); } catch (e) { /* ignore */ } }}

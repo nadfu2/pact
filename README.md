@@ -214,3 +214,13 @@ All of this lives in the existing profile data, so **no new Supabase setup is ne
 - **Family circle** (Social > Your People): choose what each person would see. Live sharing with family is not built yet; for now it saves your choices and previews them.
 
 Tests: `test/v8.mjs` covers all of the above (39 checks).
+
+## v9: simpler Home, pages counter, job hunt from your spreadsheet
+- **Home layouts** (Home > Widgets > Pick a layout): **Log** (default: glance, four round quick-log buttons, weekly goals strip, job row), **Minimal** (three small boxes) and **Classic** (every widget card, as before). Today at a glance is the same in all three. Quick-log buttons (Water, Energy, Pages, Note) can be switched on and off. Choice is saved as `homeStyle` / `logButtons` in the profile. Log and Minimal hide the Targets, Smart planning, Hydration, Reading, Notes and Feedback cards (their jobs are covered by the buttons; feedback is under Widgets > Send feedback).
+- **Pages**: tap Pages, type any number or use +5/+10/+20/+50, then "Add to today" or "I'm on page…". Capped at the book's last page. Uses the existing `reading` state, so streaks and reminders still work.
+- **Development**: the long weekly summary is now a three-number strip (milestones, sessions, hours) with a Details sheet. Editor's pick is removed.
+- **Job hunt widget** (`src/v9.jsx`): collapsible row on Home, list sheet with filters, role form with Role, Company, Salary (per year/month), Start date, Applied, Stage, Outcome and Comments. Shares `profile.jobs.apps` with the Development tab's Job hunt, so both always agree. **Paste a job advert** sends the text to `/api/gemini` (needs `GEMINI_API_KEY`) and fills the form; nothing is saved until you press Add. Only the first ~11,000 characters are read.
+- **Roamie**: a bare "hey roamie" / "hi" now gets a greeting (the old normaliser emptied it and it fell through to the AI); stray "for" and dashes are trimmed from the end of plan titles.
+- Service worker cache is now `pact-shell-v5`.
+- Not built yet: Shelf, Bento and Tabs layouts, importing an Excel file, live sharing in Family circle.
+Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on Home.
