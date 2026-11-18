@@ -187,3 +187,15 @@ One-time setup (about 10 minutes):
 5. On each phone: open Pact, Profile or the bell -> "Turn on device alerts" and allow notifications.
 iPhone: iOS 16.4 or newer, and Pact must be added to the Home Screen first (Share -> Add to Home Screen) and opened from there; Safari tabs cannot receive push. Android and desktop Chrome work from the browser.
 Not verified end to end in the build environment (it cannot reach real push services or a phone): the database triggers, the encryption and signing in `functions/api/push.js` (decrypted back with an independent implementation), the service worker handlers and the in-app flow are tested; the final delivery to a physical phone needs your first real test.
+
+## Layouts now match the mockups (v6)
+Schedule: one wide "You" column by default (hour rows 34px), past plans as outlines, upcoming as filled blocks; "Expand time matching" adds hatched friend columns, an "ALL FREE" band and "Suggest a plan for HH:MM-HH:MM". Tapping a block opens a details/edit sheet (the plan list under the grid is gone). Ideas: category bar, one top pick with picture, "Also in" list and a Wildcard box ("Surprise me"); tap an item for its full card; "Tap for more" adds more. Development: skills index ranked by momentum with sparklines and an editor's pick; opening a skill shows the chapters page (big current chapter number, progress bar, contents with dotted leaders, "you are here"). Escape closes any sheet.
+
+
+## v7: new front door, setup, Social and Your People
+
+- **Name, logo and tagline.** The app is now "The Pact". The logo is a bold P whose bowl is a clay compass seal. Icons (home screen, favicon, maskable) are in `public/icons/`, generated from the SVG `public/icons/icon.svg`. Tagline: "Live a little louder. We'll quietly sort the rest."
+- **Cover, Sign in, Sign the pact.** `AuthScreen` opens on a dark cover with two buttons, then a Sign in / Sign the pact page. Sign the pact asks for name, @username (optional, claimed after sign-up), email and password (with a Show toggle; the confirm-password box is gone).
+- **First-time setup (6 steps).** Goals and interests, where you are and how you get about, your day (days, hours, getting-ready time, how full, calendar sync), your people (find by @username, type a name, or import after setup), notifications (per-topic toggles, preview, device notifications), and "Sign your pact" (one-line promise and your name). Answers are saved on your profile (`goals`, `travel`, `prepTimeCasual`, `promise`).
+- **Social > Plans.** An invitation sits on top, then a **+ Send a plan** button that opens a bottom sheet (pick a plan, tap friends, optional note, or copy an invite link). Below that, two tabs: **Joint plans** and **Find events** (four goal tiles, then Meetup / Eventbrite / Google).
+- **Social > Your People.** A search box and **+ Add** button, All / Personal / Business filters, "Due for a catch-up" first with a Nudge button, then everyone else. Tap a person for details. **+ Add** opens a sheet: On Pact (by @username), Import contacts (file, paste or phone picker), and Type it in (quick add).

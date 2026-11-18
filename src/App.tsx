@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { cloud } from './cloud.js';
 import { findSkillPlan, planMilestones, planResources, skillPlanLabel } from './skills.js';
 import {
@@ -52,8 +53,8 @@ import {
 
 
 // Pre-compiled Tailwind CSS for this app, so it renders the same regardless of the host's Tailwind version.
-const ROAM_CSS = "*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:\"\"}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width:640px){.container{max-width:640px}}@media (min-width:768px){.container{max-width:768px}}@media (min-width:1024px){.container{max-width:1024px}}@media (min-width:1280px){.container{max-width:1280px}}@media (min-width:1536px){.container{max-width:1536px}}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.visible{visibility:visible}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.inset-x-0{left:0;right:0}.inset-x-3{left:.75rem;right:.75rem}.-left-\\[34px\\]{left:-34px}.-left-\\[7px\\]{left:-7px}.-right-1{right:-.25rem}.-right-1\\.5{right:-.375rem}.-top-1{top:-.25rem}.-top-1\\.5{top:-.375rem}.-top-2{top:-.5rem}.bottom-0{bottom:0}.bottom-16{bottom:4rem}.bottom-2{bottom:.5rem}.bottom-20{bottom:5rem}.bottom-24{bottom:6rem}.left-1{left:.25rem}.left-1\\/2{left:50%}.left-2{left:.5rem}.left-2\\.5{left:.625rem}.left-3{left:.75rem}.left-\\[34px\\]{left:34px}.right-0{right:0}.right-1{right:.25rem}.right-1\\.5{right:.375rem}.right-3{right:.75rem}.right-4{right:1rem}.top-0{top:0}.top-0\\.5{top:.125rem}.top-1{top:.25rem}.top-1\\.5{top:.375rem}.top-1\\/2{top:50%}.top-2{top:.5rem}.z-0{z-index:0}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-40{z-index:40}.z-50{z-index:50}.z-\\[1\\]{z-index:1}.m-3{margin:.75rem}.mx-auto{margin-left:auto;margin-right:auto}.-mb-px{margin-bottom:-1px}.-mt-1{margin-top:-.25rem}.mb-0{margin-bottom:0}.mb-0\\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.ml-1{margin-left:.25rem}.ml-1\\.5{margin-left:.375rem}.ml-2{margin-left:.5rem}.ml-4{margin-left:1rem}.ml-8{margin-left:2rem}.mr-1{margin-right:.25rem}.mt-0{margin-top:0}.mt-0\\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-2\\.5{margin-top:.625rem}.mt-3{margin-top:.75rem}.mt-3\\.5{margin-top:.875rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.mt-auto{margin-top:auto}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.contents{display:contents}.\\!hidden{display:none!important}.hidden{display:none}.h-0{height:0}.h-1{height:.25rem}.h-1\\.5{height:.375rem}.h-10{height:2.5rem}.h-11{height:2.75rem}.h-12{height:3rem}.h-2{height:.5rem}.h-2\\.5{height:.625rem}.h-24{height:6rem}.h-3{height:.75rem}.h-3\\.5{height:.875rem}.h-4{height:1rem}.h-44{height:11rem}.h-5{height:1.25rem}.h-52{height:13rem}.h-56{height:14rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-\\[100dvh\\]{height:100dvh}.h-\\[3px\\]{height:3px}.h-full{height:100%}.h-screen{height:100vh}.max-h-56{max-height:14rem}.max-h-72{max-height:18rem}.max-h-80{max-height:20rem}.max-h-\\[88vh\\]{max-height:88vh}.min-h-\\[56px\\]{min-height:56px}.min-h-full{min-height:100%}.w-1{width:.25rem}.w-1\\.5{width:.375rem}.w-10{width:2.5rem}.w-11{width:2.75rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-16{width:4rem}.w-2{width:.5rem}.w-2\\.5{width:.625rem}.w-3{width:.75rem}.w-3\\.5{width:.875rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-\\[22px\\]{width:22px}.w-\\[84px\\]{width:84px}.w-full{width:100%}.min-w-0{min-width:0}.min-w-\\[10px\\]{min-width:10px}.min-w-\\[140px\\]{min-width:140px}.min-w-\\[160px\\]{min-width:160px}.min-w-\\[16px\\]{min-width:16px}.min-w-\\[30\\%\\]{min-width:30%}.max-w-\\[230px\\]{max-width:230px}.max-w-\\[48\\%\\]{max-width:48%}.max-w-\\[50\\%\\]{max-width:50%}.max-w-\\[80\\%\\]{max-width:80%}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1{--tw-translate-x:-0.25rem}.-translate-x-1,.-translate-x-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-x-1\\/2{--tw-translate-x:-50%}.-translate-y-1{--tw-translate-y:-0.25rem}.-translate-y-1,.-translate-y-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-1\\/2{--tw-translate-y:-50%}.-translate-y-\\[3px\\],.translate-y-\\[-3px\\]{--tw-translate-y:-3px}.-translate-y-\\[3px\\],.transform,.translate-y-\\[-3px\\]{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}@keyframes spin{to{transform:rotate(1turn)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid-cols-7{grid-template-columns:repeat(7,minmax(0,1fr))}.grid-cols-\\[22px_1fr_64px_34px\\]{grid-template-columns:22px 1fr 64px 34px}.grid-cols-\\[46px_1fr\\]{grid-template-columns:46px 1fr}.grid-cols-\\[92px_1fr\\]{grid-template-columns:92px 1fr}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.items-baseline{align-items:baseline}.items-stretch{align-items:stretch}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0{gap:0}.gap-0\\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-3\\.5{gap:.875rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-x-2{-moz-column-gap:.5rem;column-gap:.5rem}.gap-x-2\\.5{-moz-column-gap:.625rem;column-gap:.625rem}.gap-x-3{-moz-column-gap:.75rem;column-gap:.75rem}.gap-y-1{row-gap:.25rem}.gap-y-3{row-gap:.75rem}.gap-y-3\\.5{row-gap:.875rem}.gap-y-5{row-gap:1.25rem}.space-y-0>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0px*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0px*var(--tw-space-y-reverse))}.space-y-0\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.125rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.125rem*var(--tw-space-y-reverse))}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-stone-200>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(231 229 228/var(--tw-divide-opacity,1))}.self-center{align-self:center}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.overflow-x-hidden{overflow-x:hidden}.truncate{overflow:hidden;text-overflow:ellipsis}.truncate,.whitespace-nowrap{white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.break-words{overflow-wrap:break-word}.break-all{word-break:break-all}.rounded{border-radius:.25rem}.rounded-\\[14px\\]{border-radius:14px}.rounded-\\[28px\\]{border-radius:28px}.rounded-\\[3px\\]{border-radius:3px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-b{border-bottom-right-radius:.25rem;border-bottom-left-radius:.25rem}.rounded-t{border-top-left-radius:.25rem;border-top-right-radius:.25rem}.border{border-width:1px}.border-2{border-width:2px}.border-\\[1\\.5px\\]{border-width:1.5px}.border-x{border-left-width:1px;border-right-width:1px}.border-b{border-bottom-width:1px}.border-b-\\[1\\.5px\\]{border-bottom-width:1.5px}.border-b-\\[3px\\]{border-bottom-width:3px}.border-l{border-left-width:1px}.border-l-2{border-left-width:2px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-t-2{border-top-width:2px}.border-t-\\[3px\\]{border-top-width:3px}.border-dashed{border-style:dashed}.border-dotted{border-style:dotted}.border-double{border-style:double}.border-\\[\\#1B2A22\\]{--tw-border-opacity:1;border-color:rgb(27 42 34/var(--tw-border-opacity,1))}.border-\\[\\#1B2A22\\]\\/25{border-color:rgba(27,42,34,.25)}.border-\\[\\#1B2A22\\]\\/30{border-color:rgba(27,42,34,.3)}.border-\\[\\#1B2A22\\]\\/40{border-color:rgba(27,42,34,.4)}.border-\\[\\#1B2A22\\]\\/50{border-color:rgba(27,42,34,.5)}.border-\\[\\#1B2A22\\]\\/60{border-color:rgba(27,42,34,.6)}.border-\\[\\#1B2A22\\]\\/70{border-color:rgba(27,42,34,.7)}.border-\\[\\#1F3A2E\\]{--tw-border-opacity:1;border-color:rgb(31 58 46/var(--tw-border-opacity,1))}.border-\\[\\#C8643C\\]{--tw-border-opacity:1;border-color:rgb(200 100 60/var(--tw-border-opacity,1))}.border-\\[\\#F4EFE4\\]{--tw-border-opacity:1;border-color:rgb(244 239 228/var(--tw-border-opacity,1))}.border-amber-600{--tw-border-opacity:1;border-color:rgb(217 119 6/var(--tw-border-opacity,1))}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254/var(--tw-border-opacity,1))}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254/var(--tw-border-opacity,1))}.border-blue-300{--tw-border-opacity:1;border-color:rgb(147 197 253/var(--tw-border-opacity,1))}.border-blue-400{--tw-border-opacity:1;border-color:rgb(96 165 250/var(--tw-border-opacity,1))}.border-blue-50{--tw-border-opacity:1;border-color:rgb(239 246 255/var(--tw-border-opacity,1))}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity,1))}.border-blue-600{--tw-border-opacity:1;border-color:rgb(37 99 235/var(--tw-border-opacity,1))}.border-blue-700{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.border-blue-800{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.border-blue-900{--tw-border-opacity:1;border-color:rgb(30 58 138/var(--tw-border-opacity,1))}.border-blue-950{--tw-border-opacity:1;border-color:rgb(23 37 84/var(--tw-border-opacity,1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183/var(--tw-border-opacity,1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255/var(--tw-border-opacity,1))}.border-purple-200{--tw-border-opacity:1;border-color:rgb(233 213 255/var(--tw-border-opacity,1))}.border-purple-300{--tw-border-opacity:1;border-color:rgb(216 180 254/var(--tw-border-opacity,1))}.border-purple-400{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.border-purple-50{--tw-border-opacity:1;border-color:rgb(250 245 255/var(--tw-border-opacity,1))}.border-purple-500{--tw-border-opacity:1;border-color:rgb(168 85 247/var(--tw-border-opacity,1))}.border-purple-600{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.border-purple-700{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.border-purple-900{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.border-purple-950{--tw-border-opacity:1;border-color:rgb(59 7 100/var(--tw-border-opacity,1))}.border-rose-100{--tw-border-opacity:1;border-color:rgb(255 228 230/var(--tw-border-opacity,1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211/var(--tw-border-opacity,1))}.border-rose-300{--tw-border-opacity:1;border-color:rgb(253 164 175/var(--tw-border-opacity,1))}.border-rose-400{--tw-border-opacity:1;border-color:rgb(251 113 133/var(--tw-border-opacity,1))}.border-rose-50{--tw-border-opacity:1;border-color:rgb(255 241 242/var(--tw-border-opacity,1))}.border-rose-500{--tw-border-opacity:1;border-color:rgb(244 63 94/var(--tw-border-opacity,1))}.border-rose-600{--tw-border-opacity:1;border-color:rgb(225 29 72/var(--tw-border-opacity,1))}.border-rose-700{--tw-border-opacity:1;border-color:rgb(190 18 60/var(--tw-border-opacity,1))}.border-rose-800{--tw-border-opacity:1;border-color:rgb(159 18 57/var(--tw-border-opacity,1))}.border-rose-900{--tw-border-opacity:1;border-color:rgb(136 19 55/var(--tw-border-opacity,1))}.border-rose-950{--tw-border-opacity:1;border-color:rgb(76 5 25/var(--tw-border-opacity,1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225/var(--tw-border-opacity,1))}.border-slate-400{--tw-border-opacity:1;border-color:rgb(148 163 184/var(--tw-border-opacity,1))}.border-slate-50{--tw-border-opacity:1;border-color:rgb(248 250 252/var(--tw-border-opacity,1))}.border-slate-500{--tw-border-opacity:1;border-color:rgb(100 116 139/var(--tw-border-opacity,1))}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity,1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59/var(--tw-border-opacity,1))}.border-slate-900{--tw-border-opacity:1;border-color:rgb(15 23 42/var(--tw-border-opacity,1))}.border-slate-950{--tw-border-opacity:1;border-color:rgb(2 6 23/var(--tw-border-opacity,1))}.border-stone-100{--tw-border-opacity:1;border-color:rgb(245 245 244/var(--tw-border-opacity,1))}.border-stone-200{--tw-border-opacity:1;border-color:rgb(231 229 228/var(--tw-border-opacity,1))}.border-stone-200\\/30{border-color:hsla(20,6%,90%,.3)}.border-stone-300{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.border-stone-400{--tw-border-opacity:1;border-color:rgb(168 162 158/var(--tw-border-opacity,1))}.border-stone-50{--tw-border-opacity:1;border-color:rgb(250 250 249/var(--tw-border-opacity,1))}.border-stone-500{--tw-border-opacity:1;border-color:rgb(120 113 108/var(--tw-border-opacity,1))}.border-stone-600{--tw-border-opacity:1;border-color:rgb(87 83 78/var(--tw-border-opacity,1))}.border-stone-700{--tw-border-opacity:1;border-color:rgb(68 64 60/var(--tw-border-opacity,1))}.border-stone-800{--tw-border-opacity:1;border-color:rgb(41 37 36/var(--tw-border-opacity,1))}.border-stone-900{--tw-border-opacity:1;border-color:rgb(28 25 23/var(--tw-border-opacity,1))}.border-stone-950{--tw-border-opacity:1;border-color:rgb(12 10 9/var(--tw-border-opacity,1))}.border-transparent{border-color:transparent}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255/var(--tw-border-opacity,1))}.bg-\\[\\#1F3A2E\\]{--tw-bg-opacity:1;background-color:rgb(31 58 46/var(--tw-bg-opacity,1))}.bg-\\[\\#C8643C\\]{--tw-bg-opacity:1;background-color:rgb(200 100 60/var(--tw-bg-opacity,1))}.bg-\\[\\#E6DFCF\\]{--tw-bg-opacity:1;background-color:rgb(230 223 207/var(--tw-bg-opacity,1))}.bg-\\[\\#EDEAE0\\]{--tw-bg-opacity:1;background-color:rgb(237 234 224/var(--tw-bg-opacity,1))}.bg-\\[\\#F4EFE4\\]{--tw-bg-opacity:1;background-color:rgb(244 239 228/var(--tw-bg-opacity,1))}.bg-\\[\\#F5F3EC\\]{--tw-bg-opacity:1;background-color:rgb(245 243 236/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F2\\]{--tw-bg-opacity:1;background-color:rgb(250 248 242/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F5\\]{--tw-bg-opacity:1;background-color:rgb(250 248 245/var(--tw-bg-opacity,1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235/var(--tw-bg-opacity,1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0/var(--tw-bg-opacity,1))}.bg-black\\/40{background-color:rgba(0,0,0,.4)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254/var(--tw-bg-opacity,1))}.bg-blue-200{--tw-bg-opacity:1;background-color:rgb(191 219 254/var(--tw-bg-opacity,1))}.bg-blue-300{--tw-bg-opacity:1;background-color:rgb(147 197 253/var(--tw-bg-opacity,1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250/var(--tw-bg-opacity,1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.bg-blue-800{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.bg-blue-900{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84/var(--tw-bg-opacity,1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105/var(--tw-bg-opacity,1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255/var(--tw-bg-opacity,1))}.bg-purple-200{--tw-bg-opacity:1;background-color:rgb(233 213 255/var(--tw-bg-opacity,1))}.bg-purple-300{--tw-bg-opacity:1;background-color:rgb(216 180 254/var(--tw-bg-opacity,1))}.bg-purple-400{--tw-bg-opacity:1;background-color:rgb(192 132 252/var(--tw-bg-opacity,1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255/var(--tw-bg-opacity,1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234/var(--tw-bg-opacity,1))}.bg-purple-700{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.bg-purple-800{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.bg-purple-900{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.bg-purple-950{--tw-bg-opacity:1;background-color:rgb(59 7 100/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-200{--tw-bg-opacity:1;background-color:rgb(254 205 211/var(--tw-bg-opacity,1))}.bg-rose-300{--tw-bg-opacity:1;background-color:rgb(253 164 175/var(--tw-bg-opacity,1))}.bg-rose-400{--tw-bg-opacity:1;background-color:rgb(251 113 133/var(--tw-bg-opacity,1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242/var(--tw-bg-opacity,1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94/var(--tw-bg-opacity,1))}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-rose-700{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.bg-rose-800{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.bg-rose-900{--tw-bg-opacity:1;background-color:rgb(136 19 55/var(--tw-bg-opacity,1))}.bg-rose-950{--tw-bg-opacity:1;background-color:rgb(76 5 25/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225/var(--tw-bg-opacity,1))}.bg-slate-400{--tw-bg-opacity:1;background-color:rgb(148 163 184/var(--tw-bg-opacity,1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.bg-slate-500{--tw-bg-opacity:1;background-color:rgb(100 116 139/var(--tw-bg-opacity,1))}.bg-slate-600{--tw-bg-opacity:1;background-color:rgb(71 85 105/var(--tw-bg-opacity,1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23/var(--tw-bg-opacity,1))}.bg-slate-950\\/70{background-color:rgba(2,6,23,.7)}.bg-stone-100{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.bg-stone-200{--tw-bg-opacity:1;background-color:rgb(231 229 228/var(--tw-bg-opacity,1))}.bg-stone-300{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.bg-stone-400{--tw-bg-opacity:1;background-color:rgb(168 162 158/var(--tw-bg-opacity,1))}.bg-stone-50{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.bg-stone-500{--tw-bg-opacity:1;background-color:rgb(120 113 108/var(--tw-bg-opacity,1))}.bg-stone-600{--tw-bg-opacity:1;background-color:rgb(87 83 78/var(--tw-bg-opacity,1))}.bg-stone-700{--tw-bg-opacity:1;background-color:rgb(68 64 60/var(--tw-bg-opacity,1))}.bg-stone-800{--tw-bg-opacity:1;background-color:rgb(41 37 36/var(--tw-bg-opacity,1))}.bg-stone-900{--tw-bg-opacity:1;background-color:rgb(28 25 23/var(--tw-bg-opacity,1))}.bg-stone-950{--tw-bg-opacity:1;background-color:rgb(12 10 9/var(--tw-bg-opacity,1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.bg-white\\/40{background-color:hsla(0,0%,100%,.4)}.bg-white\\/50{background-color:hsla(0,0%,100%,.5)}.object-cover{-o-object-fit:cover;object-fit:cover}.p-1{padding:.25rem}.p-1\\.5{padding:.375rem}.p-2{padding:.5rem}.p-2\\.5{padding:.625rem}.p-3{padding:.75rem}.p-3\\.5{padding:.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-0{padding-left:0;padding-right:0}.px-0\\.5{padding-left:.125rem;padding-right:.125rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-\\[22px\\]{padding-left:22px;padding-right:22px}.py-0{padding-top:0;padding-bottom:0}.py-0\\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-px{padding-top:1px;padding-bottom:1px}.pb-0{padding-bottom:0}.pb-0\\.5{padding-bottom:.125rem}.pb-1{padding-bottom:.25rem}.pb-2{padding-bottom:.5rem}.pb-28{padding-bottom:7rem}.pb-3{padding-bottom:.75rem}.pb-3\\.5{padding-bottom:.875rem}.pb-5{padding-bottom:1.25rem}.pb-8{padding-bottom:2rem}.pl-3{padding-left:.75rem}.pl-3\\.5{padding-left:.875rem}.pl-4{padding-left:1rem}.pl-9{padding-left:2.25rem}.pr-1{padding-right:.25rem}.pr-3{padding-right:.75rem}.pr-4{padding-right:1rem}.pt-0{padding-top:0}.pt-0\\.5{padding-top:.125rem}.pt-1{padding-top:.25rem}.pt-1\\.5{padding-top:.375rem}.pt-2{padding-top:.5rem}.pt-3{padding-top:.75rem}.pt-4{padding-top:1rem}.pt-5{padding-top:1.25rem}.pt-6{padding-top:1.5rem}.pt-7{padding-top:1.75rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-\\[10\\.5px\\]{font-size:10.5px}.text-\\[10px\\]{font-size:10px}.text-\\[11px\\]{font-size:11px}.text-\\[12\\.5px\\]{font-size:12.5px}.text-\\[12px\\]{font-size:12px}.text-\\[13px\\]{font-size:13px}.text-\\[14px\\]{font-size:14px}.text-\\[15px\\]{font-size:15px}.text-\\[22px\\]{font-size:22px}.text-\\[24px\\]{font-size:24px}.text-\\[28px\\]{font-size:28px}.text-\\[32px\\]{font-size:32px}.text-\\[44px\\]{font-size:44px}.text-\\[52px\\]{font-size:52px}.text-\\[8px\\]{font-size:8px}.text-\\[9\\.5px\\]{font-size:9.5px}.text-\\[9px\\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-light{font-weight:300}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.normal-case{text-transform:none}.italic{font-style:italic}.tabular-nums{--tw-numeric-spacing:tabular-nums;font-variant-numeric:var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction)}.leading-\\[\\.7\\]{line-height:.7}.leading-\\[0\\.85\\]{line-height:.85}.leading-\\[1\\.02\\]{line-height:1.02}.leading-\\[1\\.05\\]{line-height:1.05}.leading-\\[1\\.06\\]{line-height:1.06}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-\\[0\\.08em\\]{letter-spacing:.08em}.tracking-\\[0\\.12em\\]{letter-spacing:.12em}.tracking-\\[0\\.14em\\]{letter-spacing:.14em}.tracking-\\[0\\.16em\\]{letter-spacing:.16em}.tracking-\\[0\\.18em\\]{letter-spacing:.18em}.tracking-\\[0\\.2em\\]{letter-spacing:.2em}.tracking-normal{letter-spacing:0}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-\\[\\#1B2A22\\]{--tw-text-opacity:1;color:rgb(27 42 34/var(--tw-text-opacity,1))}.text-\\[\\#1B2A22\\]\\/50{color:rgba(27,42,34,.5)}.text-\\[\\#1B2A22\\]\\/60{color:rgba(27,42,34,.6)}.text-\\[\\#1B2A22\\]\\/70{color:rgba(27,42,34,.7)}.text-\\[\\#1B2A22\\]\\/75{color:rgba(27,42,34,.75)}.text-\\[\\#1B2A22\\]\\/80{color:rgba(27,42,34,.8)}.text-\\[\\#1F3A2E\\]{--tw-text-opacity:1;color:rgb(31 58 46/var(--tw-text-opacity,1))}.text-\\[\\#C8643C\\]{--tw-text-opacity:1;color:rgb(200 100 60/var(--tw-text-opacity,1))}.text-\\[\\#F4EFE4\\]{--tw-text-opacity:1;color:rgb(244 239 228/var(--tw-text-opacity,1))}.text-black{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.text-blue-100{--tw-text-opacity:1;color:rgb(219 234 254/var(--tw-text-opacity,1))}.text-blue-200{--tw-text-opacity:1;color:rgb(191 219 254/var(--tw-text-opacity,1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-blue-50{--tw-text-opacity:1;color:rgb(239 246 255/var(--tw-text-opacity,1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235/var(--tw-text-opacity,1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216/var(--tw-text-opacity,1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175/var(--tw-text-opacity,1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138/var(--tw-text-opacity,1))}.text-blue-950{--tw-text-opacity:1;color:rgb(23 37 84/var(--tw-text-opacity,1))}.text-purple-100{--tw-text-opacity:1;color:rgb(243 232 255/var(--tw-text-opacity,1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255/var(--tw-text-opacity,1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252/var(--tw-text-opacity,1))}.text-purple-50{--tw-text-opacity:1;color:rgb(250 245 255/var(--tw-text-opacity,1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247/var(--tw-text-opacity,1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234/var(--tw-text-opacity,1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206/var(--tw-text-opacity,1))}.text-purple-800{--tw-text-opacity:1;color:rgb(107 33 168/var(--tw-text-opacity,1))}.text-purple-900{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.text-purple-950{--tw-text-opacity:1;color:rgb(59 7 100/var(--tw-text-opacity,1))}.text-rose-100{--tw-text-opacity:1;color:rgb(255 228 230/var(--tw-text-opacity,1))}.text-rose-200{--tw-text-opacity:1;color:rgb(254 205 211/var(--tw-text-opacity,1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-50{--tw-text-opacity:1;color:rgb(255 241 242/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57/var(--tw-text-opacity,1))}.text-rose-900{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.text-rose-950{--tw-text-opacity:1;color:rgb(76 5 25/var(--tw-text-opacity,1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-50{--tw-text-opacity:1;color:rgb(248 250 252/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23/var(--tw-text-opacity,1))}.text-stone-100{--tw-text-opacity:1;color:rgb(245 245 244/var(--tw-text-opacity,1))}.text-stone-200{--tw-text-opacity:1;color:rgb(231 229 228/var(--tw-text-opacity,1))}.text-stone-300{--tw-text-opacity:1;color:rgb(214 211 209/var(--tw-text-opacity,1))}.text-stone-400{--tw-text-opacity:1;color:rgb(168 162 158/var(--tw-text-opacity,1))}.text-stone-50{--tw-text-opacity:1;color:rgb(250 250 249/var(--tw-text-opacity,1))}.text-stone-500{--tw-text-opacity:1;color:rgb(120 113 108/var(--tw-text-opacity,1))}.text-stone-600{--tw-text-opacity:1;color:rgb(87 83 78/var(--tw-text-opacity,1))}.text-stone-700{--tw-text-opacity:1;color:rgb(68 64 60/var(--tw-text-opacity,1))}.text-stone-800{--tw-text-opacity:1;color:rgb(41 37 36/var(--tw-text-opacity,1))}.text-stone-900{--tw-text-opacity:1;color:rgb(28 25 23/var(--tw-text-opacity,1))}.text-stone-950{--tw-text-opacity:1;color:rgb(12 10 9/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.text-white\\/80{color:hsla(0,0%,100%,.8)}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.no-underline{text-decoration-line:none}.opacity-0{opacity:0}.opacity-50{opacity:.5}.opacity-60{opacity:.6}.opacity-70{opacity:.7}.opacity-75{opacity:.75}.opacity-80{opacity:.8}.opacity-90{opacity:.9}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-2xl,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.shadow-sm,.shadow-xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.grayscale{--tw-grayscale:grayscale(100%)}.filter,.grayscale{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.ease-in{transition-timing-function:cubic-bezier(.4,0,1,1)}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.ease-out{transition-timing-function:cubic-bezier(0,0,.2,1)}.\\[out\\:json\\]{out:json}.\\[timeout\\:20\\]{timeout:20}#root,body,html{margin:0;height:100%;background:#f5f3ec;color-scheme:light}.file\\:mr-2::file-selector-button{margin-right:.5rem}.file\\:border-0::file-selector-button{border-width:0}.file\\:bg-purple-900::file-selector-button{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.file\\:px-2\\.5::file-selector-button{padding-left:.625rem;padding-right:.625rem}.file\\:py-1\\.5::file-selector-button{padding-top:.375rem;padding-bottom:.375rem}.file\\:text-\\[10px\\]::file-selector-button{font-size:10px}.file\\:uppercase::file-selector-button{text-transform:uppercase}.file\\:tracking-wider::file-selector-button{letter-spacing:.05em}.file\\:text-white::file-selector-button{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:border-blue-800:hover{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.hover\\:border-purple-400:hover{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.hover\\:border-purple-600:hover{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.hover\\:border-purple-700:hover{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.hover\\:border-purple-800:hover{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.hover\\:border-purple-900:hover{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.hover\\:bg-blue-50:hover{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.hover\\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.hover\\:bg-blue-800:hover{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.hover\\:bg-blue-900:hover{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.hover\\:bg-purple-700:hover{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.hover\\:bg-purple-800:hover{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.hover\\:bg-purple-900:hover{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.hover\\:bg-rose-600:hover{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.hover\\:bg-rose-700:hover{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.hover\\:bg-rose-800:hover{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.hover\\:bg-stone-100:hover{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.hover\\:bg-stone-300:hover{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.hover\\:bg-stone-50:hover{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.hover\\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.hover\\:bg-white\\/10:hover{background-color:hsla(0,0%,100%,.1)}.hover\\:text-purple-900:hover{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.hover\\:text-rose-700:hover{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.hover\\:text-rose-900:hover{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.hover\\:text-slate-700:hover{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.hover\\:text-slate-900:hover{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.hover\\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:opacity-100:hover{opacity:1}.focus\\:border-stone-300:focus{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.disabled\\:opacity-30:disabled{opacity:.3}.disabled\\:opacity-40:disabled{opacity:.4}.disabled\\:opacity-50:disabled{opacity:.5}@media (max-width:359px){.max-\\[359px\\]\\:text-\\[24px\\]{font-size:24px}.max-\\[359px\\]\\:text-\\[9px\\]{font-size:9px}}@media (min-width:600px){.min-\\[600px\\]\\:max-w-\\[640px\\]{max-width:640px}}@media (min-width:640px){.sm\\:items-center{align-items:center}}@media (min-width:820px){.min-\\[820px\\]\\:max-w-\\[820px\\]{max-width:820px}}";
-const PACT_CSS = "\n@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap');\nhtml, body { margin: 0; height: 100%; overflow: hidden; overscroll-behavior: none; }\nbody { position: fixed; inset: 0; width: 100%; }\n.font-sans, .font-sans input, .font-sans textarea, .font-sans select, .font-sans button { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }\n.font-sans { font-weight: 400; }\n.font-light, .font-normal { font-weight: 400 !important; }\n.font-medium { font-weight: 600 !important; }\n.font-semibold { font-weight: 700 !important; }\n.font-editorial { font-family: 'Fraunces', Georgia, serif; font-weight: 500 !important; letter-spacing: -0.01em !important; line-height: 1.12; font-optical-sizing: auto; }\n.font-pact { font-family: 'Fraunces', Georgia, serif; font-weight: 600 !important; text-transform: uppercase; letter-spacing: 0.14em; line-height: 1; }\n.font-mono { font-family: 'Inter', sans-serif !important; font-weight: 600; font-variant-numeric: tabular-nums; }\n.no-scrollbar::-webkit-scrollbar { display: none; }\n.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }\nbutton { border-radius: 12px; }\ninput, textarea, select { border-radius: 10px; }\ndiv.border:not([class*=\"rounded\"]), form.border:not([class*=\"rounded\"]), label.border:not([class*=\"rounded\"]), section.border:not([class*=\"rounded\"]) { border-radius: 16px; }\ndiv[class*=\"bg-purple-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]), div[class*=\"bg-slate-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]), div[class*=\"bg-blue-9\"]:not([class*=\"rounded\"]) { border-radius: 16px; }\n.shadow-sm, .shadow-xl { box-shadow: none !important; }\n.border-l-4 { border-radius: 4px; }\n@keyframes pact-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-4px) } }\n.pact-bob { animation: pact-bob 3.2s ease-in-out infinite; }\n@media (prefers-reduced-motion: reduce) { .pact-bob { animation: none; } }\n.bg-purple-950{background-color:#12251C!important}\n.hover\\:bg-purple-950:hover{background-color:#12251C!important}\n.text-purple-950{color:#12251C!important}\n.hover\\:text-purple-950:hover{color:#12251C!important}\n.border-purple-950{border-color:#12251C!important}\n.hover\\:border-purple-950:hover{border-color:#12251C!important}\n.focus\\:border-purple-950:focus{border-color:#12251C!important}\n.bg-purple-900{background-color:#1F3A2E!important}\n.hover\\:bg-purple-900:hover{background-color:#1F3A2E!important}\n.text-purple-900{color:#1F3A2E!important}\n.hover\\:text-purple-900:hover{color:#1F3A2E!important}\n.border-purple-900{border-color:#1F3A2E!important}\n.hover\\:border-purple-900:hover{border-color:#1F3A2E!important}\n.focus\\:border-purple-900:focus{border-color:#1F3A2E!important}\n.bg-purple-800{background-color:#2C4A3B!important}\n.hover\\:bg-purple-800:hover{background-color:#2C4A3B!important}\n.text-purple-800{color:#2C4A3B!important}\n.hover\\:text-purple-800:hover{color:#2C4A3B!important}\n.border-purple-800{border-color:#2C4A3B!important}\n.hover\\:border-purple-800:hover{border-color:#2C4A3B!important}\n.focus\\:border-purple-800:focus{border-color:#2C4A3B!important}\n.bg-purple-700{background-color:#3F6B55!important}\n.hover\\:bg-purple-700:hover{background-color:#3F6B55!important}\n.text-purple-700{color:#3F6B55!important}\n.hover\\:text-purple-700:hover{color:#3F6B55!important}\n.border-purple-700{border-color:#3F6B55!important}\n.hover\\:border-purple-700:hover{border-color:#3F6B55!important}\n.focus\\:border-purple-700:focus{border-color:#3F6B55!important}\n.bg-purple-600{background-color:#4F7A63!important}\n.hover\\:bg-purple-600:hover{background-color:#4F7A63!important}\n.text-purple-600{color:#4F7A63!important}\n.hover\\:text-purple-600:hover{color:#4F7A63!important}\n.border-purple-600{border-color:#4F7A63!important}\n.hover\\:border-purple-600:hover{border-color:#4F7A63!important}\n.focus\\:border-purple-600:focus{border-color:#4F7A63!important}\n.bg-purple-500{background-color:#5F8C73!important}\n.hover\\:bg-purple-500:hover{background-color:#5F8C73!important}\n.text-purple-500{color:#5F8C73!important}\n.hover\\:text-purple-500:hover{color:#5F8C73!important}\n.border-purple-500{border-color:#5F8C73!important}\n.hover\\:border-purple-500:hover{border-color:#5F8C73!important}\n.focus\\:border-purple-500:focus{border-color:#5F8C73!important}\n.bg-purple-400{background-color:#8FB09D!important}\n.hover\\:bg-purple-400:hover{background-color:#8FB09D!important}\n.text-purple-400{color:#8FB09D!important}\n.hover\\:text-purple-400:hover{color:#8FB09D!important}\n.border-purple-400{border-color:#8FB09D!important}\n.hover\\:border-purple-400:hover{border-color:#8FB09D!important}\n.focus\\:border-purple-400:focus{border-color:#8FB09D!important}\n.bg-purple-300{background-color:#B5CABD!important}\n.hover\\:bg-purple-300:hover{background-color:#B5CABD!important}\n.text-purple-300{color:#B5CABD!important}\n.hover\\:text-purple-300:hover{color:#B5CABD!important}\n.border-purple-300{border-color:#B5CABD!important}\n.hover\\:border-purple-300:hover{border-color:#B5CABD!important}\n.focus\\:border-purple-300:focus{border-color:#B5CABD!important}\n.bg-purple-200{background-color:#D5E0D8!important}\n.hover\\:bg-purple-200:hover{background-color:#D5E0D8!important}\n.text-purple-200{color:#D5E0D8!important}\n.hover\\:text-purple-200:hover{color:#D5E0D8!important}\n.border-purple-200{border-color:#D5E0D8!important}\n.hover\\:border-purple-200:hover{border-color:#D5E0D8!important}\n.focus\\:border-purple-200:focus{border-color:#D5E0D8!important}\n.bg-purple-100{background-color:#E6EDE8!important}\n.hover\\:bg-purple-100:hover{background-color:#E6EDE8!important}\n.text-purple-100{color:#E6EDE8!important}\n.hover\\:text-purple-100:hover{color:#E6EDE8!important}\n.border-purple-100{border-color:#E6EDE8!important}\n.hover\\:border-purple-100:hover{border-color:#E6EDE8!important}\n.focus\\:border-purple-100:focus{border-color:#E6EDE8!important}\n.bg-purple-50{background-color:#F0F4F1!important}\n.hover\\:bg-purple-50:hover{background-color:#F0F4F1!important}\n.text-purple-50{color:#F0F4F1!important}\n.hover\\:text-purple-50:hover{color:#F0F4F1!important}\n.border-purple-50{border-color:#F0F4F1!important}\n.hover\\:border-purple-50:hover{border-color:#F0F4F1!important}\n.focus\\:border-purple-50:focus{border-color:#F0F4F1!important}\n.bg-rose-950{background-color:#3A1F10!important}\n.hover\\:bg-rose-950:hover{background-color:#3A1F10!important}\n.text-rose-950{color:#3A1F10!important}\n.hover\\:text-rose-950:hover{color:#3A1F10!important}\n.border-rose-950{border-color:#3A1F10!important}\n.hover\\:border-rose-950:hover{border-color:#3A1F10!important}\n.focus\\:border-rose-950:focus{border-color:#3A1F10!important}\n.bg-rose-900{background-color:#6B3A1E!important}\n.hover\\:bg-rose-900:hover{background-color:#6B3A1E!important}\n.text-rose-900{color:#6B3A1E!important}\n.hover\\:text-rose-900:hover{color:#6B3A1E!important}\n.border-rose-900{border-color:#6B3A1E!important}\n.hover\\:border-rose-900:hover{border-color:#6B3A1E!important}\n.focus\\:border-rose-900:focus{border-color:#6B3A1E!important}\n.bg-rose-800{background-color:#8A4A27!important}\n.hover\\:bg-rose-800:hover{background-color:#8A4A27!important}\n.text-rose-800{color:#8A4A27!important}\n.hover\\:text-rose-800:hover{color:#8A4A27!important}\n.border-rose-800{border-color:#8A4A27!important}\n.hover\\:border-rose-800:hover{border-color:#8A4A27!important}\n.focus\\:border-rose-800:focus{border-color:#8A4A27!important}\n.bg-rose-700{background-color:#A65F37!important}\n.hover\\:bg-rose-700:hover{background-color:#A65F37!important}\n.text-rose-700{color:#A65F37!important}\n.hover\\:text-rose-700:hover{color:#A65F37!important}\n.border-rose-700{border-color:#A65F37!important}\n.hover\\:border-rose-700:hover{border-color:#A65F37!important}\n.focus\\:border-rose-700:focus{border-color:#A65F37!important}\n.bg-rose-600{background-color:#B5683A!important}\n.hover\\:bg-rose-600:hover{background-color:#B5683A!important}\n.text-rose-600{color:#B5683A!important}\n.hover\\:text-rose-600:hover{color:#B5683A!important}\n.border-rose-600{border-color:#B5683A!important}\n.hover\\:border-rose-600:hover{border-color:#B5683A!important}\n.focus\\:border-rose-600:focus{border-color:#B5683A!important}\n.bg-rose-500{background-color:#C77E52!important}\n.hover\\:bg-rose-500:hover{background-color:#C77E52!important}\n.text-rose-500{color:#C77E52!important}\n.hover\\:text-rose-500:hover{color:#C77E52!important}\n.border-rose-500{border-color:#C77E52!important}\n.hover\\:border-rose-500:hover{border-color:#C77E52!important}\n.focus\\:border-rose-500:focus{border-color:#C77E52!important}\n.bg-rose-400{background-color:#D9945F!important}\n.hover\\:bg-rose-400:hover{background-color:#D9945F!important}\n.text-rose-400{color:#D9945F!important}\n.hover\\:text-rose-400:hover{color:#D9945F!important}\n.border-rose-400{border-color:#D9945F!important}\n.hover\\:border-rose-400:hover{border-color:#D9945F!important}\n.focus\\:border-rose-400:focus{border-color:#D9945F!important}\n.bg-rose-300{background-color:#E6B38C!important}\n.hover\\:bg-rose-300:hover{background-color:#E6B38C!important}\n.text-rose-300{color:#E6B38C!important}\n.hover\\:text-rose-300:hover{color:#E6B38C!important}\n.border-rose-300{border-color:#E6B38C!important}\n.hover\\:border-rose-300:hover{border-color:#E6B38C!important}\n.focus\\:border-rose-300:focus{border-color:#E6B38C!important}\n.bg-rose-200{background-color:#F0D1B8!important}\n.hover\\:bg-rose-200:hover{background-color:#F0D1B8!important}\n.text-rose-200{color:#F0D1B8!important}\n.hover\\:text-rose-200:hover{color:#F0D1B8!important}\n.border-rose-200{border-color:#F0D1B8!important}\n.hover\\:border-rose-200:hover{border-color:#F0D1B8!important}\n.focus\\:border-rose-200:focus{border-color:#F0D1B8!important}\n.bg-rose-100{background-color:#F6E4D5!important}\n.hover\\:bg-rose-100:hover{background-color:#F6E4D5!important}\n.text-rose-100{color:#F6E4D5!important}\n.hover\\:text-rose-100:hover{color:#F6E4D5!important}\n.border-rose-100{border-color:#F6E4D5!important}\n.hover\\:border-rose-100:hover{border-color:#F6E4D5!important}\n.focus\\:border-rose-100:focus{border-color:#F6E4D5!important}\n.bg-rose-50{background-color:#FAF1EA!important}\n.hover\\:bg-rose-50:hover{background-color:#FAF1EA!important}\n.text-rose-50{color:#FAF1EA!important}\n.hover\\:text-rose-50:hover{color:#FAF1EA!important}\n.border-rose-50{border-color:#FAF1EA!important}\n.hover\\:border-rose-50:hover{border-color:#FAF1EA!important}\n.focus\\:border-rose-50:focus{border-color:#FAF1EA!important}\n.bg-blue-950{background-color:#14282B!important}\n.hover\\:bg-blue-950:hover{background-color:#14282B!important}\n.text-blue-950{color:#14282B!important}\n.hover\\:text-blue-950:hover{color:#14282B!important}\n.border-blue-950{border-color:#14282B!important}\n.hover\\:border-blue-950:hover{border-color:#14282B!important}\n.focus\\:border-blue-950:focus{border-color:#14282B!important}\n.bg-blue-900{background-color:#1E3F44!important}\n.hover\\:bg-blue-900:hover{background-color:#1E3F44!important}\n.text-blue-900{color:#1E3F44!important}\n.hover\\:text-blue-900:hover{color:#1E3F44!important}\n.border-blue-900{border-color:#1E3F44!important}\n.hover\\:border-blue-900:hover{border-color:#1E3F44!important}\n.focus\\:border-blue-900:focus{border-color:#1E3F44!important}\n.bg-blue-800{background-color:#2A5359!important}\n.hover\\:bg-blue-800:hover{background-color:#2A5359!important}\n.text-blue-800{color:#2A5359!important}\n.hover\\:text-blue-800:hover{color:#2A5359!important}\n.border-blue-800{border-color:#2A5359!important}\n.hover\\:border-blue-800:hover{border-color:#2A5359!important}\n.focus\\:border-blue-800:focus{border-color:#2A5359!important}\n.bg-blue-700{background-color:#3A6A70!important}\n.hover\\:bg-blue-700:hover{background-color:#3A6A70!important}\n.text-blue-700{color:#3A6A70!important}\n.hover\\:text-blue-700:hover{color:#3A6A70!important}\n.border-blue-700{border-color:#3A6A70!important}\n.hover\\:border-blue-700:hover{border-color:#3A6A70!important}\n.focus\\:border-blue-700:focus{border-color:#3A6A70!important}\n.bg-blue-600{background-color:#4C7F85!important}\n.hover\\:bg-blue-600:hover{background-color:#4C7F85!important}\n.text-blue-600{color:#4C7F85!important}\n.hover\\:text-blue-600:hover{color:#4C7F85!important}\n.border-blue-600{border-color:#4C7F85!important}\n.hover\\:border-blue-600:hover{border-color:#4C7F85!important}\n.focus\\:border-blue-600:focus{border-color:#4C7F85!important}\n.bg-blue-500{background-color:#639499!important}\n.hover\\:bg-blue-500:hover{background-color:#639499!important}\n.text-blue-500{color:#639499!important}\n.hover\\:text-blue-500:hover{color:#639499!important}\n.border-blue-500{border-color:#639499!important}\n.hover\\:border-blue-500:hover{border-color:#639499!important}\n.focus\\:border-blue-500:focus{border-color:#639499!important}\n.bg-blue-400{background-color:#8FB2B6!important}\n.hover\\:bg-blue-400:hover{background-color:#8FB2B6!important}\n.text-blue-400{color:#8FB2B6!important}\n.hover\\:text-blue-400:hover{color:#8FB2B6!important}\n.border-blue-400{border-color:#8FB2B6!important}\n.hover\\:border-blue-400:hover{border-color:#8FB2B6!important}\n.focus\\:border-blue-400:focus{border-color:#8FB2B6!important}\n.bg-blue-300{background-color:#A8C4C6!important}\n.hover\\:bg-blue-300:hover{background-color:#A8C4C6!important}\n.text-blue-300{color:#A8C4C6!important}\n.hover\\:text-blue-300:hover{color:#A8C4C6!important}\n.border-blue-300{border-color:#A8C4C6!important}\n.hover\\:border-blue-300:hover{border-color:#A8C4C6!important}\n.focus\\:border-blue-300:focus{border-color:#A8C4C6!important}\n.bg-blue-200{background-color:#CADCDD!important}\n.hover\\:bg-blue-200:hover{background-color:#CADCDD!important}\n.text-blue-200{color:#CADCDD!important}\n.hover\\:text-blue-200:hover{color:#CADCDD!important}\n.border-blue-200{border-color:#CADCDD!important}\n.hover\\:border-blue-200:hover{border-color:#CADCDD!important}\n.focus\\:border-blue-200:focus{border-color:#CADCDD!important}\n.bg-blue-100{background-color:#E1ECED!important}\n.hover\\:bg-blue-100:hover{background-color:#E1ECED!important}\n.text-blue-100{color:#E1ECED!important}\n.hover\\:text-blue-100:hover{color:#E1ECED!important}\n.border-blue-100{border-color:#E1ECED!important}\n.hover\\:border-blue-100:hover{border-color:#E1ECED!important}\n.focus\\:border-blue-100:focus{border-color:#E1ECED!important}\n.bg-blue-50{background-color:#EEF4F5!important}\n.hover\\:bg-blue-50:hover{background-color:#EEF4F5!important}\n.text-blue-50{color:#EEF4F5!important}\n.hover\\:text-blue-50:hover{color:#EEF4F5!important}\n.border-blue-50{border-color:#EEF4F5!important}\n.hover\\:border-blue-50:hover{border-color:#EEF4F5!important}\n.focus\\:border-blue-50:focus{border-color:#EEF4F5!important}\n.bg-slate-950{background-color:#0F0F0D!important}\n.hover\\:bg-slate-950:hover{background-color:#0F0F0D!important}\n.text-slate-950{color:#0F0F0D!important}\n.hover\\:text-slate-950:hover{color:#0F0F0D!important}\n.border-slate-950{border-color:#0F0F0D!important}\n.hover\\:border-slate-950:hover{border-color:#0F0F0D!important}\n.focus\\:border-slate-950:focus{border-color:#0F0F0D!important}\n.bg-slate-900{background-color:#1A1A17!important}\n.hover\\:bg-slate-900:hover{background-color:#1A1A17!important}\n.text-slate-900{color:#1A1A17!important}\n.hover\\:text-slate-900:hover{color:#1A1A17!important}\n.border-slate-900{border-color:#1A1A17!important}\n.hover\\:border-slate-900:hover{border-color:#1A1A17!important}\n.focus\\:border-slate-900:focus{border-color:#1A1A17!important}\n.bg-slate-800{background-color:#2A2A26!important}\n.hover\\:bg-slate-800:hover{background-color:#2A2A26!important}\n.text-slate-800{color:#2A2A26!important}\n.hover\\:text-slate-800:hover{color:#2A2A26!important}\n.border-slate-800{border-color:#2A2A26!important}\n.hover\\:border-slate-800:hover{border-color:#2A2A26!important}\n.focus\\:border-slate-800:focus{border-color:#2A2A26!important}\n.bg-slate-700{background-color:#3E3D37!important}\n.hover\\:bg-slate-700:hover{background-color:#3E3D37!important}\n.text-slate-700{color:#3E3D37!important}\n.hover\\:text-slate-700:hover{color:#3E3D37!important}\n.border-slate-700{border-color:#3E3D37!important}\n.hover\\:border-slate-700:hover{border-color:#3E3D37!important}\n.focus\\:border-slate-700:focus{border-color:#3E3D37!important}\n.bg-slate-600{background-color:#55534B!important}\n.hover\\:bg-slate-600:hover{background-color:#55534B!important}\n.text-slate-600{color:#55534B!important}\n.hover\\:text-slate-600:hover{color:#55534B!important}\n.border-slate-600{border-color:#55534B!important}\n.hover\\:border-slate-600:hover{border-color:#55534B!important}\n.focus\\:border-slate-600:focus{border-color:#55534B!important}\n.bg-slate-500{background-color:#6B6960!important}\n.hover\\:bg-slate-500:hover{background-color:#6B6960!important}\n.text-slate-500{color:#6B6960!important}\n.hover\\:text-slate-500:hover{color:#6B6960!important}\n.border-slate-500{border-color:#6B6960!important}\n.hover\\:border-slate-500:hover{border-color:#6B6960!important}\n.focus\\:border-slate-500:focus{border-color:#6B6960!important}\n.bg-slate-400{background-color:#8A877D!important}\n.hover\\:bg-slate-400:hover{background-color:#8A877D!important}\n.text-slate-400{color:#8A877D!important}\n.hover\\:text-slate-400:hover{color:#8A877D!important}\n.border-slate-400{border-color:#8A877D!important}\n.hover\\:border-slate-400:hover{border-color:#8A877D!important}\n.focus\\:border-slate-400:focus{border-color:#8A877D!important}\n.bg-slate-300{background-color:#B5B1A5!important}\n.hover\\:bg-slate-300:hover{background-color:#B5B1A5!important}\n.text-slate-300{color:#B5B1A5!important}\n.hover\\:text-slate-300:hover{color:#B5B1A5!important}\n.border-slate-300{border-color:#B5B1A5!important}\n.hover\\:border-slate-300:hover{border-color:#B5B1A5!important}\n.focus\\:border-slate-300:focus{border-color:#B5B1A5!important}\n.bg-slate-200{background-color:#D6D1C4!important}\n.hover\\:bg-slate-200:hover{background-color:#D6D1C4!important}\n.text-slate-200{color:#D6D1C4!important}\n.hover\\:text-slate-200:hover{color:#D6D1C4!important}\n.border-slate-200{border-color:#D6D1C4!important}\n.hover\\:border-slate-200:hover{border-color:#D6D1C4!important}\n.focus\\:border-slate-200:focus{border-color:#D6D1C4!important}\n.bg-slate-100{background-color:#E7E3D8!important}\n.hover\\:bg-slate-100:hover{background-color:#E7E3D8!important}\n.text-slate-100{color:#E7E3D8!important}\n.hover\\:text-slate-100:hover{color:#E7E3D8!important}\n.border-slate-100{border-color:#E7E3D8!important}\n.hover\\:border-slate-100:hover{border-color:#E7E3D8!important}\n.focus\\:border-slate-100:focus{border-color:#E7E3D8!important}\n.bg-slate-50{background-color:#F1EEE6!important}\n.hover\\:bg-slate-50:hover{background-color:#F1EEE6!important}\n.text-slate-50{color:#F1EEE6!important}\n.hover\\:text-slate-50:hover{color:#F1EEE6!important}\n.border-slate-50{border-color:#F1EEE6!important}\n.hover\\:border-slate-50:hover{border-color:#F1EEE6!important}\n.focus\\:border-slate-50:focus{border-color:#F1EEE6!important}\n.bg-stone-950{background-color:#1A1A17!important}\n.hover\\:bg-stone-950:hover{background-color:#1A1A17!important}\n.text-stone-950{color:#1A1A17!important}\n.hover\\:text-stone-950:hover{color:#1A1A17!important}\n.border-stone-950{border-color:#1A1A17!important}\n.hover\\:border-stone-950:hover{border-color:#1A1A17!important}\n.focus\\:border-stone-950:focus{border-color:#1A1A17!important}\n.bg-stone-900{background-color:#25241F!important}\n.hover\\:bg-stone-900:hover{background-color:#25241F!important}\n.text-stone-900{color:#25241F!important}\n.hover\\:text-stone-900:hover{color:#25241F!important}\n.border-stone-900{border-color:#25241F!important}\n.hover\\:border-stone-900:hover{border-color:#25241F!important}\n.focus\\:border-stone-900:focus{border-color:#25241F!important}\n.bg-stone-800{background-color:#33322B!important}\n.hover\\:bg-stone-800:hover{background-color:#33322B!important}\n.text-stone-800{color:#33322B!important}\n.hover\\:text-stone-800:hover{color:#33322B!important}\n.border-stone-800{border-color:#33322B!important}\n.hover\\:border-stone-800:hover{border-color:#33322B!important}\n.focus\\:border-stone-800:focus{border-color:#33322B!important}\n.bg-stone-700{background-color:#47453D!important}\n.hover\\:bg-stone-700:hover{background-color:#47453D!important}\n.text-stone-700{color:#47453D!important}\n.hover\\:text-stone-700:hover{color:#47453D!important}\n.border-stone-700{border-color:#47453D!important}\n.hover\\:border-stone-700:hover{border-color:#47453D!important}\n.focus\\:border-stone-700:focus{border-color:#47453D!important}\n.bg-stone-600{background-color:#5C5A52!important}\n.hover\\:bg-stone-600:hover{background-color:#5C5A52!important}\n.text-stone-600{color:#5C5A52!important}\n.hover\\:text-stone-600:hover{color:#5C5A52!important}\n.border-stone-600{border-color:#5C5A52!important}\n.hover\\:border-stone-600:hover{border-color:#5C5A52!important}\n.focus\\:border-stone-600:focus{border-color:#5C5A52!important}\n.bg-stone-500{background-color:#6B6960!important}\n.hover\\:bg-stone-500:hover{background-color:#6B6960!important}\n.text-stone-500{color:#6B6960!important}\n.hover\\:text-stone-500:hover{color:#6B6960!important}\n.border-stone-500{border-color:#6B6960!important}\n.hover\\:border-stone-500:hover{border-color:#6B6960!important}\n.focus\\:border-stone-500:focus{border-color:#6B6960!important}\n.bg-stone-400{background-color:#8A877D!important}\n.hover\\:bg-stone-400:hover{background-color:#8A877D!important}\n.text-stone-400{color:#8A877D!important}\n.hover\\:text-stone-400:hover{color:#8A877D!important}\n.border-stone-400{border-color:#8A877D!important}\n.hover\\:border-stone-400:hover{border-color:#8A877D!important}\n.focus\\:border-stone-400:focus{border-color:#8A877D!important}\n.bg-stone-300{background-color:#CFCABD!important}\n.hover\\:bg-stone-300:hover{background-color:#CFCABD!important}\n.text-stone-300{color:#CFCABD!important}\n.hover\\:text-stone-300:hover{color:#CFCABD!important}\n.border-stone-300{border-color:#CFCABD!important}\n.hover\\:border-stone-300:hover{border-color:#CFCABD!important}\n.focus\\:border-stone-300:focus{border-color:#CFCABD!important}\n.bg-stone-200{background-color:#D9D4C6!important}\n.hover\\:bg-stone-200:hover{background-color:#D9D4C6!important}\n.text-stone-200{color:#D9D4C6!important}\n.hover\\:text-stone-200:hover{color:#D9D4C6!important}\n.border-stone-200{border-color:#D9D4C6!important}\n.hover\\:border-stone-200:hover{border-color:#D9D4C6!important}\n.focus\\:border-stone-200:focus{border-color:#D9D4C6!important}\n.bg-stone-100{background-color:#ECE8DD!important}\n.hover\\:bg-stone-100:hover{background-color:#ECE8DD!important}\n.text-stone-100{color:#ECE8DD!important}\n.hover\\:text-stone-100:hover{color:#ECE8DD!important}\n.border-stone-100{border-color:#ECE8DD!important}\n.hover\\:border-stone-100:hover{border-color:#ECE8DD!important}\n.focus\\:border-stone-100:focus{border-color:#ECE8DD!important}\n.bg-stone-50{background-color:#F3F0E8!important}\n.hover\\:bg-stone-50:hover{background-color:#F3F0E8!important}\n.text-stone-50{color:#F3F0E8!important}\n.hover\\:text-stone-50:hover{color:#F3F0E8!important}\n.border-stone-50{border-color:#F3F0E8!important}\n.hover\\:border-stone-50:hover{border-color:#F3F0E8!important}\n.focus\\:border-stone-50:focus{border-color:#F3F0E8!important}\n.bg-white{background-color:#FBF9F3!important}\n.bg-\\[\\#FAF8F5\\]{background-color:#F3F0E8!important}\n.bg-\\[\\#F5F3EC\\]{background-color:#F5F3EC!important}\n.bg-slate-950\\/70{background-color:rgba(26,26,23,.7)!important}\n.border-stone-200\\/30{border-color:rgba(217,212,198,.3)!important}\nhtml{-webkit-text-size-adjust:100%;text-size-adjust:100%}html,body{max-width:100%;overflow-x:hidden}\ninput[type=date],input[type=time],input[type=search],select{-webkit-appearance:none;appearance:none;min-width:0;max-width:100%;box-sizing:border-box}\ninput[type=date],input[type=time]{min-height:2rem;text-align:left}\ninput[type=search]::-webkit-search-decoration,input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none}\n@supports (-webkit-touch-callout:none){input:not([type=checkbox]):not([type=radio]):not([type=file]),select,textarea{font-size:16px!important}}\n\nhtml:not([data-pact-theme]) .bg-\\[\\#F5F3EC\\]{background-color:#F4EFE4!important}\nhtml:not([data-pact-theme]) .bg-\\[\\#EDEAE0\\]{background-color:#EAE3D2!important}\nhtml:not([data-pact-theme]) .bg-\\[\\#FAF8F5\\]{background-color:#F8F3E7!important}\nhtml:not([data-pact-theme]) .bg-white{background-color:#FBF8F0!important}\nhtml:not([data-pact-theme]) .border-stone-200{border-color:#DDD5C2!important}\nhtml:not([data-pact-theme]) .border-stone-300{border-color:#CFC7B4!important}\nhtml:not([data-pact-theme]) [data-pact-glass]{background:rgba(244,239,228,.84)!important}\nhtml:not([data-pact-theme]) [data-pact-glass=\"nav\"]{background:rgba(244,239,228,.97)!important}\n.lg-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;animation:lg-fade 1s ease-out both}\n.lg-bg>*{position:absolute}\n.lg-blob{border-radius:50%;will-change:transform}\n.lg-clay{background:radial-gradient(circle,rgba(200,100,60,.20),rgba(200,100,60,0) 70%)}\n.lg-forest{background:radial-gradient(circle,rgba(31,58,46,.15),rgba(31,58,46,0) 70%)}\n.lg-rules{left:0;right:0;top:-240px;bottom:0;opacity:.55;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 39px,rgba(31,58,46,.07) 39px,rgba(31,58,46,.07) 40px);animation:lg-rules 45s linear infinite}\n.lg-hours{left:0;right:0;top:-224px;bottom:0;opacity:.6;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 55px,rgba(31,58,46,.075) 55px,rgba(31,58,46,.075) 56px);animation:lg-hours 70s linear infinite}\n.lg-spin{animation:lg-spin 140s linear infinite}\n.lg-spin-slow{animation:lg-spin 90s linear infinite reverse}\n.lg-hand{transform-origin:50% 50%;animation:lg-spin 60s linear infinite}\n.lg-sweep{left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,100,60,.45),transparent);animation:lg-sweep 22s ease-in-out infinite alternate}\n.lg-dash{stroke-dasharray:3 9;animation:lg-dash 40s linear infinite}\n.lg-pin{border-radius:50%;background:rgba(200,100,60,.55);width:7px;height:7px}\n.lg-pin::after{content:'';position:absolute;inset:-1px;border-radius:50%;border:1.5px solid rgba(200,100,60,.5);animation:lg-ring 3.6s ease-out infinite;animation-delay:inherit}\n.lg-grow{stroke-dasharray:420;stroke-dashoffset:420;animation:lg-grow 16s ease-in-out infinite}\n.lg-leaf{transform-box:fill-box;transform-origin:center;animation:lg-pulse 5s ease-in-out infinite}\n.lg-ringline{border-radius:50%;border:1.5px solid rgba(31,58,46,.12)}\n.lg-ringline.c{border-color:rgba(200,100,60,.22)}\n.lg-mote{width:6px;height:6px;border-radius:50%;background:rgba(200,100,60,.35);animation:lg-float 14s ease-in infinite}\n.lg-ring{position:absolute;border-radius:50%;background:rgba(200,100,60,.45);animation:lg-ring 2.8s ease-out infinite}\n.lg-breathe{animation:lg-breathe 4s ease-in-out infinite}\n@keyframes lg-fade{from{opacity:0}to{opacity:1}}\n@keyframes lg-rules{to{transform:translateY(-240px)}}\n@keyframes lg-hours{to{transform:translateY(-224px)}}\n@keyframes lg-spin{to{transform:rotate(360deg)}}\n@keyframes lg-sweep{from{top:12%}to{top:88%}}\n@keyframes lg-dash{to{stroke-dashoffset:-240}}\n@keyframes lg-ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(3.4);opacity:0}}\n@keyframes lg-grow{0%{stroke-dashoffset:420;opacity:0}12%{opacity:1}55%{stroke-dashoffset:0;opacity:1}85%{stroke-dashoffset:0;opacity:.9}100%{stroke-dashoffset:0;opacity:0}}\n@keyframes lg-pulse{0%,100%{transform:scale(.7);opacity:.35}50%{transform:scale(1.25);opacity:.9}}\n@keyframes lg-float{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:.8}100%{transform:translateY(-70vh) scale(1.2);opacity:0}}\n@keyframes lg-d1{0%,100%{transform:translate(-30px,0) scale(1)}50%{transform:translate(40px,60px) scale(1.15)}}\n@keyframes lg-d2{0%,100%{transform:translate(0,0) scale(1.1)}50%{transform:translate(-55px,-45px) scale(.95)}}\n@keyframes lg-l1{0%,100%{transform:translate(0,0)}50%{transform:translate(38px,10px)}}\n@keyframes lg-l2{0%,100%{transform:translate(0,0)}50%{transform:translate(-36px,22px)}}\n@keyframes lg-l3{0%,100%{transform:translate(0,0)}50%{transform:translate(8px,-34px)}}\n@keyframes lg-breathe{0%,100%{box-shadow:0 0 0 0 rgba(200,100,60,0)}50%{box-shadow:0 0 0 6px rgba(200,100,60,.13)}}\n@keyframes lg-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}\n.lg-d1{animation:lg-d1 28s ease-in-out infinite}\n.lg-d2{animation:lg-d2 34s ease-in-out infinite}\n.lg-l1{animation:lg-l1 24s ease-in-out infinite}\n.lg-l2{animation:lg-l2 30s ease-in-out infinite}\n.lg-l3{animation:lg-l3 27s ease-in-out infinite}\n.lg-rise{animation:lg-rise .7s ease-out both}\nhtml[data-pact-theme$=\"-dark\"] .lg-bg{opacity:.55}\n@media (prefers-reduced-motion: reduce){.lg-bg *,.lg-bg,.lg-breathe,.lg-rise,.lg-pulse-dot{animation:none!important}.lg-grow{stroke-dashoffset:0;opacity:.6}}\n.lg-pulse-dot{animation:lg-ring 2.8s ease-out infinite}\n\nbutton:not([class*=\"rounded\"]){border-radius:2px}\ninput:not([class*=\"rounded\"]),textarea:not([class*=\"rounded\"]),select:not([class*=\"rounded\"]){border-radius:3px}\ndiv.border:not([class*=\"rounded\"]),form.border:not([class*=\"rounded\"]),label.border:not([class*=\"rounded\"]),section.border:not([class*=\"rounded\"]){border-radius:3px}\ndiv[class*=\"bg-purple-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]),div[class*=\"bg-slate-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]),div[class*=\"bg-blue-9\"]:not([class*=\"rounded\"]){border-radius:3px}\n\n[class*=\"rounded-\"]:not(.rounded-full):not([class*=\"rounded-t\"]):not([class*=\"rounded-b\"]){border-radius:2px!important}\n[class*=\"rounded-full\"][class*=\"px-\"],[class*=\"rounded-full\"][class*=\"min-w\"]{border-radius:2px!important}\ninput,textarea,select,button,label.border,div.border,form.border,section.border{border-radius:2px}\n.lg-pill{border-radius:2px}\n\n.np-title{font-family:'Fraunces',Georgia,serif;font-weight:600;font-style:italic;font-size:30px;letter-spacing:-.02em;line-height:1;margin:0;color:#1B2A22;text-align:center;flex:1;white-space:nowrap}\n@media (max-width:359px){.np-title{font-size:25px}}\n.np-rule{margin-top:8px;border-top:3px solid #1B2A22;border-bottom:1px solid #1B2A22;height:2px}\n.np-dateline{display:flex;justify-content:space-between;gap:8px;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:5px 0 4px;border-bottom:1px solid #1B2A22;color:#1B2A22;white-space:nowrap}\n.np-dateline span{overflow:hidden;text-overflow:ellipsis}\n.np-flag,.np-skin [class*=\"text-purple-800\"][class*=\"uppercase\"][class*=\"tracking-widest\"]{background:#1B2A22;color:#F4EFE4!important;padding:3px 8px;display:inline-flex;align-items:center;letter-spacing:.18em;font-size:10px;font-weight:600;text-transform:uppercase;width:fit-content}\n.np-kicker{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:400;font-size:11px;letter-spacing:0;text-transform:none;margin-left:8px;opacity:.85}\n.np-skin div[class*=\"p-4\"][class*=\"bg-white\"][class*=\"border\"]{background:#FAF8F2!important;border:1px solid #1B2A22!important;border-top:3px double #1B2A22!important;box-shadow:4px 4px 0 rgba(31,58,46,.10)!important;border-radius:0!important}\n\n.np-sc{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#5A675F}\n.np-halftone{background:radial-gradient(circle,rgba(244,239,228,.28) .9px,transparent 1.5px) 0 0/5px 5px}\n.np-barcode{height:26px;background-image:repeating-linear-gradient(90deg,#1B2A22 0,#1B2A22 2px,transparent 2px,transparent 4px,#1B2A22 4px,#1B2A22 5px,transparent 5px,transparent 8px)}\n\n.np-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}\n.np-grid>*{grid-column:span 2}\n.np-grid>.np-tile{grid-column:span 1}\n.np-cols{overflow:hidden}\n.np-dropcap{float:left;font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:38px;line-height:.85;padding:3px 6px 0 0;color:#1B2A22}\n";
+const ROAM_CSS = "*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:\"\"}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width:640px){.container{max-width:640px}}@media (min-width:768px){.container{max-width:768px}}@media (min-width:1024px){.container{max-width:1024px}}@media (min-width:1280px){.container{max-width:1280px}}@media (min-width:1536px){.container{max-width:1536px}}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.visible{visibility:visible}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.inset-x-0{left:0;right:0}.inset-x-3{left:.75rem;right:.75rem}.-left-\\[7px\\]{left:-7px}.-right-1{right:-.25rem}.-right-1\\.5{right:-.375rem}.-top-1{top:-.25rem}.-top-1\\.5{top:-.375rem}.-top-2{top:-.5rem}.bottom-0{bottom:0}.bottom-16{bottom:4rem}.bottom-2{bottom:.5rem}.bottom-20{bottom:5rem}.bottom-24{bottom:6rem}.left-1{left:.25rem}.left-1\\/2{left:50%}.left-2{left:.5rem}.left-2\\.5{left:.625rem}.left-3{left:.75rem}.right-0{right:0}.right-1{right:.25rem}.right-1\\.5{right:.375rem}.right-3{right:.75rem}.right-4{right:1rem}.top-0{top:0}.top-1{top:.25rem}.top-1\\.5{top:.375rem}.top-1\\/2{top:50%}.top-2{top:.5rem}.z-0{z-index:0}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-40{z-index:40}.z-50{z-index:50}.z-\\[1\\]{z-index:1}.z-\\[300\\]{z-index:300}.m-3{margin:.75rem}.mx-auto{margin-left:auto;margin-right:auto}.-mb-px{margin-bottom:-1px}.-mt-1{margin-top:-.25rem}.mb-0{margin-bottom:0}.mb-0\\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.ml-1{margin-left:.25rem}.ml-1\\.5{margin-left:.375rem}.ml-2{margin-left:.5rem}.ml-4{margin-left:1rem}.ml-8{margin-left:2rem}.mr-1{margin-right:.25rem}.mt-0{margin-top:0}.mt-0\\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-2\\.5{margin-top:.625rem}.mt-3{margin-top:.75rem}.mt-3\\.5{margin-top:.875rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.mt-auto{margin-top:auto}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.contents{display:contents}.\\!hidden{display:none!important}.hidden{display:none}.h-0{height:0}.h-1{height:.25rem}.h-1\\.5{height:.375rem}.h-10{height:2.5rem}.h-11{height:2.75rem}.h-12{height:3rem}.h-2{height:.5rem}.h-2\\.5{height:.625rem}.h-24{height:6rem}.h-3{height:.75rem}.h-3\\.5{height:.875rem}.h-4{height:1rem}.h-44{height:11rem}.h-5{height:1.25rem}.h-52{height:13rem}.h-56{height:14rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-\\[100dvh\\]{height:100dvh}.h-\\[30px\\]{height:30px}.h-\\[34px\\]{height:34px}.h-\\[38px\\]{height:38px}.h-\\[3px\\]{height:3px}.h-full{height:100%}.h-screen{height:100vh}.max-h-48{max-height:12rem}.max-h-56{max-height:14rem}.max-h-72{max-height:18rem}.max-h-80{max-height:20rem}.max-h-\\[88dvh\\]{max-height:88dvh}.max-h-\\[88vh\\]{max-height:88vh}.max-h-\\[90dvh\\]{max-height:90dvh}.max-h-\\[90vh\\]{max-height:90vh}.min-h-\\[56px\\]{min-height:56px}.min-h-full{min-height:100%}.w-1{width:.25rem}.w-1\\.5{width:.375rem}.w-10{width:2.5rem}.w-11{width:2.75rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-16{width:4rem}.w-2{width:.5rem}.w-2\\.5{width:.625rem}.w-3{width:.75rem}.w-3\\.5{width:.875rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-\\[22px\\]{width:22px}.w-\\[84px\\]{width:84px}.w-full{width:100%}.min-w-0{min-width:0}.min-w-\\[140px\\]{min-width:140px}.min-w-\\[160px\\]{min-width:160px}.min-w-\\[16px\\]{min-width:16px}.min-w-\\[30\\%\\]{min-width:30%}.max-w-\\[230px\\]{max-width:230px}.max-w-\\[48\\%\\]{max-width:48%}.max-w-\\[560px\\]{max-width:560px}.max-w-\\[80\\%\\]{max-width:80%}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1{--tw-translate-x:-0.25rem}.-translate-x-1,.-translate-x-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-x-1\\/2{--tw-translate-x:-50%}.-translate-y-1{--tw-translate-y:-0.25rem}.-translate-y-1,.-translate-y-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-1\\/2{--tw-translate-y:-50%}.-translate-y-\\[3px\\]{--tw-translate-y:-3px}.-translate-y-\\[3px\\],.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}@keyframes spin{to{transform:rotate(1turn)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.resize-none{resize:none}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid-cols-7{grid-template-columns:repeat(7,minmax(0,1fr))}.grid-cols-\\[46px_1fr\\]{grid-template-columns:46px 1fr}.grid-cols-\\[92px_1fr\\]{grid-template-columns:92px 1fr}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.items-baseline{align-items:baseline}.items-stretch{align-items:stretch}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0{gap:0}.gap-0\\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-3\\.5{gap:.875rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-x-2{-moz-column-gap:.5rem;column-gap:.5rem}.gap-x-2\\.5{-moz-column-gap:.625rem;column-gap:.625rem}.gap-x-3{-moz-column-gap:.75rem;column-gap:.75rem}.gap-y-1{row-gap:.25rem}.gap-y-3{row-gap:.75rem}.gap-y-3\\.5{row-gap:.875rem}.gap-y-5{row-gap:1.25rem}.space-y-0>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0px*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0px*var(--tw-space-y-reverse))}.space-y-0\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.125rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.125rem*var(--tw-space-y-reverse))}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-stone-200>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(231 229 228/var(--tw-divide-opacity,1))}.self-center{align-self:center}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.overflow-x-hidden{overflow-x:hidden}.truncate{overflow:hidden;text-overflow:ellipsis}.truncate,.whitespace-nowrap{white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.break-words{overflow-wrap:break-word}.break-all{word-break:break-all}.rounded{border-radius:.25rem}.rounded-\\[14px\\]{border-radius:14px}.rounded-\\[28px\\]{border-radius:28px}.rounded-\\[3px\\]{border-radius:3px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-b{border-bottom-right-radius:.25rem;border-bottom-left-radius:.25rem}.rounded-t{border-top-left-radius:.25rem;border-top-right-radius:.25rem}.border{border-width:1px}.border-2{border-width:2px}.border-\\[1\\.5px\\]{border-width:1.5px}.border-x{border-left-width:1px;border-right-width:1px}.border-b{border-bottom-width:1px}.border-b-\\[1\\.5px\\]{border-bottom-width:1.5px}.border-b-\\[3px\\]{border-bottom-width:3px}.border-l{border-left-width:1px}.border-l-2{border-left-width:2px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-t-2{border-top-width:2px}.border-t-\\[3px\\]{border-top-width:3px}.border-dashed{border-style:dashed}.border-dotted{border-style:dotted}.border-double{border-style:double}.border-\\[\\#1B2A22\\]{--tw-border-opacity:1;border-color:rgb(27 42 34/var(--tw-border-opacity,1))}.border-\\[\\#1B2A22\\]\\/30{border-color:rgba(27,42,34,.3)}.border-\\[\\#1B2A22\\]\\/50{border-color:rgba(27,42,34,.5)}.border-\\[\\#1B2A22\\]\\/60{border-color:rgba(27,42,34,.6)}.border-\\[\\#1F3A2E\\]{--tw-border-opacity:1;border-color:rgb(31 58 46/var(--tw-border-opacity,1))}.border-\\[\\#C8643C\\]{--tw-border-opacity:1;border-color:rgb(200 100 60/var(--tw-border-opacity,1))}.border-\\[\\#F4EFE4\\]{--tw-border-opacity:1;border-color:rgb(244 239 228/var(--tw-border-opacity,1))}.border-amber-600{--tw-border-opacity:1;border-color:rgb(217 119 6/var(--tw-border-opacity,1))}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254/var(--tw-border-opacity,1))}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254/var(--tw-border-opacity,1))}.border-blue-300{--tw-border-opacity:1;border-color:rgb(147 197 253/var(--tw-border-opacity,1))}.border-blue-400{--tw-border-opacity:1;border-color:rgb(96 165 250/var(--tw-border-opacity,1))}.border-blue-50{--tw-border-opacity:1;border-color:rgb(239 246 255/var(--tw-border-opacity,1))}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity,1))}.border-blue-600{--tw-border-opacity:1;border-color:rgb(37 99 235/var(--tw-border-opacity,1))}.border-blue-700{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.border-blue-800{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.border-blue-900{--tw-border-opacity:1;border-color:rgb(30 58 138/var(--tw-border-opacity,1))}.border-blue-950{--tw-border-opacity:1;border-color:rgb(23 37 84/var(--tw-border-opacity,1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183/var(--tw-border-opacity,1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255/var(--tw-border-opacity,1))}.border-purple-200{--tw-border-opacity:1;border-color:rgb(233 213 255/var(--tw-border-opacity,1))}.border-purple-300{--tw-border-opacity:1;border-color:rgb(216 180 254/var(--tw-border-opacity,1))}.border-purple-400{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.border-purple-50{--tw-border-opacity:1;border-color:rgb(250 245 255/var(--tw-border-opacity,1))}.border-purple-500{--tw-border-opacity:1;border-color:rgb(168 85 247/var(--tw-border-opacity,1))}.border-purple-600{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.border-purple-700{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.border-purple-900{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.border-purple-950{--tw-border-opacity:1;border-color:rgb(59 7 100/var(--tw-border-opacity,1))}.border-rose-100{--tw-border-opacity:1;border-color:rgb(255 228 230/var(--tw-border-opacity,1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211/var(--tw-border-opacity,1))}.border-rose-300{--tw-border-opacity:1;border-color:rgb(253 164 175/var(--tw-border-opacity,1))}.border-rose-400{--tw-border-opacity:1;border-color:rgb(251 113 133/var(--tw-border-opacity,1))}.border-rose-50{--tw-border-opacity:1;border-color:rgb(255 241 242/var(--tw-border-opacity,1))}.border-rose-500{--tw-border-opacity:1;border-color:rgb(244 63 94/var(--tw-border-opacity,1))}.border-rose-600{--tw-border-opacity:1;border-color:rgb(225 29 72/var(--tw-border-opacity,1))}.border-rose-700{--tw-border-opacity:1;border-color:rgb(190 18 60/var(--tw-border-opacity,1))}.border-rose-800{--tw-border-opacity:1;border-color:rgb(159 18 57/var(--tw-border-opacity,1))}.border-rose-900{--tw-border-opacity:1;border-color:rgb(136 19 55/var(--tw-border-opacity,1))}.border-rose-950{--tw-border-opacity:1;border-color:rgb(76 5 25/var(--tw-border-opacity,1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225/var(--tw-border-opacity,1))}.border-slate-400{--tw-border-opacity:1;border-color:rgb(148 163 184/var(--tw-border-opacity,1))}.border-slate-50{--tw-border-opacity:1;border-color:rgb(248 250 252/var(--tw-border-opacity,1))}.border-slate-500{--tw-border-opacity:1;border-color:rgb(100 116 139/var(--tw-border-opacity,1))}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity,1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59/var(--tw-border-opacity,1))}.border-slate-900{--tw-border-opacity:1;border-color:rgb(15 23 42/var(--tw-border-opacity,1))}.border-slate-950{--tw-border-opacity:1;border-color:rgb(2 6 23/var(--tw-border-opacity,1))}.border-stone-100{--tw-border-opacity:1;border-color:rgb(245 245 244/var(--tw-border-opacity,1))}.border-stone-200{--tw-border-opacity:1;border-color:rgb(231 229 228/var(--tw-border-opacity,1))}.border-stone-200\\/30{border-color:hsla(20,6%,90%,.3)}.border-stone-300{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.border-stone-400{--tw-border-opacity:1;border-color:rgb(168 162 158/var(--tw-border-opacity,1))}.border-stone-50{--tw-border-opacity:1;border-color:rgb(250 250 249/var(--tw-border-opacity,1))}.border-stone-500{--tw-border-opacity:1;border-color:rgb(120 113 108/var(--tw-border-opacity,1))}.border-stone-600{--tw-border-opacity:1;border-color:rgb(87 83 78/var(--tw-border-opacity,1))}.border-stone-700{--tw-border-opacity:1;border-color:rgb(68 64 60/var(--tw-border-opacity,1))}.border-stone-800{--tw-border-opacity:1;border-color:rgb(41 37 36/var(--tw-border-opacity,1))}.border-stone-900{--tw-border-opacity:1;border-color:rgb(28 25 23/var(--tw-border-opacity,1))}.border-stone-950{--tw-border-opacity:1;border-color:rgb(12 10 9/var(--tw-border-opacity,1))}.border-transparent{border-color:transparent}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255/var(--tw-border-opacity,1))}.bg-\\[\\#1F3A2E\\]{--tw-bg-opacity:1;background-color:rgb(31 58 46/var(--tw-bg-opacity,1))}.bg-\\[\\#C8643C\\]{--tw-bg-opacity:1;background-color:rgb(200 100 60/var(--tw-bg-opacity,1))}.bg-\\[\\#E6DFCF\\]{--tw-bg-opacity:1;background-color:rgb(230 223 207/var(--tw-bg-opacity,1))}.bg-\\[\\#EDEAE0\\]{--tw-bg-opacity:1;background-color:rgb(237 234 224/var(--tw-bg-opacity,1))}.bg-\\[\\#F4EFE4\\]{--tw-bg-opacity:1;background-color:rgb(244 239 228/var(--tw-bg-opacity,1))}.bg-\\[\\#F5F3EC\\]{--tw-bg-opacity:1;background-color:rgb(245 243 236/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F2\\]{--tw-bg-opacity:1;background-color:rgb(250 248 242/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F5\\]{--tw-bg-opacity:1;background-color:rgb(250 248 245/var(--tw-bg-opacity,1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235/var(--tw-bg-opacity,1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0/var(--tw-bg-opacity,1))}.bg-black\\/40{background-color:rgba(0,0,0,.4)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254/var(--tw-bg-opacity,1))}.bg-blue-200{--tw-bg-opacity:1;background-color:rgb(191 219 254/var(--tw-bg-opacity,1))}.bg-blue-300{--tw-bg-opacity:1;background-color:rgb(147 197 253/var(--tw-bg-opacity,1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250/var(--tw-bg-opacity,1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.bg-blue-800{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.bg-blue-900{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84/var(--tw-bg-opacity,1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105/var(--tw-bg-opacity,1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255/var(--tw-bg-opacity,1))}.bg-purple-200{--tw-bg-opacity:1;background-color:rgb(233 213 255/var(--tw-bg-opacity,1))}.bg-purple-300{--tw-bg-opacity:1;background-color:rgb(216 180 254/var(--tw-bg-opacity,1))}.bg-purple-400{--tw-bg-opacity:1;background-color:rgb(192 132 252/var(--tw-bg-opacity,1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255/var(--tw-bg-opacity,1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234/var(--tw-bg-opacity,1))}.bg-purple-700{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.bg-purple-800{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.bg-purple-900{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.bg-purple-950{--tw-bg-opacity:1;background-color:rgb(59 7 100/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-200{--tw-bg-opacity:1;background-color:rgb(254 205 211/var(--tw-bg-opacity,1))}.bg-rose-300{--tw-bg-opacity:1;background-color:rgb(253 164 175/var(--tw-bg-opacity,1))}.bg-rose-400{--tw-bg-opacity:1;background-color:rgb(251 113 133/var(--tw-bg-opacity,1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242/var(--tw-bg-opacity,1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94/var(--tw-bg-opacity,1))}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-rose-700{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.bg-rose-800{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.bg-rose-900{--tw-bg-opacity:1;background-color:rgb(136 19 55/var(--tw-bg-opacity,1))}.bg-rose-950{--tw-bg-opacity:1;background-color:rgb(76 5 25/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225/var(--tw-bg-opacity,1))}.bg-slate-400{--tw-bg-opacity:1;background-color:rgb(148 163 184/var(--tw-bg-opacity,1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.bg-slate-500{--tw-bg-opacity:1;background-color:rgb(100 116 139/var(--tw-bg-opacity,1))}.bg-slate-600{--tw-bg-opacity:1;background-color:rgb(71 85 105/var(--tw-bg-opacity,1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23/var(--tw-bg-opacity,1))}.bg-slate-950\\/70{background-color:rgba(2,6,23,.7)}.bg-stone-100{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.bg-stone-200{--tw-bg-opacity:1;background-color:rgb(231 229 228/var(--tw-bg-opacity,1))}.bg-stone-300{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.bg-stone-400{--tw-bg-opacity:1;background-color:rgb(168 162 158/var(--tw-bg-opacity,1))}.bg-stone-50{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.bg-stone-500{--tw-bg-opacity:1;background-color:rgb(120 113 108/var(--tw-bg-opacity,1))}.bg-stone-600{--tw-bg-opacity:1;background-color:rgb(87 83 78/var(--tw-bg-opacity,1))}.bg-stone-700{--tw-bg-opacity:1;background-color:rgb(68 64 60/var(--tw-bg-opacity,1))}.bg-stone-800{--tw-bg-opacity:1;background-color:rgb(41 37 36/var(--tw-bg-opacity,1))}.bg-stone-900{--tw-bg-opacity:1;background-color:rgb(28 25 23/var(--tw-bg-opacity,1))}.bg-stone-950{--tw-bg-opacity:1;background-color:rgb(12 10 9/var(--tw-bg-opacity,1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.bg-white\\/40{background-color:hsla(0,0%,100%,.4)}.object-cover{-o-object-fit:cover;object-fit:cover}.p-1{padding:.25rem}.p-1\\.5{padding:.375rem}.p-2{padding:.5rem}.p-2\\.5{padding:.625rem}.p-3{padding:.75rem}.p-3\\.5{padding:.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-0{padding-left:0;padding-right:0}.px-0\\.5{padding-left:.125rem;padding-right:.125rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-7{padding-left:1.75rem;padding-right:1.75rem}.px-\\[22px\\]{padding-left:22px;padding-right:22px}.py-0{padding-top:0;padding-bottom:0}.py-0\\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-px{padding-top:1px;padding-bottom:1px}.pb-0{padding-bottom:0}.pb-0\\.5{padding-bottom:.125rem}.pb-1{padding-bottom:.25rem}.pb-1\\.5{padding-bottom:.375rem}.pb-2{padding-bottom:.5rem}.pb-28{padding-bottom:7rem}.pb-3{padding-bottom:.75rem}.pb-3\\.5{padding-bottom:.875rem}.pb-5{padding-bottom:1.25rem}.pb-6{padding-bottom:1.5rem}.pb-7{padding-bottom:1.75rem}.pb-8{padding-bottom:2rem}.pl-1{padding-left:.25rem}.pl-2{padding-left:.5rem}.pl-3{padding-left:.75rem}.pl-3\\.5{padding-left:.875rem}.pl-4{padding-left:1rem}.pl-9{padding-left:2.25rem}.pr-1{padding-right:.25rem}.pr-3{padding-right:.75rem}.pr-4{padding-right:1rem}.pt-0{padding-top:0}.pt-0\\.5{padding-top:.125rem}.pt-1{padding-top:.25rem}.pt-1\\.5{padding-top:.375rem}.pt-2{padding-top:.5rem}.pt-3{padding-top:.75rem}.pt-4{padding-top:1rem}.pt-5{padding-top:1.25rem}.pt-6{padding-top:1.5rem}.pt-7{padding-top:1.75rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-\\[10\\.5px\\]{font-size:10.5px}.text-\\[10px\\]{font-size:10px}.text-\\[11\\.5px\\]{font-size:11.5px}.text-\\[11px\\]{font-size:11px}.text-\\[12px\\]{font-size:12px}.text-\\[13px\\]{font-size:13px}.text-\\[14px\\]{font-size:14px}.text-\\[15px\\]{font-size:15px}.text-\\[22px\\]{font-size:22px}.text-\\[24px\\]{font-size:24px}.text-\\[28px\\]{font-size:28px}.text-\\[32px\\]{font-size:32px}.text-\\[44px\\]{font-size:44px}.text-\\[9\\.5px\\]{font-size:9.5px}.text-\\[9px\\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-light{font-weight:300}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.normal-case{text-transform:none}.italic{font-style:italic}.tabular-nums{--tw-numeric-spacing:tabular-nums;font-variant-numeric:var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction)}.leading-\\[\\.7\\]{line-height:.7}.leading-\\[1\\.02\\]{line-height:1.02}.leading-\\[1\\.05\\]{line-height:1.05}.leading-\\[1\\.06\\]{line-height:1.06}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-\\[0\\.08em\\]{letter-spacing:.08em}.tracking-\\[0\\.12em\\]{letter-spacing:.12em}.tracking-\\[0\\.14em\\]{letter-spacing:.14em}.tracking-\\[0\\.16em\\]{letter-spacing:.16em}.tracking-\\[0\\.18em\\]{letter-spacing:.18em}.tracking-\\[0\\.1em\\]{letter-spacing:.1em}.tracking-\\[0\\.2em\\]{letter-spacing:.2em}.tracking-normal{letter-spacing:0}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-\\[\\#1B2A22\\]{--tw-text-opacity:1;color:rgb(27 42 34/var(--tw-text-opacity,1))}.text-\\[\\#1B2A22\\]\\/50{color:rgba(27,42,34,.5)}.text-\\[\\#1B2A22\\]\\/60{color:rgba(27,42,34,.6)}.text-\\[\\#1B2A22\\]\\/70{color:rgba(27,42,34,.7)}.text-\\[\\#1B2A22\\]\\/75{color:rgba(27,42,34,.75)}.text-\\[\\#1B2A22\\]\\/80{color:rgba(27,42,34,.8)}.text-\\[\\#1F3A2E\\]{--tw-text-opacity:1;color:rgb(31 58 46/var(--tw-text-opacity,1))}.text-\\[\\#C8643C\\]{--tw-text-opacity:1;color:rgb(200 100 60/var(--tw-text-opacity,1))}.text-\\[\\#F4EFE4\\]{--tw-text-opacity:1;color:rgb(244 239 228/var(--tw-text-opacity,1))}.text-black{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.text-blue-100{--tw-text-opacity:1;color:rgb(219 234 254/var(--tw-text-opacity,1))}.text-blue-200{--tw-text-opacity:1;color:rgb(191 219 254/var(--tw-text-opacity,1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-blue-50{--tw-text-opacity:1;color:rgb(239 246 255/var(--tw-text-opacity,1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235/var(--tw-text-opacity,1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216/var(--tw-text-opacity,1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175/var(--tw-text-opacity,1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138/var(--tw-text-opacity,1))}.text-blue-950{--tw-text-opacity:1;color:rgb(23 37 84/var(--tw-text-opacity,1))}.text-purple-100{--tw-text-opacity:1;color:rgb(243 232 255/var(--tw-text-opacity,1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255/var(--tw-text-opacity,1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252/var(--tw-text-opacity,1))}.text-purple-50{--tw-text-opacity:1;color:rgb(250 245 255/var(--tw-text-opacity,1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247/var(--tw-text-opacity,1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234/var(--tw-text-opacity,1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206/var(--tw-text-opacity,1))}.text-purple-800{--tw-text-opacity:1;color:rgb(107 33 168/var(--tw-text-opacity,1))}.text-purple-900{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.text-purple-950{--tw-text-opacity:1;color:rgb(59 7 100/var(--tw-text-opacity,1))}.text-rose-100{--tw-text-opacity:1;color:rgb(255 228 230/var(--tw-text-opacity,1))}.text-rose-200{--tw-text-opacity:1;color:rgb(254 205 211/var(--tw-text-opacity,1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-50{--tw-text-opacity:1;color:rgb(255 241 242/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57/var(--tw-text-opacity,1))}.text-rose-900{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.text-rose-950{--tw-text-opacity:1;color:rgb(76 5 25/var(--tw-text-opacity,1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-50{--tw-text-opacity:1;color:rgb(248 250 252/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23/var(--tw-text-opacity,1))}.text-stone-100{--tw-text-opacity:1;color:rgb(245 245 244/var(--tw-text-opacity,1))}.text-stone-200{--tw-text-opacity:1;color:rgb(231 229 228/var(--tw-text-opacity,1))}.text-stone-300{--tw-text-opacity:1;color:rgb(214 211 209/var(--tw-text-opacity,1))}.text-stone-400{--tw-text-opacity:1;color:rgb(168 162 158/var(--tw-text-opacity,1))}.text-stone-50{--tw-text-opacity:1;color:rgb(250 250 249/var(--tw-text-opacity,1))}.text-stone-500{--tw-text-opacity:1;color:rgb(120 113 108/var(--tw-text-opacity,1))}.text-stone-600{--tw-text-opacity:1;color:rgb(87 83 78/var(--tw-text-opacity,1))}.text-stone-700{--tw-text-opacity:1;color:rgb(68 64 60/var(--tw-text-opacity,1))}.text-stone-800{--tw-text-opacity:1;color:rgb(41 37 36/var(--tw-text-opacity,1))}.text-stone-900{--tw-text-opacity:1;color:rgb(28 25 23/var(--tw-text-opacity,1))}.text-stone-950{--tw-text-opacity:1;color:rgb(12 10 9/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.no-underline{text-decoration-line:none}.opacity-0{opacity:0}.opacity-50{opacity:.5}.opacity-60{opacity:.6}.opacity-70{opacity:.7}.opacity-75{opacity:.75}.opacity-80{opacity:.8}.opacity-90{opacity:.9}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-2xl,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.shadow-sm,.shadow-xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.outline{outline-style:solid}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.grayscale{--tw-grayscale:grayscale(100%)}.filter,.grayscale{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.ease-in{transition-timing-function:cubic-bezier(.4,0,1,1)}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.ease-out{transition-timing-function:cubic-bezier(0,0,.2,1)}.\\[out\\:json\\]{out:json}.\\[timeout\\:20\\]{timeout:20}#root,body,html{margin:0;height:100%;background:#f5f3ec;color-scheme:light}.file\\:mr-2::file-selector-button{margin-right:.5rem}.file\\:border-0::file-selector-button{border-width:0}.file\\:bg-purple-900::file-selector-button{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.file\\:px-2\\.5::file-selector-button{padding-left:.625rem;padding-right:.625rem}.file\\:py-1\\.5::file-selector-button{padding-top:.375rem;padding-bottom:.375rem}.file\\:text-\\[10px\\]::file-selector-button{font-size:10px}.file\\:uppercase::file-selector-button{text-transform:uppercase}.file\\:tracking-wider::file-selector-button{letter-spacing:.05em}.file\\:text-white::file-selector-button{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:border-blue-800:hover{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.hover\\:border-purple-400:hover{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.hover\\:border-purple-600:hover{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.hover\\:border-purple-700:hover{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.hover\\:border-purple-800:hover{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.hover\\:border-purple-900:hover{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.hover\\:bg-blue-50:hover{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.hover\\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.hover\\:bg-blue-800:hover{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.hover\\:bg-blue-900:hover{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.hover\\:bg-purple-700:hover{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.hover\\:bg-purple-800:hover{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.hover\\:bg-purple-900:hover{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.hover\\:bg-rose-600:hover{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.hover\\:bg-rose-800:hover{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.hover\\:bg-stone-100:hover{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.hover\\:bg-stone-300:hover{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.hover\\:bg-stone-50:hover{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.hover\\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.hover\\:bg-white\\/10:hover{background-color:hsla(0,0%,100%,.1)}.hover\\:text-purple-900:hover{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.hover\\:text-rose-700:hover{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.hover\\:text-rose-900:hover{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.hover\\:text-slate-700:hover{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.hover\\:text-slate-900:hover{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.hover\\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:opacity-100:hover{opacity:1}.focus\\:border-stone-300:focus{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.disabled\\:opacity-30:disabled{opacity:.3}.disabled\\:opacity-40:disabled{opacity:.4}.disabled\\:opacity-50:disabled{opacity:.5}@media (max-width:359px){.max-\\[359px\\]\\:text-\\[24px\\]{font-size:24px}.max-\\[359px\\]\\:text-\\[9px\\]{font-size:9px}}@media (min-width:600px){.min-\\[600px\\]\\:max-w-\\[640px\\]{max-width:640px}}@media (min-width:640px){.sm\\:items-center{align-items:center}}@media (min-width:820px){.min-\\[820px\\]\\:max-w-\\[820px\\]{max-width:820px}}";
+const PACT_CSS = "\n@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap');\nhtml, body { margin: 0; height: 100%; overflow: hidden; overscroll-behavior: none; }\nbody { position: fixed; inset: 0; width: 100%; }\n.font-sans, .font-sans input, .font-sans textarea, .font-sans select, .font-sans button { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }\n.font-sans { font-weight: 400; }\n.font-light, .font-normal { font-weight: 400 !important; }\n.font-medium { font-weight: 600 !important; }\n.font-semibold { font-weight: 700 !important; }\n.font-editorial { font-family: 'Fraunces', Georgia, serif; font-weight: 500 !important; letter-spacing: -0.01em !important; line-height: 1.12; font-optical-sizing: auto; }\n.font-pact { font-family: 'Fraunces', Georgia, serif; font-weight: 600 !important; text-transform: uppercase; letter-spacing: 0.14em; line-height: 1; }\n.font-mono { font-family: 'Inter', sans-serif !important; font-weight: 600; font-variant-numeric: tabular-nums; }\n.no-scrollbar::-webkit-scrollbar { display: none; }\n.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }\nbutton { border-radius: 12px; }\ninput, textarea, select { border-radius: 10px; }\ndiv.border:not([class*=\"rounded\"]), form.border:not([class*=\"rounded\"]), label.border:not([class*=\"rounded\"]), section.border:not([class*=\"rounded\"]) { border-radius: 16px; }\ndiv[class*=\"bg-purple-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]), div[class*=\"bg-slate-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]), div[class*=\"bg-blue-9\"]:not([class*=\"rounded\"]) { border-radius: 16px; }\n.shadow-sm, .shadow-xl { box-shadow: none !important; }\n.border-l-4 { border-radius: 4px; }\n@keyframes pact-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-4px) } }\n.pact-bob { animation: pact-bob 3.2s ease-in-out infinite; }\n@media (prefers-reduced-motion: reduce) { .pact-bob { animation: none; } }\n.bg-purple-950{background-color:#12251C!important}\n.hover\\:bg-purple-950:hover{background-color:#12251C!important}\n.text-purple-950{color:#12251C!important}\n.hover\\:text-purple-950:hover{color:#12251C!important}\n.border-purple-950{border-color:#12251C!important}\n.hover\\:border-purple-950:hover{border-color:#12251C!important}\n.focus\\:border-purple-950:focus{border-color:#12251C!important}\n.bg-purple-900{background-color:#1F3A2E!important}\n.hover\\:bg-purple-900:hover{background-color:#1F3A2E!important}\n.text-purple-900{color:#1F3A2E!important}\n.hover\\:text-purple-900:hover{color:#1F3A2E!important}\n.border-purple-900{border-color:#1F3A2E!important}\n.hover\\:border-purple-900:hover{border-color:#1F3A2E!important}\n.focus\\:border-purple-900:focus{border-color:#1F3A2E!important}\n.bg-purple-800{background-color:#2C4A3B!important}\n.hover\\:bg-purple-800:hover{background-color:#2C4A3B!important}\n.text-purple-800{color:#2C4A3B!important}\n.hover\\:text-purple-800:hover{color:#2C4A3B!important}\n.border-purple-800{border-color:#2C4A3B!important}\n.hover\\:border-purple-800:hover{border-color:#2C4A3B!important}\n.focus\\:border-purple-800:focus{border-color:#2C4A3B!important}\n.bg-purple-700{background-color:#3F6B55!important}\n.hover\\:bg-purple-700:hover{background-color:#3F6B55!important}\n.text-purple-700{color:#3F6B55!important}\n.hover\\:text-purple-700:hover{color:#3F6B55!important}\n.border-purple-700{border-color:#3F6B55!important}\n.hover\\:border-purple-700:hover{border-color:#3F6B55!important}\n.focus\\:border-purple-700:focus{border-color:#3F6B55!important}\n.bg-purple-600{background-color:#4F7A63!important}\n.hover\\:bg-purple-600:hover{background-color:#4F7A63!important}\n.text-purple-600{color:#4F7A63!important}\n.hover\\:text-purple-600:hover{color:#4F7A63!important}\n.border-purple-600{border-color:#4F7A63!important}\n.hover\\:border-purple-600:hover{border-color:#4F7A63!important}\n.focus\\:border-purple-600:focus{border-color:#4F7A63!important}\n.bg-purple-500{background-color:#5F8C73!important}\n.hover\\:bg-purple-500:hover{background-color:#5F8C73!important}\n.text-purple-500{color:#5F8C73!important}\n.hover\\:text-purple-500:hover{color:#5F8C73!important}\n.border-purple-500{border-color:#5F8C73!important}\n.hover\\:border-purple-500:hover{border-color:#5F8C73!important}\n.focus\\:border-purple-500:focus{border-color:#5F8C73!important}\n.bg-purple-400{background-color:#8FB09D!important}\n.hover\\:bg-purple-400:hover{background-color:#8FB09D!important}\n.text-purple-400{color:#8FB09D!important}\n.hover\\:text-purple-400:hover{color:#8FB09D!important}\n.border-purple-400{border-color:#8FB09D!important}\n.hover\\:border-purple-400:hover{border-color:#8FB09D!important}\n.focus\\:border-purple-400:focus{border-color:#8FB09D!important}\n.bg-purple-300{background-color:#B5CABD!important}\n.hover\\:bg-purple-300:hover{background-color:#B5CABD!important}\n.text-purple-300{color:#B5CABD!important}\n.hover\\:text-purple-300:hover{color:#B5CABD!important}\n.border-purple-300{border-color:#B5CABD!important}\n.hover\\:border-purple-300:hover{border-color:#B5CABD!important}\n.focus\\:border-purple-300:focus{border-color:#B5CABD!important}\n.bg-purple-200{background-color:#D5E0D8!important}\n.hover\\:bg-purple-200:hover{background-color:#D5E0D8!important}\n.text-purple-200{color:#D5E0D8!important}\n.hover\\:text-purple-200:hover{color:#D5E0D8!important}\n.border-purple-200{border-color:#D5E0D8!important}\n.hover\\:border-purple-200:hover{border-color:#D5E0D8!important}\n.focus\\:border-purple-200:focus{border-color:#D5E0D8!important}\n.bg-purple-100{background-color:#E6EDE8!important}\n.hover\\:bg-purple-100:hover{background-color:#E6EDE8!important}\n.text-purple-100{color:#E6EDE8!important}\n.hover\\:text-purple-100:hover{color:#E6EDE8!important}\n.border-purple-100{border-color:#E6EDE8!important}\n.hover\\:border-purple-100:hover{border-color:#E6EDE8!important}\n.focus\\:border-purple-100:focus{border-color:#E6EDE8!important}\n.bg-purple-50{background-color:#F0F4F1!important}\n.hover\\:bg-purple-50:hover{background-color:#F0F4F1!important}\n.text-purple-50{color:#F0F4F1!important}\n.hover\\:text-purple-50:hover{color:#F0F4F1!important}\n.border-purple-50{border-color:#F0F4F1!important}\n.hover\\:border-purple-50:hover{border-color:#F0F4F1!important}\n.focus\\:border-purple-50:focus{border-color:#F0F4F1!important}\n.bg-rose-950{background-color:#3A1F10!important}\n.hover\\:bg-rose-950:hover{background-color:#3A1F10!important}\n.text-rose-950{color:#3A1F10!important}\n.hover\\:text-rose-950:hover{color:#3A1F10!important}\n.border-rose-950{border-color:#3A1F10!important}\n.hover\\:border-rose-950:hover{border-color:#3A1F10!important}\n.focus\\:border-rose-950:focus{border-color:#3A1F10!important}\n.bg-rose-900{background-color:#6B3A1E!important}\n.hover\\:bg-rose-900:hover{background-color:#6B3A1E!important}\n.text-rose-900{color:#6B3A1E!important}\n.hover\\:text-rose-900:hover{color:#6B3A1E!important}\n.border-rose-900{border-color:#6B3A1E!important}\n.hover\\:border-rose-900:hover{border-color:#6B3A1E!important}\n.focus\\:border-rose-900:focus{border-color:#6B3A1E!important}\n.bg-rose-800{background-color:#8A4A27!important}\n.hover\\:bg-rose-800:hover{background-color:#8A4A27!important}\n.text-rose-800{color:#8A4A27!important}\n.hover\\:text-rose-800:hover{color:#8A4A27!important}\n.border-rose-800{border-color:#8A4A27!important}\n.hover\\:border-rose-800:hover{border-color:#8A4A27!important}\n.focus\\:border-rose-800:focus{border-color:#8A4A27!important}\n.bg-rose-700{background-color:#A65F37!important}\n.hover\\:bg-rose-700:hover{background-color:#A65F37!important}\n.text-rose-700{color:#A65F37!important}\n.hover\\:text-rose-700:hover{color:#A65F37!important}\n.border-rose-700{border-color:#A65F37!important}\n.hover\\:border-rose-700:hover{border-color:#A65F37!important}\n.focus\\:border-rose-700:focus{border-color:#A65F37!important}\n.bg-rose-600{background-color:#B5683A!important}\n.hover\\:bg-rose-600:hover{background-color:#B5683A!important}\n.text-rose-600{color:#B5683A!important}\n.hover\\:text-rose-600:hover{color:#B5683A!important}\n.border-rose-600{border-color:#B5683A!important}\n.hover\\:border-rose-600:hover{border-color:#B5683A!important}\n.focus\\:border-rose-600:focus{border-color:#B5683A!important}\n.bg-rose-500{background-color:#C77E52!important}\n.hover\\:bg-rose-500:hover{background-color:#C77E52!important}\n.text-rose-500{color:#C77E52!important}\n.hover\\:text-rose-500:hover{color:#C77E52!important}\n.border-rose-500{border-color:#C77E52!important}\n.hover\\:border-rose-500:hover{border-color:#C77E52!important}\n.focus\\:border-rose-500:focus{border-color:#C77E52!important}\n.bg-rose-400{background-color:#D9945F!important}\n.hover\\:bg-rose-400:hover{background-color:#D9945F!important}\n.text-rose-400{color:#D9945F!important}\n.hover\\:text-rose-400:hover{color:#D9945F!important}\n.border-rose-400{border-color:#D9945F!important}\n.hover\\:border-rose-400:hover{border-color:#D9945F!important}\n.focus\\:border-rose-400:focus{border-color:#D9945F!important}\n.bg-rose-300{background-color:#E6B38C!important}\n.hover\\:bg-rose-300:hover{background-color:#E6B38C!important}\n.text-rose-300{color:#E6B38C!important}\n.hover\\:text-rose-300:hover{color:#E6B38C!important}\n.border-rose-300{border-color:#E6B38C!important}\n.hover\\:border-rose-300:hover{border-color:#E6B38C!important}\n.focus\\:border-rose-300:focus{border-color:#E6B38C!important}\n.bg-rose-200{background-color:#F0D1B8!important}\n.hover\\:bg-rose-200:hover{background-color:#F0D1B8!important}\n.text-rose-200{color:#F0D1B8!important}\n.hover\\:text-rose-200:hover{color:#F0D1B8!important}\n.border-rose-200{border-color:#F0D1B8!important}\n.hover\\:border-rose-200:hover{border-color:#F0D1B8!important}\n.focus\\:border-rose-200:focus{border-color:#F0D1B8!important}\n.bg-rose-100{background-color:#F6E4D5!important}\n.hover\\:bg-rose-100:hover{background-color:#F6E4D5!important}\n.text-rose-100{color:#F6E4D5!important}\n.hover\\:text-rose-100:hover{color:#F6E4D5!important}\n.border-rose-100{border-color:#F6E4D5!important}\n.hover\\:border-rose-100:hover{border-color:#F6E4D5!important}\n.focus\\:border-rose-100:focus{border-color:#F6E4D5!important}\n.bg-rose-50{background-color:#FAF1EA!important}\n.hover\\:bg-rose-50:hover{background-color:#FAF1EA!important}\n.text-rose-50{color:#FAF1EA!important}\n.hover\\:text-rose-50:hover{color:#FAF1EA!important}\n.border-rose-50{border-color:#FAF1EA!important}\n.hover\\:border-rose-50:hover{border-color:#FAF1EA!important}\n.focus\\:border-rose-50:focus{border-color:#FAF1EA!important}\n.bg-blue-950{background-color:#14282B!important}\n.hover\\:bg-blue-950:hover{background-color:#14282B!important}\n.text-blue-950{color:#14282B!important}\n.hover\\:text-blue-950:hover{color:#14282B!important}\n.border-blue-950{border-color:#14282B!important}\n.hover\\:border-blue-950:hover{border-color:#14282B!important}\n.focus\\:border-blue-950:focus{border-color:#14282B!important}\n.bg-blue-900{background-color:#1E3F44!important}\n.hover\\:bg-blue-900:hover{background-color:#1E3F44!important}\n.text-blue-900{color:#1E3F44!important}\n.hover\\:text-blue-900:hover{color:#1E3F44!important}\n.border-blue-900{border-color:#1E3F44!important}\n.hover\\:border-blue-900:hover{border-color:#1E3F44!important}\n.focus\\:border-blue-900:focus{border-color:#1E3F44!important}\n.bg-blue-800{background-color:#2A5359!important}\n.hover\\:bg-blue-800:hover{background-color:#2A5359!important}\n.text-blue-800{color:#2A5359!important}\n.hover\\:text-blue-800:hover{color:#2A5359!important}\n.border-blue-800{border-color:#2A5359!important}\n.hover\\:border-blue-800:hover{border-color:#2A5359!important}\n.focus\\:border-blue-800:focus{border-color:#2A5359!important}\n.bg-blue-700{background-color:#3A6A70!important}\n.hover\\:bg-blue-700:hover{background-color:#3A6A70!important}\n.text-blue-700{color:#3A6A70!important}\n.hover\\:text-blue-700:hover{color:#3A6A70!important}\n.border-blue-700{border-color:#3A6A70!important}\n.hover\\:border-blue-700:hover{border-color:#3A6A70!important}\n.focus\\:border-blue-700:focus{border-color:#3A6A70!important}\n.bg-blue-600{background-color:#4C7F85!important}\n.hover\\:bg-blue-600:hover{background-color:#4C7F85!important}\n.text-blue-600{color:#4C7F85!important}\n.hover\\:text-blue-600:hover{color:#4C7F85!important}\n.border-blue-600{border-color:#4C7F85!important}\n.hover\\:border-blue-600:hover{border-color:#4C7F85!important}\n.focus\\:border-blue-600:focus{border-color:#4C7F85!important}\n.bg-blue-500{background-color:#639499!important}\n.hover\\:bg-blue-500:hover{background-color:#639499!important}\n.text-blue-500{color:#639499!important}\n.hover\\:text-blue-500:hover{color:#639499!important}\n.border-blue-500{border-color:#639499!important}\n.hover\\:border-blue-500:hover{border-color:#639499!important}\n.focus\\:border-blue-500:focus{border-color:#639499!important}\n.bg-blue-400{background-color:#8FB2B6!important}\n.hover\\:bg-blue-400:hover{background-color:#8FB2B6!important}\n.text-blue-400{color:#8FB2B6!important}\n.hover\\:text-blue-400:hover{color:#8FB2B6!important}\n.border-blue-400{border-color:#8FB2B6!important}\n.hover\\:border-blue-400:hover{border-color:#8FB2B6!important}\n.focus\\:border-blue-400:focus{border-color:#8FB2B6!important}\n.bg-blue-300{background-color:#A8C4C6!important}\n.hover\\:bg-blue-300:hover{background-color:#A8C4C6!important}\n.text-blue-300{color:#A8C4C6!important}\n.hover\\:text-blue-300:hover{color:#A8C4C6!important}\n.border-blue-300{border-color:#A8C4C6!important}\n.hover\\:border-blue-300:hover{border-color:#A8C4C6!important}\n.focus\\:border-blue-300:focus{border-color:#A8C4C6!important}\n.bg-blue-200{background-color:#CADCDD!important}\n.hover\\:bg-blue-200:hover{background-color:#CADCDD!important}\n.text-blue-200{color:#CADCDD!important}\n.hover\\:text-blue-200:hover{color:#CADCDD!important}\n.border-blue-200{border-color:#CADCDD!important}\n.hover\\:border-blue-200:hover{border-color:#CADCDD!important}\n.focus\\:border-blue-200:focus{border-color:#CADCDD!important}\n.bg-blue-100{background-color:#E1ECED!important}\n.hover\\:bg-blue-100:hover{background-color:#E1ECED!important}\n.text-blue-100{color:#E1ECED!important}\n.hover\\:text-blue-100:hover{color:#E1ECED!important}\n.border-blue-100{border-color:#E1ECED!important}\n.hover\\:border-blue-100:hover{border-color:#E1ECED!important}\n.focus\\:border-blue-100:focus{border-color:#E1ECED!important}\n.bg-blue-50{background-color:#EEF4F5!important}\n.hover\\:bg-blue-50:hover{background-color:#EEF4F5!important}\n.text-blue-50{color:#EEF4F5!important}\n.hover\\:text-blue-50:hover{color:#EEF4F5!important}\n.border-blue-50{border-color:#EEF4F5!important}\n.hover\\:border-blue-50:hover{border-color:#EEF4F5!important}\n.focus\\:border-blue-50:focus{border-color:#EEF4F5!important}\n.bg-slate-950{background-color:#0F0F0D!important}\n.hover\\:bg-slate-950:hover{background-color:#0F0F0D!important}\n.text-slate-950{color:#0F0F0D!important}\n.hover\\:text-slate-950:hover{color:#0F0F0D!important}\n.border-slate-950{border-color:#0F0F0D!important}\n.hover\\:border-slate-950:hover{border-color:#0F0F0D!important}\n.focus\\:border-slate-950:focus{border-color:#0F0F0D!important}\n.bg-slate-900{background-color:#1A1A17!important}\n.hover\\:bg-slate-900:hover{background-color:#1A1A17!important}\n.text-slate-900{color:#1A1A17!important}\n.hover\\:text-slate-900:hover{color:#1A1A17!important}\n.border-slate-900{border-color:#1A1A17!important}\n.hover\\:border-slate-900:hover{border-color:#1A1A17!important}\n.focus\\:border-slate-900:focus{border-color:#1A1A17!important}\n.bg-slate-800{background-color:#2A2A26!important}\n.hover\\:bg-slate-800:hover{background-color:#2A2A26!important}\n.text-slate-800{color:#2A2A26!important}\n.hover\\:text-slate-800:hover{color:#2A2A26!important}\n.border-slate-800{border-color:#2A2A26!important}\n.hover\\:border-slate-800:hover{border-color:#2A2A26!important}\n.focus\\:border-slate-800:focus{border-color:#2A2A26!important}\n.bg-slate-700{background-color:#3E3D37!important}\n.hover\\:bg-slate-700:hover{background-color:#3E3D37!important}\n.text-slate-700{color:#3E3D37!important}\n.hover\\:text-slate-700:hover{color:#3E3D37!important}\n.border-slate-700{border-color:#3E3D37!important}\n.hover\\:border-slate-700:hover{border-color:#3E3D37!important}\n.focus\\:border-slate-700:focus{border-color:#3E3D37!important}\n.bg-slate-600{background-color:#55534B!important}\n.hover\\:bg-slate-600:hover{background-color:#55534B!important}\n.text-slate-600{color:#55534B!important}\n.hover\\:text-slate-600:hover{color:#55534B!important}\n.border-slate-600{border-color:#55534B!important}\n.hover\\:border-slate-600:hover{border-color:#55534B!important}\n.focus\\:border-slate-600:focus{border-color:#55534B!important}\n.bg-slate-500{background-color:#6B6960!important}\n.hover\\:bg-slate-500:hover{background-color:#6B6960!important}\n.text-slate-500{color:#6B6960!important}\n.hover\\:text-slate-500:hover{color:#6B6960!important}\n.border-slate-500{border-color:#6B6960!important}\n.hover\\:border-slate-500:hover{border-color:#6B6960!important}\n.focus\\:border-slate-500:focus{border-color:#6B6960!important}\n.bg-slate-400{background-color:#8A877D!important}\n.hover\\:bg-slate-400:hover{background-color:#8A877D!important}\n.text-slate-400{color:#8A877D!important}\n.hover\\:text-slate-400:hover{color:#8A877D!important}\n.border-slate-400{border-color:#8A877D!important}\n.hover\\:border-slate-400:hover{border-color:#8A877D!important}\n.focus\\:border-slate-400:focus{border-color:#8A877D!important}\n.bg-slate-300{background-color:#B5B1A5!important}\n.hover\\:bg-slate-300:hover{background-color:#B5B1A5!important}\n.text-slate-300{color:#B5B1A5!important}\n.hover\\:text-slate-300:hover{color:#B5B1A5!important}\n.border-slate-300{border-color:#B5B1A5!important}\n.hover\\:border-slate-300:hover{border-color:#B5B1A5!important}\n.focus\\:border-slate-300:focus{border-color:#B5B1A5!important}\n.bg-slate-200{background-color:#D6D1C4!important}\n.hover\\:bg-slate-200:hover{background-color:#D6D1C4!important}\n.text-slate-200{color:#D6D1C4!important}\n.hover\\:text-slate-200:hover{color:#D6D1C4!important}\n.border-slate-200{border-color:#D6D1C4!important}\n.hover\\:border-slate-200:hover{border-color:#D6D1C4!important}\n.focus\\:border-slate-200:focus{border-color:#D6D1C4!important}\n.bg-slate-100{background-color:#E7E3D8!important}\n.hover\\:bg-slate-100:hover{background-color:#E7E3D8!important}\n.text-slate-100{color:#E7E3D8!important}\n.hover\\:text-slate-100:hover{color:#E7E3D8!important}\n.border-slate-100{border-color:#E7E3D8!important}\n.hover\\:border-slate-100:hover{border-color:#E7E3D8!important}\n.focus\\:border-slate-100:focus{border-color:#E7E3D8!important}\n.bg-slate-50{background-color:#F1EEE6!important}\n.hover\\:bg-slate-50:hover{background-color:#F1EEE6!important}\n.text-slate-50{color:#F1EEE6!important}\n.hover\\:text-slate-50:hover{color:#F1EEE6!important}\n.border-slate-50{border-color:#F1EEE6!important}\n.hover\\:border-slate-50:hover{border-color:#F1EEE6!important}\n.focus\\:border-slate-50:focus{border-color:#F1EEE6!important}\n.bg-stone-950{background-color:#1A1A17!important}\n.hover\\:bg-stone-950:hover{background-color:#1A1A17!important}\n.text-stone-950{color:#1A1A17!important}\n.hover\\:text-stone-950:hover{color:#1A1A17!important}\n.border-stone-950{border-color:#1A1A17!important}\n.hover\\:border-stone-950:hover{border-color:#1A1A17!important}\n.focus\\:border-stone-950:focus{border-color:#1A1A17!important}\n.bg-stone-900{background-color:#25241F!important}\n.hover\\:bg-stone-900:hover{background-color:#25241F!important}\n.text-stone-900{color:#25241F!important}\n.hover\\:text-stone-900:hover{color:#25241F!important}\n.border-stone-900{border-color:#25241F!important}\n.hover\\:border-stone-900:hover{border-color:#25241F!important}\n.focus\\:border-stone-900:focus{border-color:#25241F!important}\n.bg-stone-800{background-color:#33322B!important}\n.hover\\:bg-stone-800:hover{background-color:#33322B!important}\n.text-stone-800{color:#33322B!important}\n.hover\\:text-stone-800:hover{color:#33322B!important}\n.border-stone-800{border-color:#33322B!important}\n.hover\\:border-stone-800:hover{border-color:#33322B!important}\n.focus\\:border-stone-800:focus{border-color:#33322B!important}\n.bg-stone-700{background-color:#47453D!important}\n.hover\\:bg-stone-700:hover{background-color:#47453D!important}\n.text-stone-700{color:#47453D!important}\n.hover\\:text-stone-700:hover{color:#47453D!important}\n.border-stone-700{border-color:#47453D!important}\n.hover\\:border-stone-700:hover{border-color:#47453D!important}\n.focus\\:border-stone-700:focus{border-color:#47453D!important}\n.bg-stone-600{background-color:#5C5A52!important}\n.hover\\:bg-stone-600:hover{background-color:#5C5A52!important}\n.text-stone-600{color:#5C5A52!important}\n.hover\\:text-stone-600:hover{color:#5C5A52!important}\n.border-stone-600{border-color:#5C5A52!important}\n.hover\\:border-stone-600:hover{border-color:#5C5A52!important}\n.focus\\:border-stone-600:focus{border-color:#5C5A52!important}\n.bg-stone-500{background-color:#6B6960!important}\n.hover\\:bg-stone-500:hover{background-color:#6B6960!important}\n.text-stone-500{color:#6B6960!important}\n.hover\\:text-stone-500:hover{color:#6B6960!important}\n.border-stone-500{border-color:#6B6960!important}\n.hover\\:border-stone-500:hover{border-color:#6B6960!important}\n.focus\\:border-stone-500:focus{border-color:#6B6960!important}\n.bg-stone-400{background-color:#8A877D!important}\n.hover\\:bg-stone-400:hover{background-color:#8A877D!important}\n.text-stone-400{color:#8A877D!important}\n.hover\\:text-stone-400:hover{color:#8A877D!important}\n.border-stone-400{border-color:#8A877D!important}\n.hover\\:border-stone-400:hover{border-color:#8A877D!important}\n.focus\\:border-stone-400:focus{border-color:#8A877D!important}\n.bg-stone-300{background-color:#CFCABD!important}\n.hover\\:bg-stone-300:hover{background-color:#CFCABD!important}\n.text-stone-300{color:#CFCABD!important}\n.hover\\:text-stone-300:hover{color:#CFCABD!important}\n.border-stone-300{border-color:#CFCABD!important}\n.hover\\:border-stone-300:hover{border-color:#CFCABD!important}\n.focus\\:border-stone-300:focus{border-color:#CFCABD!important}\n.bg-stone-200{background-color:#D9D4C6!important}\n.hover\\:bg-stone-200:hover{background-color:#D9D4C6!important}\n.text-stone-200{color:#D9D4C6!important}\n.hover\\:text-stone-200:hover{color:#D9D4C6!important}\n.border-stone-200{border-color:#D9D4C6!important}\n.hover\\:border-stone-200:hover{border-color:#D9D4C6!important}\n.focus\\:border-stone-200:focus{border-color:#D9D4C6!important}\n.bg-stone-100{background-color:#ECE8DD!important}\n.hover\\:bg-stone-100:hover{background-color:#ECE8DD!important}\n.text-stone-100{color:#ECE8DD!important}\n.hover\\:text-stone-100:hover{color:#ECE8DD!important}\n.border-stone-100{border-color:#ECE8DD!important}\n.hover\\:border-stone-100:hover{border-color:#ECE8DD!important}\n.focus\\:border-stone-100:focus{border-color:#ECE8DD!important}\n.bg-stone-50{background-color:#F3F0E8!important}\n.hover\\:bg-stone-50:hover{background-color:#F3F0E8!important}\n.text-stone-50{color:#F3F0E8!important}\n.hover\\:text-stone-50:hover{color:#F3F0E8!important}\n.border-stone-50{border-color:#F3F0E8!important}\n.hover\\:border-stone-50:hover{border-color:#F3F0E8!important}\n.focus\\:border-stone-50:focus{border-color:#F3F0E8!important}\n.bg-white{background-color:#FBF9F3!important}\n.bg-\\[\\#FAF8F5\\]{background-color:#F3F0E8!important}\n.bg-\\[\\#F5F3EC\\]{background-color:#F5F3EC!important}\n.bg-slate-950\\/70{background-color:rgba(26,26,23,.7)!important}\n.border-stone-200\\/30{border-color:rgba(217,212,198,.3)!important}\nhtml{-webkit-text-size-adjust:100%;text-size-adjust:100%}html,body{max-width:100%;overflow-x:hidden}\ninput[type=date],input[type=time],input[type=search],select{-webkit-appearance:none;appearance:none;min-width:0;max-width:100%;box-sizing:border-box}\ninput[type=date],input[type=time]{min-height:2rem;text-align:left}\ninput[type=search]::-webkit-search-decoration,input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none}\n@supports (-webkit-touch-callout:none){input:not([type=checkbox]):not([type=radio]):not([type=file]),select,textarea{font-size:16px!important}}\n\nhtml:not([data-pact-theme]) .bg-\\[\\#F5F3EC\\]{background-color:#F4EFE4!important}\nhtml:not([data-pact-theme]) .bg-\\[\\#EDEAE0\\]{background-color:#EAE3D2!important}\nhtml:not([data-pact-theme]) .bg-\\[\\#FAF8F5\\]{background-color:#F8F3E7!important}\nhtml:not([data-pact-theme]) .bg-white{background-color:#FBF8F0!important}\nhtml:not([data-pact-theme]) .border-stone-200{border-color:#DDD5C2!important}\nhtml:not([data-pact-theme]) .border-stone-300{border-color:#CFC7B4!important}\nhtml:not([data-pact-theme]) [data-pact-glass]{background:rgba(244,239,228,.84)!important}\nhtml:not([data-pact-theme]) [data-pact-glass=\"nav\"]{background:rgba(244,239,228,.97)!important}\n.lg-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;animation:lg-fade 1s ease-out both}\n.lg-bg>*{position:absolute}\n.lg-blob{border-radius:50%;will-change:transform}\n.lg-clay{background:radial-gradient(circle,rgba(200,100,60,.20),rgba(200,100,60,0) 70%)}\n.lg-forest{background:radial-gradient(circle,rgba(31,58,46,.15),rgba(31,58,46,0) 70%)}\n.lg-rules{left:0;right:0;top:-240px;bottom:0;opacity:.55;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 39px,rgba(31,58,46,.07) 39px,rgba(31,58,46,.07) 40px);animation:lg-rules 45s linear infinite}\n.lg-hours{left:0;right:0;top:-224px;bottom:0;opacity:.6;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 55px,rgba(31,58,46,.075) 55px,rgba(31,58,46,.075) 56px);animation:lg-hours 70s linear infinite}\n.lg-spin{animation:lg-spin 140s linear infinite}\n.lg-spin-slow{animation:lg-spin 90s linear infinite reverse}\n.lg-hand{transform-origin:50% 50%;animation:lg-spin 60s linear infinite}\n.lg-sweep{left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,100,60,.45),transparent);animation:lg-sweep 22s ease-in-out infinite alternate}\n.lg-dash{stroke-dasharray:3 9;animation:lg-dash 40s linear infinite}\n.lg-pin{border-radius:50%;background:rgba(200,100,60,.55);width:7px;height:7px}\n.lg-pin::after{content:'';position:absolute;inset:-1px;border-radius:50%;border:1.5px solid rgba(200,100,60,.5);animation:lg-ring 3.6s ease-out infinite;animation-delay:inherit}\n.lg-grow{stroke-dasharray:420;stroke-dashoffset:420;animation:lg-grow 16s ease-in-out infinite}\n.lg-leaf{transform-box:fill-box;transform-origin:center;animation:lg-pulse 5s ease-in-out infinite}\n.lg-ringline{border-radius:50%;border:1.5px solid rgba(31,58,46,.12)}\n.lg-ringline.c{border-color:rgba(200,100,60,.22)}\n.lg-mote{width:6px;height:6px;border-radius:50%;background:rgba(200,100,60,.35);animation:lg-float 14s ease-in infinite}\n.lg-ring{position:absolute;border-radius:50%;background:rgba(200,100,60,.45);animation:lg-ring 2.8s ease-out infinite}\n.lg-breathe{animation:lg-breathe 4s ease-in-out infinite}\n@keyframes lg-fade{from{opacity:0}to{opacity:1}}\n@keyframes lg-rules{to{transform:translateY(-240px)}}\n@keyframes lg-hours{to{transform:translateY(-224px)}}\n@keyframes lg-spin{to{transform:rotate(360deg)}}\n@keyframes lg-sweep{from{top:12%}to{top:88%}}\n@keyframes lg-dash{to{stroke-dashoffset:-240}}\n@keyframes lg-ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(3.4);opacity:0}}\n@keyframes lg-grow{0%{stroke-dashoffset:420;opacity:0}12%{opacity:1}55%{stroke-dashoffset:0;opacity:1}85%{stroke-dashoffset:0;opacity:.9}100%{stroke-dashoffset:0;opacity:0}}\n@keyframes lg-pulse{0%,100%{transform:scale(.7);opacity:.35}50%{transform:scale(1.25);opacity:.9}}\n@keyframes lg-float{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:.8}100%{transform:translateY(-70vh) scale(1.2);opacity:0}}\n@keyframes lg-d1{0%,100%{transform:translate(-30px,0) scale(1)}50%{transform:translate(40px,60px) scale(1.15)}}\n@keyframes lg-d2{0%,100%{transform:translate(0,0) scale(1.1)}50%{transform:translate(-55px,-45px) scale(.95)}}\n@keyframes lg-l1{0%,100%{transform:translate(0,0)}50%{transform:translate(38px,10px)}}\n@keyframes lg-l2{0%,100%{transform:translate(0,0)}50%{transform:translate(-36px,22px)}}\n@keyframes lg-l3{0%,100%{transform:translate(0,0)}50%{transform:translate(8px,-34px)}}\n@keyframes lg-breathe{0%,100%{box-shadow:0 0 0 0 rgba(200,100,60,0)}50%{box-shadow:0 0 0 6px rgba(200,100,60,.13)}}\n@keyframes lg-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}\n.lg-d1{animation:lg-d1 28s ease-in-out infinite}\n.lg-d2{animation:lg-d2 34s ease-in-out infinite}\n.lg-l1{animation:lg-l1 24s ease-in-out infinite}\n.lg-l2{animation:lg-l2 30s ease-in-out infinite}\n.lg-l3{animation:lg-l3 27s ease-in-out infinite}\n.lg-rise{animation:lg-rise .7s ease-out both}\nhtml[data-pact-theme$=\"-dark\"] .lg-bg{opacity:.55}\n@media (prefers-reduced-motion: reduce){.lg-bg *,.lg-bg,.lg-breathe,.lg-rise,.lg-pulse-dot{animation:none!important}.lg-grow{stroke-dashoffset:0;opacity:.6}}\n.lg-pulse-dot{animation:lg-ring 2.8s ease-out infinite}\n\nbutton:not([class*=\"rounded\"]){border-radius:2px}\ninput:not([class*=\"rounded\"]),textarea:not([class*=\"rounded\"]),select:not([class*=\"rounded\"]){border-radius:3px}\ndiv.border:not([class*=\"rounded\"]),form.border:not([class*=\"rounded\"]),label.border:not([class*=\"rounded\"]),section.border:not([class*=\"rounded\"]){border-radius:3px}\ndiv[class*=\"bg-purple-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]),div[class*=\"bg-slate-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]),div[class*=\"bg-blue-9\"]:not([class*=\"rounded\"]){border-radius:3px}\n\n[class*=\"rounded-\"]:not(.rounded-full):not([class*=\"rounded-t\"]):not([class*=\"rounded-b\"]){border-radius:2px!important}\n[class*=\"rounded-full\"][class*=\"px-\"],[class*=\"rounded-full\"][class*=\"min-w\"]{border-radius:2px!important}\ninput,textarea,select,button,label.border,div.border,form.border,section.border{border-radius:2px}\n.lg-pill{border-radius:2px}\n\n.np-title{font-family:'Fraunces',Georgia,serif;font-weight:600;font-style:italic;font-size:30px;letter-spacing:-.02em;line-height:1;margin:0;color:#1B2A22;text-align:center;flex:1;white-space:nowrap}\n@media (max-width:359px){.np-title{font-size:25px}}\n.np-rule{margin-top:8px;border-top:3px solid #1B2A22;border-bottom:1px solid #1B2A22;height:2px}\n.np-dateline{display:flex;justify-content:space-between;gap:8px;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:5px 0 4px;border-bottom:1px solid #1B2A22;color:#1B2A22;white-space:nowrap}\n.np-dateline span{overflow:hidden;text-overflow:ellipsis}\n.np-flag,.np-skin [class*=\"text-purple-800\"][class*=\"uppercase\"][class*=\"tracking-widest\"]{background:#1B2A22;color:#F4EFE4!important;padding:3px 8px;display:inline-flex;align-items:center;letter-spacing:.18em;font-size:10px;font-weight:600;text-transform:uppercase;width:fit-content}\n.np-kicker{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:400;font-size:11px;letter-spacing:0;text-transform:none;margin-left:8px;opacity:.85}\n.np-skin div[class*=\"p-4\"][class*=\"bg-white\"][class*=\"border\"]{background:#FAF8F2!important;border:1px solid #1B2A22!important;border-top:3px double #1B2A22!important;box-shadow:4px 4px 0 rgba(31,58,46,.10)!important;border-radius:0!important}\n\n.np-sc{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#5A675F}\n.np-halftone{background:radial-gradient(circle,rgba(244,239,228,.28) .9px,transparent 1.5px) 0 0/5px 5px}\n.np-barcode{height:26px;background-image:repeating-linear-gradient(90deg,#1B2A22 0,#1B2A22 2px,transparent 2px,transparent 4px,#1B2A22 4px,#1B2A22 5px,transparent 5px,transparent 8px)}\n\n.np-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}\n.np-grid>*{grid-column:span 2}\n.np-grid>.np-tile{grid-column:span 1}\n.font-fr{font-family:'Fraunces',Georgia,serif;font-optical-sizing:auto}\n.np-cols{overflow:hidden}\n.np-dropcap{float:left;font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:38px;line-height:.85;padding:3px 6px 0 0;color:#1B2A22}\n";
 
 // =====================================================================
 // ROAM HELPERS: time maths, slot finder, calendar (ICS) parser, accounts
@@ -1689,10 +1690,8 @@ const CONTOUR = [[[{"v": "M375,150C374,159 378,166 375,173C372,180 364,190 355,1
 
 function PactSeal({ size = 30 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 30 30" role="img" aria-label="Pact seal" className="shrink-0">
-      <circle cx="15" cy="15" r="14" fill="#1F3A2E" />
-      <path d="M9 20V10h6a3.2 3.2 0 0 1 0 6.4H9" fill="none" stroke="#F4EFE4" strokeWidth="2.2" strokeLinecap="round" />
-      <circle cx="21.5" cy="21" r="2.2" fill="#C8643C" />
+    <svg width={size} height={size} viewBox="190 150 640 700" role="img" aria-label="The Pact" className="shrink-0">
+      <g transform="translate(-8 60)"><rect x="330" y="193" width="92" height="531" fill="#F4EFE4"/><rect x="248" y="700" width="256" height="26" fill="#F4EFE4"/><polygon points="775.0,400.0 757.5,431.3 764.5,466.4 738.2,490.8 733.9,526.4 701.4,541.4 686.4,573.9 650.8,578.2 626.4,604.5 591.3,597.5 560.0,615.0 528.7,597.5 493.6,604.5 469.2,578.2 433.6,573.9 418.6,541.4 386.1,526.4 381.8,490.8 355.5,466.4 362.5,431.3 345.0,400.0 362.5,368.7 355.5,333.6 381.8,309.2 386.1,273.6 418.6,258.6 433.6,226.1 469.2,221.8 493.6,195.5 528.7,202.5 560.0,185.0 591.3,202.5 626.4,195.5 650.8,221.8 686.4,226.1 701.4,258.6 733.9,273.6 738.2,309.2 764.5,333.6 757.5,368.7" fill="#C8643C"/><circle cx="560" cy="400" r="169.85" fill="none" stroke="#F4EFE4" strokeWidth="9.0"/><circle cx="560" cy="400" r="154.79999999999998" fill="none" stroke="#F4EFE4" strokeWidth="2.5"/><g transform="rotate(35 560 400)"><path d="M560 281.75L587.95 400L560 518.25L532.05 400Z" fill="#F4EFE4"/><path d="M560 281.75L587.95 400L532.05 400Z" fill="#1F3A2E"/></g><circle cx="560" cy="400" r="10.75" fill="#C8643C" stroke="#F4EFE4" strokeWidth="4"/></g>
     </svg>
   );
 }
@@ -1926,14 +1925,17 @@ const PrivacyNotice = ({ onClose }) => {
   );
 };
 
+const PACT_TAGLINE = 'Live a little louder. We’ll quietly sort the rest.';
 function AuthScreen({ onAuth, onGuest }) {
   const [showPriv, setShowPriv] = useState(false);
   const pendingInvite = (() => { try { return JSON.parse(store.get(PENDING_INVITE) || 'null'); } catch (e) { return null; } })();
-  const [mode, setMode] = useState('signup');
+  const [view, setView] = useState(pendingInvite ? 'signup' : 'cover');   // cover | signup | signin
+  const mode = view === 'signin' ? 'signin' : 'signup';
   const [name, setName] = useState('');
+  const [handle, setHandle] = useState('');
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
-  const [pw2, setPw2] = useState('');
+  const [showPw, setShowPw] = useState(false);
   const [err, setErr] = useState('');
   const [notice, setNotice] = useState('');
   const [busy, setBusy] = useState(false);
@@ -1954,7 +1956,9 @@ function AuthScreen({ onAuth, onGuest }) {
     if (pw.length < 8) return setErr('Your password needs at least 8 characters.');
     if (mode === 'signup') {
       if (!name.trim()) return setErr('Please tell us your name.');
-      if (pw !== pw2) return setErr('Those passwords do not match.');
+      const h = handle.trim().replace(/^@/, '');
+      if (h && !/^[A-Za-z0-9_]{3,24}$/.test(h)) return setErr('Usernames use 3 to 24 letters, numbers or underscores.');
+      if (h) store.set('pact:wantHandle', h.toLowerCase()); else store.del('pact:wantHandle');
     }
     setBusy(true);
     try {
@@ -1962,7 +1966,7 @@ function AuthScreen({ onAuth, onGuest }) {
         if (mode === 'signup') {
           const r = await cloud.signUp(em, pw, name.trim());
           if (r.error) setErr(r.error);
-          else if (r.needsConfirm) { setNotice('Almost there. We emailed you a confirmation link. Tap it, then come back and sign in.'); setMode('signin'); setPw(''); setPw2(''); }
+          else if (r.needsConfirm) { setNotice('Almost there. We emailed you a confirmation link. Tap it, then come back and sign in.'); setView('signin'); setPw(''); }
           else onAuth(r.user);
         } else {
           const r = await cloud.signIn(em, pw);
@@ -1992,67 +1996,72 @@ function AuthScreen({ onAuth, onGuest }) {
     }
   };
 
+  const INK = '#1B2A22', FOR = '#1F3A2E', PAPER = '#F4EFE4', MUT = '#5A675F', CLAY = '#C8643C';
+  const Masthead = ({ size, dark, tag }) => (
+    <div className="px-7 text-center" style={{ color: dark ? PAPER : INK }}>
+      <div style={{ borderTop: `3px solid ${dark ? PAPER : INK}`, borderBottom: `1px solid ${dark ? PAPER : INK}`, height: 2 }} />
+      <div className="font-fr" style={{ fontWeight: 600, fontStyle: 'italic', fontSize: size, letterSpacing: '-0.025em', lineHeight: 1.05, marginTop: 16 }}>The Pact</div>
+      <div className="font-fr" data-auth-tagline style={{ fontStyle: 'italic', fontSize: 15, lineHeight: 1.35, color: dark ? '#B9C6BE' : MUT, margin: '8px auto 0', maxWidth: 300 }}>{tag}</div>
+      <div style={{ marginTop: 16, borderTop: `1px solid ${dark ? PAPER : INK}`, borderBottom: `3px solid ${dark ? PAPER : INK}`, height: 2 }} />
+    </div>
+  );
+
+  if (view === 'cover') {
+    return (
+      <div data-auth-cover className="absolute inset-0 flex flex-col" style={{ background: FOR, zIndex: 20 }}>
+        <div style={{ position: 'absolute', right: -110, top: -60, width: 320, height: 320, borderRadius: '50%', background: 'radial-gradient(circle, rgba(200,100,60,.22), rgba(200,100,60,0) 70%)', pointerEvents: 'none' }} />
+        <div style={{ flex: 2 }} />
+        <div className="flex justify-center" style={{ marginBottom: 22 }}><PactSeal size={120} /></div>
+        <Masthead size={56} dark tag={PACT_TAGLINE} />
+        <div style={{ flex: 1 }} />
+        <div className="px-7 pb-3 space-y-2.5">
+          <button data-auth-start type="button" onClick={() => setView('signup')} className="w-full h-12 text-sm font-bold" style={{ background: PAPER, color: FOR, borderRadius: 0 }}>Sign the pact</button>
+          <button data-auth-have type="button" onClick={() => setView('signin')} className="w-full h-12 text-sm font-semibold" style={{ border: `1px solid ${PAPER}`, color: PAPER, borderRadius: 0 }}>I already have an account</button>
+          <button type="button" onClick={onGuest} className="w-full text-[11px] underline pt-1" style={{ color: '#8FA398', borderRadius: 0 }}>Just looking? Try the demo without an account</button>
+        </div>
+        <div className="text-center pb-6 text-[10px] uppercase tracking-[0.14em]" style={{ color: '#8FA398' }}>Free &middot; Works on iPhone, Android &amp; laptop</div>
+      </div>
+    );
+  }
+
+  const field = (label, input, right) => (
+    <label className="block" style={{ marginTop: 14 }}>
+      <span className="text-[10px] uppercase tracking-[0.14em]" style={{ color: MUT }}>{label}</span>
+      <div className="flex items-center" style={{ borderBottom: `1.5px solid ${INK}` }}>{input}{right}</div>
+    </label>
+  );
+  const inputCls = 'flex-1 min-w-0 bg-transparent py-2 text-[15px] outline-none';
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-10 flex flex-col justify-center space-y-6 relative z-10">
-      <div>
-        <h1 className="font-pact text-5xl text-slate-900 text-center">PACT</h1>
-        <p className="text-xs text-stone-500 mt-2 text-center">Your digital secretary. It keeps your life organised and clash-free.</p>
-        {pendingInvite && <div data-auth-invite className="mt-4 p-3 bg-white border border-stone-300 text-xs text-slate-800 text-center">{pendingInvite.from} invited you to <span className="font-medium">{pendingInvite.t}</span>. Sign in or create an account to see it.</div>}
+    <div className="flex-1 overflow-y-auto relative z-10 flex flex-col" style={{ color: INK }}>
+      <div style={{ paddingTop: 28 }}><Masthead size={40} tag={PACT_TAGLINE} /></div>
+      <div className="px-7">
+        <div className="grid grid-cols-2" style={{ marginTop: 20, borderBottom: `1px solid ${INK}` }}>
+          {[{ id: 'signin', label: 'Sign in' }, { id: 'signup', label: 'Sign the pact' }].map(t => (
+            <button key={t.id} data-auth-tab={t.id} type="button" onClick={() => { setView(t.id); setErr(''); }} className="py-2 text-[10px] uppercase tracking-[0.16em]" style={{ borderRadius: 0, fontWeight: view === t.id ? 700 : 400, color: view === t.id ? INK : MUT, borderBottom: view === t.id ? `3px solid ${CLAY}` : '3px solid transparent', marginBottom: -1 }}>{t.label}</button>
+          ))}
+        </div>
+        {pendingInvite && <div data-auth-invite className="mt-4 p-3 border border-stone-300 text-xs text-center">{pendingInvite.from} invited you to <span className="font-medium">{pendingInvite.t}</span>. Sign in or create an account to see it.</div>}
+        <form onSubmit={submit} noValidate>
+          {mode === 'signup' && field('Your name', <input type="text" placeholder="What should we call you?" value={name} onChange={e => setName(e.target.value)} autoComplete="name" className={inputCls} />)}
+          {mode === 'signup' && field('Username', <input data-auth-handle type="text" placeholder="@yourname" value={handle} onChange={e => setHandle(e.target.value)} autoCapitalize="none" autoComplete="username" className={inputCls} />, <span className="text-[10px] uppercase tracking-[0.1em] shrink-0" style={{ color: MUT }}>Friends find you here</span>)}
+          {field('Email', <input type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} autoComplete="email" className={inputCls} />)}
+          {field('Password', <input type={showPw ? 'text' : 'password'} placeholder={mode === 'signup' ? 'At least 8 characters' : 'Your password'} value={pw} onChange={e => setPw(e.target.value)} autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} className={inputCls} />, <button type="button" data-auth-showpw onClick={() => setShowPw(!showPw)} className="text-[10px] uppercase tracking-[0.1em] shrink-0" style={{ color: MUT, borderRadius: 0 }}>{showPw ? 'Hide' : 'Show'}</button>)}
+          {cloud.enabled && mode === 'signin' && <div className="text-right" style={{ marginTop: 10 }}><button type="button" onClick={forgot} className="text-xs underline" style={{ color: MUT, borderRadius: 0 }}>Forgot your password?</button></div>}
+          {notice && <div className="mt-3 p-2.5 border border-stone-300 text-xs">{notice}</div>}
+          {err && <div className="mt-3 p-2.5 text-white text-xs flex items-start gap-2" style={{ background: '#8A4A27' }}><AlertTriangle size={14} className="shrink-0 mt-0.5" /><span>{err}</span></div>}
+          <button type="submit" disabled={busy} className="w-full h-11 text-[13px] font-semibold text-white" style={{ background: FOR, borderRadius: 0, marginTop: 16 }}>{busy ? 'One moment...' : mode === 'signup' ? 'Create my account' : 'Sign in'}</button>
+          <p className="text-[11px] leading-relaxed text-center" style={{ color: MUT, marginTop: 12 }}>
+            {mode === 'signup' ? <>Takes about two minutes to set up.<br /></> : null}
+            {cloud.enabled ? 'Your account and plans are saved securely online, so you can sign in from any device.' : 'Your account and plans are saved on this device and protected by your password. Use the same browser to come back to them.'}
+            {' '}By continuing you agree to how your data is used, explained in the <button type="button" data-privacy-link onClick={() => setShowPriv(true)} className="underline" style={{ color: CLAY, borderRadius: 0 }}>privacy notice</button>.
+          </p>
+        </form>
+        <div className="text-center text-xs" style={{ marginTop: 12, color: MUT }}>
+          {mode === 'signup' ? <>Already have an account? <button type="button" onClick={() => setView('signin')} className="font-bold underline" style={{ color: CLAY, borderRadius: 0 }}>Sign in</button></> : <>New here? <button type="button" onClick={() => setView('signup')} className="font-bold underline" style={{ color: CLAY, borderRadius: 0 }}>Sign the pact</button></>}
+        </div>
+        <button type="button" onClick={onGuest} className="block mx-auto text-[11px] underline" style={{ marginTop: 14, marginBottom: 24, color: MUT, borderRadius: 0 }}>Just looking? Try the demo without an account</button>
       </div>
-
-      <div className="grid grid-cols-2 border border-stone-300 bg-white">
-        {[{ id: 'signup', label: 'Create Account' }, { id: 'signin', label: 'Sign In' }].map(t => (
-          <button
-            key={t.id}
-            type="button"
-            onClick={() => { setMode(t.id); setErr(''); }}
-            className={`py-2 text-[10px] uppercase tracking-widest font-medium ${mode === t.id ? 'bg-purple-900 text-white' : 'text-slate-700 hover:bg-stone-100'}`}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
-
-      <form onSubmit={submit} noValidate className="p-4 bg-white border border-stone-200 space-y-3">
-        <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">
-          {mode === 'signup' ? 'Set up your account' : 'Welcome back'}
-        </span>
-        {mode === 'signup' && (
-          <input type="text" placeholder="Your name" value={name} onChange={e => setName(e.target.value)} autoComplete="name"
-            className="w-full bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs" />
-        )}
-        <input type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} autoComplete="email"
-          className="w-full bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs" />
-        <input type="password" placeholder="Password (8+ characters)" value={pw} onChange={e => setPw(e.target.value)}
-          autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
-          className="w-full bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs" />
-        {mode === 'signup' && (
-          <input type="password" placeholder="Confirm password" value={pw2} onChange={e => setPw2(e.target.value)} autoComplete="new-password"
-            className="w-full bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs" />
-        )}
-        {notice && <div className="p-2.5 bg-white border border-stone-300 text-xs text-slate-800">{notice}</div>}
-        {err && (
-          <div className="p-2.5 bg-rose-800 text-white text-xs flex items-start gap-2">
-            <AlertTriangle size={14} className="shrink-0 mt-0.5" /><span>{err}</span>
-          </div>
-        )}
-        <button type="submit" disabled={busy}
-          className="w-full py-2.5 bg-purple-900 hover:bg-purple-800 text-white text-xs uppercase tracking-widest font-medium">
-          {busy ? 'One moment...' : mode === 'signup' ? 'Create Account' : 'Sign In'}
-        </button>
-        {cloud.enabled && mode === 'signin' && <button type="button" onClick={forgot} className="text-[10px] text-purple-800 underline">Forgot password?</button>}
-        <p className="text-[10px] text-stone-500 leading-relaxed">
-          {cloud.enabled
-            ? 'Your account and plans are saved securely online, so you can sign in from any device.'
-            : 'Your account and plans are saved on this device and protected by your password. Use the same browser to come back to them.'}
-          {' '}By continuing you agree to how your data is used, explained in the <button type="button" data-privacy-link onClick={() => setShowPriv(true)} className="underline text-purple-800">privacy notice</button>.
-        </p>
-      </form>
       {showPriv && <PrivacyNotice onClose={() => setShowPriv(false)} />}
-
-      <button type="button" onClick={onGuest} className="text-xs text-purple-800 font-medium underline text-center">
-        Just looking? Try the demo without an account
-      </button>
     </div>
   );
 }
@@ -2060,7 +2069,9 @@ function AuthScreen({ onAuth, onGuest }) {
 // ---------------------------------------------------------------------------------------------
 // Schedule "Listings": a TV-guide grid. Your day first; tap "time matching" to add friends who chose to share.
 // ---------------------------------------------------------------------------------------------
-const LST_PX = 30;
+const LST_PX = 34;
+const WORD_HOURS = ['midnight', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'noon'];
+const hourWord = (m) => { const h = Math.floor(m / 60), mm = m % 60, h12 = h === 0 ? 0 : h > 12 ? h - 12 : h; const w = h === 12 ? 'noon' : WORD_HOURS[h12]; return mm === 0 ? w : mm === 30 ? 'half past ' + w : fromMins(m); };
 const lstLanes = (blocks) => {
   const sorted = [...blocks].sort((a, b) => a.s - b.s || a.e - b.e);
   const lanes = []; const out = [];
@@ -2072,92 +2083,95 @@ const lstLanes = (blocks) => {
   const n = Math.max(1, lanes.length);
   return out.map(b => ({ ...b, lanes: n }));
 };
-function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMatch, onTapTask, onShare, onAdd, nowMin }) {
-  const all = [...mine, ...friends.flatMap(f => f.blocks)];
+const HATCH = 'repeating-linear-gradient(135deg,#CFC7B4 0,#CFC7B4 3px,transparent 3px,transparent 7px)';
+const Portal = ({ children }) => (typeof document !== 'undefined' ? createPortal(children, document.body) : null);
+function KickerRow({ label, right }) {
+  return (
+    <div className="flex items-center gap-2.5" style={{ margin: '14px 0 0' }}>
+      <span style={{ background: '#1B2A22', color: '#F4EFE4', fontSize: 10, letterSpacing: '.18em', textTransform: 'uppercase', padding: '4px 9px', fontWeight: 600 }}>{label}</span>
+      <span style={{ flex: 1, borderTop: '1px solid #1B2A22' }} />
+      {right}
+    </div>
+  );
+}
+const kickerRightStyle = { fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: '#5A675F' };
+function Headline({ title, sub }) {
+  return (
+    <div style={{ margin: '10px 0 0' }}>
+      <h1 className="font-fr" style={{ margin: 0, fontWeight: 600, fontSize: 30, lineHeight: 0.98, letterSpacing: '-.025em', color: '#1B2A22' }}>{title}</h1>
+      {sub && <div className="font-fr" style={{ fontStyle: 'italic', fontSize: 15, color: '#5A675F', marginTop: 7, lineHeight: 1.3 }}>{sub}</div>}
+    </div>
+  );
+}
+function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMatch, onTapTask, onShare, onAdd, nowMin, isToday }) {
+  const cols = [{ id: 'me', name: 'You', blocks: mine, ok: true, mine: true }, ...(matching ? friends : [])];
+  const all = cols.flatMap(c => c.blocks);
   const H0 = Math.min(8, all.length ? Math.floor(Math.min(...all.map(b => b.s)) / 60) : 8);
   const H1 = Math.max(22, all.length ? Math.ceil(Math.max(...all.map(b => b.e)) / 60) : 22);
-  const hours = Array.from({ length: H1 - H0 + 1 }, (_, i) => H0 + i);
   const height = (H1 - H0) * LST_PX;
   const top = (m) => ((m - H0 * 60) / 60) * LST_PX;
-  const cols = [{ id: 'me', name: 'You', blocks: mine, ok: true, mine: true }, ...(matching ? friends : [])];
-  // Windows when everyone shown is free for an hour or more.
   const busyAt = (m) => cols.some(c => c.ok && c.blocks.some(b => m >= b.s && m < b.e));
   const free = []; let cur = null;
   if (matching && friends.some(f => f.ok)) {
-    for (let m = Math.max(H0 * 60, 8 * 60); m < Math.min(H1 * 60, 22 * 60); m += 15) {
+    const from = Math.max(H0 * 60, 8 * 60, nowMin != null ? Math.ceil(nowMin / 15) * 15 : 0);
+    for (let m = from; m < Math.min(H1 * 60, 22 * 60); m += 15) {
       if (!busyAt(m)) { if (!cur) cur = { s: m, e: m + 15 }; else cur.e = m + 15; } else if (cur) { if (cur.e - cur.s >= 60) free.push(cur); cur = null; }
     }
     if (cur && cur.e - cur.s >= 60) free.push(cur);
   }
-  const grid = `34px repeat(${cols.length}, minmax(${matching ? 92 : 120}px, 1fr))`;
+  const upcoming = mine.filter(b => !b.past).sort((a, b) => a.s - b.s)[0];
+  const title = matching ? (free.length ? `Everyone’s free at ${hourWord(free[0].s)}.` : 'No hour works for everyone.') : mine.length === 0 ? 'A clear day.' : `${mine.length} plan${mine.length === 1 ? '' : 's'} ${isToday ? 'today' : 'that day'}.`;
+  const sub = matching ? 'See your friends’ day beside yours.' : upcoming ? `Next: ${upcoming.t} at ${fromMins(upcoming.s)}.` : canMatch ? 'Tap time matching to see your friends’ day beside yours.' : 'Nothing else planned.';
+  const grid = `34px repeat(${cols.length}, minmax(${matching ? 104 : 120}px, 1fr))`;
+  const hoursLabels = []; for (let h = H0; h < H1; h += 2) hoursLabels.push(h);
   return (
-    <section data-listings className="border-[1.5px] border-[#1B2A22] bg-[#F4EFE4]" style={{ borderRadius: 0 }}>
-      <div className="flex items-center justify-between gap-2 px-3 py-2 border-b-[3px] border-double border-[#1B2A22]">
-        <div className="min-w-0">
-          <div className="text-[9px] uppercase tracking-[0.18em] text-[#1F3A2E] font-medium">Listings</div>
-          <div className="font-editorial text-[15px] leading-tight text-[#1B2A22] truncate">{matching ? 'You and your friends' : 'Your day at a glance'}</div>
-        </div>
-        <div className="flex gap-1.5 shrink-0">
-          <button data-add-plan-listing onClick={onAdd} className="px-2 py-1.5 border border-[#1B2A22] text-[9px] uppercase tracking-wider font-medium">+ Plan</button>
-          {canMatch && <button data-match-toggle aria-pressed={matching} onClick={onToggleMatch} className={`px-2 py-1.5 border border-[#1B2A22] text-[9px] uppercase tracking-wider font-medium ${matching ? 'bg-[#1F3A2E] text-[#F4EFE4]' : 'bg-transparent text-[#1B2A22]'}`}>{matching ? 'Hide matching' : 'Expand for time matching'}</button>}
-        </div>
-      </div>
-      <div className="overflow-x-auto no-scrollbar">
-        <div className="relative" style={{ minWidth: matching ? 34 + cols.length * 92 : undefined }}>
-          <div className="grid border-b border-[#1B2A22]" style={{ gridTemplateColumns: grid }}>
+    <section data-listings>
+      <KickerRow label="Schedule" right={canMatch
+        ? <button data-match-toggle aria-pressed={matching} onClick={onToggleMatch} style={{ ...kickerRightStyle, background: 'none', border: 0, padding: 0, color: '#1B2A22', fontWeight: 600 }}>{matching ? 'Hide time matching ▴' : 'Expand time matching ▾'}</button>
+        : <span style={kickerRightStyle}>Listings</span>} />
+      <Headline title={title} sub={sub} />
+      <div className="overflow-x-auto no-scrollbar" style={{ marginTop: 12 }}>
+        <div style={{ minWidth: matching ? 34 + cols.length * 104 : undefined }}>
+          <div style={{ display: 'grid', gridTemplateColumns: grid, borderTop: '3px solid #1B2A22', borderBottom: '1px solid #1B2A22' }}>
             <div />
+            {cols.map(c => <div key={c.id} style={{ textAlign: 'center', borderLeft: '1px solid #1B2A22', padding: '6px 0 5px', fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{c.name}</div>)}
+          </div>
+          <div style={{ position: 'relative', height, display: 'grid', gridTemplateColumns: grid, backgroundImage: `repeating-linear-gradient(to bottom,transparent 0,transparent ${LST_PX - 1}px,#CFC7B4 ${LST_PX - 1}px,#CFC7B4 ${LST_PX}px)`, borderBottom: '1px solid #1B2A22' }}>
+            <div style={{ position: 'relative' }}>
+              {hoursLabels.map(h => <div key={h} style={{ position: 'absolute', left: 0, top: top(h * 60) - 7, width: 28, textAlign: 'right', fontSize: 10, color: '#7C857F' }}>{pad2(h)}</div>)}
+            </div>
             {cols.map(c => (
-              <div key={c.id} className="px-1.5 py-1 border-l border-[#1B2A22]/40 min-w-0">
-                <div className="text-[10px] uppercase tracking-wider font-medium text-[#1B2A22] truncate">{c.name}</div>
-                {!c.mine && <div className="text-[9px] text-[#1B2A22]/60 truncate">{c.ok ? (c.titles ? 'with titles' : 'busy only') + (c.until ? ' · to ' + new Date(c.until + 'T12:00:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' }) : '') : 'not shared'}</div>}
+              <div key={c.id} data-list-col={c.id} style={{ position: 'relative', borderLeft: '1px solid #1B2A22' }}>
+                {!c.ok && <div style={{ position: 'absolute', inset: 0, backgroundImage: HATCH, opacity: 0.35, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontSize: 9, letterSpacing: '.14em', textTransform: 'uppercase', background: '#F4EFE4', color: '#5A675F', padding: '2px 5px' }}>Not shared</span></div>}
+                {lstLanes(c.blocks).map((b, i) => {
+                  const h = Math.max(24, ((b.e - b.s) / 60) * LST_PX - 1);
+                  const w = 100 / b.lanes;
+                  const base = { position: 'absolute', top: top(b.s), height: h, left: `calc(${b.lane * w}% + 1px)`, width: `calc(${w}% - 3px)`, boxSizing: 'border-box', padding: '4px 7px', fontSize: 11, lineHeight: 1.2, textAlign: 'left', overflow: 'hidden', borderRadius: 0 };
+                  const st = c.mine ? (b.past ? { ...base, border: '1px solid #CFC7B4', color: '#7C857F', background: '#F4EFE4' } : { ...base, background: '#1F3A2E', color: '#F4EFE4', border: 0 })
+                    : { ...base, backgroundImage: HATCH, border: '1px solid #CFC7B4', color: '#5A675F', background: undefined };
+                  return (
+                    <button key={i} data-list-block={c.mine ? b.id : undefined} disabled={!c.mine} onClick={() => c.mine && onTapTask(b.id)} style={st}>
+                      {c.mine && !b.past ? <><b style={{ display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{b.t}</b>{h >= 40 && <span style={{ display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{b.loc || (fromMins(b.s) + '–' + fromMins(b.e))}</span>}</> : <span style={{ display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{b.t}</span>}
+                    </button>
+                  );
+                })}
               </div>
             ))}
-          </div>
-          <div className="relative grid" style={{ gridTemplateColumns: grid, height }}>
-            <div className="relative">
-              {hours.slice(0, -1).map(h => <div key={h} className="absolute right-1 text-[9px] text-[#1B2A22]/60 tabular-nums" style={{ top: top(h * 60) - 1 }}>{pad2(h)}</div>)}
-            </div>
-            {cols.map(c => {
-              const lanes = lstLanes(c.blocks);
-              return (
-                <div key={c.id} data-list-col={c.id} className="relative border-l border-[#1B2A22]/40" style={{ backgroundImage: 'repeating-linear-gradient(to bottom, transparent 0, transparent ' + (LST_PX - 1) + 'px, rgba(27,42,34,.14) ' + (LST_PX - 1) + 'px, rgba(27,42,34,.14) ' + LST_PX + 'px)' }}>
-                  {!c.ok && <div className="absolute inset-0 flex items-center justify-center text-center px-1" style={{ backgroundImage: 'repeating-linear-gradient(135deg, transparent 0 5px, rgba(27,42,34,.08) 5px 6px)' }}><span className="text-[9px] uppercase tracking-wider text-[#1B2A22]/60 bg-[#F4EFE4] px-1">Not shared</span></div>}
-                  {lanes.map((b, i) => {
-                    const h = Math.max(16, ((b.e - b.s) / 60) * LST_PX - 2);
-                    const w = 100 / b.lanes;
-                    return (
-                      <button key={i} data-list-block={c.mine ? b.id : undefined} disabled={!c.mine} onClick={() => c.mine && onTapTask(b.id)}
-                        className={`absolute overflow-hidden text-left px-1 border ${c.mine ? 'bg-[#1F3A2E] text-[#F4EFE4] border-[#1B2A22]' : 'bg-[#E6DFCF] text-[#1B2A22] border-[#1B2A22]/70'} ${b.done ? 'opacity-50' : ''}`}
-                        style={{ top: top(b.s) + 1, height: h, left: `calc(${b.lane * w}% + 2px)`, width: `calc(${w}% - 4px)`, borderRadius: 0, lineHeight: 1.15 }}>
-                        <span className="block text-[10px] font-medium truncate">{b.t}</span>
-                        {h >= 34 && <span className="block text-[9px] opacity-75 tabular-nums truncate">{fromMins(b.s)}–{fromMins(b.e)}</span>}
-                      </button>
-                    );
-                  })}
-                </div>
-              );
-            })}
-            {nowMin != null && nowMin >= H0 * 60 && nowMin <= H1 * 60 && <div className="absolute left-[34px] right-0 border-t-2 border-[#C8643C] pointer-events-none" style={{ top: top(nowMin) }}><span className="absolute -left-[34px] -top-2 text-[8px] bg-[#C8643C] text-white px-0.5">NOW</span></div>}
+            {mine.length === 0 && !matching && <div style={{ position: 'absolute', left: 34, right: 0, top: 18, textAlign: 'center', fontSize: 12, color: '#7C857F' }}>Nothing planned. Tap below to add something.</div>}
+            {nowMin != null && nowMin >= H0 * 60 && nowMin <= H1 * 60 && <div style={{ position: 'absolute', left: 34, right: 0, top: top(nowMin), borderTop: '1.5px solid #C8643C', pointerEvents: 'none' }} />}
             {free.map((f, i) => (
-              <div key={i} data-all-free className="absolute pointer-events-none border-2 border-dashed border-[#C8643C]" style={{ left: 34, right: 0, top: top(f.s), height: top(f.e) - top(f.s), background: 'rgba(200,100,60,.10)' }}>
-                <span className="absolute right-1 top-0.5 text-[9px] uppercase tracking-[0.14em] font-medium text-[#C8643C] bg-[#F4EFE4] px-1">All free</span>
-              </div>
+              <div key={i} data-all-free style={{ position: 'absolute', left: 35, right: 0, top: top(f.s), height: top(f.e) - top(f.s), background: 'rgba(200,100,60,.14)', borderTop: '1.5px dashed #C8643C', borderBottom: '1.5px dashed #C8643C', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, letterSpacing: '.14em', color: '#C8643C', fontWeight: 600, pointerEvents: 'none' }}>ALL FREE &middot; {pad2(Math.floor(f.s / 60))}&ndash;{pad2(Math.floor(f.e / 60))}</div>
             ))}
           </div>
         </div>
       </div>
-      {matching && (
-        <div className="px-3 py-2 border-t-[3px] border-double border-[#1B2A22] space-y-1.5">
-          {free.length > 0 ? free.map((f, i) => (
-            <div key={i} className="flex items-center justify-between gap-2">
-              <span className="text-[11px] text-[#1B2A22]">Everyone is free <b className="tabular-nums">{fromMins(f.s)}–{fromMins(f.e)}</b></span>
-              <button data-suggest-plan onClick={onAdd} className="px-2 py-1 bg-[#C8643C] text-white text-[9px] uppercase tracking-wider font-medium">Suggest a plan</button>
-            </div>
-          )) : <div className="text-[11px] text-[#1B2A22]/70">{friends.some(f => f.ok) ? 'No hour where everyone is free on this day. Try another day.' : 'None of your friends are sharing this day with you yet.'}</div>}
-          <button data-share-open onClick={onShare} className="text-[10px] uppercase tracking-wider underline text-[#1F3A2E]">Choose who sees my schedule</button>
-        </div>
-      )}
-      {!matching && canMatch && <div className="px-3 py-1.5 border-t border-[#1B2A22]/40"><button data-share-open onClick={onShare} className="text-[10px] uppercase tracking-wider underline text-[#1F3A2E]">Sharing settings</button></div>}
+      <div className="flex justify-between" style={{ marginTop: 8 }}>
+        <button data-share-open onClick={onShare} style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: '#5A675F', background: 'none', border: 0, padding: 0, textDecoration: 'underline' }}>{canMatch ? 'Who sees my schedule' : 'Sharing settings'}</button>
+        <button data-add-plan-listing onClick={onAdd} style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: '#1B2A22', background: 'none', border: 0, padding: 0, fontWeight: 600 }}>+ Add plan</button>
+      </div>
+      {matching && free.length > 0
+        ? <button data-suggest-plan onClick={onAdd} style={{ marginTop: 12, width: '100%', height: 44, border: 0, background: '#1F3A2E', color: '#F4EFE4', fontSize: 13, fontWeight: 600, borderRadius: 0 }}>Suggest a plan for {fromMins(free[0].s)}&ndash;{fromMins(free[0].e)}</button>
+        : <button data-add-plan-cta onClick={onAdd} style={{ marginTop: 12, width: '100%', height: 44, border: 0, background: '#1F3A2E', color: '#F4EFE4', fontSize: 13, fontWeight: 600, borderRadius: 0 }}>Add a plan</button>}
     </section>
   );
 }
@@ -2205,7 +2219,6 @@ function ShareSchedulePanel({ friends, grants, onSet, onClose }) {
 // ---------------------------------------------------------------------------------------------
 // Development: an index of skills with sparklines; opening one shows it as a book of chapters.
 // ---------------------------------------------------------------------------------------------
-const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX'];
 const skillSpark = (skill, weeks = 8) => {
   const steps = skill.steps || []; if (!steps.length) return Array(weeks).fill(0);
   const today = todayDateStr();
@@ -2214,86 +2227,109 @@ const skillSpark = (skill, weeks = 8) => {
     return steps.filter(s => s.done && (!s.doneDate || s.doneDate <= end)).length / steps.length;
   });
 };
-function Spark({ pts }) {
-  const w = 64, h = 18;
-  const d = pts.map((v, i) => (i * (w / (pts.length - 1))).toFixed(1) + ',' + (h - 2 - v * (h - 4)).toFixed(1)).join(' ');
-  return <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden="true" className="shrink-0"><polyline points={d} fill="none" stroke="#1F3A2E" strokeWidth="1.5" /><circle cx={w} cy={h - 2 - pts[pts.length - 1] * (h - 4)} r="2" fill="#C8643C" /></svg>;
+const skillStats = (sk) => {
+  const total = sk.steps.length, done = sk.steps.filter(s => s.done).length, wk = addDaysStr(todayDateStr(), -7);
+  const gained = sk.steps.filter(s => s.done && s.doneDate && s.doneDate > wk).length;
+  const next = sk.steps.find(s => !s.done);
+  return { pct: total ? Math.round(done / total * 100) : 0, delta: total ? Math.round(gained / total * 100) : 0, next, spark: skillSpark(sk) };
+};
+function SparkLine({ pts, up }) {
+  const w = 70, h = 24, d = pts.map((v, i) => Math.round(i * (w / (pts.length - 1))) + ',' + Math.round(22 - v * 20)).join(' ');
+  return <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden="true"><polyline fill="none" stroke={up ? '#C8643C' : '#7C857F'} strokeWidth="1.6" points={d} /></svg>;
 }
-function SkillIndex({ branches, selectedId, onOpen, invites, onAccept, onDecline }) {
-  let n = 0;
+function SkillIndex({ branches, domain, onDomain, onOpen, invites, onAccept, onDecline, onPlan, onNew }) {
+  const rows = branches.flatMap(b => b.skills.map(sk => ({ b, sk, ...skillStats(sk) }))).sort((a, c) => c.delta - a.delta || c.pct - a.pct);
+  const top = rows[0];
+  const pick = rows.find(r => r.next);
+  const title = !top ? 'Start your skills index.' : top.delta > 0 ? `${top.sk.name} up ${top.delta}% this week.` : 'Pick a skill and make a start.';
   return (
-    <div data-skill-index className="space-y-2">
+    <div data-skill-index>
+      <KickerRow label="Development" right={<span style={kickerRightStyle}><button data-domain-work onClick={() => onDomain('work')} style={{ background: 'none', border: 0, padding: 0, letterSpacing: 'inherit', textTransform: 'inherit', color: domain === 'work' ? '#1B2A22' : '#5A675F', fontWeight: domain === 'work' ? 700 : 400, textDecoration: domain === 'work' ? 'underline' : 'none' }}>Work</button> &middot; <button data-domain-personal onClick={() => onDomain('personal')} style={{ background: 'none', border: 0, padding: 0, letterSpacing: 'inherit', textTransform: 'inherit', color: domain === 'personal' ? '#1B2A22' : '#5A675F', fontWeight: domain === 'personal' ? 700 : 400, textDecoration: domain === 'personal' ? 'underline' : 'none' }}>Personal</button></span>} />
+      <Headline title={title} sub="Your skills, ranked by momentum." />
       {invites.map(v => (
-        <div key={v.id} data-buddy-invite className="border-[1.5px] border-[#C8643C] bg-[#F4EFE4] p-2.5 space-y-1.5">
-          <div className="text-[9px] uppercase tracking-[0.18em] text-[#C8643C] font-medium">Invitation</div>
-          <div className="text-[12px] text-[#1B2A22]"><b>{v.friend_name}</b> wants to learn <b>{v.skill}</b> with you.</div>
-          <div className="flex gap-1.5"><button data-buddy-join onClick={() => onAccept(v)} className="px-2.5 py-1.5 bg-[#1F3A2E] text-[#F4EFE4] text-[10px] uppercase tracking-wider font-medium">Join them</button><button data-buddy-decline onClick={() => onDecline(v)} className="px-2.5 py-1.5 border border-[#1B2A22] text-[10px] uppercase tracking-wider font-medium">Not now</button></div>
+        <div key={v.id} data-buddy-invite style={{ marginTop: 12, border: '3px double #1B2A22', padding: '12px 14px' }}>
+          <div style={{ fontSize: 9, letterSpacing: '.2em', textTransform: 'uppercase', color: '#C8643C', fontWeight: 600 }}>Invitation</div>
+          <div style={{ fontSize: 13, marginTop: 3 }}><b>{v.friend_name}</b> wants to learn <b>{v.skill}</b> with you.</div>
+          <div className="flex gap-2" style={{ marginTop: 8 }}><button data-buddy-join onClick={() => onAccept(v)} style={{ height: 36, padding: '0 14px', border: 0, background: '#1F3A2E', color: '#F4EFE4', fontSize: 12, fontWeight: 600, borderRadius: 0 }}>Join them</button><button data-buddy-decline onClick={() => onDecline(v)} style={{ height: 36, padding: '0 14px', border: '1px solid #1B2A22', background: 'transparent', fontSize: 12, fontWeight: 600, borderRadius: 0 }}>Not now</button></div>
         </div>
       ))}
-      <div className="border-[1.5px] border-[#1B2A22] bg-[#F4EFE4]">
-        <div className="grid grid-cols-[22px_1fr_64px_34px] gap-x-2 px-2.5 py-1.5 border-b-[3px] border-double border-[#1B2A22] text-[9px] uppercase tracking-[0.14em] text-[#1F3A2E] font-medium"><span>No.</span><span>Skill</span><span>8 weeks</span><span className="text-right">Done</span></div>
-        {branches.length === 0 && <div className="p-3 text-[11px] text-[#1B2A22]/70">No skills yet. Add an area to begin.</div>}
-        {branches.map(b => (
-          <div key={b.id}>
-            <div className="px-2.5 py-1 bg-[#E6DFCF] text-[9px] uppercase tracking-[0.16em] text-[#1B2A22] font-medium">{b.name}</div>
-            {b.skills.map(sk => {
-              n += 1; const done = sk.steps.filter(s => s.done).length, pct = sk.steps.length ? Math.round(done / sk.steps.length * 100) : 0;
-              return (
-                <button key={sk.id} data-skill-row={sk.id} onClick={() => onOpen(b.id, sk.id)} className={`w-full grid grid-cols-[22px_1fr_64px_34px] gap-x-2 items-center px-2.5 py-2 text-left border-b border-[#1B2A22]/25 ${selectedId === sk.id ? 'bg-white/50' : ''}`}>
-                  <span className="font-editorial text-[13px] text-[#C8643C]">{n}</span>
-                  <span className="min-w-0"><span className="block text-[13px] font-medium text-[#1B2A22] truncate">{sk.name}</span><span className="block text-[10px] text-[#1B2A22]/60 truncate">{sk.timeframe} · {done} of {sk.steps.length} chapters</span></span>
-                  <Spark pts={skillSpark(sk)} />
-                  <span className="text-right text-[12px] tabular-nums font-medium text-[#1B2A22]">{pct}%</span>
-                </button>
-              );
-            })}
-          </div>
-        ))}
+      <div className="flex justify-between" style={{ marginTop: 14, borderTop: '3px solid #1B2A22', paddingTop: 6 }}>
+        <span style={kickerRightStyle}>Skill</span><span style={kickerRightStyle}>Trend &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Done</span>
       </div>
+      <div style={{ borderTop: '1px solid #1B2A22', marginTop: 6 }} />
+      {rows.length === 0 && <div style={{ padding: '16px 0', fontSize: 13, color: '#5A675F' }}>No skills yet. Tap "List a new skill" below.</div>}
+      {rows.map(({ b, sk, pct, delta, next, spark }) => (
+        <button key={sk.id} data-skill-row={sk.id} onClick={() => onOpen(b.id, sk.id)} className="w-full text-left" style={{ display: 'grid', gridTemplateColumns: '1fr 70px 48px', gap: 10, alignItems: 'center', padding: '11px 0', borderBottom: '1px solid #CFC7B4', background: 'none', borderTop: 0, borderLeft: 0, borderRight: 0, borderRadius: 0 }}>
+          <div style={{ minWidth: 0 }}><div className="font-fr" style={{ fontWeight: 600, fontSize: 17, lineHeight: 1.1, color: '#1B2A22' }}>{sk.name}</div><div style={{ fontSize: 11, color: '#5A675F', marginTop: 2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{next ? next.title : 'All chapters done'}</div></div>
+          <SparkLine pts={spark} up={delta > 0} />
+          <div style={{ textAlign: 'right' }}><div style={{ fontWeight: 600, fontSize: 15, color: '#1B2A22' }}>{pct}%</div><div style={{ fontSize: 10, color: delta > 0 ? '#1F3A2E' : '#7C857F' }}>{delta > 0 ? '▲' : '▼'} {delta}</div></div>
+        </button>
+      ))}
+      {pick && (
+        <div data-editors-pick style={{ marginTop: 14, border: '3px double #1B2A22', padding: '12px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+          <div style={{ minWidth: 0 }}><div style={{ fontSize: 9, letterSpacing: '.2em', textTransform: 'uppercase', color: '#C8643C', fontWeight: 600 }}>Editor&rsquo;s pick</div><div style={{ fontSize: 13, marginTop: 3 }}>Finish {String(pick.next.title).slice(0, 38)}</div></div>
+          <button data-plan-slot onClick={onPlan} style={{ height: 36, padding: '0 14px', border: 0, background: '#1F3A2E', color: '#F4EFE4', borderRadius: 0, fontSize: 12, fontWeight: 600, whiteSpace: 'nowrap' }}>Plan a slot</button>
+        </div>
+      )}
+      <button data-new-skill onClick={onNew} style={{ marginTop: 14, fontSize: 12, color: '#5A675F', background: 'none', border: 0, padding: 0 }}>+ List a new skill</button>
     </div>
   );
 }
-function SkillChapters({ skill, branch, number, onBack, onToggle, buddy }) {
-  const done = skill.steps.filter(s => s.done).length, total = skill.steps.length, pct = total ? Math.round(done / total * 100) : 0;
+function SkillChapters({ skill, skills, onPickSkill, onToggle, onPlan, weekText, buddy }) {
+  const total = skill.steps.length, done = skill.steps.filter(s => s.done).length, pct = total ? Math.round(done / total * 100) : 0;
+  const curIdx = skill.steps.findIndex(s => !s.done);
+  const cur = curIdx < 0 ? Math.max(0, total - 1) : curIdx;
   return (
-    <section data-skill-chapters className="border-[1.5px] border-[#1B2A22] bg-[#F4EFE4]">
-      <div className="flex items-center justify-between px-3 py-2 border-b border-[#1B2A22]/50">
-        <button data-skill-back onClick={onBack} className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-medium text-[#1B2A22]"><ArrowLeft size={13} /> All skills</button>
-        <span className="text-[9px] uppercase tracking-[0.16em] text-[#1F3A2E] truncate max-w-[50%]">{branch.name}</span>
-      </div>
-      <div className="px-3 pt-3 pb-2 flex items-end gap-3 border-b-[3px] border-double border-[#1B2A22]">
-        <div className="font-editorial text-[52px] leading-[0.85] text-[#C8643C] shrink-0">{number}</div>
-        <div className="min-w-0 pb-0.5">
-          <h3 className="font-editorial text-[22px] leading-tight text-[#1B2A22] break-words">{skill.name}</h3>
-          <div className="text-[10px] uppercase tracking-wider text-[#1B2A22]/70 mt-0.5">{skill.timeframe} · {pct}% read</div>
+    <section data-skill-chapters>
+      <KickerRow label="Development" right={
+        <span style={{ position: 'relative', ...kickerRightStyle }}>{skill.name} &#9662;
+          <select data-skill-switch aria-label="Choose a skill" value={skill.id} onChange={e => onPickSkill(e.target.value)} style={{ position: 'absolute', inset: 0, opacity: 0, width: '100%' }}>
+            <option value="__all">All skills</option>
+            {skills.map(x => <option key={x.id} value={x.id}>{x.name}</option>)}
+          </select>
+        </span>} />
+      <button data-skill-back onClick={() => onPickSkill('__all')} style={{ marginTop: 6, fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: '#5A675F', background: 'none', border: 0, padding: 0 }}>&larr; All skills</button>
+      {total === 0 ? <Headline title={skill.name} sub="No chapters yet. Add some below." /> : (<>
+        <div className="flex items-end gap-3" style={{ marginTop: 10 }}>
+          <span className="font-fr" style={{ fontWeight: 600, fontSize: 92, lineHeight: 0.78, color: '#C8643C' }}>{cur + 1}</span>
+          <div style={{ paddingBottom: 4, minWidth: 0 }}>
+            <span style={kickerRightStyle}>Chapter {cur + 1} of {total}</span>
+            <div className="font-fr" style={{ fontWeight: 600, fontSize: 24, lineHeight: 1, marginTop: 4, overflowWrap: 'anywhere' }}>{skill.steps[cur].title}</div>
+          </div>
         </div>
-      </div>
-      {skill.goal && <p className="px-3 pt-2 text-[12px] italic leading-snug text-[#1B2A22]/80">{skill.goal}</p>}
-      <div className="px-3 pt-2 pb-1 text-[9px] uppercase tracking-[0.18em] text-[#1F3A2E] font-medium">Contents</div>
-      <ol className="px-3 pb-3">
-        {skill.steps.map((st, i) => (
-          <li key={st.id}>
-            <button data-chapter-row={st.id} onClick={() => onToggle(st)} className="w-full flex items-baseline gap-1.5 py-1.5 text-left">
-              <span className="font-editorial text-[13px] text-[#C8643C] w-8 shrink-0">{ROMAN[i] || i + 1}.</span>
-              <span className={`text-[12.5px] min-w-0 ${st.done ? 'line-through text-[#1B2A22]/50' : 'text-[#1B2A22]'}`}>{st.title || 'Untitled chapter'}</span>
-              <span className="flex-1 border-b border-dotted border-[#1B2A22]/50 translate-y-[-3px] min-w-[10px]" />
-              <span className={`text-[10px] tabular-nums shrink-0 ${st.done ? 'text-[#1F3A2E] font-medium' : 'text-[#1B2A22]/60'}`}>{st.done ? 'read' : (st.target || 'to do')}</span>
+        <div className="flex items-center gap-2.5" style={{ marginTop: 12 }}>
+          <div style={{ flex: 1, height: 5, background: '#CFC7B4' }}><div style={{ height: 5, width: pct + '%', background: '#C8643C' }} /></div>
+          <span style={{ fontSize: 12, fontWeight: 600 }}>{pct}%</span>
+        </div>
+        <div style={{ marginTop: 16, borderTop: '3px solid #1B2A22', paddingTop: 6 }}><span style={kickerRightStyle}>Contents</span></div>
+        {skill.steps.map((st, i) => {
+          const isCur = i === cur && curIdx >= 0;
+          return (
+            <button key={st.id} data-chapter-row={st.id} onClick={() => onToggle(st)} className="w-full text-left" style={{ display: 'flex', alignItems: 'baseline', gap: 8, padding: isCur ? '10px 10px' : '10px 0', borderBottom: '1px solid #CFC7B4', borderTop: 0, borderLeft: 0, borderRight: 0, borderRadius: 0, background: isCur ? '#1B2A22' : 'none', color: isCur ? '#F4EFE4' : '#1B2A22' }}>
+              <span className="font-fr" style={{ fontWeight: 600, fontSize: 16, width: 18, flex: 'none', color: isCur ? undefined : '#C8643C' }}>{i + 1}</span>
+              <span style={{ fontSize: 14, fontWeight: isCur ? 600 : 400, minWidth: 0, textDecoration: st.done ? 'none' : 'none' }}>{st.title || 'Untitled chapter'}</span>
+              <span style={{ flex: 1, borderBottom: `1.5px dotted ${isCur ? '#6F8A7B' : '#7C857F'}`, transform: 'translateY(-3px)', minWidth: 8 }} />
+              <span style={{ fontSize: 12, flex: 'none', color: isCur ? undefined : '#5A675F' }}>{st.done ? 'done' : isCur ? 'you are here' : 'p. ' + (i + 1)}</span>
             </button>
-          </li>
-        ))}
-        {skill.steps.length === 0 && <li className="text-[11px] text-[#1B2A22]/60 py-1">No chapters yet. Add some below.</li>}
-      </ol>
+          );
+        })}
+      </>)}
+      <div className="flex justify-between items-center" style={{ marginTop: 14 }}>
+        <div><span style={kickerRightStyle}>This week</span><div style={{ fontSize: 13, marginTop: 2 }}>{weekText}</div></div>
+        <button data-plan-slot onClick={onPlan} style={{ width: 120, height: 44, border: 0, background: '#1F3A2E', color: '#F4EFE4', fontSize: 13, fontWeight: 600, borderRadius: 0 }}>Plan a slot</button>
+      </div>
       {buddy}
     </section>
   );
 }
+
 function BuddyPanel({ skill, friends, entry, onInvite, onEnd, onRespond }) {
   const [pick, setPick] = useState(null); const [note, setNote] = useState('');
   const myDone = skill.steps.filter(s => s.done).length, myTotal = skill.steps.length;
   const bar = (label, p) => { const d = p && p.done != null ? p.done : 0, t = p && p.total ? p.total : myTotal; const pc = t ? Math.round(d / t * 100) : 0; return (
     <div><div className="flex justify-between text-[11px] text-[#1B2A22]"><span className="font-medium truncate">{label}</span><span className="tabular-nums">{d}/{t}{p && p.last ? ' · ' + p.last : ''}</span></div><div className="h-1.5 bg-[#E6DFCF] border border-[#1B2A22]/30"><div className="h-full bg-[#1F3A2E]" style={{ width: pc + '%' }} /></div></div>); };
   return (
-    <div data-buddy-panel className="border-t-[3px] border-double border-[#1B2A22] px-3 py-3 space-y-2">
+    <div data-buddy-panel className="mt-5 border-t-[3px] border-double border-[#1B2A22] py-3 space-y-2">
       <div className="text-[9px] uppercase tracking-[0.18em] text-[#C8643C] font-medium">Learn it together</div>
       {!entry && (<>
         {friends.length === 0 ? <p className="text-[11px] text-[#1B2A22]/70">Add friends in the Social tab, then you can learn this with one of them.</p> : (<>
@@ -2383,6 +2419,63 @@ function IdeaTile({ idea, onOpen, fav, onFav }) {
         </div>
       </div>
     </article>
+  );
+}
+
+function IdeasFront({ items, cat, cats, onCat, savedCount, showFavs, onFavs, onSearch, onOpen, onAdd, onFav, isFav, onSurprise, adventure, onBack, more, filters }) {
+  const hero = items[0], rest = items.slice(1);
+  const photo = useIdeaPhoto(hero || {});
+  const [broken, setBroken] = useState(false);
+  const clip = (d) => { const t = String(d || '').split(/[.!?]\s/)[0].replace(/\.$/, ''); return t.length > 62 ? t.slice(0, 60).replace(/\s+\S*$/, '') : t; };
+  const label = showFavs ? 'Saved' : cat;
+  return (
+    <div data-ideas-front>
+      <div className="flex items-stretch" style={{ marginTop: 12, background: '#1B2A22', color: '#F4EFE4' }}>
+        <div className="flex flex-1 overflow-x-auto no-scrollbar">
+          <button data-fav-chip onClick={onFavs} style={{ padding: '8px 11px', fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', whiteSpace: 'nowrap', background: showFavs ? '#C8643C' : 'transparent', color: '#F4EFE4', fontWeight: showFavs ? 600 : 400, border: 0, borderRadius: 0 }}>Saved ({savedCount})</button>
+          {cats.map(c => <button key={c} data-idea-cat={c} onClick={() => onCat(c)} style={{ padding: '8px 11px', fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', whiteSpace: 'nowrap', background: !showFavs && cat === c ? '#C8643C' : 'transparent', color: '#F4EFE4', fontWeight: !showFavs && cat === c ? 600 : 400, border: 0, borderRadius: 0 }}>{c}</button>)}
+        </div>
+        <button data-ideas-search-toggle aria-label="Search" onClick={onSearch} style={{ width: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', borderLeft: '1px solid #3a4a41', background: 'transparent', border: 0, borderRadius: 0 }}><Search size={16} color="#F4EFE4" /></button>
+      </div>
+      {hero && (<>
+        <div data-idea-hero onClick={() => onOpen(hero)} style={{ marginTop: 10, height: 196, position: 'relative', cursor: 'pointer', background: photo && !broken ? '#12251C' : 'radial-gradient(circle,rgba(244,239,228,.30) .9px,transparent 1.5px) 0 0/5px 5px,linear-gradient(135deg,#4F7A63,#12251C)' }}>
+          {photo && !broken && <img src={photo} alt="" onError={() => setBroken(true)} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(.25) contrast(1.05)' }} />}
+          <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '40px 16px 14px', background: 'linear-gradient(to top,rgba(18,37,28,.92),rgba(18,37,28,0))', color: '#F4EFE4' }}>
+            <div style={{ fontSize: 9, letterSpacing: '.2em', textTransform: 'uppercase', color: '#E7B79F', fontWeight: 600 }}>Top pick &middot; {label}</div>
+            <div className="font-fr" style={{ fontWeight: 600, fontSize: 32, lineHeight: 1, marginTop: 4, overflowWrap: 'anywhere' }}>{hero.title}</div>
+            <div className="font-fr" style={{ fontStyle: 'italic', fontSize: 14, marginTop: 4, color: '#E6EDE8' }}>{clip(hero.desc)}{hero.distance ? `, ${hero.distance} away.` : '.'}</div>
+          </div>
+        </div>
+        <div className="flex gap-2" style={{ marginTop: 10 }}>
+          <button data-idea-add onClick={() => onAdd(hero)} style={{ width: 'calc(100% - 52px)', height: 44, border: 0, background: '#1F3A2E', color: '#F4EFE4', fontSize: 13, fontWeight: 600, borderRadius: 0 }}>Add to a plan</button>
+          <button data-fav-heart aria-label={isFav(hero) ? 'Remove from saved' : 'Save'} aria-pressed={isFav(hero)} onClick={() => onFav(hero)} style={{ width: 44, height: 44, border: '1px solid #1B2A22', background: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 0 }}><Heart size={18} color={isFav(hero) ? '#C8643C' : '#1B2A22'} fill={isFav(hero) ? '#C8643C' : 'none'} /></button>
+        </div>
+      </>)}
+      <div style={{ marginTop: 12, display: 'grid', gridTemplateColumns: '1.25fr 1fr', gap: 14, alignItems: 'start' }}>
+        <div style={{ borderTop: '3px solid #1B2A22', minWidth: 0 }}>
+          <div className="flex justify-between items-center" style={{ paddingTop: 6 }}>
+            <span style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: '#5A675F' }}>Also in {label.toLowerCase()}</span>
+            {!showFavs && <button data-ideas-filter-toggle onClick={filters.toggle} style={{ fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: '#1B2A22', background: 'none', border: 0, padding: 0, textDecoration: 'underline' }}>{filters.label}</button>}
+          </div>
+          {filters.panel}
+          {rest.map(it => (
+            <button key={it.id} data-idea-item onClick={() => onOpen(it)} className="w-full text-left" style={{ display: 'block', padding: '9px 0', borderBottom: '1px solid #CFC7B4', background: 'none', borderTop: 0, borderLeft: 0, borderRight: 0, borderRadius: 0 }}>
+              <div className="font-fr" style={{ fontWeight: 600, fontSize: 15, lineHeight: 1.08, color: '#1B2A22' }}>{it.title}</div>
+              <div style={{ fontSize: 10.5, color: '#5A675F', marginTop: 2 }}>{[it.distance, String(it.sub1 || '').toLowerCase()].filter(Boolean).join(' · ')}</div>
+            </button>
+          ))}
+          {rest.length === 0 && <div style={{ padding: '9px 0', fontSize: 11, color: '#5A675F' }}>Nothing else here yet.</div>}
+        </div>
+        <div style={{ border: '3px double #1B2A22', padding: 12 }}>
+          <div style={{ fontSize: 9, letterSpacing: '.2em', textTransform: 'uppercase', color: '#C8643C', fontWeight: 600 }}>Wildcard</div>
+          <div className="font-fr" style={{ fontWeight: 600, fontSize: 18, lineHeight: 1.05, marginTop: 4 }}>Feeling adventurous?</div>
+          <div style={{ fontSize: 10.5, color: '#5A675F', marginTop: 4 }}>For {cat} only.</div>
+          <button data-ideas-surprise onClick={onSurprise} style={{ marginTop: 10, width: '100%', height: 34, border: 0, background: '#1F3A2E', color: '#F4EFE4', borderRadius: 0, fontSize: 11, fontWeight: 600 }}>{adventure ? 'Surprise me again' : 'Surprise me'}</button>
+          {adventure && <button data-ideas-adv-back onClick={onBack} style={{ marginTop: 8, fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', background: 'none', border: 0, padding: 0, textDecoration: 'underline' }}>Back to top picks</button>}
+        </div>
+      </div>
+      {more}
+    </div>
   );
 }
 
@@ -2702,6 +2795,8 @@ function AppInner({ onReset }) {
   ]);
 
   const [expandedTaskId, setExpandedTaskId] = useState(101);
+  const [sheetTaskId, setSheetTaskId] = useState(null);
+  useEffect(() => { const k = (e) => { if (e.key === 'Escape') { setSheetTaskId(null); setIdeaOpenId(null); } }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k); }, []);
   const [skillOpen, setSkillOpen] = useState(false);
   const [buddies, setBuddies] = useState([]);
   // ---- schedule listings: friends who share with me, my own sharing choices ----
@@ -3264,6 +3359,13 @@ function AppInner({ onReset }) {
   // --- SOCIAL & COMMUNITY TAB STATE ---
   const [communityGoalFilter, setCommunityGoalFilter] = useState('All');
   const [communityQuery, setCommunityQuery] = useState('');
+  const [communityGoal, setCommunityGoal] = useState('Meet New Friends');
+  const [plansTab, setPlansTab] = useState('joint');
+  const [sendSheetOpen, setSendSheetOpen] = useState(false);
+  const [peopleAddOpen, setPeopleAddOpen] = useState(false);
+  const [addPane, setAddPane] = useState('');
+  const [peopleQ, setPeopleQ] = useState('');
+  const [peopleOpenId, setPeopleOpenId] = useState(null);
   const [expandedCommunityEventId, setExpandedCommunityEventId] = useState(null);
   const [sharedFriendPlans, setSharedFriendPlans] = useState([]);
 
@@ -3680,9 +3782,11 @@ function AppInner({ onReset }) {
     if (!have) handleLoadMoreLiveIdeas();
   }, [filterKey, activeTab]);
   useEffect(() => { if (adventurousMode && activeTab === 'ideas') shuffleAdventure(); }, [filterKey]);
-  const [ideaShown, setIdeaShown] = useState(13);
+  const [ideaShown, setIdeaShown] = useState(4);
+  const [ideaSearchOpen, setIdeaSearchOpen] = useState(false);
+  const [ideaFiltersOpen, setIdeaFiltersOpen] = useState(false);
   const [ideaOpenId, setIdeaOpenId] = useState(null);
-  useEffect(() => { setIdeaShown(13); setIdeaOpenId(null); }, [filterKey]);
+  useEffect(() => { setIdeaShown(4); setIdeaOpenId(null); }, [filterKey]);
   const ideaListAll = ideasFeed
     .filter(item => item.category === selectedIdeaCategory)
     .filter(item => String(item.city || 'Manchester').toLowerCase() === loc.city.toLowerCase())
@@ -3720,9 +3824,36 @@ function AppInner({ onReset }) {
     ideasFeed.filter(i => String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase() && (i.title + ' ' + (i.desc || '') + ' ' + (i.sub1 || '')).toLowerCase().includes(lq) && !have2.has(i.title.toLowerCase())).forEach(i => items.push(i));
     setIdeaSearchRes({ q, items: items.slice(0, 40), busy: false });
   };
+  const addIdeaToPlan = (idea) => {
+                          setTasks(prev => [...prev, {
+                            id: Date.now(),
+                            title: idea.title,
+                            duration: 90,
+                            status: 'pending',
+                            ...(() => {
+                              const g = getFreeGaps(selectedDateStr, calCtx, 100, { from: 540 })[0];
+                              const st = g ? roundUpTo(g.s, 15) : 17 * 60 + 30;
+                              return { startTime: fromMins(st), endTime: fromMins(st + 90) };
+                            })(),
+                            date: selectedDateStr,
+                            type: 'social',
+                            categoryColor: 'leisure',
+                            location: idea.title,
+                            transportMode: loc.isHome ? 'Metrolink' : 'Public transport',
+                            travelTime: 20,
+                            distance: idea.distance,
+                            leaveByNote: loc.isHome ? 'Leave 20m prior via Metrolink' : 'Leave 20m before to get there',
+                            notes: '',
+                            rating: null,
+                            reviewNote: '',
+                            withPerson: null,
+                            meetingType: 'Friendly'
+                          }]);
+                          setActiveTab('schedule');
+  };
   const seeMoreIdeas = async () => {
-    if (ideaShown < ideaListAll.length) { setIdeaShown(n => n + 12); return; }
-    setIdeaShown(n => n + 12);
+    if (ideaShown < ideaListAll.length) { setIdeaShown(n => n + 8); return; }
+    setIdeaShown(n => n + 8);
     await handleLoadMoreLiveIdeas(true);
   };
   const getMatchedVenues = () => {
@@ -4369,7 +4500,12 @@ function AppInner({ onReset }) {
   const [setupOpen, setSetupOpen] = useState(false);
   const [setupStep, setSetupStep] = useState(0);
   const [setupCalOpen, setSetupCalOpen] = useState(false);
-  const [setupDraft, setSetupDraft] = useState({ name: '', status: 'University Student', days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], start: '09:00', end: '17:00', load: 'balanced', care: ['targets', 'medicine', 'meals', 'cadence'], interests: ['Food', 'Outdoor'], location: HOME_LOC });
+  const [setupUserQ, setSetupUserQ] = useState('');
+  const [setupUserRes, setSetupUserRes] = useState(null);
+  const [setupPName, setSetupPName] = useState('');
+  const [setupPFreq, setSetupPFreq] = useState(30);
+  const [setupAdded, setSetupAdded] = useState([]);
+  const [setupDraft, setSetupDraft] = useState({ goals: ['out', 'people', 'touch'], travel: ['Walk', 'Bus / tram'], prep: 30, promise: 'To get out more, meet new people and stop putting my life on hold.', peopleOpen: '', importAfter: false, name: '', status: 'University Student', days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], start: '09:00', end: '17:00', load: 'balanced', care: ['targets', 'medicine', 'meals', 'cadence'], interests: ['Food', 'Outdoor'], location: HOME_LOC });
   const openSetup = () => {
     const wh = userProfile.weeklyHours || {};
     const on = SETUP_DAYS.filter(d => wh[d] && wh[d].active);
@@ -4381,8 +4517,10 @@ function AppInner({ onReset }) {
       load: userProfile.dailyActivityCap <= 3 ? 'light' : userProfile.dailyActivityCap >= 6 ? 'full' : 'balanced',
       care: SETUP_CARE.filter(c => !homeLayout.hidden.includes(c.widget) && (!c.rem || rem[c.rem])).map(c => c.id),
       interests: userProfile.interests && userProfile.interests.length ? userProfile.interests : ['Food', 'Outdoor'],
-      location: userProfile.location || HOME_LOC
+      location: userProfile.location || HOME_LOC,
+      goals: userProfile.goals && userProfile.goals.length ? userProfile.goals : ['out', 'people', 'touch'], travel: userProfile.travel || ['Walk', 'Bus / tram'], prep: userProfile.prepTimeCasual || 30, promise: userProfile.promise || 'To get out more, meet new people and stop putting my life on hold.', peopleOpen: '', importAfter: false
     });
+    setSetupAdded([]); setSetupUserQ(''); setSetupUserRes(null); setSetupPName('');
     setSetupStep(0); setSetupOpen(true);
   };
   const closeSetup = (apply) => {
@@ -4393,7 +4531,8 @@ function AppInner({ onReset }) {
       SETUP_DAYS.forEach(d => { weeklyHours[d] = { active: D.days.includes(d), start: D.start, end: D.end }; });
       const rem = {};
       SETUP_CARE.forEach(c => { if (c.rem) rem[c.rem] = D.care.includes(c.id); });
-      setUserProfile(prev => ({ ...prev, onboarded: true, status: D.status, weeklyHours, dailyActivityCap: D.load === 'light' ? 3 : D.load === 'full' ? 6 : 4, interests: D.interests, location: D.location, reminders: { ...getReminderCfg(prev), ...rem } }));
+      setUserProfile(prev => ({ ...prev, onboarded: true, status: D.status, weeklyHours, dailyActivityCap: D.load === 'light' ? 3 : D.load === 'full' ? 6 : 4, interests: D.interests, location: D.location, goals: D.goals, travel: D.travel, promise: D.promise, prepTimeCasual: D.prep, prepTimeSerious: Math.max(prev.prepTimeSerious || 0, D.prep), reminders: { ...getReminderCfg(prev), ...rem } }));
+      if (D.importAfter) { setActiveTab('social'); setSocialSub('people'); setPeopleAddOpen(true); }
       setHomeLayout(prev => {
         const careWidgets = SETUP_CARE.map(c => c.widget);
         const hidden = prev.hidden.filter(id => !careWidgets.includes(id)).concat(SETUP_CARE.filter(c => !D.care.includes(c.id)).map(c => c.widget));
@@ -4458,7 +4597,7 @@ function AppInner({ onReset }) {
   const startFresh = () => {
     if (typeof window !== 'undefined' && window.PACT_BLANK === true) applyBlankStart();
     setUserProfile(prev => ({ ...prev, onboarded: false }));
-    setAccountInfo(prev => ({ ...prev, name: authUser.name || prev.name, email: authUser.email, username: '@' + authUser.email.split('@')[0] }));
+    setAccountInfo(prev => ({ ...prev, name: authUser.name || prev.name, email: authUser.email, username: '@' + (store.get('pact:wantHandle') || authUser.email.split('@')[0]) }));
   };
   const readLocalBlob = (email) => { try { return JSON.parse(store.get('roam:data:' + email) || 'null'); } catch (e) { return null; } };
   const hasContent = (o) => !!o && typeof o === 'object' && Object.keys(o).length > 0;
@@ -5269,113 +5408,208 @@ function AppInner({ onReset }) {
         const set = (patch) => setSetupDraft(prev => ({ ...prev, ...patch }));
         const toggle = (key, v) => set({ [key]: D[key].includes(v) ? D[key].filter(x => x !== v) : [...D[key], v] });
         const LAST = 5;
-        const chip = (on) => `px-3 py-2 text-xs border font-medium transition-all ${on ? 'bg-purple-900 text-white border-purple-900' : 'bg-white text-slate-700 border-stone-300'}`;
+        const INK = '#1B2A22', MUT = '#5A675F', CLAY = '#C8643C', FOR = '#1F3A2E';
+        const optBtn = (on) => ({ borderRadius: 0, border: on ? `1.5px solid ${INK}` : `1px solid ${INK}`, background: on ? INK : 'transparent', color: on ? '#F4EFE4' : INK });
+        const chip = (on) => `px-3 h-[34px] text-[11.5px] font-semibold ${on ? '' : ''}`;
+        const chipSt = (on) => ({ borderRadius: 0, background: on ? FOR : 'transparent', color: on ? '#F4EFE4' : INK, border: `1px solid ${on ? FOR : INK}` });
+        const lab = (t) => <div className="text-[10px] uppercase tracking-[0.14em]" style={{ color: MUT }}>{t}</div>;
+        const h2 = (t, sub) => (<div><h2 className="font-fr" style={{ fontSize: 32, lineHeight: 1, letterSpacing: '-0.025em', fontWeight: 600 }}>{t}</h2>{sub && <div className="font-fr" style={{ fontStyle: 'italic', fontSize: 15, color: MUT, marginTop: 7, lineHeight: 1.3 }}>{sub}</div>}</div>);
+        const GOALS = [
+          { id: 'out', t: 'Get out more', s: 'Plans, events and a reason to leave the house' },
+          { id: 'people', t: 'Meet new people', s: 'Find things nearby that are actually worth going to' },
+          { id: 'learn', t: 'Learn something', s: 'Skills with milestones you can see' },
+          { id: 'touch', t: 'Keep in touch', s: 'Never let a good friendship drift' },
+          { id: 'week', t: 'Run my week', s: 'Schedule, reminders and a calm head' }
+        ];
+        const TRAVEL = ['Walk', 'Bus / tram', 'Cycle', 'Drive', 'Train'];
+        const PREP = [15, 30, 45, 60];
+        const PROMISES = ['I’ll say yes more often.', 'I’ll show up for the people I love.', 'I’ll learn something new every month.'];
+        const addSetupPerson = () => {
+          const nm = setupPName.trim(); if (!nm) return;
+          const td = todayDateStr();
+          setPeople(prev => [...prev, { id: 'p_' + Date.now(), name: nm, kind: 'personal', relation: '', remindEvery: Number(setupPFreq) || 0, lastContact: td, createdAt: td, blocked: false, notes: '', linkedUserId: '', phone: '', whatsapp: '', email: '' }]);
+          setSetupAdded(prev => [...prev, nm]); setSetupPName('');
+        };
+        const findSetupUser = async () => {
+          const q = setupUserQ.trim(); if (!q) return;
+          if (!authUser || !authUser.cloud) { setSetupUserRes('offline'); return; }
+          try { const r = await cloud.findUser(q); setSetupUserRes(r || 'none'); } catch (e) { setSetupUserRes('error'); }
+        };
+        const addSetupUser = (u) => {
+          const nm = (u.display_name || u.username || '').trim(); const td = todayDateStr();
+          if (u.relation === 'none') sendFriendReq(u.id);
+          setPeople(prev => prev.some(x => x.username === u.username) ? prev : [...prev, { id: 'p_' + Date.now(), name: nm, kind: 'personal', relation: '', remindEvery: 30, lastContact: td, createdAt: td, blocked: false, notes: '', linkedUserId: u.relation === 'friends' ? u.id : '', username: u.username, avatar: u.avatar || '', bio: u.bio || '', phone: '', whatsapp: '', email: '' }]);
+          setSetupAdded(prev => [...prev, nm]); setSetupUserRes(null); setSetupUserQ('');
+        };
+        const rowNum = (n, t, sub, onClick, on) => (
+          <button type="button" onClick={onClick} className="w-full text-left grid items-center" style={{ gridTemplateColumns: '28px 1fr 14px', gap: 8, padding: '11px 0', borderBottom: '1px solid #CFC7B4', borderRadius: 0 }}>
+            <span className="font-fr" style={{ fontSize: 18, fontWeight: 600, color: CLAY }}>{n}</span>
+            <span><span className="block text-[14px] font-semibold">{t}</span><span className="block text-[11px]" style={{ color: MUT }}>{sub}</span></span>
+            <span style={{ color: '#7C857F' }}>{on ? '✓' : '›'}</span>
+          </button>
+        );
         return (
-          <div data-setup className="absolute inset-0 bg-[#F5F3EC] overflow-y-auto" style={{ zIndex: 45 }} role="dialog" aria-label="Set up Pact">
-            <div className="min-h-full flex flex-col px-6 pt-6 pb-8">
-              <div className="flex items-center justify-between">
-                <div className="flex gap-1.5" aria-label={`Step ${setupStep + 1} of ${LAST + 1}`}>
-                  {[0, 1, 2, 3, 4, 5].map(i => <span key={i} className={`h-1 w-8 ${i <= setupStep ? 'bg-purple-900' : 'bg-stone-300'}`} />)}
+          <div data-setup className="absolute inset-0 overflow-y-auto" style={{ zIndex: 45, background: '#F4EFE4', color: INK }} role="dialog" aria-label="Set up The Pact">
+            <div className="min-h-full flex flex-col px-7 pt-5 pb-7">
+              <div>
+                <div className="flex items-baseline justify-between text-[10px] uppercase tracking-[0.16em]" style={{ color: MUT }}>
+                  {setupStep > 0 ? <button data-setup-back onClick={() => setSetupStep(setupStep - 1)} style={{ borderRadius: 0, textTransform: 'uppercase', letterSpacing: '0.16em' }}>&larr; Back</button> : <span />}
+                  <span>Step {setupStep + 1} of {LAST + 1}</span>
+                  <button data-setup-skip onClick={() => closeSetup(false)} style={{ borderRadius: 0, textTransform: 'uppercase', letterSpacing: '0.16em' }}>Skip</button>
                 </div>
-                <button data-setup-skip onClick={() => closeSetup(false)} className="text-[11px] uppercase tracking-wider text-stone-500 underline">Skip setup</button>
+                <div className="flex gap-1 mt-2.5" aria-label={`Step ${setupStep + 1} of ${LAST + 1}`}>
+                  {[0, 1, 2, 3, 4, 5].map(i => <span key={i} style={{ flex: 1, height: 4, background: i <= setupStep ? CLAY : '#CFC7B4' }} />)}
+                </div>
               </div>
 
-              <div className="flex-1 pt-8 space-y-5">
+              <div className="flex-1 pt-5 space-y-4">
                 {setupStep === 0 && (
-                  <div className="space-y-4">
-                    <div className="font-editorial text-3xl tracking-wide">PACT</div>
-                    <h2 className="text-2xl font-medium leading-tight">Hi, I'm your digital secretary.</h2>
-                    <p className="text-sm text-stone-600 leading-relaxed">I keep your plans clash-free, remind you about the things you'd forget, and suggest things to do. Setup takes about a minute, and you can change every answer later.</p>
-                    <label className="block text-[10px] uppercase tracking-widest text-stone-500 space-y-1">
-                      What should I call you?
-                      <input data-setup-name type="text" value={D.name} onChange={e => set({ name: e.target.value })} aria-label="Your name" className="w-full bg-white border border-stone-300 px-3 py-2.5 text-sm normal-case tracking-normal text-slate-900" />
-                    </label>
-                    <label className="block text-[10px] uppercase tracking-widest text-stone-500 space-y-1">
-                      Which describes you best?
-                      <select value={D.status} onChange={e => set({ status: e.target.value })} aria-label="Your situation" className="w-full bg-white border border-stone-300 px-3 py-2.5 text-sm normal-case tracking-normal text-slate-900">
-                        {SETUP_STATUSES.map(st => <option key={st} value={st}>{st}</option>)}
-                      </select>
-                    </label>
+                  <div className="space-y-2">
+                    {h2('What do you want back?', 'Pick as many as you like. The Pact shapes itself around them.')}
+                    {!accountInfo.name && !D.name && <input data-setup-name type="text" value={D.name} onChange={e => set({ name: e.target.value })} aria-label="Your name" placeholder="What should we call you?" className="w-full bg-transparent py-2 text-[15px] outline-none" style={{ borderBottom: `1.5px solid ${INK}` }} />}
+                    <div className="space-y-2 pt-2">
+                      {GOALS.map(g => (
+                        <button key={g.id} data-setup-goal={g.id} aria-pressed={D.goals.includes(g.id)} onClick={() => toggle('goals', g.id)} className="w-full flex items-center justify-between text-left px-3.5 py-2.5" style={optBtn(D.goals.includes(g.id))}>
+                          <span><span className="block font-fr" style={{ fontSize: 16, fontWeight: 600, lineHeight: 1.1 }}>{g.t}</span><span className="block text-[11px] mt-0.5" style={{ color: D.goals.includes(g.id) ? '#B9C6BE' : MUT }}>{g.s}</span></span>
+                          {D.goals.includes(g.id) && <span>&#10003;</span>}
+                        </button>
+                      ))}
+                    </div>
+                    <div className="pt-3 space-y-2">{lab('And what are you into?')}
+                      <div className="flex flex-wrap gap-1.5">{IDEA_CATEGORIES_BASE.map(c => <button key={c} data-setup-interest={c} aria-pressed={D.interests.includes(c)} onClick={() => toggle('interests', c)} className={chip(D.interests.includes(c))} style={chipSt(D.interests.includes(c))}>{c}</button>)}</div>
+                    </div>
                   </div>
                 )}
 
                 {setupStep === 1 && (
                   <div className="space-y-4">
-                    <h2 className="text-2xl font-medium leading-tight">When can I plan things for you?</h2>
-                    <p className="text-sm text-stone-600 leading-relaxed">I'll only schedule inside these days and hours. Sync a calendar too and I'll also avoid anything already booked.</p>
-                    <div className="grid grid-cols-7 gap-1">
-                      {SETUP_DAYS.map(d => <button key={d} data-setup-day={d} aria-pressed={D.days.includes(d)} onClick={() => toggle('days', d)} className={chip(D.days.includes(d)).replace('px-3', 'px-0')}>{d}</button>)}
+                    {h2('Where are you based?', 'So events, travel times and weather are right.')}
+                    <LocationPicker value={D.location} onChange={l => set({ location: l })} />
+                    <div className="space-y-2">{lab('How do you usually get about?')}
+                      <div className="flex flex-wrap gap-2">{TRAVEL.map(t => <button key={t} data-setup-travel={t} aria-pressed={D.travel.includes(t)} onClick={() => toggle('travel', t)} className={chip(D.travel.includes(t))} style={chipSt(D.travel.includes(t))}>{t}</button>)}</div>
                     </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      <label className="text-[10px] uppercase tracking-widest text-stone-500 space-y-1 block">From<input type="time" value={D.start} aria-label="Day starts" onChange={e => set({ start: e.target.value || '09:00' })} className="w-full bg-white border border-stone-300 px-2 py-2 text-sm text-slate-900" /></label>
-                      <label className="text-[10px] uppercase tracking-widest text-stone-500 space-y-1 block">Until<input type="time" value={D.end} aria-label="Day ends" onChange={e => set({ end: e.target.value || '17:00' })} className="w-full bg-white border border-stone-300 px-2 py-2 text-sm text-slate-900" /></label>
-                    </div>
-                    <div className="border border-stone-300 bg-white p-3 space-y-2" data-setup-cal>
-                      <div className="flex items-center justify-between gap-2">
-                        <div><div className="text-xs font-medium">Sync your calendar</div><div className="text-[10px] text-stone-500">Google, iPhone or Outlook events become busy time, so I never plan over them.</div></div>
-                        <button data-setup-cal-toggle onClick={() => setSetupCalOpen(!setupCalOpen)} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider font-medium shrink-0">{calendarSources.length ? `${calendarSources.length} synced ✓` : setupCalOpen ? 'Hide' : 'Add'}</button>
-                      </div>
-                      {setupCalOpen && calConnectBlock}
-                    </div>
-                    <div className="text-[10px] uppercase tracking-widest text-stone-500 pt-1">How full should your days be?</div>
-                    <div className="grid grid-cols-3 gap-1.5">
-                      {[['light', 'Light', 'up to 3 a day'], ['balanced', 'Balanced', 'up to 4'], ['full', 'Full', 'up to 6']].map(([id, l, h]) => (
-                        <button key={id} data-setup-load={id} onClick={() => set({ load: id })} className={`${chip(D.load === id)} text-left`}><div>{l}</div><div className={`text-[10px] font-normal ${D.load === id ? 'text-white/80' : 'text-stone-500'}`}>{h}</div></button>
-                      ))}
-                    </div>
+                    <div className="text-[12px] leading-relaxed p-3" style={{ border: '1.5px dashed #7C857F', color: MUT }}>Your location stays on your device unless you share it. Friends only ever see what you choose.</div>
                   </div>
                 )}
 
                 {setupStep === 2 && (
                   <div className="space-y-4">
-                    <h2 className="text-2xl font-medium leading-tight">Where are you based?</h2>
-                    <p className="text-sm text-stone-600 leading-relaxed">I'll suggest places, events and trips near you, and plan travel around where you are. You can change it any time, for example when you travel.</p>
-                    <LocationPicker value={D.location} onChange={l => set({ location: l })} />
+                    {h2('What does a normal day look like?', 'Rough is fine. You can tune it later.')}
+                    <div className="space-y-2">{lab('Which describes you best?')}
+                      <select value={D.status} onChange={e => set({ status: e.target.value })} aria-label="Your situation" className="w-full bg-transparent px-2 py-2.5 text-sm" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}>
+                        {SETUP_STATUSES.map(st => <option key={st} value={st}>{st}</option>)}
+                      </select>
+                    </div>
+                    <div className="space-y-2">{lab('Busy days')}
+                      <div className="grid grid-cols-7 gap-1">{SETUP_DAYS.map(d => <button key={d} data-setup-day={d} aria-pressed={D.days.includes(d)} onClick={() => toggle('days', d)} className="h-[38px] text-[11px] font-semibold" style={chipSt(D.days.includes(d))}>{d.slice(0, 1)}</button>)}</div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2.5">
+                      <label className="block space-y-1">{lab('Work / study from')}<input type="time" value={D.start} aria-label="Day starts" onChange={e => set({ start: e.target.value || '09:00' })} className="w-full bg-transparent px-2 text-center font-fr" style={{ border: `1px solid ${INK}`, borderRadius: 0, height: 42, fontSize: 20, fontWeight: 600 }} /></label>
+                      <label className="block space-y-1">{lab('Until')}<input type="time" value={D.end} aria-label="Day ends" onChange={e => set({ end: e.target.value || '17:00' })} className="w-full bg-transparent px-2 text-center font-fr" style={{ border: `1px solid ${INK}`, borderRadius: 0, height: 42, fontSize: 20, fontWeight: 600 }} /></label>
+                    </div>
+                    <div className="space-y-2">{lab('Getting ready takes')}
+                      <div className="flex gap-2">{PREP.map(m => <button key={m} data-setup-prep={m} aria-pressed={D.prep === m} onClick={() => set({ prep: m })} className={chip(D.prep === m)} style={chipSt(D.prep === m)}>{m === 60 ? '1 hr' : m + ' min'}</button>)}</div>
+                      <div className="text-[11px] leading-snug" style={{ color: MUT }}>The Pact adds travel and getting-ready time around every plan automatically.</div>
+                    </div>
+                    <div className="space-y-2">{lab('How full should your days be?')}
+                      <div className="grid grid-cols-3 gap-1.5">
+                        {[['light', 'Light', 'up to 3 a day'], ['balanced', 'Balanced', 'up to 4'], ['full', 'Full', 'up to 6']].map(([id, l, h]) => (
+                          <button key={id} data-setup-load={id} onClick={() => set({ load: id })} className="text-left px-3 py-2" style={optBtn(D.load === id)}><div className="text-xs font-semibold">{l}</div><div className="text-[10px]" style={{ color: D.load === id ? '#B9C6BE' : MUT }}>{h}</div></button>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="p-3 space-y-2" data-setup-cal style={{ border: '1px solid #CFC7B4' }}>
+                      <div className="flex items-center justify-between gap-2">
+                        <div><div className="text-xs font-semibold">Sync your calendar</div><div className="text-[10px]" style={{ color: MUT }}>Google, iPhone or Outlook events become busy time, so nothing gets planned over them.</div></div>
+                        <button data-setup-cal-toggle onClick={() => setSetupCalOpen(!setupCalOpen)} className="px-2.5 py-1 text-[10px] uppercase tracking-wider font-semibold shrink-0" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}>{calendarSources.length ? `${calendarSources.length} synced ✓` : setupCalOpen ? 'Hide' : 'Add'}</button>
+                      </div>
+                      {setupCalOpen && calConnectBlock}
+                    </div>
                   </div>
                 )}
 
                 {setupStep === 3 && (
-                  <div className="space-y-4">
-                    <h2 className="text-2xl font-medium leading-tight">What should I look after?</h2>
-                    <p className="text-sm text-stone-600 leading-relaxed">Pick what matters. Each one gets a card on Home and its own reminders. Unticked ones stay out of your way.</p>
-                    <div className="space-y-1.5">
-                      {SETUP_CARE.map(c => (
-                        <button key={c.id} data-setup-care={c.id} aria-pressed={D.care.includes(c.id)} onClick={() => toggle('care', c.id)} className={`w-full flex items-center justify-between gap-2 text-left px-3 py-2.5 border ${D.care.includes(c.id) ? 'bg-purple-900 text-white border-purple-900' : 'bg-white text-slate-800 border-stone-300'}`}>
-                          <span><span className="block text-xs font-medium">{c.label}</span><span className={`block text-[10px] ${D.care.includes(c.id) ? 'text-white/80' : 'text-stone-500'}`}>{c.desc}</span></span>
-                          {D.care.includes(c.id) && <Check size={14} />}
-                        </button>
-                      ))}
+                  <div className="space-y-3">
+                    {h2('Who matters to you?', 'Add a few now, or skip. It never messages anyone for you.')}
+                    <div>
+                      {rowNum('1', 'Find friends on Pact', 'Search by @username', () => set({ peopleOpen: D.peopleOpen === 'find' ? '' : 'find' }), D.peopleOpen === 'find')}
+                      {D.peopleOpen === 'find' && (
+                        <div className="py-2 space-y-2">
+                          <div className="flex gap-1.5">
+                            <input data-setup-username type="text" aria-label="Pact username" placeholder="@username" value={setupUserQ} onChange={e => { setSetupUserQ(e.target.value); setSetupUserRes(null); }} onKeyDown={e => { if (e.key === 'Enter') findSetupUser(); }} className="flex-1 min-w-0 bg-transparent px-2 py-2 text-sm" style={{ border: `1px solid ${INK}`, borderRadius: 0 }} />
+                            <button data-setup-username-find onClick={findSetupUser} disabled={!setupUserQ.trim()} className="px-3 text-[11px] font-semibold text-white disabled:opacity-50" style={{ background: FOR, borderRadius: 0 }}>Find</button>
+                          </div>
+                          {setupUserRes === 'none' && <p className="text-[11px]" style={{ color: MUT }}>No one found with that username.</p>}
+                          {setupUserRes === 'offline' && <p className="text-[11px]" style={{ color: MUT }}>Sign in with an account to look people up.</p>}
+                          {setupUserRes === 'error' && <p className="text-[11px]" style={{ color: MUT }}>Couldn't search just now. Try again.</p>}
+                          {setupUserRes && typeof setupUserRes === 'object' && (
+                            <div className="flex items-center justify-between gap-2 p-2.5" style={{ border: '1px solid #CFC7B4' }}>
+                              <div className="flex items-center gap-2 min-w-0"><Avatar src={setupUserRes.avatar} name={setupUserRes.display_name || setupUserRes.username} size={32} /><div className="min-w-0"><div className="text-xs font-semibold truncate">{setupUserRes.display_name || setupUserRes.username}</div><div className="text-[10px]" style={{ color: MUT }}>@{setupUserRes.username}</div></div></div>
+                              <button data-setup-username-add onClick={() => addSetupUser(setupUserRes)} className="px-2.5 py-1.5 text-[10px] uppercase tracking-wider font-semibold text-white shrink-0" style={{ background: FOR, borderRadius: 0 }}>{setupUserRes.relation === 'none' ? 'Add + request' : 'Add'}</button>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      {rowNum('2', 'Import contacts', 'Phone export (vCard / CSV) or paste a list. Opens after setup.', () => set({ importAfter: !D.importAfter }), D.importAfter)}
+                      {rowNum('3', 'Type a name', 'Add someone and how often you’d like to see them', () => set({ peopleOpen: D.peopleOpen === 'type' ? '' : 'type' }), D.peopleOpen === 'type')}
+                      {D.peopleOpen === 'type' && (
+                        <div className="py-2 flex gap-1.5">
+                          <input data-setup-person-name type="text" aria-label="Name" placeholder="Name" value={setupPName} onChange={e => setSetupPName(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') addSetupPerson(); }} className="flex-1 min-w-0 bg-transparent px-2 py-2 text-sm" style={{ border: `1px solid ${INK}`, borderRadius: 0 }} />
+                          <select aria-label="How often" value={setupPFreq} onChange={e => setSetupPFreq(Number(e.target.value))} className="bg-transparent px-1.5 text-xs" style={{ border: `1px solid ${INK}`, borderRadius: 0, maxWidth: 110 }}>{REMIND_OPTIONS.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}</select>
+                          <button data-setup-person-add onClick={addSetupPerson} disabled={!setupPName.trim()} className="px-3 text-[11px] font-semibold text-white disabled:opacity-50" style={{ background: FOR, borderRadius: 0 }}>Add</button>
+                        </div>
+                      )}
                     </div>
+                    {setupAdded.length > 0 && <div data-setup-added className="space-y-1.5">{lab(`Added so far · ${setupAdded.length}`)}<div className="flex flex-wrap gap-1.5">{setupAdded.map((n, i) => <span key={i} className="inline-flex items-center h-[30px] px-2.5 text-xs font-semibold" style={{ border: `1px solid ${INK}` }}>{n}</span>)}</div></div>}
+                    <div className="text-[11px]" style={{ color: MUT }}>Friends only appear once they accept.</div>
                   </div>
                 )}
 
                 {setupStep === 4 && (
-                  <div className="space-y-4">
-                    <h2 className="text-2xl font-medium leading-tight">What are you into?</h2>
-                    <p className="text-sm text-stone-600 leading-relaxed">I'll put these first when I suggest things to do. Pick as many as you like.</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {IDEA_CATEGORIES_BASE.map(c => <button key={c} data-setup-interest={c} aria-pressed={D.interests.includes(c)} onClick={() => toggle('interests', c)} className={chip(D.interests.includes(c))}>{c}</button>)}
+                  <div className="space-y-3">
+                    {h2('Nudges that reach your phone.', 'Reminders arrive even when the app is closed.')}
+                    <div className="p-3.5" style={{ border: `3px double ${INK}` }}>
+                      <div className="text-[9px] uppercase tracking-[0.2em] font-bold" style={{ color: CLAY }}>Preview</div>
+                      <div className="flex items-center gap-2.5 mt-2"><PactSeal size={38} /><div><div className="text-xs font-bold">The Pact &middot; now</div><div className="text-xs" style={{ color: MUT }}>Leave in 10 min for coffee at Pollen.</div></div></div>
                     </div>
+                    <div>{lab('Look after')}
+                      {SETUP_CARE.map(c => (
+                        <button key={c.id} data-setup-care={c.id} aria-pressed={D.care.includes(c.id)} onClick={() => toggle('care', c.id)} className="w-full flex items-center justify-between text-left" style={{ minHeight: 44, borderBottom: '1px solid #CFC7B4', borderRadius: 0 }}>
+                          <span><span className="block text-[14px]">{c.label}</span><span className="block text-[10px]" style={{ color: MUT }}>{c.desc}</span></span>
+                          <span style={{ width: 40, height: 22, border: `1.5px solid ${INK}`, position: 'relative', background: D.care.includes(c.id) ? FOR : 'transparent', flex: 'none' }}><span style={{ position: 'absolute', top: 2, [D.care.includes(c.id) ? 'right' : 'left']: 2, width: 15, height: 15, background: D.care.includes(c.id) ? '#F4EFE4' : INK }} /></span>
+                        </button>
+                      ))}
+                    </div>
+                    <div className="text-[11.5px] leading-relaxed p-3" style={{ border: '1.5px dashed #7C857F', color: MUT }}><b style={{ color: INK }}>On iPhone:</b> tap Share, then Add to Home Screen, then open The Pact from there. Android and laptop work straight away.</div>
+                    <button data-setup-notify onClick={enableDeviceNotifications} className="w-full h-11 text-[13px] font-semibold text-white" style={{ background: FOR, borderRadius: 0 }}>Turn on notifications</button>
+                    <div className="text-center text-[11px]" style={{ color: MUT }}>Not now &middot; you can do this later in Profile</div>
                   </div>
                 )}
 
                 {setupStep === 5 && (
                   <div className="space-y-4">
-                    <h2 className="text-2xl font-medium leading-tight">You're all set{D.name.trim() ? ', ' + D.name.trim() : ''}.</h2>
-                    <div className="space-y-2 text-sm text-stone-700 leading-relaxed">
-                      <p><span className="font-medium">Talk to Roamie</span> (bottom right). Try "book gym tomorrow at 7am" or "when am I free on Friday?".</p>
-                      <p><span className="font-medium">Tap +</span> at the top to add a plan, task or activity.</p>
-                      <p><span className="font-medium">Tap the heart</span> on any idea in Ideas to save it.</p>
-                      <p><span className="font-medium">Sync your calendar</span> from Profile so I never plan over real events.</p>
+                    {h2('Sign your pact.', 'One line, in your own words.')}
+                    <div className="p-4" style={{ border: `3px double ${INK}` }}>
+                      <div className="text-[9px] uppercase tracking-[0.2em] font-bold" style={{ color: CLAY }}>I promise myself</div>
+                      <textarea data-setup-promise aria-label="Your promise to yourself" rows={3} value={D.promise} onChange={e => set({ promise: e.target.value })} className="w-full bg-transparent font-fr outline-none resize-none mt-2" style={{ fontStyle: 'italic', fontSize: 21, lineHeight: 1.25 }} />
+                      <div className="text-[11px] mt-1" style={{ color: MUT }}>Only you see this.</div>
                     </div>
-                    <button onClick={enableDeviceNotifications} className="px-3 py-2 border border-stone-400 text-[11px] uppercase tracking-wider font-medium">Turn on device notifications</button>
+                    <div className="space-y-2">{lab('Or start from one of these')}
+                      <div className="font-fr" style={{ fontStyle: 'italic', fontSize: 14, color: MUT }}>
+                        {PROMISES.map(pm => <button key={pm} onClick={() => set({ promise: pm })} className="block w-full text-left py-1.5" style={{ borderBottom: '1px solid #CFC7B4', borderRadius: 0 }}>&ldquo;{pm}&rdquo;</button>)}
+                      </div>
+                    </div>
+                    <div className="flex items-end gap-3 pt-2">
+                      <input data-setup-sign type="text" aria-label="Sign with your name" value={D.name} onChange={e => set({ name: e.target.value })} placeholder="Your name" className="flex-1 min-w-0 bg-transparent font-fr outline-none" style={{ fontStyle: 'italic', fontSize: 26, borderBottom: `1.5px solid ${INK}`, paddingBottom: 4 }} />
+                      <div className="text-[10px] uppercase tracking-[0.14em] pb-1.5" style={{ color: MUT }}>{prettyDate(todayDateStr())}</div>
+                    </div>
                   </div>
                 )}
               </div>
 
-              <div className="flex gap-2 pt-6">
-                {setupStep > 0 && <button data-setup-back onClick={() => setSetupStep(setupStep - 1)} className="px-4 py-3 border border-stone-400 text-xs uppercase tracking-wider font-medium">Back</button>}
-                <button data-setup-next onClick={() => (setupStep === LAST ? closeSetup(true) : setSetupStep(setupStep + 1))} className="flex-1 py-3 bg-purple-900 text-white text-xs uppercase tracking-widest font-medium">{setupStep === 0 ? "Let's go" : setupStep === LAST ? 'Start using Pact' : 'Next'}</button>
+              <div className="pt-6">
+                <button data-setup-next onClick={() => (setupStep === LAST ? closeSetup(true) : setSetupStep(setupStep + 1))} className="w-full h-12 text-[13px] font-semibold text-white" style={{ background: FOR, borderRadius: 0 }}>{setupStep === LAST ? 'Sign & begin' : 'Continue'}</button>
+                <div className="mt-2.5 text-center text-[11px]" style={{ color: MUT }}>{setupStep === 0 ? 'You can change any of this later.' : setupStep === LAST ? 'Your first front page is ready.' : ''}</div>
               </div>
             </div>
           </div>
@@ -6439,22 +6673,7 @@ function AppInner({ onReset }) {
             TAB 2: SCHEDULE (merged Today + Plan, any week)
            ========================================================= */}
         {activeTab === 'schedule' && (
-          <div className="space-y-4 animate-in fade-in duration-300">
-
-            <div className="flex items-end justify-between gap-3">
-              <div>
-                <div className="text-[10px] uppercase tracking-widest text-stone-500 font-medium">
-                  {selectedDateStr === todayDateStr() ? 'Today' : selectedDateStr < todayDateStr() ? 'Past day' : daysBetween(todayDateStr(), selectedDateStr) === 1 ? 'Tomorrow' : `In ${daysBetween(todayDateStr(), selectedDateStr)} days`}
-                </div>
-                <h2 className="font-editorial text-[28px] leading-none text-slate-900 mt-1">{longDate(selectedDateStr)}</h2>
-              </div>
-              <button
-                onClick={() => { setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }}
-                className="shrink-0 px-3 py-2 bg-purple-900 text-white text-[10px] uppercase tracking-wider font-medium flex items-center gap-1"
-              >
-                <Plus size={12} /> Add plan
-              </button>
-            </div>
+          <div className="np-skin space-y-4 animate-in fade-in duration-300">
 
             {/* Context-Aware Reclaimed Time Prompt */}
             {reclaimedMinutes && (
@@ -6642,7 +6861,8 @@ function AppInner({ onReset }) {
 
             {/* Listings: your day first; friends' columns only when they chose to share */}
             {(() => {
-              const mineBlocks = filteredTasks.filter(t => t.startTime && t.endTime).map(t => ({ id: t.id, s: toMins(t.startTime), e: Math.max(toMins(t.startTime) + 15, toMins(t.endTime)), t: t.title, done: t.status === 'completed' || t.status === 'done' }));
+              const nowM0 = new Date().getHours() * 60 + new Date().getMinutes();
+              const mineBlocks = filteredTasks.filter(t => t.startTime && t.endTime).map(t => { const e = Math.max(toMins(t.startTime) + 15, toMins(t.endTime)); const dn = t.status === 'completed' || t.status === 'done'; return { id: t.id, s: toMins(t.startTime), e, t: t.title, loc: t.location && t.location !== t.title ? t.location : '', done: dn, past: dn || selectedDateStr < todayDateStr() || (selectedDateStr === todayDateStr() && e <= nowM0) }; });
               const friendCols = pactFriends.map(f => {
                 const sh = schedShared.find(x => x.owner_id === f.userId);
                 const ok = !!sh && selectedDateStr <= sh.until;
@@ -6652,24 +6872,20 @@ function AppInner({ onReset }) {
               const nowM = selectedDateStr === todayDateStr() ? new Date().getHours() * 60 + new Date().getMinutes() : null;
               return (<>
                 <ScheduleListings date={selectedDateStr} mine={mineBlocks} friends={friendCols} matching={matching} canMatch={!!(authUser && authUser.cloud) && pactFriends.length > 0}
-                  onToggleMatch={() => { setMatching(m => !m); loadSched(); }} onShare={() => setSharePanel(true)} nowMin={nowM}
-                  onTapTask={(id) => { setExpandedTaskId(id); setTimeout(() => { const el = document.querySelector('[data-task-card="' + id + '"]'); if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 60); }}
+                  onToggleMatch={() => { setMatching(m => !m); loadSched(); }} onShare={() => setSharePanel(true)} nowMin={nowM} isToday={selectedDateStr === todayDateStr()}
+                  onTapTask={(id) => setSheetTaskId(id)}
                   onAdd={() => { setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }} />
                 {sharePanel && <ShareSchedulePanel friends={pactFriends} grants={schedGrants} onSet={setScheduleShare} onClose={() => setSharePanel(false)} />}
               </>);
             })()}
 
-            {/* Today's Timeline List */}
-            <div className="space-y-3">
-              {filteredTasks.length === 0 && (
-                <div className="p-4 bg-white border border-dashed border-stone-300 text-center space-y-2">
-                  <div className="text-sm font-medium text-slate-900">Nothing planned for this day</div>
-                  <div className="text-[11px] text-stone-600">{getFreeGaps(selectedDateStr, calCtx, 45).length ? `You have ${getFreeGaps(selectedDateStr, calCtx, 45).length} clash-free window${getFreeGaps(selectedDateStr, calCtx, 45).length === 1 ? '' : 's'} to use.` : 'This day is fully booked by your calendar and work hours.'}</div>
-                  <button onClick={() => { setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }} className="px-3 py-1.5 bg-purple-900 text-white text-[10px] uppercase tracking-wider font-medium">Plan something</button>
-                </div>
-              )}
-              {filteredTasks.map(task => {
-                const isExpanded = expandedTaskId === task.id;
+            {/* Plan details and editing: opens when you tap a block in the listings */}
+            {sheetTaskId != null && filteredTasks.some(t => t.id === sheetTaskId) && <Portal>
+            <div data-task-sheet className="fixed inset-0 z-[300] bg-black/40 flex items-end justify-center" onClick={() => setSheetTaskId(null)}>
+             <div className="np-skin w-full max-w-[560px] max-h-[88vh] overflow-y-auto bg-[#F4EFE4] border-t-[3px] border-double border-[#1B2A22] p-3 space-y-3" onClick={e => e.stopPropagation()}>
+              <button data-task-sheet-close onClick={() => setSheetTaskId(null)} className="text-[10px] uppercase tracking-[0.14em] font-medium text-[#1B2A22] flex items-center gap-1"><X size={13} /> Close</button>
+              {filteredTasks.filter(t => t.id === sheetTaskId).map(task => {
+                const isExpanded = true;
                 const borderColor = getCategoryColorHex(task.categoryColor);
                 return (
                   <div
@@ -6679,8 +6895,7 @@ function AppInner({ onReset }) {
                     style={{ borderLeftWidth: '5px', borderLeftColor: borderColor }}
                   >
                     <div
-                      onClick={() => setExpandedTaskId(isExpanded ? null : task.id)}
-                      className="p-3.5 cursor-pointer flex justify-between items-start"
+                      className="p-3.5 flex justify-between items-start"
                     >
                       <div className="space-y-1">
                         <div className="flex items-center gap-2">
@@ -6846,7 +7061,8 @@ function AppInner({ onReset }) {
                   </div>
                 );
               })}
-            </div>
+             </div>
+            </div></Portal>}
           </div>
         )}
 
@@ -6909,7 +7125,7 @@ function AppInner({ onReset }) {
           <div className="np-skin flex flex-col gap-4 animate-in fade-in duration-300">
 
             {/* Unfilled Weekly Target Nudge Banner */}
-            {weeklyTargets.some(t => t.current < t.target) && (
+            {false && weeklyTargets.some(t => t.current < t.target) && (
               <div style={{ order: 40 }} className="p-3.5 bg-blue-900 text-white flex justify-between items-center">
                 <div>
                   <span className="text-[10px] uppercase tracking-widest text-rose-300 font-medium">Weekly Target Quota</span>
@@ -6933,87 +7149,36 @@ function AppInner({ onReset }) {
               </div>
             )}
 
+            {(ideaSearchOpen || ideaSearchRes) && (
             <div data-ideas-search className="flex gap-1.5">
               <input data-ideas-search-input type="search" aria-label="Search places and ideas" placeholder={`Search ${loc.city}, e.g. sushi, climbing, bookshop`} value={ideaSearch} onChange={e => { setIdeaSearch(e.target.value); if (!e.target.value.trim()) setIdeaSearchRes(null); }} onKeyDown={e => { if (e.key === 'Enter') runIdeaSearch(); }} className="flex-1 min-w-0 bg-white border border-stone-300 px-3 py-2 text-xs" />
               <button data-ideas-search-go onClick={runIdeaSearch} disabled={!ideaSearch.trim() || (ideaSearchRes && ideaSearchRes.busy)} className="px-3.5 bg-purple-900 text-white text-[10px] uppercase tracking-wider font-medium disabled:opacity-50">Search</button>
             </div>
-
-            {/* Category Bar */}
-            <div className="flex gap-1.5 overflow-x-auto no-scrollbar pb-1">
-              <button
-                data-fav-chip
-                onClick={() => { setShowFavs(!showFavs); setAdventurousMode(false); }}
-                className={`px-3.5 py-1.5 text-xs uppercase tracking-wider font-medium border shrink-0 flex items-center gap-1.5 ${showFavs ? 'bg-rose-700 text-white border-rose-700' : 'bg-white text-rose-800 border-rose-300'}`}
-              >
-                <Heart size={12} fill={showFavs ? 'currentColor' : 'none'} /> Saved ({favourites.length})
-              </button>
-              {ideaCategories.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => { setShowFavs(false); setIdeaSearchRes(null); setIdeaSearch(''); setSelectedIdeaCategory(cat); }}
-                  className={`px-3.5 py-1.5 text-xs uppercase tracking-wider font-medium border shrink-0 transition-all ${
-                    selectedIdeaCategory === cat
-                      ? 'bg-purple-900 text-white border-purple-900'
-                      : 'bg-white text-slate-700 border-stone-200 hover:border-purple-600'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-
-            {/* Vibe Check & Feeling Adventurous Box */}
-            {!showFavs && !ideaSearchRes && <>
-            <div className="p-4 bg-white border border-stone-200 space-y-3">
-              <div className="flex justify-between items-center">
-                <div>
-                  <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Vibe Check</span>
-                  <h3 className="font-editorial text-base font-normal">
-                    What are you looking for in {selectedIdeaCategory}?
-                  </h3>
-                </div>
-                <button
-                  onClick={() => { const next = !adventurousMode; setAdventurousMode(next); if (next) shuffleAdventure(); }}
-                  className={`px-2.5 py-1 text-[10px] uppercase tracking-wider font-medium border flex items-center gap-1 ${
-                    adventurousMode ? 'bg-rose-700 text-white border-rose-700' : 'bg-[#FAF8F5] text-rose-800 border-rose-300'
-                  }`}
-                >
-                  <Sparkles size={11} /> Adventurous {activeFilterLabels.length ? activeFilterLabels[0].toLowerCase() : selectedIdeaCategory.toLowerCase()}
-                </button>
-              </div>
-
-              <div className="flex flex-wrap gap-1.5">
+            )}
+            {(() => {
+              const items = ideaSearchRes ? ideaSearchRes.items : showFavs ? favourites : adventurousMode ? adventurePicks : ideaListAll.slice(0, ideaShown);
+              return (
+                <IdeasFront items={items} cat={selectedIdeaCategory} cats={ideaCategories} savedCount={favourites.length} showFavs={showFavs}
+                  onFavs={() => { setShowFavs(!showFavs); setAdventurousMode(false); setIdeaSearchRes(null); }}
+                  onCat={(c) => { setShowFavs(false); setIdeaSearchRes(null); setIdeaSearch(''); setAdventurousMode(false); setSelectedIdeaCategory(c); }}
+                  onSearch={() => setIdeaSearchOpen(o => !o)}
+                  onOpen={(it) => setIdeaOpenId(it.id)} onAdd={addIdeaToPlan} onFav={toggleFav} isFav={isFav}
+                  adventure={adventurousMode} onSurprise={() => { setShowFavs(false); setIdeaSearchRes(null); setAdventurousMode(true); shuffleAdventure(); }} onBack={() => setAdventurousMode(false)}
+                  filters={{ toggle: () => setIdeaFiltersOpen(o => !o), label: activeFilterLabels.length ? 'Filter (' + activeFilterLabels.length + ')' : 'Filter', panel: ideaFiltersOpen ? (
+              <div data-idea-filters className="flex flex-wrap gap-1.5 py-2">
                 {(ideaSubFilterOptions[selectedIdeaCategory] || []).map(sub => (
-                  <button
-                    key={sub}
-                    data-idea-filter={sub}
-                    aria-pressed={activeFilterLabels.includes(sub)}
-                    onClick={() => toggleIdeaFilter(sub)}
-                    className={`px-2.5 py-1 text-xs border transition-all ${
-                      activeFilterLabels.includes(sub) ? 'bg-blue-800 text-white border-blue-800' : 'bg-[#FAF8F5] text-slate-700 border-stone-200'
-                    }`}
-                  >
-                    {sub}
-                  </button>
+                  <button key={sub} data-idea-filter={sub} aria-pressed={activeFilterLabels.includes(sub)} onClick={() => toggleIdeaFilter(sub)}
+                    style={{ borderRadius: 0 }} className={`px-2 py-1 text-[11px] border ${activeFilterLabels.includes(sub) ? 'bg-[#1F3A2E] text-[#F4EFE4] border-[#1F3A2E]' : 'border-[#1B2A22]/50 text-[#1B2A22]'}`}>{sub}</button>
                 ))}
-                {activeFilterLabels.length > 0 && (
-                  <button data-idea-filter-clear onClick={() => setActiveFilterLabels([])} className="px-2.5 py-1 text-xs border border-rose-300 text-rose-800 bg-white">&times; Clear filters</button>
-                )}
+                {activeFilterLabels.length > 0 && <button data-idea-filter-clear onClick={() => setActiveFilterLabels([])} style={{ borderRadius: 0 }} className="px-2 py-1 text-[11px] border border-[#C8643C] text-[#C8643C]">&times; Clear</button>}
               </div>
-            </div>
-
-            {/* Smart Pattern & Local Deals Banner */}
-            <div style={{ order: 41 }} className="p-3.5 bg-purple-900 text-white space-y-1">
-              <div className="text-[10px] uppercase tracking-widest text-rose-300 font-medium">Ideas near you</div>
-              <p className="text-xs leading-relaxed">
-                {loc.isHome ? 'These are example picks to get you started. Scroll down and tap "See more" to find real places near you. Check prices and offers with the venue.' : `Tap "See more" at the bottom to find real places near ${loc.city}. Check prices and offers with the venue.`}
-              </p>
-            </div>
-
-            </>}
+                  ) : null }}
+                  more={(!showFavs && !ideaSearchRes && !adventurousMode) ? <button data-ideas-more onClick={seeMoreIdeas} disabled={isSearchingLiveIdeas} style={{ display: 'block', width: '100%', textAlign: 'center', margin: '14px 0 4px', fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', background: 'none', border: 0, color: '#1B2A22' }}>{isSearchingLiveIdeas ? 'Finding more...' : 'Tap for more \u2014 continued \u2304'}</button> : null} />
+              );
+            })()}
 
             {/* Filtered Ideas Cards: lead story, then a two-column front page of picture cards */}
-            <div className="np-grid">
+            <div className="space-y-3">
               {!showFavs && !ideaSearchRes && !adventurousMode && !ideasFeed.some(i => i.category === selectedIdeaCategory && String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase()) && (
                 <div data-ideas-empty className="p-4 bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">No {selectedIdeaCategory.toLowerCase()} ideas for {loc.city} yet. Tap "See more" below to find some near you.</div>
               )}
@@ -7050,12 +7215,9 @@ function AppInner({ onReset }) {
                 </div>
               )}
               {ideaSearchRes && !ideaSearchRes.busy && ideaSearchRes.items.length === 0 && <div data-ideas-search-empty className="p-4 bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">Nothing found for "{ideaSearchRes.q}" near {loc.city}. Try a simpler word, like "pizza" or "gym".</div>}
-              {(ideaSearchRes ? ideaSearchRes.items : showFavs ? favourites : adventurousMode
-                ? adventurePicks
-                : ideaListAll.slice(0, ideaShown)
-              ).map((idea, idx) => (idx !== 0 && ideaOpenId !== idea.id) ? (
-                  <IdeaTile key={idea.id} idea={idea} fav={isFav(idea)} onFav={() => toggleFav(idea)} onOpen={() => setIdeaOpenId(idea.id)} />
-              ) : (
+              {(ideaSearchRes ? ideaSearchRes.items : showFavs ? favourites : adventurousMode ? adventurePicks : ideaListAll).filter(it => it.id === ideaOpenId).map((idea, idx) => (
+                <Portal key={'sheet' + idea.id}><div data-idea-sheet className="fixed inset-0 z-[300] bg-black/40 flex items-end justify-center" onClick={() => setIdeaOpenId(null)}>
+                 <div className="w-full max-w-[560px] max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
                   <div
                     key={idea.id}
                     data-idea-full
@@ -7137,48 +7299,19 @@ function AppInner({ onReset }) {
                       </div>
 
                       <button
-                        onClick={() => {
-                          setTasks(prev => [...prev, {
-                            id: Date.now(),
-                            title: idea.title,
-                            duration: 90,
-                            status: 'pending',
-                            ...(() => {
-                              const g = getFreeGaps(selectedDateStr, calCtx, 100, { from: 540 })[0];
-                              const st = g ? roundUpTo(g.s, 15) : 17 * 60 + 30;
-                              return { startTime: fromMins(st), endTime: fromMins(st + 90) };
-                            })(),
-                            date: selectedDateStr,
-                            type: 'social',
-                            categoryColor: 'leisure',
-                            location: idea.title,
-                            transportMode: loc.isHome ? 'Metrolink' : 'Public transport',
-                            travelTime: 20,
-                            distance: idea.distance,
-                            leaveByNote: loc.isHome ? 'Leave 20m prior via Metrolink' : 'Leave 20m before to get there',
-                            notes: '',
-                            rating: null,
-                            reviewNote: '',
-                            withPerson: null,
-                            meetingType: 'Friendly'
-                          }]);
-                          setActiveTab('schedule');
-                        }}
+                        onClick={() => addIdeaToPlan(idea)}
                         className="px-3 py-1 bg-blue-800 hover:bg-blue-700 text-white text-[10px] uppercase tracking-wider font-medium"
                       >
                         + Schedule
                       </button>
                     </div>
-                    {idx !== 0 && <button data-idea-collapse onClick={() => setIdeaOpenId(null)} className="text-[10px] uppercase tracking-wider underline opacity-70">Show less</button>}
+                    <button data-idea-collapse onClick={() => setIdeaOpenId(null)} className="text-[10px] uppercase tracking-wider underline opacity-70">Close</button>
                     </div>
                   </div>
-                ))}
+                 </div>
+                </div></Portal>
+              ))}
 
-              {!showFavs && !ideaSearchRes && !adventurousMode && (
-                <button data-ideas-more onClick={seeMoreIdeas} disabled={isSearchingLiveIdeas} className="w-full py-3 bg-white border border-purple-900 text-purple-900 text-[11px] uppercase tracking-widest font-medium">
-                  {isSearchingLiveIdeas ? 'Finding more...' : 'Tap to see more'}
-                </button>
-              )}
             </div>
           </div>
         )}
@@ -7189,7 +7322,7 @@ function AppInner({ onReset }) {
         {activeTab === 'skills' && (
           <div className="np-skin flex flex-col gap-4 animate-in fade-in duration-300">
 
-            <div className={`${skillOpen ? 'hidden' : ''} p-4 bg-[#EDEAE0] border border-stone-300 space-y-2.5`}>
+            <div className="hidden">
               <div>
                 <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Development</span>
                 <h3 className="font-editorial text-lg font-normal">Grow the skills you care about</h3>
@@ -7272,8 +7405,8 @@ function AppInner({ onReset }) {
               )}
             </div>
 
-            <div className="p-4 bg-white border border-stone-200 space-y-3">
-              <div className={`${skillOpen ? 'hidden' : ''} flex justify-between items-center`}>
+            <div className="space-y-3">
+              <div className="hidden">
                 <div>
                   <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Your skills</span>
                   <h3 className="font-editorial text-lg font-normal">Your Development map</h3>
@@ -7307,7 +7440,14 @@ function AppInner({ onReset }) {
               </div>
 
               {/* Interactive SVG Branching Tree Visualization */}
-              <div data-skill-map className={`${skillOpen ? 'hidden' : ''} text-[#1B2A22] relative space-y-2`}>
+              {!skillOpen && <SkillIndex branches={currentForest.branches} domain={skillTreeDomain}
+                onDomain={(d) => { setSkillTreeDomain(d); const b0 = skillForest[d].branches[0]; if (b0) { setSelectedBranchId(b0.id); if (b0.skills[0]) setSelectedSkillId(b0.skills[0].id); } }}
+                invites={(buddies || []).filter(v => v.status === 'invited' && !v.is_owner)}
+                onOpen={(bid, sid) => { setSelectedBranchId(bid); setSelectedSkillId(sid); setSkillOpen(true); try { document.getElementById('pact-main').scrollTo({ top: 0 }); } catch (e) { /* ignore */ } }}
+                onAccept={(v) => respondBuddy(v, true)} onDecline={(v) => respondBuddy(v, false)}
+                onPlan={() => { setPlannerMode('task'); setPlannerResultsStep(false); setPlannerOpen(true); }}
+                onNew={() => { setShowAddSkillModal(v => !v); setShowAddBranchModal(false); }} />}
+              <div data-skill-map className={`${(!skillOpen && (showAddSkillModal || showAddBranchModal)) ? '' : 'hidden'} text-[#1B2A22] relative space-y-2 p-3 border-[1.5px] border-[#1B2A22]`}>
                 <div className="flex justify-between items-center mb-1">
                   <span className="text-[10px] uppercase tracking-widest text-[#1F3A2E] font-medium">
                     Tap a skill to open it
@@ -7445,18 +7585,16 @@ function AppInner({ onReset }) {
                   </div>
                 )}
 
-                <SkillIndex branches={currentForest.branches} selectedId={skillOpen ? activeSkill && activeSkill.id : null}
-                  invites={(buddies || []).filter(v => v.status === 'invited' && !v.is_owner)}
-                  onOpen={(bid, sid) => { setSelectedBranchId(bid); setSelectedSkillId(sid); setSkillOpen(true); try { document.getElementById('pact-main').scrollTo({ top: 0 }); } catch (e) { /* ignore */ } }}
-                  onAccept={(v) => respondBuddy(v, true)} onDecline={(v) => respondBuddy(v, false)} />
               </div>
 
               {/* Chapters view (a skill opened from the index) */}
               {skillOpen && activeSkill && (
-                <SkillChapters skill={activeSkill} branch={activeBranch}
-                  number={Math.max(1, currentForest.branches.flatMap(b => b.skills).findIndex(x => x.id === activeSkill.id) + 1)}
-                  onBack={() => setSkillOpen(false)}
+                <SkillChapters skill={activeSkill}
+                  skills={currentForest.branches.flatMap(b => b.skills)}
+                  onPickSkill={(id) => { if (id === '__all') { setSkillOpen(false); return; } const b = currentForest.branches.find(x => x.skills.some(k => k.id === id)); if (b) { setSelectedBranchId(b.id); setSelectedSkillId(id); } }}
                   onToggle={(st) => patchStep(activeSkill.id, st.id, { done: !st.done, doneDate: st.done ? null : todayDateStr() })}
+                  onPlan={() => { setPlannerMode('task'); setPlannerResultsStep(false); setPlannerOpen(true); }}
+                  weekText={(() => { const nm = activeSkill.name.toLowerCase(); const ss = (devSummary.sessions || []).filter(t => String(t.title).toLowerCase().includes(nm)); if (!ss.length) return 'No study blocks booked yet'; const avg = Math.round(ss.reduce((a, t) => a + (Number(t.duration) || 0), 0) / ss.length); return `${ss.length} \u00D7 ${avg} min \u00B7 ${ss.filter(t => t.status === 'done').length} done`; })()}
                   buddy={<BuddyPanel skill={activeSkill} friends={pactFriends} entry={(buddies || []).find(v => v.skill.toLowerCase() === activeSkill.name.toLowerCase() && (v.status === 'invited' || v.status === 'active'))}
                     onInvite={(fid, note) => inviteBuddy(activeSkill, fid, note)} onEnd={endBuddy} onRespond={respondBuddy} />} />
               )}
@@ -7666,194 +7804,201 @@ function AppInner({ onReset }) {
               ))}
             </div>
 
-            {socialSub === 'plans' && (<>
-
+            {socialSub === 'plans' && (() => {
+              const INK = '#1B2A22', MUT = '#5A675F', CLAY = '#C8643C', FOR = '#1F3A2E';
+              const dayBlock = (ds) => { const dt = ds ? new Date(ds + 'T00:00:00') : null; const ok = dt && !isNaN(dt.getTime()); return (
+                <div className="text-center" style={{ width: 46, borderRight: '1px solid #CFC7B4', paddingRight: 8 }}>
+                  <div className="font-fr" style={{ fontWeight: 600, fontSize: 24, lineHeight: 1, color: CLAY }}>{ok ? dt.getDate() : '–'}</div>
+                  <div className="text-[9px] tracking-[0.14em]" style={{ color: MUT, marginTop: 2 }}>{ok ? dt.toLocaleDateString('en-GB', { weekday: 'short' }).toUpperCase() : ''}</div>
+                </div>); };
+              const goalDefs = [
+                { id: 'Meet New Friends', label: 'Meet new friends', terms: 'social meetup', tip: 'walks, games, supper clubs' },
+                { id: 'Learn a New Skill', label: 'Learn a skill', terms: 'workshop class', tip: 'taster sessions, workshops' },
+                { id: 'Creative Hangout', label: 'Creative hangout', terms: 'art craft creative', tip: 'drawing, pottery, craft' },
+                { id: 'Get Moving', label: 'Get moving', terms: 'run club climbing yoga', tip: 'run clubs, climbing, yoga' }
+              ];
+              const goal = goalDefs.find(g => g.id === communityGoal) || goalDefs[0];
+              const city = loc.city; const uk = loc.country === 'United Kingdom';
+              const links = (g) => [
+                { label: 'Meetup', url: `https://www.meetup.com/find/?keywords=${encodeURIComponent(g.terms)}&location=${encodeURIComponent(city)}&source=EVENTS` },
+                { label: 'Eventbrite', url: uk ? `https://www.eventbrite.co.uk/d/united-kingdom--${encodeURIComponent(city.toLowerCase().replace(/\s+/g, '-'))}/${encodeURIComponent(g.terms.split(' ')[0])}/` : `https://www.google.com/search?q=${encodeURIComponent('eventbrite ' + g.terms + ' ' + city)}` },
+                { label: 'Google', url: `https://www.google.com/search?q=${encodeURIComponent(g.terms + ' events in ' + city + ' this week')}` }
+              ];
+              const jointCount = sharedEvents.length + sharedFriendPlans.length;
+              return (<>
             {/* Invitations as the front-page story */}
             {pendingInvites.slice(0, 3).map(e => { const d = e.details || {}; const who = e.owner_name || 'A friend'; return (
-              <article key={e.id} data-invite-story className="border-t-[3px] border-slate-900 pt-2 space-y-2">
-                <span className="np-flag">Invitation<span className="np-kicker">Society pages</span></span>
-                <h2 className="font-editorial text-[28px] leading-[1.02]">{who} invites you to {e.title}.</h2>
-                <div className="np-sc" style={{ color: '#B8532B', fontWeight: 600 }}>{d.date ? prettyDate(d.date) : 'Date to be confirmed'}{d.location ? ` — ${d.location}` : ''}</div>
-                <p className="np-cols text-[12px] leading-relaxed text-stone-700"><span className="np-dropcap">{who.trim()[0] || 'A'}</span>{who.trim().slice(1)} has proposed {d.start ? d.start + (d.end && d.end !== d.start ? '–' + d.end : '') : 'a time'}{d.location ? ' at ' + d.location : ''}. Reply below and it joins your schedule with your getting-ready time worked out.</p>
-                <div className="flex gap-2">
-                  <button data-story-accept onClick={() => answerEvent(e.id, 'accepted')} className="flex-1 h-11 bg-purple-900 text-white text-[13px] font-semibold" style={{ borderRadius: 0 }}>Accept</button>
-                  <button data-story-decline onClick={() => answerEvent(e.id, 'declined')} className="flex-1 h-11 border border-slate-900 text-[13px] font-semibold" style={{ borderRadius: 0 }}>Not this time</button>
+              <article key={e.id} data-invite-story className="p-3.5" style={{ border: `3px double ${INK}` }}>
+                <div className="text-[9px] uppercase tracking-[0.2em] font-bold" style={{ color: CLAY }}>Invitation{d.date ? ' · ' + prettyDate(d.date) : ''}</div>
+                <h2 className="font-fr" style={{ fontWeight: 600, fontSize: 22, lineHeight: 1.05, marginTop: 4 }}>{who} invites you to {e.title}.</h2>
+                <div className="text-[11px]" style={{ color: MUT, marginTop: 3 }}>{d.start ? d.start + (d.end && d.end !== d.start ? '–' + d.end : '') : 'Time to be confirmed'}{d.location ? ` · ${d.location}` : ''}</div>
+                <div className="flex gap-2 mt-2.5">
+                  <button data-story-accept onClick={() => answerEvent(e.id, 'accepted')} className="flex-1 h-[38px] text-xs font-semibold text-white" style={{ background: FOR, borderRadius: 0 }}>Accept</button>
+                  <button data-story-decline onClick={() => answerEvent(e.id, 'declined')} className="flex-1 h-[38px] text-xs font-semibold" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}>Not this time</button>
                 </div>
               </article>
             ); })}
 
-            {/* Invite a friend to a plan */}
-            <div data-invite-card className="p-4 bg-white border border-stone-200 space-y-3">
-              <div>
-                <span className="text-[10px] uppercase tracking-widest text-rose-700 font-medium">Invite a friend</span>
-                <h3 className="font-editorial text-base font-normal">Send a plan to someone on Pact</h3>
-                <p className="text-[11px] text-stone-600 leading-relaxed mt-1">Pick a plan and send the link by message. When they open it and sign in, they can accept it straight into their own schedule. No account yet? They can create one first.</p>
-              </div>
-              {upcomingTasks.length === 0 ? (
-                <p className="text-[11px] text-stone-500">Add a plan first, then you can invite someone to it.</p>
-              ) : (
-                <div className="space-y-2">
-                  <select aria-label="Plan to invite them to" value={inviteDraft.taskId} onChange={e => { setInviteDraft({ ...inviteDraft, taskId: e.target.value }); setInviteOut(null); }} className="w-full bg-[#FAF8F5] border border-stone-300 px-2.5 py-2 text-xs">
-                    <option value="">Choose a plan...</option>
-                    {upcomingTasks.slice(0, 30).map(t => <option key={t.id} value={t.id}>{prettyDate(t.date)} {t.startTime} · {t.title}</option>)}
-                  </select>
-                  <input type="text" aria-label="Friend's name (optional)" list="pact-friend-names" placeholder="Friend's name (optional)" value={inviteDraft.friend} onChange={e => { setInviteDraft({ ...inviteDraft, friend: e.target.value }); setInviteOut(null); }} className="w-full bg-[#FAF8F5] border border-stone-300 px-2.5 py-2 text-xs" />
-                  <datalist id="pact-friend-names">{[...friendsList.map(f => f.name), ...people.filter(x => !x.blocked).map(x => x.name)].filter((n, i, a) => n && a.indexOf(n) === i).map(n => <option key={n} value={n} />)}</datalist>
-                  {pactFriends.length > 0 && (
-                    <div data-pact-invite className="p-2.5 bg-[#FAF8F5] border border-stone-200 space-y-2">
-                      <div className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Send in Pact to your friends</div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {pactFriends.map(f => (
-                          <button key={f.userId} data-invite-friend={f.userId} aria-pressed={inviteSel.includes(f.userId)} onClick={() => setInviteSel(prev => prev.includes(f.userId) ? prev.filter(x => x !== f.userId) : [...prev, f.userId])} className={`px-2.5 py-1 text-[11px] border ${inviteSel.includes(f.userId) ? 'bg-purple-800 text-white border-purple-800' : 'bg-white border-stone-300'}`}>{f.name}</button>
-                        ))}
-                      </div>
-                      <input type="text" aria-label="Add a note (optional)" placeholder="Add a note (optional)" value={inviteNote} onChange={e => setInviteNote(e.target.value)} className="w-full bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
-                      <button data-invite-send-pact onClick={sendPactInvite} disabled={inviteBusy || !inviteDraft.taskId || inviteSel.length === 0} className="w-full py-2 bg-rose-700 text-white text-[11px] uppercase tracking-widest font-medium disabled:opacity-50">{inviteBusy ? 'Sending...' : 'Send invite in Pact'}</button>
-                      <p className="text-[10px] text-stone-500 leading-snug">It becomes a joint event: if you change it later, it updates on their calendar too.</p>
-                    </div>
-                  )}
-                  <button data-invite-create onClick={createInvite} className="w-full py-2 bg-purple-900 text-white text-[11px] uppercase tracking-widest font-medium">Or create a link to share</button>
-                </div>
-              )}
-              {inviteOut && (
-                <div data-invite-out className="space-y-2">
-                  <textarea readOnly aria-label="Invite message" value={inviteOut.text} rows={4} onFocus={e => e.target.select()} className="w-full bg-[#FAF8F5] border border-stone-300 px-2.5 py-2 text-[11px] leading-snug" />
-                  <div className="flex gap-2 flex-wrap">
-                    <button data-invite-copy onClick={() => copyText(inviteOut.text, 'Invite copied. Paste it into a message.')} className="px-3 py-1.5 bg-slate-900 text-white text-[10px] uppercase tracking-wider font-medium">Copy</button>
-                    <button onClick={() => shareText(inviteOut.text)} className="px-3 py-1.5 border border-stone-400 text-[10px] uppercase tracking-wider font-medium flex items-center gap-1"><Share2 size={11} /> Share</button>
-                    <a href={`https://wa.me/?text=${encodeURIComponent(inviteOut.text)}`} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 border border-stone-400 text-[10px] uppercase tracking-wider font-medium">WhatsApp</a>
-                  </div>
-                </div>
-              )}
+            <button data-send-plan-open onClick={() => setSendSheetOpen(true)} className="w-full h-11 text-[13px] font-semibold text-white" style={{ background: FOR, borderRadius: 0 }}>+ Send a plan</button>
+
+            <div data-plans-tabs className="grid grid-cols-2" style={{ border: `1.5px solid ${INK}` }}>
+              {[{ id: 'joint', label: `Joint plans${jointCount ? ' · ' + jointCount : ''}` }, { id: 'events', label: 'Find events' }].map((t, i) => (
+                <button key={t.id} data-plans-tab={t.id} onClick={() => setPlansTab(t.id)} className="py-2.5 text-[10px] uppercase tracking-[0.12em] font-semibold" style={{ borderRadius: 0, background: plansTab === t.id ? INK : 'transparent', color: plansTab === t.id ? '#F4EFE4' : INK, borderLeft: i ? `1px solid ${INK}` : 'none' }}>{t.label}</button>
+              ))}
             </div>
 
-            {/* Joint events: invites, who is coming, edits that sync to everyone */}
-            {(sharedEvents.length > 0 || sharedFriendPlans.length > 0) && (
-              <div data-joint-events className="p-4 bg-white border border-stone-200 space-y-3">
-                <div>
-                  <span className="text-[10px] uppercase tracking-widest text-rose-700 font-medium">Joint events{pendingInvites.length ? ` • ${pendingInvites.length} waiting` : ''}</span>
-                  <h3 className="font-editorial text-base font-normal">Plans with friends</h3>
-                  <p className="text-[11px] text-stone-600 mt-1">Everything you share with friends, or that friends have shared with you, in one place.</p>
-                </div>
+            {plansTab === 'joint' && (
+              <div data-joint-events>
+                {jointCount === 0 && <p data-joint-empty className="text-[12px] leading-relaxed py-4" style={{ color: MUT }}>Nothing planned together yet. Tap Send a plan to invite a friend to something on your schedule.</p>}
                 {sharedEvents.map(e => {
                   const d = e.details || {};
                   const hasLocal = tasks.some(t => t.sharedId === e.id);
                   const editing = editEvent && editEvent.id === e.id;
+                  const parts = (e.participants || []);
                   return (
-                    <div key={e.id} data-joint-event className={`p-2.5 border space-y-2 ${!e.is_owner && e.my_status === 'invited' ? 'bg-rose-50 border-rose-200' : 'bg-[#FAF8F5] border-stone-200'}`}>
-                      <div>
-                        <div className="text-xs font-medium text-slate-900">{e.title}</div>
-                        <div className="text-[10px] text-stone-600">{d.date ? prettyDate(d.date) : 'No date'}{d.start ? ` • ${d.start}${d.end && d.end !== d.start ? '–' + d.end : ''}` : ''}{d.location ? ` • ${d.location}` : ''}</div>
-                        <div className="text-[10px] text-stone-500">{e.is_owner ? 'You made this event' : `From ${e.owner_name}`}{(e.participants || []).length ? ' • ' + e.participants.map(pp => `${pp.name} (${pp.status})`).join(', ') : ''}</div>
+                    <div key={e.id} data-joint-event className="grid" style={{ gridTemplateColumns: '46px 1fr', gap: 10, padding: '12px 0', borderBottom: '1px solid #CFC7B4' }}>
+                      {dayBlock(d.date)}
+                      <div className="min-w-0 space-y-1.5">
+                        <div>
+                          <div className="font-fr" style={{ fontWeight: 600, fontSize: 17, lineHeight: 1.1 }}>{e.title}</div>
+                          <div className="text-[11px]" style={{ color: MUT, marginTop: 2 }}>{d.start ? `${d.start}${d.end && d.end !== d.start ? '–' + d.end : ''}` : 'No time yet'}{d.location ? ` · ${d.location}` : ''} &middot; {e.is_owner ? 'You made this' : `from ${e.owner_name}`}</div>
+                          {parts.length > 0 && <div className="mt-1.5 text-[11px]">{parts.map((pp, i) => <span key={i} style={{ marginRight: 12, fontWeight: pp.status === 'accepted' ? 700 : 400, color: pp.status === 'accepted' ? INK : MUT }}>{pp.status === 'accepted' ? '✓ ' : '? '}{pp.name}</span>)}</div>}
+                        </div>
+                        {!e.is_owner && e.my_status === 'invited' && (
+                          <div className="flex gap-2">
+                            <button data-event-accept onClick={() => answerEvent(e.id, 'accepted')} className="px-3.5 h-[34px] text-xs font-semibold text-white" style={{ background: FOR, borderRadius: 0 }}>Accept</button>
+                            <button data-event-decline onClick={() => answerEvent(e.id, 'declined')} className="px-3.5 h-[34px] text-xs font-semibold" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}>Can't make it</button>
+                          </div>
+                        )}
+                        {!e.is_owner && e.my_status === 'accepted' && <div className="text-[10px]" style={{ color: MUT }}>On your schedule. It updates automatically if {e.owner_name} changes it.</div>}
+                        {e.is_owner && !editing && (
+                          <div className="flex flex-wrap gap-x-3 gap-y-1 text-[10px] uppercase tracking-[0.12em]" style={{ color: MUT }}>
+                            <button data-event-edit onClick={() => setEditEvent({ id: e.id, title: e.title, date: d.date || '', start: d.start || '', end: d.end || '', location: d.location || '' })} style={{ borderRadius: 0, textTransform: 'uppercase', letterSpacing: '0.12em' }}>Edit</button>
+                            {!hasLocal && <button onClick={() => addEventToMySchedule(e)} style={{ borderRadius: 0, textTransform: 'uppercase', letterSpacing: '0.12em' }}>Add to my schedule</button>}
+                            <button data-event-cancel onClick={() => cancelEvent(e)} style={{ borderRadius: 0, textTransform: 'uppercase', letterSpacing: '0.12em', color: CLAY }}>Cancel for everyone</button>
+                          </div>
+                        )}
+                        {editing && (
+                          <div data-event-edit-form className="space-y-1.5">
+                            <input type="text" aria-label="Event title" value={editEvent.title} onChange={ev => setEditEvent({ ...editEvent, title: ev.target.value })} className="w-full bg-transparent px-2 py-1.5 text-xs" style={{ border: `1px solid ${INK}`, borderRadius: 0 }} />
+                            <div className="grid grid-cols-3 gap-1.5">
+                              <input type="date" aria-label="Event date" value={editEvent.date} onChange={ev => setEditEvent({ ...editEvent, date: ev.target.value })} className="bg-transparent px-1.5 py-1 text-[11px]" style={{ border: `1px solid ${INK}`, borderRadius: 0 }} />
+                              <input type="time" aria-label="Event start" value={editEvent.start} onChange={ev => setEditEvent({ ...editEvent, start: ev.target.value })} className="bg-transparent px-1.5 py-1 text-[11px]" style={{ border: `1px solid ${INK}`, borderRadius: 0 }} />
+                              <input type="time" aria-label="Event end" value={editEvent.end} onChange={ev => setEditEvent({ ...editEvent, end: ev.target.value })} className="bg-transparent px-1.5 py-1 text-[11px]" style={{ border: `1px solid ${INK}`, borderRadius: 0 }} />
+                            </div>
+                            <input type="text" aria-label="Event location" placeholder="Location" value={editEvent.location} onChange={ev => setEditEvent({ ...editEvent, location: ev.target.value })} className="w-full bg-transparent px-2 py-1.5 text-xs" style={{ border: `1px solid ${INK}`, borderRadius: 0 }} />
+                            <div className="flex gap-2">
+                              <button data-event-save onClick={saveEventEdit} className="px-3 h-[34px] text-xs font-semibold text-white" style={{ background: FOR, borderRadius: 0 }}>Save and tell everyone</button>
+                              <button onClick={() => setEditEvent(null)} className="px-3 h-[34px] text-xs font-semibold" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}>Back</button>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                      {!e.is_owner && e.my_status === 'invited' && (
-                        <div className="flex gap-1.5">
-                          <button data-event-accept onClick={() => answerEvent(e.id, 'accepted')} className="px-2.5 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Accept</button>
-                          <button data-event-decline onClick={() => answerEvent(e.id, 'declined')} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Can't make it</button>
-                        </div>
-                      )}
-                      {!e.is_owner && e.my_status === 'accepted' && <div className="text-[10px] text-purple-800">On your schedule. It updates automatically if {e.owner_name} changes it.</div>}
-                      {e.is_owner && !editing && (
-                        <div className="flex flex-wrap gap-1.5">
-                          <button data-event-edit onClick={() => setEditEvent({ id: e.id, title: e.title, date: d.date || '', start: d.start || '', end: d.end || '', location: d.location || '' })} className="px-2.5 py-1 bg-slate-900 text-white text-[10px] uppercase tracking-wider">Edit for everyone</button>
-                          {!hasLocal && <button onClick={() => addEventToMySchedule(e)} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Add to my schedule</button>}
-                          <button data-event-cancel onClick={() => cancelEvent(e)} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider text-rose-700">Cancel for everyone</button>
-                        </div>
-                      )}
-                      {editing && (
-                        <div data-event-edit-form className="space-y-1.5">
-                          <input type="text" aria-label="Event title" value={editEvent.title} onChange={ev => setEditEvent({ ...editEvent, title: ev.target.value })} className="w-full bg-white border border-stone-300 px-2 py-1 text-xs" />
-                          <div className="grid grid-cols-3 gap-1.5">
-                            <input type="date" aria-label="Event date" value={editEvent.date} onChange={ev => setEditEvent({ ...editEvent, date: ev.target.value })} className="bg-white border border-stone-300 px-1.5 py-1 text-[11px]" />
-                            <input type="time" aria-label="Event start" value={editEvent.start} onChange={ev => setEditEvent({ ...editEvent, start: ev.target.value })} className="bg-white border border-stone-300 px-1.5 py-1 text-[11px]" />
-                            <input type="time" aria-label="Event end" value={editEvent.end} onChange={ev => setEditEvent({ ...editEvent, end: ev.target.value })} className="bg-white border border-stone-300 px-1.5 py-1 text-[11px]" />
-                          </div>
-                          <input type="text" aria-label="Event location" placeholder="Location" value={editEvent.location} onChange={ev => setEditEvent({ ...editEvent, location: ev.target.value })} className="w-full bg-white border border-stone-300 px-2 py-1 text-xs" />
-                          <div className="flex gap-1.5">
-                            <button data-event-save onClick={saveEventEdit} className="px-2.5 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Save and tell everyone</button>
-                            <button onClick={() => setEditEvent(null)} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Back</button>
-                          </div>
-                        </div>
-                      )}
                     </div>
                   );
                 })}
-              {sharedFriendPlans.map(plan => (
-                <div key={plan.id} className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
-                  <div className="flex justify-between items-start">
+                {sharedFriendPlans.map(plan => (
+                  <div key={plan.id} className="space-y-2" style={{ padding: '12px 0', borderBottom: '1px solid #CFC7B4' }}>
                     <div>
-                      <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 bg-purple-800 text-white">
-                        w/ {plan.friend}
-                      </span>
-                      <h4 className="text-xs font-medium text-slate-900 mt-1">{plan.title}</h4>
-                      <div className="text-[11px] text-stone-600">{plan.day} @ {plan.time} • {plan.location}</div>
+                      <div className="text-[10px] uppercase tracking-[0.14em] font-bold" style={{ color: CLAY }}>With {plan.friend}</div>
+                      <div className="font-fr" style={{ fontWeight: 600, fontSize: 17, lineHeight: 1.1 }}>{plan.title}</div>
+                      <div className="text-[11px]" style={{ color: MUT }}>{plan.day} @ {plan.time} &middot; {plan.location}</div>
+                    </div>
+                    <div className="text-[11px] pl-2" style={{ borderLeft: `2px solid ${FOR}`, color: MUT }}>{plan.syncStatus}</div>
+                    <div className="space-y-1">
+                      <span className="text-[10px] uppercase tracking-[0.14em] block" style={{ color: MUT }}>Need to push back? Moves it on your side:</span>
+                      <div className="grid grid-cols-4 gap-1.5">
+                        {[15, 30, 45, 60].map(mins => <button key={mins} onClick={() => handlePushSharedPlan(plan.id, mins)} className="py-1.5 text-[10px] font-semibold" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}>+{mins}m</button>)}
+                      </div>
                     </div>
                   </div>
-
-                  <div className="text-[10px] text-blue-900 bg-blue-50 px-2 py-1 border-l-2 border-blue-800">
-                    {plan.syncStatus}
-                  </div>
-
-                  <div className="space-y-1 pt-1">
-                    <span className="text-[10px] uppercase tracking-wider text-stone-500 block">
-                      Need to push back? Moves it on your side:
-                    </span>
-                    <div className="grid grid-cols-4 gap-1.5">
-                      {[15, 30, 45, 60].map(mins => (
-                        <button
-                          key={mins}
-                          onClick={() => handlePushSharedPlan(plan.id, mins)}
-                          className="py-1 bg-white hover:bg-rose-700 hover:text-white border border-stone-300 text-[10px] font-medium transition-colors"
-                        >
-                          +{mins}m
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
+                ))}
               </div>
             )}
 
-            {/* Community events: honest search links, no made-up listings */}
-            <div data-community className="p-4 bg-white border border-stone-200 space-y-3">
-              <div>
-                <span className="text-[10px] uppercase tracking-widest text-blue-800 font-medium">Find events near {loc.city}</span>
-                <h3 className="font-editorial text-base font-normal">What do you want out of an event?</h3>
-                <p className="text-[11px] text-stone-600 leading-snug mt-1">Pact doesn't list events itself, so it never shows anything out of date or made up. Pick a goal and it opens a live search for {loc.city} on the sites where local events are really posted.</p>
-              </div>
-              {(() => {
-                const city = loc.city;
-                const uk = loc.country === 'United Kingdom';
-                const goals = [
-                  { id: 'Meet New Friends', terms: 'social meetup', tip: 'Group walks, language exchanges, board games, supper clubs.' },
-                  { id: 'Learn a New Skill', terms: 'workshop class', tip: 'Short courses, taster sessions, talks and workshops.' },
-                  { id: 'Creative Hangout', terms: 'art craft creative', tip: 'Life drawing, pottery, writing groups, craft nights.' }
-                ];
-                const links = (g) => [
-                  { label: 'Meetup', url: `https://www.meetup.com/find/?keywords=${encodeURIComponent(g.terms)}&location=${encodeURIComponent(city)}&source=EVENTS` },
-                  { label: 'Eventbrite', url: uk ? `https://www.eventbrite.co.uk/d/united-kingdom--${encodeURIComponent(city.toLowerCase().replace(/\s+/g, '-'))}/${encodeURIComponent(g.terms.split(' ')[0])}/` : `https://www.google.com/search?q=${encodeURIComponent(g.terms + ' events ' + city + ' site:eventbrite.com')}` },
-                  { label: 'Google', url: `https://www.google.com/search?q=${encodeURIComponent(g.terms + ' events in ' + city + ' this week')}` }
-                ];
-                return (
-                  <div className="space-y-2.5">
-                    {goals.map(g => (
-                      <div key={g.id} data-community-goal className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
-                        <div><div className="text-xs font-medium text-slate-900">{g.id}</div><div className="text-[11px] text-stone-500">{g.tip}</div></div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {links(g).map(l => <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer" className="px-2.5 py-1 border border-blue-800 text-blue-800 text-[10px] uppercase tracking-wider font-medium inline-flex items-center gap-1"><ExternalLink size={11} /> {l.label}</a>)}
-                        </div>
-                      </div>
-                    ))}
-                    <div className="flex gap-1.5">
-                      <input data-community-q type="search" aria-label="Search events" placeholder="Something else, e.g. salsa, running club" value={communityQuery} onChange={e => setCommunityQuery(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && communityQuery.trim()) window.open(`https://www.google.com/search?q=${encodeURIComponent(communityQuery.trim() + ' events in ' + city)}`, '_blank', 'noopener'); }} className="flex-1 min-w-0 bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs" />
-                      <a data-community-go href={communityQuery.trim() ? `https://www.google.com/search?q=${encodeURIComponent(communityQuery.trim() + ' events in ' + city)}` : undefined} target="_blank" rel="noopener noreferrer" className={`px-3 py-1.5 bg-blue-800 text-white text-[10px] uppercase tracking-wider font-medium ${communityQuery.trim() ? '' : 'opacity-50 pointer-events-none'}`}>Search</a>
-                    </div>
+            {plansTab === 'events' && (
+              <div data-community className="space-y-3">
+                <div>
+                  <h3 className="font-fr" style={{ fontSize: 28, fontWeight: 600, lineHeight: 1, letterSpacing: '-0.025em' }}>What do you fancy?</h3>
+                  <p className="font-fr" style={{ fontStyle: 'italic', fontSize: 15, color: MUT, marginTop: 6 }}>Live searches for {city}. Nothing is made up.</p>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {goalDefs.map(g => { const on = g.id === goal.id; return (
+                    <button key={g.id} data-community-goal={g.id} aria-pressed={on} onClick={() => setCommunityGoal(g.id)} className="text-left" style={{ padding: '10px 11px', borderRadius: 0, border: on ? `1.5px solid ${INK}` : '1px solid #CFC7B4', background: on ? INK : 'transparent', color: on ? '#F4EFE4' : INK }}>
+                      <div className="font-fr" style={{ fontWeight: 600, fontSize: 15, lineHeight: 1.1 }}>{g.label}</div>
+                      <div className="text-[10.5px]" style={{ marginTop: 2, color: on ? '#B9C6BE' : MUT }}>{g.tip}</div>
+                    </button>); })}
+                </div>
+                <div style={{ borderTop: `3px solid ${INK}`, paddingTop: 6 }}><span className="text-[10px] uppercase tracking-[0.14em]" style={{ color: MUT }}>Search &ldquo;{goal.label}&rdquo; on</span></div>
+                <div className="grid grid-cols-3 gap-2">
+                  {links(goal).map((l, i) => <a key={l.label} href={l.url} target="_blank" rel="noopener noreferrer" className="h-11 flex items-center justify-center text-xs font-semibold" style={{ borderRadius: 0, background: i < 2 ? FOR : 'transparent', color: i < 2 ? '#F4EFE4' : INK, border: `1px solid ${i < 2 ? FOR : INK}` }}>{l.label}</a>)}
+                </div>
+                <div className="space-y-2"><span className="text-[10px] uppercase tracking-[0.14em]" style={{ color: MUT }}>Or search for something else</span>
+                  <div className="flex gap-2">
+                    <input data-community-q type="search" aria-label="Search events" placeholder="e.g. salsa, running club" value={communityQuery} onChange={e => setCommunityQuery(e.target.value)} onKeyDown={e => { if (e.key === 'Enter' && communityQuery.trim()) window.open(`https://www.google.com/search?q=${encodeURIComponent(communityQuery.trim() + ' events in ' + city)}`, '_blank', 'noopener'); }} className="flex-1 min-w-0 bg-transparent px-3 h-10 text-[13px]" style={{ border: `1.5px solid ${INK}`, borderRadius: 0 }} />
+                    <a data-community-go href={communityQuery.trim() ? `https://www.google.com/search?q=${encodeURIComponent(communityQuery.trim() + ' events in ' + city)}` : undefined} target="_blank" rel="noopener noreferrer" className="px-4 h-10 flex items-center text-xs font-semibold text-white" style={{ background: FOR, borderRadius: 0, opacity: communityQuery.trim() ? 1 : 0.5 }}>Search</a>
                   </div>
-                );
-              })()}
-            </div>
-            </>)}
+                </div>
+                <p className="text-[11px]" style={{ color: MUT }}>Pact never lists events itself, so it never shows anything out of date.</p>
+              </div>
+            )}
+
+            {sendSheetOpen && (
+              <Portal>
+                <div data-send-sheet className="fixed inset-0 flex items-end justify-center" style={{ zIndex: 300 }} role="dialog" aria-label="Send a plan">
+                  <div className="absolute inset-0" style={{ background: 'rgba(27,42,34,.5)' }} onClick={() => setSendSheetOpen(false)} />
+                  <div className="relative w-full max-w-md max-h-[88dvh] overflow-y-auto px-6 pt-4 pb-6" style={{ background: '#F4EFE4', borderTop: `3px double ${INK}`, color: INK }}>
+                    <div className="flex items-baseline justify-between"><div className="font-fr" style={{ fontWeight: 600, fontSize: 24 }}>Send a plan</div><button aria-label="Close" onClick={() => setSendSheetOpen(false)} style={{ fontSize: 22, color: MUT, borderRadius: 0 }}>&times;</button></div>
+                    {upcomingTasks.length === 0 ? (
+                      <p className="text-[12px] leading-relaxed mt-3" style={{ color: MUT }}>Add a plan to your schedule first, then you can invite someone to it.</p>
+                    ) : (<>
+                      <div className="mt-3 space-y-1.5"><span className="text-[10px] uppercase tracking-[0.14em]" style={{ color: MUT }}>1 &middot; Plan</span>
+                        <select aria-label="Plan to invite them to" value={inviteDraft.taskId} onChange={e => { setInviteDraft({ ...inviteDraft, taskId: e.target.value }); setInviteOut(null); }} className="w-full bg-transparent px-3 py-2.5 text-sm font-fr" style={{ border: `1.5px solid ${INK}`, borderRadius: 0, fontWeight: 600 }}>
+                          <option value="">Choose a plan...</option>
+                          {upcomingTasks.slice(0, 30).map(t => <option key={t.id} value={t.id}>{prettyDate(t.date)} {t.startTime} · {t.title}</option>)}
+                        </select>
+                      </div>
+                      <div className="mt-3 space-y-2"><span className="text-[10px] uppercase tracking-[0.14em]" style={{ color: MUT }}>2 &middot; Friends</span>
+                        {pactFriends.length === 0 ? <p className="text-[12px]" style={{ color: MUT }}>No friends on Pact yet. Add them in Friend Book, or copy an invite link below.</p> : (
+                          <div data-pact-invite className="flex gap-1.5 overflow-x-auto pt-2 pl-1 pb-1">
+                            {pactFriends.map(f => { const on = inviteSel.includes(f.userId); return (
+                              <button key={f.userId} data-invite-friend={f.userId} aria-pressed={on} onClick={() => setInviteSel(prev => prev.includes(f.userId) ? prev.filter(x => x !== f.userId) : [...prev, f.userId])} className="shrink-0 text-center" style={{ width: 62, borderRadius: 0 }}>
+                                <div className="relative mx-auto" style={{ width: 54 }}>
+                                  <div style={{ outline: on ? `2.5px solid ${CLAY}` : 'none', outlineOffset: 2 }}><Avatar src={f.avatar} name={f.name} size={54} /></div>
+                                  {on && <span className="absolute flex items-center justify-center text-[11px]" style={{ right: -5, top: -5, width: 18, height: 18, background: CLAY, color: '#F4EFE4' }}>&#10003;</span>}
+                                </div>
+                                <div className="text-[10.5px] mt-1.5 truncate" style={{ fontWeight: on ? 700 : 400, color: on ? INK : MUT }}>{String(f.name).split(' ')[0]}</div>
+                              </button>); })}
+                          </div>
+                        )}
+                      </div>
+                      {pactFriends.length > 0 && (<>
+                        <input type="text" aria-label="Add a note (optional)" placeholder="Add a note (optional)" value={inviteNote} onChange={e => setInviteNote(e.target.value)} className="w-full bg-transparent py-2 mt-3 text-[13px] outline-none" style={{ borderBottom: `1.5px solid ${INK}` }} />
+                        <button data-invite-send-pact onClick={async () => { await sendPactInvite(); }} disabled={inviteBusy || !inviteDraft.taskId || inviteSel.length === 0} className="w-full h-11 mt-3.5 text-[13px] font-semibold text-white disabled:opacity-50" style={{ background: FOR, borderRadius: 0 }}>{inviteSel.length ? `Send to ${inviteSel.length} friend${inviteSel.length === 1 ? '' : 's'}` : 'Pick a friend to send to'}</button>
+                        <p className="text-[10px] mt-1.5 leading-snug" style={{ color: MUT }}>It becomes a joint event: if you change it later, it updates on their calendar too.</p>
+                      </>)}
+                      <div className="mt-3.5 text-center">
+                        <input type="text" aria-label="Friend's name (optional)" list="pact-friend-names" placeholder="Friend's name (optional, for a link)" value={inviteDraft.friend} onChange={e => { setInviteDraft({ ...inviteDraft, friend: e.target.value }); setInviteOut(null); }} className="w-full bg-transparent px-2.5 py-2 text-xs mb-2" style={{ border: '1px solid #CFC7B4', borderRadius: 0 }} />
+                        <datalist id="pact-friend-names">{[...friendsList.map(f => f.name), ...people.filter(x => !x.blocked).map(x => x.name)].filter((n, i, a) => n && a.indexOf(n) === i).map(n => <option key={n} value={n} />)}</datalist>
+                        <button data-invite-create onClick={createInvite} className="text-[11px] underline" style={{ color: MUT, borderRadius: 0 }}>Not on Pact? Copy an invite link</button>
+                      </div>
+                      {inviteOut && (
+                        <div data-invite-out className="space-y-2 mt-3">
+                          <textarea readOnly aria-label="Invite message" value={inviteOut.text} rows={4} onFocus={e => e.target.select()} className="w-full bg-transparent px-2.5 py-2 text-[11px] leading-snug" style={{ border: '1px solid #CFC7B4', borderRadius: 0 }} />
+                          <div className="flex gap-2 flex-wrap">
+                            <button data-invite-copy onClick={() => copyText(inviteOut.text, 'Invite copied. Paste it into a message.')} className="px-3 h-[34px] text-[10px] uppercase tracking-wider font-semibold text-white" style={{ background: FOR, borderRadius: 0 }}>Copy</button>
+                            <button onClick={() => shareText(inviteOut.text)} className="px-3 h-[34px] text-[10px] uppercase tracking-wider font-semibold flex items-center gap-1" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}><Share2 size={11} /> Share</button>
+                            <a href={`https://wa.me/?text=${encodeURIComponent(inviteOut.text)}`} target="_blank" rel="noopener noreferrer" className="px-3 h-[34px] flex items-center text-[10px] uppercase tracking-wider font-semibold" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}>WhatsApp</a>
+                          </div>
+                        </div>
+                      )}
+                    </>)}
+                  </div>
+                </div>
+              </Portal>
+            )}
+              </>);
+            })()}
 
             {socialSub === 'friends' && (
               <div data-friendbook className="space-y-4">
@@ -8074,153 +8219,214 @@ function AppInner({ onReset }) {
                 setPeopleUserRes(null); setPeopleUserQ('');
               };
               const hasPicker = typeof navigator !== 'undefined' && !!(navigator as any).contacts && !!(navigator as any).contacts.select;
-              return (
-              <div data-people-tab className="p-4 bg-white border border-stone-200 space-y-3">
-                <div>
-                  <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Your People</span>
-                  <h3 className="font-editorial text-base font-normal">Personal & business connections</h3>
-                  <p className="text-[11px] text-stone-500 leading-snug mt-0.5">Keep track of people in your life. They don't need a Pact account. Choose how often you want a nudge to get in touch.</p>
-                </div>
-
-                <div data-add-username className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
-                  <div className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Add someone by their Pact username</div>
-                  <div className="flex gap-1.5">
-                    <input data-people-username type="text" aria-label="Pact username" placeholder="@username" value={peopleUserQ} onChange={e => { setPeopleUserQ(e.target.value); setPeopleUserRes(null); }} onKeyDown={e => { if (e.key === 'Enter') findPersonByUsername(); }} className="flex-1 min-w-0 bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
-                    <button data-people-username-find onClick={findPersonByUsername} disabled={!peopleUserQ.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider disabled:opacity-50">Find</button>
-                  </div>
-                  {peopleUserRes === 'none' && <p className="text-[11px] text-stone-600">No one found with that username. Check the spelling with them.</p>}
-                  {peopleUserRes === 'offline' && <p className="text-[11px] text-stone-600">Sign in with an account to look people up.</p>}
-                  {peopleUserRes === 'error' && <p className="text-[11px] text-stone-600">Couldn't search just now. Try again.</p>}
-                  {peopleUserRes && typeof peopleUserRes === 'object' && (
-                    <div data-people-username-result className="p-2.5 bg-white border border-stone-200 space-y-2">
-                      <div className="flex items-center gap-2.5"><Avatar src={peopleUserRes.avatar} name={peopleUserRes.display_name || peopleUserRes.username} size={40} /><div className="min-w-0"><div className="text-xs font-medium text-slate-900">{peopleUserRes.display_name || peopleUserRes.username} <span className="text-stone-400 font-normal">@{peopleUserRes.username}</span></div>{peopleUserRes.bio && <div className="text-[10px] text-stone-600 leading-snug">{peopleUserRes.bio}</div>}</div></div>
-                      <div className="flex flex-wrap gap-1.5">
-                        <button data-people-username-add onClick={() => addUserAsPerson(peopleUserRes)} className="px-2.5 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Add to Your People</button>
-                        {peopleUserRes.relation === 'none' && <button onClick={() => { sendFriendReq(peopleUserRes.id); }} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Also send friend request</button>}
+              const INK = '#1B2A22', MUT = '#5A675F', CLAY = '#C8643C', FOR = '#1F3A2E';
+              const q = peopleQ.trim().toLowerCase();
+              const vis = shown.filter(x => !q || String(x.name).toLowerCase().includes(q) || String(x.relation || '').toLowerCase().includes(q) || String(x.username || '').toLowerCase().includes(q));
+              const dueList = peopleFilter === 'blocked' ? [] : vis.filter(x => personOverdue(x, today, addDaysStr) !== null);
+              const restList = peopleFilter === 'blocked' ? vis : vis.filter(x => personOverdue(x, today, addDaysStr) === null);
+              const tint = ['#4F7A63|#1F3A2E', '#C8643C|#7A3418', '#3A6A70|#17323A', '#B08A3E|#6B5320', '#7A3418|#3E1B0D'];
+              const tile = (pr, i) => { const [c1, c2] = tint[(String(pr.name).charCodeAt(0) || i) % tint.length].split('|'); return pr.avatar ? <Avatar src={pr.avatar} name={pr.name} size={40} /> : <div style={{ width: 40, height: 40, flex: 'none', background: `radial-gradient(circle,rgba(244,239,228,.30) .9px,transparent 1.5px) 0 0/5px 5px,linear-gradient(135deg,${c1},${c2})`, color: '#F4EFE4', display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="font-fr"><span style={{ fontSize: 17, fontWeight: 600 }}>{String(pr.name).trim()[0] || '?'}</span></div>; };
+              const freqLabel = (n) => (REMIND_OPTIONS.find(o => o.v === n) || { l: n ? `Every ${n} days` : 'No reminders' }).l;
+              const subLine = (pr) => {
+                const over = personOverdue(pr, today, addDaysStr);
+                const since = daysBetweenStr(pr.lastContact || pr.createdAt || today, today);
+                const next = pr.remindEvery ? daysBetweenStr(today, addDaysStr(pr.lastContact || pr.createdAt || today, pr.remindEvery)) : null;
+                const kind = pr.kind === 'business' ? 'Business' : 'Personal';
+                if (pr.blocked) return { t: `${kind} · Blocked, no reminders`, hot: false };
+                if (over !== null) return { t: `${kind} · ${over > 0 ? `${over} day${over === 1 ? '' : 's'} overdue` : `last spoke ${agoText(since)}`}`, hot: true };
+                if (pr.snoozeUntil && pr.snoozeUntil > today) return { t: `${kind} · snoozed`, hot: false };
+                return { t: pr.remindEvery ? `${freqLabel(pr.remindEvery)} · in ${next} day${next === 1 ? '' : 's'}` : `${kind} · no reminders`, hot: false };
+              };
+              const detail = (pr) => {
+                const linked = pactFriends.find(f => f.userId === pr.linkedUserId);
+                return (
+                  <div data-person-card className="space-y-2.5 pb-3" style={{ borderBottom: '1px solid #CFC7B4' }}>
+                    {pr.username && <div data-person-username className="flex items-center gap-1.5"><Avatar src={pr.avatar} name={pr.name} size={20} /><span className="text-[11px]" style={{ color: MUT }}>@{pr.username}{pr.bio ? ' • ' + pr.bio : ''}</span></div>}
+                    {pr.relation && <div className="text-[11px]" style={{ color: MUT }}>{pr.relation}</div>}
+                    {linked && <button data-person-view-profile onClick={() => openFriendProfile(linked)} className="text-[11px] underline" style={{ color: FOR, borderRadius: 0 }}>View profile</button>}
+                    <div className="text-[11px]" style={{ color: MUT }}>Last in touch: {agoText(daysBetweenStr(pr.lastContact || pr.createdAt || today, today))}</div>
+                    <div data-person-contact className="flex flex-wrap gap-1.5 items-center">
+                      {pr.phone && <a data-contact-call href={`tel:${pr.phone}`} className="px-2.5 py-1.5 text-[10px] uppercase tracking-wider font-semibold" style={{ border: `1px solid ${INK}` }}>Call</a>}
+                      {(pr.whatsapp || pr.phone) && <a data-contact-wa href={`https://wa.me/${waDigits(pr.whatsapp || pr.phone)}`} target="_blank" rel="noopener noreferrer" className="px-2.5 py-1.5 text-[10px] uppercase tracking-wider font-semibold" style={{ border: `1px solid ${INK}` }}>WhatsApp</a>}
+                      {pr.email && <a data-contact-mail href={`mailto:${pr.email}`} className="px-2.5 py-1.5 text-[10px] uppercase tracking-wider font-semibold" style={{ border: `1px solid ${INK}` }}>Email</a>}
+                      <button data-contact-edit onClick={() => setContactEditId(contactEditId === pr.id ? null : pr.id)} className="px-2 py-1 text-[10px] underline" style={{ color: MUT, borderRadius: 0 }}>{(pr.phone || pr.whatsapp || pr.email) ? 'Edit contact info' : 'Add contact info'}</button>
+                    </div>
+                    {contactEditId === pr.id && (
+                      <div data-contact-form className="grid grid-cols-1 gap-1.5">
+                        <input type="tel" aria-label={`Phone for ${pr.name}`} placeholder="Phone" value={pr.phone || ''} onChange={e => updatePerson(pr.id, { phone: e.target.value })} className="bg-transparent px-2 py-1.5 text-xs" style={{ border: `1px solid ${INK}`, borderRadius: 0 }} />
+                        <input type="tel" aria-label={`WhatsApp for ${pr.name}`} placeholder="WhatsApp (leave blank to use their phone)" value={pr.whatsapp || ''} onChange={e => updatePerson(pr.id, { whatsapp: e.target.value })} className="bg-transparent px-2 py-1.5 text-xs" style={{ border: `1px solid ${INK}`, borderRadius: 0 }} />
+                        <input type="email" aria-label={`Email for ${pr.name}`} placeholder="Email" value={pr.email || ''} onChange={e => updatePerson(pr.id, { email: e.target.value })} className="bg-transparent px-2 py-1.5 text-xs" style={{ border: `1px solid ${INK}`, borderRadius: 0 }} />
                       </div>
-                      <p className="text-[10px] text-stone-500 leading-snug">Their name, picture and description are filled in for you. Phone and email stay private unless you type them in yourself.</p>
-                    </div>
-                  )}
-                </div>
-
-                <div data-import-bar className="flex flex-wrap gap-1.5">
-                  {hasPicker && <button data-import-picker onClick={pickContacts} className="px-2.5 py-1.5 bg-slate-900 text-white text-[10px] uppercase tracking-wider font-medium">Add from phone contacts</button>}
-                  <label className="px-2.5 py-1.5 border border-stone-400 text-[10px] uppercase tracking-wider font-medium cursor-pointer">Import a file<input data-import-file type="file" multiple className="hidden" onChange={onContactFile} /></label>
-                  <button data-import-paste-toggle onClick={() => setPasteOpen(o => !o)} className="px-2.5 py-1.5 border border-stone-400 text-[10px] uppercase tracking-wider font-medium">Paste a list</button>
-                </div>
-                {pasteOpen && (
-                  <div data-import-paste className="space-y-1.5">
-                    <textarea aria-label="Paste contacts" rows={5} placeholder={'One person per line:\nMaya Lin, 07700 900123, maya@example.com\nSam Patel, 07911 123456'} value={pasteText} onChange={e => setPasteText(e.target.value)} className="w-full bg-white border border-stone-300 px-2.5 py-2 text-xs" />
-                    <button data-import-paste-go onClick={importPasted} disabled={!pasteText.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider disabled:opacity-50">Review</button>
+                    )}
+                    {!pr.blocked && (
+                      <div className="flex flex-wrap gap-1.5 items-center">
+                        <button data-person-contacted onClick={() => { updatePerson(pr.id, { lastContact: today, snoozeUntil: '' }); pushToast(`Logged: in touch with ${pr.name} today.`, 'success'); }} className="px-2.5 py-1.5 text-[10px] uppercase tracking-wider font-semibold text-white" style={{ background: FOR, borderRadius: 0 }}>In touch today</button>
+                        <select data-person-freq aria-label={`How often to be reminded about ${pr.name}`} value={pr.remindEvery || 0} onChange={e => updatePerson(pr.id, { remindEvery: Number(e.target.value), snoozeUntil: '' })} className="bg-transparent px-1.5 py-1 text-[10px]" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}>
+                          {REMIND_OPTIONS.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
+                        </select>
+                        <button data-person-block onClick={() => updatePerson(pr.id, { blocked: true })} className="px-2.5 py-1.5 text-[10px] uppercase tracking-wider font-semibold" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}>Block</button>
+                      </div>
+                    )}
+                    {pr.blocked ? (
+                      <button data-person-unblock onClick={() => updatePerson(pr.id, { blocked: false, lastContact: today })} className="px-2.5 py-1.5 text-[10px] uppercase tracking-wider font-semibold" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}>Unblock</button>
+                    ) : (<>
+                      {pactFriends.length > 0 && (
+                        <select data-person-link aria-label={`Link ${pr.name} to a Pact friend`} value={pr.linkedUserId || ''} onChange={e => updatePerson(pr.id, { linkedUserId: e.target.value })} className="w-full bg-transparent px-1.5 py-1.5 text-[10px]" style={{ border: '1px solid #CFC7B4', borderRadius: 0 }}>
+                          <option value="">Not linked to a Pact user</option>
+                          {pactFriends.map(f => <option key={f.userId} value={f.userId}>Same person as {f.name} {f.handle}</option>)}
+                        </select>
+                      )}
+                      <input type="text" aria-label={`Notes about ${pr.name}`} placeholder="Notes (company, birthday, what to ask about...)" defaultValue={pr.notes || ''} onBlur={e => { if (e.target.value !== (pr.notes || '')) updatePerson(pr.id, { notes: e.target.value }); }} className="w-full bg-transparent px-2 py-1.5 text-[11px]" style={{ border: '1px solid #CFC7B4', borderRadius: 0 }} />
+                    </>)}
+                    <button data-person-delete aria-label={`Delete ${pr.name}`} onClick={() => setPeople(prev => prev.filter(x => x.id !== pr.id))} className="text-[10px] uppercase tracking-wider" style={{ color: CLAY, borderRadius: 0 }}>Delete</button>
                   </div>
-                )}
-                {importMsg && <p data-import-msg className="text-[11px] text-rose-700 leading-snug">{importMsg}</p>}
-                <p className="text-[10px] text-stone-500 leading-snug">{hasPicker ? 'Add from phone contacts opens your phone\'s own list so you can tick several people.' : 'This browser can\'t open your phone contacts directly (only Chrome on Android can).'} Otherwise: on iPhone go to icloud.com/contacts, select all, and Export vCard. On Android or Google go to contacts.google.com, Export, and choose vCard or CSV. Then import the file here. You choose who to add; nothing is uploaded.</p>
-                {importList && (
-                  <div data-import-preview className="p-3 bg-[#FAF8F5] border border-purple-300 space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Choose who to add ({importList.filter(x => x.sel).length}/{importList.length})</span>
-                      <span className="flex gap-2 text-[10px] underline text-stone-600"><button onClick={() => setImportList(importList.map(x => ({ ...x, sel: true })))}>All</button><button onClick={() => setImportList(importList.map(x => ({ ...x, sel: false })))}>None</button></span>
+                );
+              };
+              const row = (pr, i, due) => {
+                const open = peopleOpenId === pr.id; const sl = subLine(pr);
+                return (
+                  <div key={pr.id}>
+                    <div data-person-row className="grid items-center" style={{ gridTemplateColumns: '40px 1fr auto', gap: 12, padding: '10px 0', borderBottom: open ? 'none' : '1px solid #CFC7B4' }}>
+                      <button onClick={() => setPeopleOpenId(open ? null : pr.id)} aria-label={`Open ${pr.name}`} style={{ borderRadius: 0 }}>{tile(pr, i)}</button>
+                      <button onClick={() => setPeopleOpenId(open ? null : pr.id)} className="text-left min-w-0" style={{ borderRadius: 0 }}>
+                        <div className="font-fr truncate" style={{ fontWeight: 600, fontSize: 16, lineHeight: 1.1 }}>{pr.name}</div>
+                        <div className="text-[11px] truncate" style={{ marginTop: 2, color: sl.hot ? CLAY : MUT, fontWeight: sl.hot ? 600 : 400 }}>{sl.t}</div>
+                      </button>
+                      {due && !open ? <button data-person-nudge onClick={() => setPeopleOpenId(pr.id)} className="px-3 h-[30px] text-[11px] font-semibold" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}>Nudge</button> : <button onClick={() => setPeopleOpenId(open ? null : pr.id)} aria-label="Toggle details" style={{ color: '#7C857F', fontSize: 16, borderRadius: 0 }}>{open ? '‹' : '›'}</button>}
                     </div>
-                    <div className="max-h-56 overflow-y-auto space-y-1">
-                      {importList.map((x, i) => (
-                        <label key={i} data-import-row className="flex items-center gap-2 text-xs bg-white border border-stone-200 px-2 py-1.5">
-                          <input type="checkbox" checked={x.sel} onChange={() => setImportList(importList.map((y, j) => j === i ? { ...y, sel: !y.sel } : y))} />
-                          <span className="min-w-0"><span className="font-medium">{x.name}</span><span className="block text-[10px] text-stone-500 truncate">{[x.phone, x.email].filter(Boolean).join(' • ')}</span></span>
-                        </label>
-                      ))}
-                    </div>
-                    <div className="flex gap-1.5"><button data-import-confirm onClick={addImported} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Add selected</button><button onClick={() => setImportList(null)} className="px-3 py-1.5 border border-stone-400 text-[10px] uppercase tracking-wider">Cancel</button></div>
+                    {open && detail(pr)}
                   </div>
-                )}
-
-                <div className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
-                  <div className="grid grid-cols-2 gap-1">
-                    {[{ id: 'personal', label: 'Personal' }, { id: 'business', label: 'Business' }].map(k => (
-                      <button key={k.id} data-person-kind={k.id} onClick={() => setPersonDraft({ ...personDraft, kind: k.id })} className={`py-1.5 text-[10px] uppercase tracking-wider border ${personDraft.kind === k.id ? 'bg-purple-800 text-white border-purple-800' : 'bg-white border-stone-300'}`}>{k.label}</button>
+                );
+              };
+              const optRow = (n, t, sub, k) => (
+                <button data-add-opt={k} onClick={() => setAddPane(addPane === k ? '' : k)} className="w-full text-left grid items-center" style={{ gridTemplateColumns: '28px 1fr 14px', gap: 8, padding: '11px 0', borderBottom: '1px solid #CFC7B4', borderRadius: 0 }}>
+                  <span className="font-fr" style={{ fontSize: 18, fontWeight: 600, color: CLAY }}>{n}</span>
+                  <span><span className="block text-[14px] font-semibold">{t}</span><span className="block text-[11px]" style={{ color: MUT }}>{sub}</span></span>
+                  <span style={{ color: '#7C857F' }}>{addPane === k ? '‹' : '›'}</span>
+                </button>
+              );
+              const closeAdd = () => { setPeopleAddOpen(false); setAddPane(''); };
+              return (
+              <div data-people-tab className="space-y-3">
+                <div className="flex gap-2">
+                  <div className="flex-1 min-w-0 flex items-center gap-2 px-3 h-10" style={{ border: `1.5px solid ${INK}` }}>
+                    <Search size={15} style={{ color: '#7C857F', flex: 'none' }} />
+                    <input data-people-search type="search" aria-label="Search people" placeholder="Search people" value={peopleQ} onChange={e => setPeopleQ(e.target.value)} className="flex-1 min-w-0 bg-transparent text-[13px] outline-none" />
+                  </div>
+                  <button data-people-add-open onClick={() => setPeopleAddOpen(true)} className="px-4 h-10 text-xs font-semibold text-white" style={{ background: FOR, borderRadius: 0 }}>+ Add</button>
+                </div>
+                <div className="flex justify-between items-center text-[10px] uppercase tracking-[0.14em]">
+                  <span className="flex gap-4">
+                    {[{ id: 'all', label: 'All' }, { id: 'personal', label: 'Personal' }, { id: 'business', label: 'Business' }].map(f => (
+                      <button key={f.id} data-people-filter={f.id} onClick={() => setPeopleFilter(f.id)} style={{ borderRadius: 0, textTransform: 'uppercase', letterSpacing: '0.14em', fontWeight: peopleFilter === f.id ? 700 : 400, color: peopleFilter === f.id ? INK : MUT, borderBottom: peopleFilter === f.id ? `2px solid ${CLAY}` : '2px solid transparent', paddingBottom: 2 }}>{f.label}</button>
                     ))}
-                  </div>
-                  <input data-person-name type="text" aria-label="Name" placeholder="Name" value={personDraft.name} onChange={e => setPersonDraft({ ...personDraft, name: e.target.value })} onKeyDown={e => { if (e.key === 'Enter') addPerson(); }} className="w-full bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
-                  <input type="text" aria-label="Relationship" placeholder={personDraft.kind === 'business' ? 'e.g. Client, Recruiter, Mentor, Supplier' : 'e.g. Cousin, Old friend, Neighbour'} value={personDraft.relation} onChange={e => setPersonDraft({ ...personDraft, relation: e.target.value })} className="w-full bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
-                  <div className="grid grid-cols-3 gap-1.5">
-                    <input data-person-phone type="tel" aria-label="Phone" placeholder="Phone" value={personDraft.phone} onChange={e => setPersonDraft({ ...personDraft, phone: e.target.value })} className="min-w-0 bg-white border border-stone-300 px-2 py-1.5 text-xs" />
-                    <input data-person-whatsapp type="tel" aria-label="WhatsApp" placeholder="WhatsApp" value={personDraft.whatsapp} onChange={e => setPersonDraft({ ...personDraft, whatsapp: e.target.value })} className="min-w-0 bg-white border border-stone-300 px-2 py-1.5 text-xs" />
-                    <input data-person-email type="email" aria-label="Email" placeholder="Email" value={personDraft.email} onChange={e => setPersonDraft({ ...personDraft, email: e.target.value })} className="min-w-0 bg-white border border-stone-300 px-2 py-1.5 text-xs" />
-                  </div>
-                  <div className="flex gap-2">
-                    <select aria-label="How often to be reminded" value={personDraft.remindEvery} onChange={e => setPersonDraft({ ...personDraft, remindEvery: Number(e.target.value) })} className="flex-1 min-w-0 bg-white border border-stone-300 px-2 py-1.5 text-xs">
-                      {REMIND_OPTIONS.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
-                    </select>
-                    <button data-person-add onClick={addPerson} disabled={!personDraft.name.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider font-medium disabled:opacity-50">+ Add</button>
-                  </div>
+                  </span>
+                  <span style={{ color: MUT }}>Due first</span>
                 </div>
-
-                <div className="grid grid-cols-4 border border-stone-300">
-                  {[{ id: 'all', label: 'All' }, { id: 'personal', label: 'Personal' }, { id: 'business', label: 'Business' }, { id: 'blocked', label: `Blocked${blockedN ? ' (' + blockedN + ')' : ''}` }].map(f => (
-                    <button key={f.id} data-people-filter={f.id} onClick={() => setPeopleFilter(f.id)} className={`py-1.5 text-[10px] uppercase tracking-wider ${peopleFilter === f.id ? 'bg-slate-900 text-white' : 'hover:bg-stone-100'}`}>{f.label}</button>
-                  ))}
+                {peopleFilter === 'blocked' && <div className="text-[11px]" style={{ color: MUT }}>Showing blocked people. <button data-people-filter="all" onClick={() => setPeopleFilter('all')} className="underline" style={{ borderRadius: 0 }}>Back to everyone</button></div>}
+                {vis.length === 0 && <p data-people-empty className="text-[12px] leading-relaxed py-3" style={{ color: MUT }}>{peopleFilter === 'blocked' ? 'No one is blocked.' : q ? 'No one matches that search.' : 'No one here yet. Tap + Add to bring in the people who matter.'}</p>}
+                {dueList.length > 0 && (<div><div style={{ borderTop: `3px solid ${INK}`, paddingTop: 6 }}><span className="text-[10px] uppercase tracking-[0.14em]" style={{ color: CLAY }}>Due for a catch-up &middot; {dueList.length}</span></div>{dueList.map((pr, i) => row(pr, i, true))}</div>)}
+                {restList.length > 0 && (<div><div style={{ borderTop: `3px solid ${INK}`, paddingTop: 6 }}><span className="text-[10px] uppercase tracking-[0.14em]" style={{ color: MUT }}>{peopleFilter === 'blocked' ? 'Blocked' : dueList.length ? 'Everyone else' : 'Everyone'} &middot; {restList.length}</span></div>{restList.map((pr, i) => row(pr, i, false))}</div>)}
+                <div className="flex justify-between items-center text-[11px] pt-1" style={{ color: MUT }}>
+                  <button data-people-filter="blocked" onClick={() => setPeopleFilter('blocked')} style={{ borderRadius: 0 }}>Blocked &middot; {blockedN} &nbsp;&rsaquo;</button>
                 </div>
+                <p className="text-[10px] leading-snug" style={{ color: MUT }}>Blocked people never trigger reminders. Finishing a plan you tagged with someone counts as being in touch.</p>
 
-                {shown.length === 0 && <p data-people-empty className="text-[11px] text-stone-500 leading-snug">{peopleFilter === 'blocked' ? 'No one is blocked.' : 'No one here yet. Add someone above.'}</p>}
-
-                <div className="space-y-2">
-                  {shown.map(pr => {
-                    const over = personOverdue(pr, today, addDaysStr);
-                    const since = daysBetweenStr(pr.lastContact || pr.createdAt || today, today);
-                    const next = pr.remindEvery ? daysBetweenStr(today, addDaysStr(pr.lastContact || pr.createdAt || today, pr.remindEvery)) : null;
-                    const linked = pactFriends.find(f => f.userId === pr.linkedUserId);
-                    return (
-                      <div key={pr.id} data-person-card className={`p-2.5 border space-y-2 ${pr.blocked ? 'bg-stone-100 border-stone-300 opacity-80' : over !== null ? 'bg-rose-50 border-rose-200' : 'bg-[#FAF8F5] border-stone-200'}`}>
-                        <div className="flex justify-between items-start gap-2">
-                          <div className="min-w-0">
-                            <div className="text-xs font-medium text-slate-900">{pr.name} <span className="ml-1 px-1.5 py-px bg-stone-200 text-stone-700 text-[9px] uppercase tracking-wider">{pr.kind === 'business' ? 'Business' : 'Personal'}</span>{linked && <span className="ml-1 px-1.5 py-px bg-purple-100 text-purple-900 text-[9px] uppercase tracking-wider">On Pact {linked.handle}</span>}</div>
-                            {pr.relation && <div className="text-[10px] text-stone-500">{pr.relation}</div>}
-                            {pr.username && <div data-person-username className="flex items-center gap-1.5 mt-0.5"><Avatar src={pr.avatar} name={pr.name} size={20} /><span className="text-[10px] text-stone-500">@{pr.username}{pr.bio ? ' • ' + pr.bio : ''}</span></div>}
-                            {linked && <button data-person-view-profile onClick={() => openFriendProfile(linked)} className="text-[10px] underline text-purple-800">View profile</button>}
-                            <div className="text-[10px] text-stone-600 mt-0.5">Last in touch: {agoText(since)}{pr.blocked ? ' • Blocked: no reminders' : over !== null ? <span className="text-rose-700 font-medium"> • Time to reach out{over > 0 ? ` (${over} day${over === 1 ? '' : 's'} overdue)` : ''}</span> : next !== null ? (pr.snoozeUntil && pr.snoozeUntil > today ? ' • Snoozed' : ` • Next reminder in ${next} day${next === 1 ? '' : 's'}`) : ' • No reminders'}</div>
-                          </div>
-                          <button data-person-delete aria-label={`Delete ${pr.name}`} onClick={() => setPeople(prev => prev.filter(x => x.id !== pr.id))} className="text-[10px] text-stone-400 hover:text-rose-700 shrink-0">Delete</button>
+                {peopleAddOpen && (
+                  <Portal>
+                    <div data-add-sheet className="fixed inset-0 flex items-end justify-center" style={{ zIndex: 300 }} role="dialog" aria-label="Add someone">
+                      <div className="absolute inset-0" style={{ background: 'rgba(27,42,34,.5)' }} onClick={closeAdd} />
+                      <div className="relative w-full max-w-md max-h-[90dvh] overflow-y-auto px-6 pt-4 pb-6" style={{ background: '#F4EFE4', borderTop: `3px double ${INK}`, color: INK }}>
+                        <div className="flex items-baseline justify-between"><div className="font-fr" style={{ fontWeight: 600, fontSize: 24 }}>Add someone</div><button aria-label="Close" onClick={closeAdd} style={{ fontSize: 22, color: MUT, borderRadius: 0 }}>&times;</button></div>
+                        <div className="mt-1.5">
+                          {optRow('1', 'On Pact', 'Find them by @username and fill in their details', 'pact')}
+                          {addPane === 'pact' && (
+                            <div data-add-username className="py-2.5 space-y-2">
+                              <div className="flex gap-1.5">
+                                <input data-people-username type="text" aria-label="Pact username" placeholder="@username" value={peopleUserQ} onChange={e => { setPeopleUserQ(e.target.value); setPeopleUserRes(null); }} onKeyDown={e => { if (e.key === 'Enter') findPersonByUsername(); }} className="flex-1 min-w-0 bg-transparent px-2.5 py-2 text-sm" style={{ border: `1px solid ${INK}`, borderRadius: 0 }} />
+                                <button data-people-username-find onClick={findPersonByUsername} disabled={!peopleUserQ.trim()} className="px-3.5 text-[11px] font-semibold text-white disabled:opacity-50" style={{ background: FOR, borderRadius: 0 }}>Find</button>
+                              </div>
+                              {peopleUserRes === 'none' && <p className="text-[11px]" style={{ color: MUT }}>No one found with that username. Check the spelling with them.</p>}
+                              {peopleUserRes === 'offline' && <p className="text-[11px]" style={{ color: MUT }}>Sign in with an account to look people up.</p>}
+                              {peopleUserRes === 'error' && <p className="text-[11px]" style={{ color: MUT }}>Couldn't search just now. Try again.</p>}
+                              {peopleUserRes && typeof peopleUserRes === 'object' && (
+                                <div data-people-username-result className="p-2.5 space-y-2" style={{ border: '1px solid #CFC7B4' }}>
+                                  <div className="flex items-center gap-2.5"><Avatar src={peopleUserRes.avatar} name={peopleUserRes.display_name || peopleUserRes.username} size={40} /><div className="min-w-0"><div className="text-xs font-semibold">{peopleUserRes.display_name || peopleUserRes.username}</div><div className="text-[10px]" style={{ color: MUT }}>@{peopleUserRes.username}{peopleUserRes.bio ? ' • ' + peopleUserRes.bio : ''}</div></div></div>
+                                  <div className="flex flex-wrap gap-1.5">
+                                    <button data-people-username-add onClick={() => { addUserAsPerson(peopleUserRes); closeAdd(); }} className="px-3 h-[34px] text-[10px] uppercase tracking-wider font-semibold text-white" style={{ background: FOR, borderRadius: 0 }}>Add to Your People</button>
+                                    {peopleUserRes.relation === 'none' && <button onClick={() => { sendFriendReq(peopleUserRes.id); }} className="px-3 h-[34px] text-[10px] uppercase tracking-wider font-semibold" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}>Also send friend request</button>}
+                                  </div>
+                                  <p className="text-[10px] leading-snug" style={{ color: MUT }}>Phone and email stay private unless you type them in yourself.</p>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                          {optRow('2', 'Import contacts', 'From a phone export (vCard or CSV), or paste a list', 'import')}
+                          {addPane === 'import' && (
+                            <div className="py-2.5 space-y-2">
+                              <div data-import-bar className="flex flex-wrap gap-1.5">
+                                {hasPicker && <button data-import-picker onClick={pickContacts} className="px-3 h-[34px] text-[10px] uppercase tracking-wider font-semibold text-white" style={{ background: FOR, borderRadius: 0 }}>Add from phone contacts</button>}
+                                <label className="px-3 h-[34px] flex items-center text-[10px] uppercase tracking-wider font-semibold cursor-pointer" style={{ border: `1px solid ${INK}` }}>Import a file<input data-import-file type="file" multiple className="hidden" onChange={onContactFile} /></label>
+                                <button data-import-paste-toggle onClick={() => setPasteOpen(o => !o)} className="px-3 h-[34px] text-[10px] uppercase tracking-wider font-semibold" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}>Paste a list</button>
+                              </div>
+                              {pasteOpen && (
+                                <div data-import-paste className="space-y-1.5">
+                                  <textarea aria-label="Paste contacts" rows={5} placeholder={'One person per line:\nMaya Lin, 07700 900123, maya@example.com\nSam Patel, 07911 123456'} value={pasteText} onChange={e => setPasteText(e.target.value)} className="w-full bg-transparent px-2.5 py-2 text-xs" style={{ border: `1px solid ${INK}`, borderRadius: 0 }} />
+                                  <button data-import-paste-go onClick={importPasted} disabled={!pasteText.trim()} className="px-3.5 h-[34px] text-[10px] uppercase tracking-wider font-semibold text-white disabled:opacity-50" style={{ background: FOR, borderRadius: 0 }}>Review</button>
+                                </div>
+                              )}
+                              {importMsg && <p data-import-msg className="text-[11px] leading-snug" style={{ color: CLAY }}>{importMsg}</p>}
+                              <p className="text-[10px] leading-snug" style={{ color: MUT }}>{hasPicker ? 'Add from phone contacts opens your phone\'s own list so you can tick several people. ' : 'This browser can\'t open your phone contacts directly (only Chrome on Android can). '}On iPhone, export from icloud.com/contacts (Select all, then Export vCard) and import the file here.</p>
+                              {importList && (
+                                <div data-import-preview className="p-3 space-y-2" style={{ border: `1px solid ${INK}` }}>
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-[10px] uppercase tracking-[0.14em] font-semibold">Choose who to add ({importList.filter(x => x.sel).length}/{importList.length})</span>
+                                    <span className="flex gap-2 text-[10px] underline" style={{ color: MUT }}><button onClick={() => setImportList(importList.map(x => ({ ...x, sel: true })))}>All</button><button onClick={() => setImportList(importList.map(x => ({ ...x, sel: false })))}>None</button></span>
+                                  </div>
+                                  <div className="max-h-48 overflow-y-auto space-y-1">
+                                    {importList.map((x, i) => (
+                                      <label key={i} data-import-row className="flex items-center gap-2 text-xs px-2 py-1.5" style={{ border: '1px solid #CFC7B4' }}>
+                                        <input type="checkbox" checked={x.sel} onChange={() => setImportList(importList.map((y, j) => j === i ? { ...y, sel: !y.sel } : y))} />
+                                        <span className="min-w-0"><span className="font-semibold">{x.name}</span><span className="block text-[10px] truncate" style={{ color: MUT }}>{[x.phone, x.email].filter(Boolean).join(' • ')}</span></span>
+                                      </label>
+                                    ))}
+                                  </div>
+                                  <div className="flex gap-1.5"><button data-import-confirm onClick={() => { addImported(); closeAdd(); }} className="px-3.5 h-[34px] text-[10px] uppercase tracking-wider font-semibold text-white" style={{ background: FOR, borderRadius: 0 }}>Add selected</button><button onClick={() => setImportList(null)} className="px-3.5 h-[34px] text-[10px] uppercase tracking-wider font-semibold" style={{ border: `1px solid ${INK}`, borderRadius: 0 }}>Cancel</button></div>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                          {optRow('3', 'Type it in', 'Name, how you know them, how often to nudge', 'type')}
                         </div>
-                        <div data-person-contact className="flex flex-wrap gap-1.5 items-center">
-                          {pr.phone && <a data-contact-call href={`tel:${pr.phone}`} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Call</a>}
-                          {(pr.whatsapp || pr.phone) && <a data-contact-wa href={`https://wa.me/${waDigits(pr.whatsapp || pr.phone)}`} target="_blank" rel="noopener noreferrer" className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">WhatsApp</a>}
-                          {pr.email && <a data-contact-mail href={`mailto:${pr.email}`} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Email</a>}
-                          <button data-contact-edit onClick={() => setContactEditId(contactEditId === pr.id ? null : pr.id)} className="px-2 py-1 text-[10px] underline text-stone-500">{(pr.phone || pr.whatsapp || pr.email) ? 'Edit contact info' : 'Add contact info'}</button>
-                        </div>
-                        {contactEditId === pr.id && (
-                          <div data-contact-form className="grid grid-cols-1 gap-1.5">
-                            <input type="tel" aria-label={`Phone for ${pr.name}`} placeholder="Phone" value={pr.phone || ''} onChange={e => updatePerson(pr.id, { phone: e.target.value })} className="bg-white border border-stone-300 px-2 py-1.5 text-xs" />
-                            <input type="tel" aria-label={`WhatsApp for ${pr.name}`} placeholder="WhatsApp (leave blank to use their phone)" value={pr.whatsapp || ''} onChange={e => updatePerson(pr.id, { whatsapp: e.target.value })} className="bg-white border border-stone-300 px-2 py-1.5 text-xs" />
-                            <input type="email" aria-label={`Email for ${pr.name}`} placeholder="Email" value={pr.email || ''} onChange={e => updatePerson(pr.id, { email: e.target.value })} className="bg-white border border-stone-300 px-2 py-1.5 text-xs" />
+                        <div className="mt-3 space-y-2" data-add-quick>
+                          <span className="text-[10px] uppercase tracking-[0.14em]" style={{ color: MUT }}>Quick add</span>
+                          <div className="flex gap-2">
+                            <input data-person-name type="text" aria-label="Name" placeholder="Name" value={personDraft.name} onChange={e => setPersonDraft({ ...personDraft, name: e.target.value })} onKeyDown={e => { if (e.key === 'Enter') { addPerson(); closeAdd(); } }} className="flex-1 min-w-0 bg-transparent px-3 h-10 text-[13px]" style={{ border: `1.5px solid ${INK}`, borderRadius: 0 }} />
+                            <div className="flex">
+                              {[{ id: 'personal', label: 'Personal' }, { id: 'business', label: 'Business' }].map(k => <button key={k.id} data-person-kind={k.id} onClick={() => setPersonDraft({ ...personDraft, kind: k.id })} className="px-2.5 h-10 text-[11px] font-semibold" style={{ borderRadius: 0, background: personDraft.kind === k.id ? FOR : 'transparent', color: personDraft.kind === k.id ? '#F4EFE4' : INK, border: `1px solid ${personDraft.kind === k.id ? FOR : INK}` }}>{k.label}</button>)}
+                            </div>
                           </div>
-                        )}
-                        {!pr.blocked && (
-                          <div className="flex flex-wrap gap-1.5 items-center">
-                            <button data-person-contacted onClick={() => { updatePerson(pr.id, { lastContact: today, snoozeUntil: '' }); pushToast(`Logged: in touch with ${pr.name} today.`, 'success'); }} className="px-2 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">In touch today</button>
-                            <select data-person-freq aria-label={`How often to be reminded about ${pr.name}`} value={pr.remindEvery || 0} onChange={e => updatePerson(pr.id, { remindEvery: Number(e.target.value), snoozeUntil: '' })} className="bg-white border border-stone-300 px-1.5 py-1 text-[10px]">
+                          {(addPane === 'type' || personDraft.relation || personDraft.phone || personDraft.whatsapp || personDraft.email) ? (
+                            <div className="space-y-1.5">
+                              <input type="text" aria-label="Relationship" placeholder={personDraft.kind === 'business' ? 'e.g. Client, Recruiter, Mentor, Supplier' : 'e.g. Cousin, Old friend, Neighbour'} value={personDraft.relation} onChange={e => setPersonDraft({ ...personDraft, relation: e.target.value })} className="w-full bg-transparent px-3 h-9 text-xs" style={{ border: '1px solid #CFC7B4', borderRadius: 0 }} />
+                              <div className="grid grid-cols-3 gap-1.5">
+                                <input data-person-phone type="tel" aria-label="Phone" placeholder="Phone" value={personDraft.phone} onChange={e => setPersonDraft({ ...personDraft, phone: e.target.value })} className="min-w-0 bg-transparent px-2 h-9 text-xs" style={{ border: '1px solid #CFC7B4', borderRadius: 0 }} />
+                                <input data-person-whatsapp type="tel" aria-label="WhatsApp" placeholder="WhatsApp" value={personDraft.whatsapp} onChange={e => setPersonDraft({ ...personDraft, whatsapp: e.target.value })} className="min-w-0 bg-transparent px-2 h-9 text-xs" style={{ border: '1px solid #CFC7B4', borderRadius: 0 }} />
+                                <input data-person-email type="email" aria-label="Email" placeholder="Email" value={personDraft.email} onChange={e => setPersonDraft({ ...personDraft, email: e.target.value })} className="min-w-0 bg-transparent px-2 h-9 text-xs" style={{ border: '1px solid #CFC7B4', borderRadius: 0 }} />
+                              </div>
+                            </div>
+                          ) : <button onClick={() => setAddPane('type')} className="text-[11px]" style={{ color: MUT, borderRadius: 0 }}>+ Phone, WhatsApp, email (optional)</button>}
+                          <div className="flex gap-2">
+                            <select aria-label="How often to be reminded" value={personDraft.remindEvery} onChange={e => setPersonDraft({ ...personDraft, remindEvery: Number(e.target.value) })} className="flex-1 min-w-0 bg-transparent px-3 h-10 text-[13px]" style={{ border: `1.5px solid ${INK}`, borderRadius: 0 }}>
                               {REMIND_OPTIONS.map(o => <option key={o.v} value={o.v}>{o.l}</option>)}
                             </select>
-                            <button data-person-block onClick={() => updatePerson(pr.id, { blocked: true })} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Block</button>
+                            <button data-person-add onClick={() => { addPerson(); closeAdd(); }} disabled={!personDraft.name.trim()} className="px-6 h-10 text-xs font-semibold text-white disabled:opacity-50" style={{ background: FOR, borderRadius: 0 }}>Add</button>
                           </div>
-                        )}
-                        {pr.blocked ? (
-                          <button data-person-unblock onClick={() => updatePerson(pr.id, { blocked: false, lastContact: today })} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Unblock</button>
-                        ) : (
-                          <>
-                            {pactFriends.length > 0 && (
-                              <select data-person-link aria-label={`Link ${pr.name} to a Pact friend`} value={pr.linkedUserId || ''} onChange={e => updatePerson(pr.id, { linkedUserId: e.target.value })} className="w-full bg-white border border-stone-300 px-1.5 py-1 text-[10px]">
-                                <option value="">Not linked to a Pact user</option>
-                                {pactFriends.map(f => <option key={f.userId} value={f.userId}>Same person as {f.name} {f.handle}</option>)}
-                              </select>
-                            )}
-                            <input type="text" aria-label={`Notes about ${pr.name}`} placeholder="Notes (company, birthday, what to ask about...)" defaultValue={pr.notes || ''} onBlur={e => { if (e.target.value !== (pr.notes || '')) updatePerson(pr.id, { notes: e.target.value }); }} className="w-full bg-white border border-stone-200 px-2 py-1 text-[11px]" />
-                          </>
-                        )}
+                        </div>
                       </div>
-                    );
-                  })}
-                </div>
-                <p className="text-[10px] text-stone-500 leading-snug">Blocked people never trigger reminders. Finishing a plan you tagged with someone counts as being in touch.</p>
+                    </div>
+                  </Portal>
+                )}
               </div>
               );
             })()}
