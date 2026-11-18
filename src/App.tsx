@@ -5975,6 +5975,7 @@ function AppInner({ onReset }) {
                   </div>
                   <button onClick={() => setWidgetPanelOpen(false)} aria-label="Close widget menu" className="text-stone-400 hover:text-slate-900"><X size={16} /></button>
                 </div>
+                <button data-home-redo-setup onClick={() => { setWidgetPanelOpen(false); openSetup(); }} className="w-full h-11 border-[1.5px] border-slate-900 text-[11px] uppercase tracking-[0.16em] font-medium flex items-center justify-center gap-2" style={{ borderRadius: 0 }}>Redo setup &rarr;</button>
                 {healthAsk && (
                   <div data-health-consent className="p-3 space-y-2" style={{ border: '2px solid #1B2A22', background: '#FBF4E0' }}>
                     <div className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Before you add this</div>
