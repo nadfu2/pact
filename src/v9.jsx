@@ -27,7 +27,7 @@ export const HOME_STYLES = [['log', 'Log'], ['minimal', 'Minimal'], ['classic', 
 export const homeStyleOf = (p) => (p && p.homeStyle) || 'log';
 export const LOG_BUTTONS = [['water', 'Water'], ['energy', 'Energy'], ['pages', 'Pages'], ['note', 'Note']];
 export const logButtonsOf = (p) => (p && Array.isArray(p.logButtons) ? p.logButtons : ['water', 'energy', 'pages', 'note']);
-export const LOG_HIDES = ['targets', 'launchpad', 'hydration', 'reading', 'notes', 'feedback'];
+export const LOG_HIDES = ['targets', 'launchpad', 'hydration', 'reading', 'notes', 'feedback', 'mood'];
 
 const Thumb = ({ id, on, label, set }) => {
   const bar = (w, h, c = RULE) => <div style={{ height: h, width: w, background: c }} />;
@@ -253,7 +253,7 @@ function RoleForm({ init, isNew, onSave, onDelete, onClose, ai }) {
     </Sheet>);
 }
 
-export function JobWidget({ profile, patch, ai, onOpenTab, pushToast }) {
+export function JobWidget({ profile, patch, ai, onOpenTab, pushToast, face }) {
   const J = profile.jobs || {};
   const apps = (J.apps || []).map(normJob);
   const [open, setOpen] = useState(false); const [list, setList] = useState(false); const [form, setForm] = useState(null); const [flt, setFlt] = useState('all');
@@ -275,12 +275,12 @@ export function JobWidget({ profile, patch, ai, onOpenTab, pushToast }) {
   const chips = [['all', `All ${apps.length}`], ['pending', `Pending ${waiting}`], ['rejected', `Rejected ${rejected}`], ['toapply', `To apply ${toApply}`]];
   const edit = (a) => setForm({ init: a, isNew: false });
   return (
-    <div data-job-widget style={{ marginTop: 14 }}>
-      <button data-job-row aria-expanded={list} onClick={() => setList(true)} style={{ width: '100%', border: `1.5px solid ${INK}`, background: '#FAF8F2', padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 12, textAlign: 'left', borderRadius: 0 }}>
-        <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontSize: 9, letterSpacing: '.16em', textTransform: 'uppercase', color: MUT }}>Job hunt</div>
+    <div data-job-widget style={{ marginTop: face ? 0 : 14 }}>
+      <button data-job-row aria-expanded={list} onClick={() => setList(true)} style={face ? { width: '100%', border: 0, background: 'none', padding: 0, textAlign: 'left', borderRadius: 0 } : { width: '100%', border: `1.5px solid ${INK}`, background: '#FAF8F2', padding: '10px 12px', display: 'flex', alignItems: 'center', gap: 12, textAlign: 'left', borderRadius: 0 }}>
+        {face || <><div style={{ flex: 1, minWidth: 0 }}><div style={{ fontSize: 9, letterSpacing: '.16em', textTransform: 'uppercase', color: MUT }}>Job hunt</div>
           <div data-job-summary style={{ ...FR, fontWeight: 600, fontSize: 16, marginTop: 3 }}>{apps.length ? `${applied} applied · ${waiting} waiting` : 'Add your first role'}</div></div>
         {badge && <span data-job-badge style={{ background: CLAY, color: BG, fontSize: 10, letterSpacing: '.08em', textTransform: 'uppercase', fontWeight: 700, padding: '4px 8px' }}>{badge}</span>}
-        <span style={{ fontSize: 14 }}>&#8964;</span>
+        <span style={{ fontSize: 14 }}>&#8964;</span></>}
       </button>
       {list && <Sheet title="Job hunt" onClose={() => setList(false)} dataAttr={{ 'data-job-list': true }}>
         <div style={{ marginTop: 2, fontSize: 12, color: MUT }}>{apps.length} role{apps.length === 1 ? '' : 's'} &middot; {applied} applied &middot; {rejected} rejected</div>

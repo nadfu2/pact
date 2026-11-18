@@ -147,15 +147,15 @@ export function EnergyCard({ profile, patch, tasks, today, moveTask, pushToast }
       <Lab>How&rsquo;s your battery?</Lab>
       <div style={{ display: 'flex', gap: 8, marginTop: 6 }}><Bat id="low" label="Low" n={1} /><Bat id="steady" label="Steady" n={2} /><Bat id="high" label="High" n={3} /></div>
       {lvl === 'low' && (
-        <Box style={{ marginTop: 10 }}>
-          <Kick>A gentle day</Kick>
-          <div data-energy-gentle style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontSize: 16, lineHeight: 1.3, marginTop: 4 }}>
+        <div data-energy-stop style={{ marginTop: 12, borderTop: `1px solid ${INK}`, borderBottom: `1px solid ${INK}`, padding: '9px 0 11px' }}>
+          <div style={{ textAlign: 'center', fontSize: 9.5, letterSpacing: '.26em', textTransform: 'uppercase', fontWeight: 700, color: CLAY }}>&#10022; Stop press &#10022;</div>
+          <div data-energy-gentle style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontSize: 16, lineHeight: 1.3, marginTop: 4, textAlign: 'center' }}>
             {todays.length === 0 ? 'Nothing planned. Rest counts as a plan.' : `${Math.min(cap, todays.length)} thing${Math.min(cap, todays.length) === 1 ? '' : 's'} today. Everything else can wait, and nothing is lost.`}
           </div>
           {kept.length > 0 && <div style={{ marginTop: 8 }}>{kept.map(t => <div key={t.id} style={{ fontSize: 13, padding: '5px 0', borderBottom: `1px solid ${RULE}` }}>{t.startTime} &middot; {t.title}</div>)}</div>}
           {later.length > 0 && <div style={{ marginTop: 10 }}><Lab>Could wait</Lab>{later.map(t => <div key={t.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, padding: '6px 0', borderBottom: `1px solid ${RULE}` }}><span style={{ fontSize: 13 }}>{t.startTime} &middot; {t.title}</span><Btn data-energy-move solid={false} h={30} onClick={() => { moveTask(t.id); pushToast && pushToast(`${t.title} moved to tomorrow.`, 'success'); }}>Tomorrow</Btn></div>)}</div>}
           <div style={{ marginTop: 10, fontSize: 11.5, color: MUT }}>Protect a rest block: leave an hour or two empty in the afternoon.</div>
-        </Box>
+        </div>
       )}
       {lvl && lvl !== 'low' && <div style={{ marginTop: 8, fontSize: 12.5, color: MUT }}>{lvl === 'high' ? 'Good battery. A fine day to say yes to something new.' : 'Steady day. Plans as normal.'}</div>}
     </div>

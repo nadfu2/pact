@@ -224,3 +224,11 @@ Tests: `test/v8.mjs` covers all of the above (39 checks).
 - Service worker cache is now `pact-shell-v5`.
 - Not built yet: Shelf, Bento and Tabs layouts, importing an Excel file, live sharing in Family circle.
 Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on Home.
+
+## v10: the front page (rest of Home)
+
+- Medicine, Meals, Countdown, This week, Life admin and Job hunt are now compact engraved tiles (clock, ring, ruler, columns, track). Tap a tile to open the full widget right under it; tap again to close. Only one is open at a time.
+- Medicine: one dot per medicine today. Tap a dot to tick it. The big time and the clock show the next dose.
+- Mood is no longer on Log or Minimal Home (the Energy button replaces it). Low battery now shows a single "Stop press" strip.
+- Classic layout is unchanged (old inline widgets).
+- New file `src/v10.jsx`. `renderDetail` in App portals each old widget into its tile slot. Service worker cache is `pact-shell-v6`.
