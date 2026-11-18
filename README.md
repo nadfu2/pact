@@ -156,5 +156,11 @@ Search box at the top (places database, then OpenStreetMap, plus your saved idea
 ## Install and phone sizes
 Installable from the browser menu (Add to Home screen / Install app). Layout checked from 344px (folded phone) to 884px (unfolded).
 
+## Friend profiles, mood and today
+Tap a friend in the Friend Book to open their profile: picture, description, daily mood and what they're doing today. Profile -> Account -> "What friends can see today" controls it: mood on/off, plans off / busy only / with titles, an optional time window, and a per-plan "Mark private" in the Schedule. Everything starts off, the app only sends what is allowed (`set_my_status`, migration 0007), and only accepted friends can read it (`get_friend_profile`).
+
+## Add by username, import, voice link
+Your People -> "Add someone by their Pact username" fills in name, picture and description (phone and email are never shared). Contact import accepts any file type, several files, iPhone vCards, Google CSV, or a pasted list. `/?add=<text>` adds a plan from text (used by an iPhone Shortcut for a one-tap voice button; steps are in Profile -> Account).
+
 ## Updating an existing install
-Run `supabase/RUN_IN_SUPABASE.sql` once in the Supabase SQL editor (now includes 0006 profile pictures) (it is safe to run more than once), upload the source to GitHub, then re-run `tools/import_places.py --city <name> --load` for each city.
+Run `supabase/RUN_IN_SUPABASE.sql` once in the Supabase SQL editor (now includes 0006 profile pictures and 0007 friend status) (it is safe to run more than once), upload the source to GitHub, then re-run `tools/import_places.py --city <name> --load` for each city.

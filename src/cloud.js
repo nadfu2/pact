@@ -148,6 +148,16 @@ export const cloud = {
     if (error) throw new Error(error.message || 'could not save');
     return data;   // ok | bio_too_long | picture_too_big | not_signed_in
   },
+  async setMyStatus(mood, day, today) {
+    const { data, error } = await sb.rpc('set_my_status', { p_mood: mood || '', p_day: day, p_today: today || [] });
+    if (error) throw new Error(error.message || 'could not save');
+    return data;
+  },
+  async getFriendProfile(userId) {
+    const { data, error } = await sb.rpc('get_friend_profile', { p_user: userId });
+    if (error) throw new Error(error.message || 'profile unavailable');
+    return (data && data[0]) || null;
+  },
   async removeFriend(userId) {
     const { error } = await sb.rpc('remove_friend', { p_user: userId });
     if (error) throw new Error(error.message || 'could not remove');
