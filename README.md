@@ -237,3 +237,17 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - Voice is now a small round mic bubble beside the Widgets button (no full-width row).
 - Opened tile widgets (Meals, Medicine, Life admin, Week ahead, Countdown) are restyled flat to match the engraved tiles.
 - Medicine clock row no longer relies on a button for its layout (steadier centring on iPhone). Cache `pact-shell-v7`.
+
+### v10.2
+- Voice bubble sits at the bottom of the greeting block, well apart from Widgets.
+- Medicine tile with no medicines has equal top and bottom padding, so the clock is centred.
+
+## v10.3 - Real location in the planner
+- The planner's "Near" box now has **Use my location** (GPS, turned into a UK postcode through postcodes.io) and a postcode/town box. Both set your saved location, so every place search uses it.
+- Results can be sorted **Best match** or **Nearest**.
+- Accounts that never chose a place are marked "(default)" instead of silently being Manchester.
+
+## v10.4 - Auto location and health consent
+- **Keep my location up to date** (Settings, and offered after the first "Use my location"). Off until chosen. Only while the app is open: on opening or returning to the app it checks, and updates if you have moved about 0.5 km. Never reads GPS in the background.
+- **Health consent:** Medicine and Energy check-in (mood) ask for agreement before they can be added, in setup (a tick box under "Look after") and in Customise Home. Without it they stay off. Water and the rest need none. Agreement is stored as `healthConsent` on the profile.
+- Privacy page updated for both.

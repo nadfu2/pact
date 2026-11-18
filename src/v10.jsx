@@ -168,7 +168,7 @@ export default function FrontPage({ hidden, open, setOpen, registerSlot, meds, s
   const medTile = show('medicine') && (
     <section data-fp-tile="medicine" style={{ position: 'relative', borderTop: `3px double ${INK}`, borderBottom: `1px solid ${INK}`, overflow: 'hidden' }}>
       <Dots />
-      <div data-fp-open="medicine" role="button" tabIndex={0} aria-expanded={open === 'medicine'} onClick={() => toggle('medicine')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle('medicine'); } }} style={{ position: 'relative', display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', textAlign: 'left', padding: '10px 0 0', cursor: 'pointer' }}>
+      <div data-fp-open="medicine" role="button" tabIndex={0} aria-expanded={open === 'medicine'} onClick={() => toggle('medicine')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle('medicine'); } }} style={{ position: 'relative', display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', textAlign: 'left', padding: meds.length > 0 ? '10px 0 0' : '12px 0 12px', cursor: 'pointer' }}>
         <div>
           <div style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}><Kicker>{meds.length === 0 ? 'Medicine' : nextMed ? 'Medicine · next dose' : 'Medicine · all taken'}</Kicker><CloseTag on={open === 'medicine'} /></div>
           {meds.length === 0
