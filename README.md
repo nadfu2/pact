@@ -199,3 +199,18 @@ Schedule: one wide "You" column by default (hour rows 34px), past plans as outli
 - **First-time setup (6 steps).** Goals and interests, where you are and how you get about, your day (days, hours, getting-ready time, how full, calendar sync), your people (find by @username, type a name, or import after setup), notifications (per-topic toggles, preview, device notifications), and "Sign your pact" (one-line promise and your name). Answers are saved on your profile (`goals`, `travel`, `prepTimeCasual`, `promise`).
 - **Social > Plans.** An invitation sits on top, then a **+ Send a plan** button that opens a bottom sheet (pick a plan, tap friends, optional note, or copy an invite link). Below that, two tabs: **Joint plans** and **Find events** (four goal tiles, then Meetup / Eventbrite / Google).
 - **Social > Your People.** A search box and **+ Add** button, All / Personal / Business filters, "Due for a catch-up" first with a Nudge button, then everyone else. Tap a person for details. **+ Add** opens a sheet: On Pact (by @username), Import contacts (file, paste or phone picker), and Type it in (quick add).
+
+## v8: made for every stage of life
+
+All of this lives in the existing profile data, so **no new Supabase setup is needed**.
+
+- **Setup step 1, "What's life like right now?"** (multi-select). Ticking Retired starts you with larger text, bigger buttons and the simple four-tab view; Energy lowers the daily cap; Studying turns on Term mode. Change it any time in **Profile > Life**.
+- **Profile > Life** also holds **Comfort** (text size to 160%, higher contrast, simple view, bigger buttons, calm motion) and **How I talk** (cheer me on / calm and clear / just the facts, with a setback preview).
+- **Simple view**: Today, Plans, People, More, with a large calm Today page (next up with directions, who to call, this week's treat).
+- **Energy** (Home): Low / Steady / High. On a low day it keeps two things, and anything else offers "Tomorrow".
+- **Job hunt** (Development, when "Looking for work" is ticked): weekly targets, pipeline, follow-ups (a Draft button opens an email), and an Interview prep sheet that adds the interview and a prep hour to your planner.
+- **Student** (Schedule, Ideas): Term/Holiday switch (Holiday clears your study hours, Term restores them), deadlines, and a weekly fun budget with a spend log and Free / Under £5 / Fits what's left filters on Ideas.
+- **Shift rota** (Schedule): set each day's shift, see free windows, "Use this week in my planner" updates your working hours.
+- **Family circle** (Social > Your People): choose what each person would see. Live sharing with family is not built yet; for now it saves your choices and previews them.
+
+Tests: `test/v8.mjs` covers all of the above (39 checks).
