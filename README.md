@@ -260,3 +260,10 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 ## v10.7 - Edit from the press card, sharper photos
 - Tap **Edit** on the press card to change your photo, name and short description right there. The separate "Edit your profile" box is gone.
 - Photos are now saved at up to 480px (was 128px), stepping size and quality down only if needed to fit the server's 60,000-character limit. The halftone overlay on real photos is softer.
+
+## v10.8 - Profile as a hub
+- The Account / Life / Data tabs are replaced by the press card (editable) plus a short list. Each row opens one small screen with Back:
+  - Home and look (Widgets link, install, appearance, text size, voice button)
+  - Reminders; Calendar and hours (sync, blocked hours, getting-ready times); Location and places (incl. keep up to date)
+  - About you (account, sign out, delete account, life situation); What friends can see; Health records and exports (with your health agreement and a withdraw button); Privacy and data; Assistant and advanced (AI key, redo setup).
+- Nothing was removed. Old links to the Data and Life tabs open the matching screens.
