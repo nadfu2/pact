@@ -252,7 +252,11 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - **Health consent:** Medicine and Energy check-in (mood) ask for agreement before they can be added, in setup (a tick box under "Look after") and in Customise Home. Without it they stay off. Water and the rest need none. Agreement is stored as `healthConsent` on the profile.
 - Privacy page updated for both.
 
-## v10.5 - Job hunt lives on Home
-- The Development-tab job card is gone. Its weekly targets (Apply / Reach out / One outing), follow-ups for applications with no reply, and interview prep (leave-by time, checklist, adds the interview and a prep hour to the week) now sit in the Home job widget.
+## v10.5 - Job hunt on Home and Development
+- The Development-tab job card is now **collapsible** (collapsed by default, showing Saved / Applied / Interview / Offer counts; tap to expand). Same data as Home. Its weekly targets (Apply / Reach out / One outing), follow-ups for applications with no reply, and interview prep (leave-by time, checklist, adds the interview and a prep hour to the week) now sit in the Home job widget.
 - On the Home tile: the weekly line and three thin meters under the track. In the opened Job hunt list: a "This week" block with the + buttons, a "Follow up" section, then the roles.
 - Roles in the Interview stage show a Prep button even before a date is set.
+
+## v10.7 - Edit from the press card, sharper photos
+- Tap **Edit** on the press card to change your photo, name and short description right there. The separate "Edit your profile" box is gone.
+- Photos are now saved at up to 480px (was 128px), stepping size and quality down only if needed to fit the server's 60,000-character limit. The halftone overlay on real photos is softer.

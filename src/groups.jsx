@@ -195,7 +195,8 @@ export function CalmHome({ name, nextTask, todayCount, tomorrowCount, duePerson,
 // ---------- Job hunt (Development) ----------
 const STAGES = [['saved', 'Saved'], ['applied', 'Applied'], ['interview', 'Interview'], ['offer', 'Offer']];
 const CHECK0 = ['Read about the team and the role', 'Three questions to ask them', 'Outfit and ID ready', 'Bring two copies of your CV'];
-export function JobHunt({ profile, patch, addTask, pushToast, pulseOnly }) {
+export function JobHunt({ profile, patch, addTask, pushToast, pulseOnly, collapsible }) {
+  const [cardOpen, setCardOpen] = useState(!collapsible);
   const J = profile.jobs || {}; const apps = J.apps || []; const tg = { apply: 5, reach: 2, outing: 1, ...(J.targets || {}) };
   const wk = weekStart(); const W = J.week && J.week.key === wk ? J.week : { key: wk, reach: 0, outing: 0 };
   const save = (o) => patch({ jobs: { ...J, apps, week: W, targets: tg, ...o } });
@@ -238,9 +239,11 @@ export function JobHunt({ profile, patch, addTask, pushToast, pulseOnly }) {
     </div>);
   return (
     <div data-job-hunt={pulseOnly ? undefined : true} data-job-pulse={pulseOnly ? true : undefined} style={pulseOnly ? {} : { border: `1.5px solid ${INK}`, padding: '12px 14px', background: 'rgba(250,248,242,.85)' }}>
-      {!pulseOnly && <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}><div className="font-fr" style={{ fontWeight: 600, fontSize: 22 }}>Your search, steadily.</div><Lab>Job hunt</Lab></div>}
+      {!pulseOnly && <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}><div className="font-fr" style={{ fontWeight: 600, fontSize: 22 }}>Your search, steadily.</div>{collapsible ? <button data-job-collapse aria-expanded={cardOpen} aria-label={cardOpen ? 'Collapse job hunt' : 'Expand job hunt'} onClick={() => setCardOpen(o => !o)} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', color: MUT, borderRadius: 0 }}>Job hunt <span style={{ fontSize: 14, display: 'inline-block', transform: cardOpen ? 'rotate(180deg)' : 'none' }}>&#8964;</span></button> : <Lab>Job hunt</Lab>}</div>}
       {pulseOnly && <Sec t="This week" r="" mt={0} />}
       <div data-job-line style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', color: MUT, fontSize: 14, marginTop: 3 }}>{weeklyLine(profile, sentThisWeek, tg.apply)}</div>
+      {collapsible && !cardOpen && <div data-job-mini style={{ marginTop: 8, display: 'flex', gap: 14, fontSize: 11, color: MUT, letterSpacing: '.06em', textTransform: 'uppercase', flexWrap: 'wrap' }}>{STAGES.map(([k, l], i) => <span key={k}>{l} <b style={{ color: INK }}>{counts[i]}</b></span>)}</div>}
+      <div style={{ display: collapsible && !cardOpen ? 'none' : 'block' }}>
       <div style={{ marginTop: 6 }}>
         {tgt('Apply', sentThisWeek, tg.apply)}
         {tgt('Reach out to someone', W.reach || 0, tg.reach, () => save({ week: { ...W, reach: (W.reach || 0) + 1 } }), { 'data-job-reach': true })}
@@ -266,6 +269,7 @@ export function JobHunt({ profile, patch, addTask, pushToast, pulseOnly }) {
       {!pulseOnly && apps.length === 0 && <div style={{ marginTop: 10, fontSize: 12.5, color: MUT }}>Nothing here yet. Add the first one and I&rsquo;ll keep track of the follow-ups.</div>}
       {!pulseOnly && <div style={{ marginTop: 10, fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontSize: 12, color: MUT }}>Quiet inboxes are normal. Replies often take two to three weeks.</div>}
       {!pulseOnly && <div style={{ marginTop: 10, display: 'flex', gap: 8 }}><Btn data-job-add-open h={44} w="100%" onClick={() => setAdd(true)}>+ Add an application</Btn></div>}
+      </div>
       {add && (
         <Sheet title="Add an application" onClose={() => setAdd(false)} dataAttr={{ 'data-job-add-sheet': true }}>
           <div className="space-y-3" style={{ marginTop: 10 }}>
