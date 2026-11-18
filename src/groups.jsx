@@ -67,6 +67,7 @@ export const TONES = [
   { id: 'calm', t: 'Calm and clear', q: '“Two applications sent this week. Three to go.”' },
   { id: 'facts', t: 'Just the facts', q: '“2 sent. Target 5.”' },
 ];
+export const jobWeek = (profile) => { const J = profile.jobs || {}; const tg = { apply: 5, reach: 2, outing: 1, ...(J.targets || {}) }; const wk = weekStart(); const W = J.week && J.week.key === wk ? J.week : { reach: 0, outing: 0 }; const sent = (J.apps || []).filter(a => a.applied && a.applied >= wk).length; return { tg, sent, reach: W.reach || 0, outing: W.outing || 0, line: weeklyLine(profile, sent, tg.apply) }; };
 export const weeklyLine = (p, n, target) => {
   const left = Math.max(0, target - n); const tn = toneOf(p);
   if (n >= target) return tn === 'cheer' ? `All ${target} sent. That is a brilliant week.` : tn === 'facts' ? `${n} sent. Target met.` : `${n} sent this week. Target met.`;
@@ -194,7 +195,7 @@ export function CalmHome({ name, nextTask, todayCount, tomorrowCount, duePerson,
 // ---------- Job hunt (Development) ----------
 const STAGES = [['saved', 'Saved'], ['applied', 'Applied'], ['interview', 'Interview'], ['offer', 'Offer']];
 const CHECK0 = ['Read about the team and the role', 'Three questions to ask them', 'Outfit and ID ready', 'Bring two copies of your CV'];
-export function JobHunt({ profile, patch, addTask, pushToast }) {
+export function JobHunt({ profile, patch, addTask, pushToast, pulseOnly }) {
   const J = profile.jobs || {}; const apps = J.apps || []; const tg = { apply: 5, reach: 2, outing: 1, ...(J.targets || {}) };
   const wk = weekStart(); const W = J.week && J.week.key === wk ? J.week : { key: wk, reach: 0, outing: 0 };
   const save = (o) => patch({ jobs: { ...J, apps, week: W, targets: tg, ...o } });
@@ -203,8 +204,12 @@ export function JobHunt({ profile, patch, addTask, pushToast }) {
   const [add, setAdd] = useState(false); const [d, setD] = useState({ org: '', role: '', status: 'applied' });
   const [prep, setPrep] = useState(null); // app id
   const counts = STAGES.map(([k]) => apps.filter(a => a.status === k).length);
-  const stale = apps.filter(a => a.status === 'applied' && a.applied && -daysTo(a.applied) >= 7);
-  const upcoming = apps.filter(a => a.status === 'interview' && a.interview && a.interview.date && daysTo(a.interview.date) >= 0).sort((a, b) => a.interview.date.localeCompare(b.interview.date));
+  // Works for roles saved by either the old list or the Home role form.
+  const isLive = (a) => (a.appliedFlag !== undefined ? !!a.appliedFlag && (a.outcome || 'Pending') === 'Pending' : a.status !== 'saved' && a.status !== 'closed');
+  const isApplied = (a) => isLive(a) && (a.appliedFlag !== undefined ? (a.stage || 'Application') === 'Application' : a.status === 'applied');
+  const isInterview = (a) => isLive(a) && (a.appliedFlag !== undefined ? a.stage === 'Interview' : a.status === 'interview');
+  const stale = apps.filter(a => isApplied(a) && a.applied && -daysTo(a.applied) >= 7);
+  const upcoming = apps.filter(a => isInterview(a) && (!a.interview || !a.interview.date || daysTo(a.interview.date) >= 0)).sort((a, b) => ((a.interview && a.interview.date) || '9999').localeCompare((b.interview && b.interview.date) || '9999'));
   const submit = () => {
     if (!d.org.trim()) return;
     save({ apps: [...apps, { id: uid(), org: d.org.trim(), role: d.role.trim(), status: d.status, applied: d.status === 'applied' ? dstr() : '', added: dstr() }] });
@@ -220,7 +225,7 @@ export function JobHunt({ profile, patch, addTask, pushToast }) {
   const leave = ivx.time ? fromM(toM(ivx.time) - (Number(ivx.travel) || 0) - 10) : '';
   const commit = () => {
     if (!ivx.date) { pushToast && pushToast('Pick the interview date first.', 'info'); return; }
-    setApp(pa.id, { status: 'interview', interview: { ...ivx } });
+    setApp(pa.id, { status: 'interview', stage: 'Interview', appliedFlag: true, applied: pa.applied || dstr(), interview: { ...ivx } });
     const end = fromM(toM(ivx.time) + 60);
     addTask({ title: `Interview: ${pa.org}`, date: ivx.date, startTime: ivx.time, endTime: end, duration: 60, location: ivx.place || pa.org, travelTime: Number(ivx.travel) || 0, type: 'analytical', categoryColor: 'work' });
     addTask({ title: `Interview prep: ${pa.org}`, date: addDays(ivx.date, -1), startTime: '18:00', endTime: '19:00', duration: 60, location: 'Home', travelTime: 0, type: 'analytical', categoryColor: 'work' });
@@ -232,22 +237,23 @@ export function JobHunt({ profile, patch, addTask, pushToast }) {
       <Bar p={t ? n / t * 100 : 0} col={n < t ? CLAY : FOR} />
     </div>);
   return (
-    <div data-job-hunt style={{ border: `1.5px solid ${INK}`, padding: '12px 14px', background: 'rgba(250,248,242,.85)' }}>
-      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}><div className="font-fr" style={{ fontWeight: 600, fontSize: 22 }}>Your search, steadily.</div><Lab>Job hunt</Lab></div>
+    <div data-job-hunt={pulseOnly ? undefined : true} data-job-pulse={pulseOnly ? true : undefined} style={pulseOnly ? {} : { border: `1.5px solid ${INK}`, padding: '12px 14px', background: 'rgba(250,248,242,.85)' }}>
+      {!pulseOnly && <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}><div className="font-fr" style={{ fontWeight: 600, fontSize: 22 }}>Your search, steadily.</div><Lab>Job hunt</Lab></div>}
+      {pulseOnly && <Sec t="This week" r="" mt={0} />}
       <div data-job-line style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', color: MUT, fontSize: 14, marginTop: 3 }}>{weeklyLine(profile, sentThisWeek, tg.apply)}</div>
       <div style={{ marginTop: 6 }}>
         {tgt('Apply', sentThisWeek, tg.apply)}
         {tgt('Reach out to someone', W.reach || 0, tg.reach, () => save({ week: { ...W, reach: (W.reach || 0) + 1 } }), { 'data-job-reach': true })}
         {tgt('One outing, just for you', W.outing || 0, tg.outing, () => save({ week: { ...W, outing: (W.outing || 0) + 1 } }), { 'data-job-outing': true })}
       </div>
-      <div style={{ marginTop: 12, display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', border: `1.5px solid ${INK}` }}>
+      {!pulseOnly && <div style={{ marginTop: 12, display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', border: `1.5px solid ${INK}` }}>
         {STAGES.map(([k, l], i) => <div key={k} data-job-count={k} style={{ padding: '8px 0', textAlign: 'center', borderRight: i < 3 ? `1px solid ${INK}` : 0, background: k === 'interview' && counts[i] ? INK : 'transparent', color: k === 'interview' && counts[i] ? BG : INK }}><div className="font-fr" style={{ fontWeight: 600, fontSize: 26, lineHeight: 1 }}>{counts[i]}</div><div style={{ fontSize: 9, letterSpacing: '.14em', textTransform: 'uppercase', marginTop: 3, opacity: .8 }}>{l}</div></div>)}
-      </div>
+      </div>}
       {(stale.length > 0 || upcoming.length > 0) && <Sec t="Follow up" r={String(stale.length + upcoming.length)} mt={12} />}
-      {upcoming.map(a => <Row key={a.id} data-job-interview t={`${a.org} · Interview ${nice(a.interview.date)} ${a.interview.time || ''}`} s={a.role || 'Interview coming up'} right={<Btn data-job-prep h={32} onClick={() => setPrep(a.id)}>Prep</Btn>} />)}
+      {upcoming.map(a => <Row key={a.id} data-job-interview t={a.interview && a.interview.date ? `${a.org} · Interview ${nice(a.interview.date)} ${a.interview.time || ''}` : `${a.org} · Interview stage`} s={a.interview && a.interview.date ? (a.role || 'Interview coming up') : 'Add the date and I will plan your travel and prep'} right={<Btn data-job-prep h={32} onClick={() => setPrep(a.id)}>Prep</Btn>} />)}
       {stale.map(a => { const n = -daysTo(a.applied); return <Row key={a.id} data-job-stale t={`${a.org}${a.role ? ' · ' + a.role : ''}`} s={n >= 14 ? `No reply in ${n} days. That’s common. Keep or archive?` : `Applied ${n} days ago. A short nudge is fine now.`} right={n >= 14 ? <Btn data-job-archive solid={false} h={32} onClick={() => setApp(a.id, { status: 'closed' })}>Archive</Btn> : <Btn data-job-draft solid={false} h={32} onClick={() => draft(a)}>Draft</Btn>} />; })}
-      {apps.length > 0 && <Sec t="All applications" r={String(apps.filter(a => a.status !== 'closed').length)} mt={12} />}
-      {apps.filter(a => a.status !== 'closed').map(a => (
+      {!pulseOnly && apps.length > 0 && <Sec t="All applications" r={String(apps.filter(a => a.status !== 'closed').length)} mt={12} />}
+      {!pulseOnly && apps.filter(a => a.status !== 'closed').map(a => (
         <div key={a.id} data-job-app style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, padding: '8px 0', borderBottom: `1px solid ${RULE}` }}>
           <div style={{ minWidth: 0 }}><div className="font-fr" style={{ fontWeight: 600, fontSize: 15, lineHeight: 1.1 }}>{a.org}</div><div style={{ fontSize: 11, color: MUT }}>{a.role || 'Role not set'}{a.applied ? ' · applied ' + nice(a.applied) : ''}</div></div>
           <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
@@ -257,9 +263,9 @@ export function JobHunt({ profile, patch, addTask, pushToast }) {
             <button aria-label={`Remove ${a.org}`} onClick={() => save({ apps: apps.filter(x => x.id !== a.id) })} style={{ color: MUT, fontSize: 18, borderRadius: 0 }}>&times;</button>
           </div>
         </div>))}
-      {apps.length === 0 && <div style={{ marginTop: 10, fontSize: 12.5, color: MUT }}>Nothing here yet. Add the first one and I&rsquo;ll keep track of the follow-ups.</div>}
-      <div style={{ marginTop: 10, fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontSize: 12, color: MUT }}>Quiet inboxes are normal. Replies often take two to three weeks.</div>
-      <div style={{ marginTop: 10, display: 'flex', gap: 8 }}><Btn data-job-add-open h={44} w="100%" onClick={() => setAdd(true)}>+ Add an application</Btn></div>
+      {!pulseOnly && apps.length === 0 && <div style={{ marginTop: 10, fontSize: 12.5, color: MUT }}>Nothing here yet. Add the first one and I&rsquo;ll keep track of the follow-ups.</div>}
+      {!pulseOnly && <div style={{ marginTop: 10, fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontSize: 12, color: MUT }}>Quiet inboxes are normal. Replies often take two to three weeks.</div>}
+      {!pulseOnly && <div style={{ marginTop: 10, display: 'flex', gap: 8 }}><Btn data-job-add-open h={44} w="100%" onClick={() => setAdd(true)}>+ Add an application</Btn></div>}
       {add && (
         <Sheet title="Add an application" onClose={() => setAdd(false)} dataAttr={{ 'data-job-add-sheet': true }}>
           <div className="space-y-3" style={{ marginTop: 10 }}>

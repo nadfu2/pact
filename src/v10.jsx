@@ -1,7 +1,7 @@
 // v10: the "front page" tiles for the rest of Home. Engraved instruments (clock, ring, ruler, columns, track).
 // Each tile is a compact face. Tapping it opens the full widget in place (App portals it into the tile's slot).
 import React, { useId, useRef } from 'react';
-import { INK, MUT, CLAY, FOR, RULE, BG, SOFT } from './groups.jsx';
+import { INK, MUT, CLAY, FOR, RULE, BG, SOFT, jobWeek } from './groups.jsx';
 import { normJob } from './v9.jsx';
 
 
@@ -147,6 +147,11 @@ export function JobFace({ profile }) {
     <div data-fp-job style={{ padding: '10px 0 4px', borderBottom: `3px double ${INK}`, width: '100%' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}><Kicker>Job hunt</Kicker><span style={{ display: 'flex', gap: 8, alignItems: 'baseline' }}>{badge && <span data-job-badge style={{ background: CLAY, color: BG, fontSize: 9, letterSpacing: '.1em', textTransform: 'uppercase', fontWeight: 700, padding: '2px 6px' }}>{badge}</span>}<span style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, borderBottom: `1.5px solid ${INK}` }}>Open list &rsaquo;</span></span></div>
       {apps.length ? <Track stations={stations} /> : <div style={{ ...FRS, fontStyle: 'italic', fontSize: 14, color: MUT, padding: '8px 0 10px' }}>Nothing on the track yet. Add your first role.</div>}
+      {(() => { const w = jobWeek(profile); const cell = (l, n, t) => <div key={l} style={{ flex: 1, minWidth: 0 }}><div style={{ fontSize: 9, letterSpacing: '.14em', textTransform: 'uppercase', color: MUT, whiteSpace: 'nowrap' }}>{l} <b style={{ color: n < t ? CLAY : FOR }}>{n}/{t}</b></div><div style={{ height: 3, background: RULE, marginTop: 3 }}><div style={{ height: 3, width: Math.min(100, t ? n / t * 100 : 0) + '%', background: n < t ? CLAY : FOR }} /></div></div>; return (
+        <div data-fp-week style={{ padding: '4px 0 10px' }}>
+          <div data-job-line style={{ fontStyle: 'italic', fontSize: 13, color: MUT, marginBottom: 7, fontFamily: 'Fraunces, serif' }}>{w.line}</div>
+          <div style={{ display: 'flex', gap: 12 }}>{cell('Apply', w.sent, w.tg.apply)}{cell('Reach out', w.reach, w.tg.reach)}{cell('Outing', w.outing, w.tg.outing)}</div>
+        </div>); })()}
       <span data-job-summary style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)' }}>{apps.length ? `${live.length} applied · ${waiting} waiting` : 'Add your first role'}</span>
     </div>);
 }

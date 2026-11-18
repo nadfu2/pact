@@ -5995,7 +5995,7 @@ function AppInner({ onReset }) {
                 <LogHome variant={homeStyle} profile={userProfile} patch={patchProfile} today={todayDateStr()} water={water} setWater={setWater} waterGoal={WATER_GOAL} reading={reading} setReading={setReading} notes={homeNotes} setNotes={setHomeNotes} targets={weeklyTargets} setTargets={setWeeklyTargets} onPlan={() => { setPlannerMode('task'); setPlannerResultsStep(false); setPlannerOpen(true); }}
                 jobSlot={null} />
                 <FrontPage hidden={homeLayout.hidden} open={openTile} setOpen={setOpenTile} registerSlot={registerSlot} meds={medications} setMeds={setMedications} meals={dailyMeals} tasks={tasks} cadence={lifeCadenceItems} countdown={countdown} today={todayDateStr()} addDays={addDaysStr} daysBetween={daysBetween}
-                  jobNode={jobsOn ? <JobWidget face={<JobFace profile={userProfile} />} profile={userProfile} patch={patchProfile} pushToast={pushToast} ai={(p, sys, schema) => callGeminiWithSearch(p, sys, schema, true)} onOpenTab={() => setActiveTab('skills')} /> : null} />
+                  jobNode={jobsOn ? <JobWidget face={<JobFace profile={userProfile} />} profile={userProfile} patch={patchProfile} pushToast={pushToast} addTask={addPlainTask} ai={(p, sys, schema) => callGeminiWithSearch(p, sys, schema, true)} onOpenTab={() => setActiveTab('skills')} /> : null} />
               </>);
             })()}
 
@@ -7477,7 +7477,6 @@ function AppInner({ onReset }) {
            ========================================================= */}
         {activeTab === 'skills' && (
           <div className="np-skin flex flex-col gap-4 animate-in fade-in duration-300">
-            {hasSit(userProfile, 'jobs') && <div style={{ order: -30 }}><JobHunt profile={{ ...userProfile, name: accountInfo.name }} patch={patchProfile} addTask={addPlainTask} pushToast={pushToast} /></div>}
 
             <div className="hidden">
               <div>

@@ -1,6 +1,6 @@
 // v9: Log-style Home, pages counter, Development week strip, job hunt widget. Everything persists in existing state (userProfile / reading / water).
 import React, { useState } from 'react';
-import { Sheet, Input, Lab, Kick, FR, INK, MUT, CLAY, FOR, RULE, BG, SOFT, uid, nice, dstr, addDays } from './groups.jsx';
+import { Sheet, Input, Lab, Kick, FR, INK, MUT, CLAY, FOR, RULE, BG, SOFT, uid, nice, dstr, addDays, JobHunt } from './groups.jsx';
 
 const btn = (fill) => ({ height: 44, width: '100%', border: fill ? 0 : `1.5px solid ${INK}`, background: fill ? FOR : 'transparent', color: fill ? BG : INK, fontSize: 13, fontWeight: 600, borderRadius: 0 });
 const Seg = ({ opts, on, set, attr }) => (
@@ -253,7 +253,7 @@ function RoleForm({ init, isNew, onSave, onDelete, onClose, ai }) {
     </Sheet>);
 }
 
-export function JobWidget({ profile, patch, ai, onOpenTab, pushToast, face }) {
+export function JobWidget({ profile, patch, ai, onOpenTab, pushToast, face, addTask }) {
   const J = profile.jobs || {};
   const apps = (J.apps || []).map(normJob);
   const [open, setOpen] = useState(false); const [list, setList] = useState(false); const [form, setForm] = useState(null); const [flt, setFlt] = useState('all');
@@ -283,6 +283,7 @@ export function JobWidget({ profile, patch, ai, onOpenTab, pushToast, face }) {
         <span style={{ fontSize: 14 }}>&#8964;</span></>}
       </button>
       {list && <Sheet title="Job hunt" onClose={() => setList(false)} dataAttr={{ 'data-job-list': true }}>
+        {addTask && <div style={{ marginTop: 4, marginBottom: 12 }}><JobHunt pulseOnly profile={profile} patch={patch} addTask={addTask} pushToast={pushToast} /></div>}
         <div style={{ marginTop: 2, fontSize: 12, color: MUT }}>{apps.length} role{apps.length === 1 ? '' : 's'} &middot; {applied} applied &middot; {rejected} rejected</div>
         <div style={{ display: 'flex', gap: 6, marginTop: 10, flexWrap: 'wrap' }}>{chips.map(([k, l]) => <button key={k} data-job-filter={k} aria-pressed={flt === k} onClick={() => setFlt(k)} style={{ fontSize: 11, padding: '5px 10px', border: `1.5px solid ${INK}`, background: flt === k ? INK : 'transparent', color: flt === k ? BG : MUT, borderRadius: 0 }}>{l}</button>)}</div>
         <div style={{ marginTop: 8 }}>
@@ -299,7 +300,7 @@ export function JobWidget({ profile, patch, ai, onOpenTab, pushToast, face }) {
         </div>
         <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
           <div style={{ flex: 1 }}><button data-job-add onClick={() => setForm({ init: {}, isNew: true })} style={btn(true)}>+ Add a role</button></div>
-          {onOpenTab && <div style={{ flex: 1 }}><button data-job-open-tab onClick={() => { setList(false); onOpenTab(); }} style={btn(false)}>Open Job hunt</button></div>}
+          {false && onOpenTab && <div style={{ flex: 1 }}><button data-job-open-tab onClick={() => { setList(false); onOpenTab(); }} style={btn(false)}>Open Job hunt</button></div>}
         </div>
       </Sheet>}
       {form && <RoleForm key={form.init.id || 'new'} init={form.init} isNew={form.isNew} ai={ai} onClose={() => setForm(null)}
