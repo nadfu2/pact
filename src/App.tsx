@@ -1849,8 +1849,8 @@ const parseLooseContacts = (txt) => String(txt || '').split(/\r?\n/).map(l => l.
   return { name, phone, email };
 }).map(x => { const m = x.name.match(/^(.*?)\s+([+(]?\d[\d\s()+-]{5,})$/); return m && !x.phone ? { ...x, name: m[1].trim(), phone: m[2].trim() } : x; }).filter(x => x.name && /\p{L}/u.test(x.name) && !/[\u0000-\u0008\u000E-\u001F]/.test(x.name));
 const waDigits = (phone) => { let d = String(phone || '').replace(/[^\d+]/g, ''); if (d.startsWith('+')) d = d.slice(1); else if (d.startsWith('00')) d = d.slice(2); else if (d.startsWith('0')) d = '44' + d.slice(1); return d; };
-// Square crop, as sharp as the server limit allows (60,000 characters): try 480px first, then step the size and quality down until it fits.
-const shrinkImage = (file, size = 480) => new Promise((resolve, reject) => {
+// Square crop, as sharp as the limit allows: try the biggest size first, then step the size and quality down until it fits.
+const shrinkImage = (file, size = 720, maxLen = 190000) => new Promise((resolve, reject) => {
   const fr = new FileReader();
   fr.onerror = () => reject(new Error('read failed'));
   fr.onload = () => {
@@ -1858,14 +1858,14 @@ const shrinkImage = (file, size = 480) => new Promise((resolve, reject) => {
     img.onerror = () => reject(new Error('not an image'));
     img.onload = () => {
       const m = Math.min(img.width, img.height);
-      const sizes = [size, 420, 360, 300, 240, 180].filter((v, k, a) => v <= size && a.indexOf(v) === k);
+      const sizes = [size, 640, 560, 480, 420, 360, 300, 240, 180].filter((v, k, arr) => v <= size && arr.indexOf(v) === k);
       let out = '';
       for (const px of sizes) {
         const side = Math.min(px, m);
         const c = document.createElement('canvas'); c.width = side; c.height = side;
         const g = c.getContext('2d'); g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high';
         g.drawImage(img, (img.width - m) / 2, (img.height - m) / 2, m, m, 0, 0, side, side);
-        for (const q of [0.85, 0.76, 0.68, 0.6, 0.5]) { out = c.toDataURL('image/jpeg', q); if (out.length <= 58000) { resolve(out); return; } }
+        for (const q of [0.88, 0.8, 0.72, 0.64, 0.55]) { out = c.toDataURL('image/jpeg', q); if (out.length <= maxLen) { resolve(out); return; } }
       }
       resolve(out);
     };
@@ -8568,7 +8568,7 @@ function AppInner({ onReset }) {
                     {pressEdit ? (
                       <label data-press-photo className="relative shrink-0 cursor-pointer block" style={{ width: 104, height: 124 }}>
                         <Mug src={myProfile.avatar} name={accountInfo.name} w={104} h={124} />
-                        <input data-avatar-input type="file" accept="image/*" className="hidden" onChange={async e => { const f = e.target.files && e.target.files[0]; if (!f) return; try { const d = await shrinkImage(f); setMyProfile(prev => ({ ...prev, avatar: d })); setProfileMsg(''); } catch (err) { setProfileMsg("That file couldn't be used as a picture."); } e.target.value = ''; }} />
+                        <input data-avatar-input type="file" accept="image/*" className="hidden" onChange={async e => { const f = e.target.files && e.target.files[0]; if (!f) return; try { const d = await shrinkImage(f); const dLow = await shrinkImage(f, 480, 58000); setMyProfile(prev => ({ ...prev, avatar: d, avatarLow: dLow })); setProfileMsg(''); } catch (err) { setProfileMsg("That file couldn't be used as a picture."); } e.target.value = ''; }} />
                         <span className="absolute left-0 right-0 bottom-0 text-center text-[9px] uppercase tracking-wider bg-slate-900/85 text-[#F4EFE4] py-1.5">{myProfile.avatar ? 'Change photo' : 'Add photo'}</span>
                       </label>
                     ) : (
@@ -8598,7 +8598,7 @@ function AppInner({ onReset }) {
                     <div className="flex items-center gap-2">
                       <button data-profile-save onClick={async () => {
                       if (!authUser || !authUser.cloud) { setProfileMsg('Sign in with an account to share your picture and description with friends.'); return; }
-                      try { const r = await cloud.setMyProfile(myProfile.bio, myProfile.avatar); setProfileMsg(r === 'ok' ? 'Saved. Your friends can now see it.' : r === 'picture_too_big' ? 'That picture is too large. Try a different one.' : 'Could not save. Try again.'); } catch (e) { setProfileMsg("Couldn't save. If this keeps happening, the latest database update hasn't been run yet."); }
+                      try { let r = await cloud.setMyProfile(myProfile.bio, myProfile.avatar); let small = false; if (r === 'picture_too_big' && myProfile.avatarLow && myProfile.avatarLow !== myProfile.avatar) { r = await cloud.setMyProfile(myProfile.bio, myProfile.avatarLow); if (r === 'ok') { small = true; setMyProfile(prev => ({ ...prev, avatar: prev.avatarLow })); } } if (small) { setProfileMsg('Saved, at a smaller size. Run the photo upgrade in Supabase for sharper pictures.'); return; } setProfileMsg(r === 'ok' ? 'Saved. Your friends can now see it.' : r === 'picture_too_big' ? 'That picture is too large. Try a different one.' : 'Could not save. Try again.'); } catch (e) { setProfileMsg("Couldn't save. If this keeps happening, the latest database update hasn't been run yet."); }
                     }} className="px-4 py-2 bg-slate-900 text-[#F4EFE4] text-[10px] uppercase tracking-[0.18em] font-medium">Save</button>
                       {profileMsg && <span data-profile-msg className="text-[11px] text-stone-600">{profileMsg}</span>}
                     </div>

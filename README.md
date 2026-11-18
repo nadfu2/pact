@@ -267,3 +267,7 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
   - Reminders; Calendar and hours (sync, blocked hours, getting-ready times); Location and places (incl. keep up to date)
   - About you (account, sign out, delete account, life situation); What friends can see; Health records and exports (with your health agreement and a withdraw button); Privacy and data; Assistant and advanced (AI key, redo setup).
 - Nothing was removed. Old links to the Data and Life tabs open the matching screens.
+
+## v10.9 - Properly sharp profile photos
+- Photos are now saved up to 720px (was 128px, then 480px). This needs the database limit raised: run `supabase/UPGRADE_PHOTOS.sql` once in Supabase > SQL Editor. Until then the app falls back to the smaller picture and says so.
+- Pictures uploaded before this stay as small as they were. Re-upload them once.
