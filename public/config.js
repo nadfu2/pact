@@ -5,7 +5,9 @@
 // Leave both empty to run Pact in local-only mode (accounts and data stay on the device).
 window.PACT_CONFIG = {
   supabaseUrl: 'https://anfvtigcnfprattktmil.supabase.co',
-  supabaseAnonKey: 'sb_publishable_fw2YRr_07OXuojEi7Nh4Tg_LHouuTwm'
+  supabaseAnonKey: 'sb_publishable_fw2YRr_07OXuojEi7Nh4Tg_LHouuTwm',
+  // Web Push public key (safe to publish). Generate a pair as described in the README, paste the PUBLIC key here.
+  vapidPublicKey: 'BDRAG-QLOoS7KHRhRiewpr7MuNQEgUyh6s2NCMXHTs0dRUQRiZySiIktyJgYczTlahUiG4ykj-dBSyyR77vgtVc'
 };
 
 // Demo edition: a new account starts completely empty. Only what the person enters

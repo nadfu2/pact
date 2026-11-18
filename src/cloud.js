@@ -148,6 +148,67 @@ export const cloud = {
     if (error) throw new Error(error.message || 'could not save');
     return data;   // ok | bio_too_long | picture_too_big | not_signed_in
   },
+  // ---- schedule sharing (time-limited, chosen by the sharer) ----
+  async setMySchedule(blocks) {
+    const { data, error } = await sb.rpc('set_my_schedule', { p_blocks: blocks || [] });
+    if (error) throw new Error(error.message || 'could not save');
+    return data;
+  },
+  async setScheduleGrant(friendId, days, titles) {
+    const { data, error } = await sb.rpc('set_schedule_grant', { p_friend: friendId, p_days: days, p_titles: !!titles });
+    if (error) throw new Error(error.message || 'could not save');
+    return data;   // ok | not_friends | invalid
+  },
+  async myScheduleGrants() {
+    const { data, error } = await sb.rpc('my_schedule_grants');
+    if (error) throw new Error(error.message || 'could not load');
+    return data || [];
+  },
+  async schedulesSharedWithMe() {
+    const { data, error } = await sb.rpc('schedules_shared_with_me');
+    if (error) throw new Error(error.message || 'could not load');
+    return data || [];
+  },
+  // ---- learn a skill with a friend ----
+  async inviteSkillBuddy(friendId, skill, plan, progress, note) {
+    const { data, error } = await sb.rpc('invite_skill_buddy', { p_friend: friendId, p_skill: skill, p_plan: plan || {}, p_progress: progress || {}, p_note: note || '' });
+    if (error) throw new Error(error.message || 'could not invite');
+    return data;   // ok | exists | not_friends | invalid
+  },
+  async respondSkillBuddy(id, accept, progress) {
+    const { data, error } = await sb.rpc('respond_skill_buddy', { p_id: id, p_accept: !!accept, p_progress: progress || {} });
+    if (error) throw new Error(error.message || 'could not answer');
+    return data;
+  },
+  async updateSkillProgress(id, progress) {
+    const { data, error } = await sb.rpc('update_skill_progress', { p_id: id, p_progress: progress || {} });
+    if (error) throw new Error(error.message || 'could not save');
+    return data;
+  },
+  async endSkillBuddy(id) {
+    const { error } = await sb.rpc('end_skill_buddy', { p_id: id });
+    if (error) throw new Error(error.message || 'could not end');
+  },
+  async mySkillBuddies() {
+    const { data, error } = await sb.rpc('my_skill_buddies');
+    if (error) throw new Error(error.message || 'could not load');
+    return data || [];
+  },
+  // ---- phone notifications (Web Push) ----
+  async savePushSub(sub) {
+    const j = sub && sub.toJSON ? sub.toJSON() : sub;
+    const { data, error } = await sb.rpc('save_push_sub', { p_endpoint: j.endpoint, p_p256dh: j.keys && j.keys.p256dh, p_auth: j.keys && j.keys.auth, p_ua: (typeof navigator !== 'undefined' && navigator.userAgent) || '' });
+    if (error) throw new Error(error.message || 'could not save');
+    return data;
+  },
+  async deletePushSub(endpoint) {
+    await sb.rpc('delete_push_sub', { p_endpoint: endpoint });
+  },
+  async syncReminders(items) {
+    const { data, error } = await sb.rpc('sync_my_reminders', { p_items: items || [] });
+    if (error) throw new Error(error.message || 'could not sync');
+    return data;
+  },
   async setMyStatus(mood, day, today) {
     const { data, error } = await sb.rpc('set_my_status', { p_mood: mood || '', p_day: day, p_today: today || [] });
     if (error) throw new Error(error.message || 'could not save');

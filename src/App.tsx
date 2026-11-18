@@ -3,6 +3,7 @@ import { cloud } from './cloud.js';
 import { findSkillPlan, planMilestones, planResources, skillPlanLabel } from './skills.js';
 import {
   ArrowLeft,
+  Search,
   Home,
   Clock,
   Calendar,
@@ -46,13 +47,13 @@ import {
   StickyNote,
   CalendarDays,
   ArrowUp,
-  Heart
+  Heart, Landmark, Trees, Dumbbell, ShoppingBag, Coffee, Pizza, Beer, Mountain, Film, Music, Palette, BookOpen, Plane
 } from 'lucide-react';
 
 
 // Pre-compiled Tailwind CSS for this app, so it renders the same regardless of the host's Tailwind version.
-const ROAM_CSS = "*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:\"\"}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width:640px){.container{max-width:640px}}@media (min-width:768px){.container{max-width:768px}}@media (min-width:1024px){.container{max-width:1024px}}@media (min-width:1280px){.container{max-width:1280px}}@media (min-width:1536px){.container{max-width:1536px}}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.visible{visibility:visible}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.inset-x-0{left:0;right:0}.inset-x-3{left:.75rem;right:.75rem}.-left-\\[7px\\]{left:-7px}.-right-1{right:-.25rem}.-top-1{top:-.25rem}.-top-2{top:-.5rem}.bottom-0{bottom:0}.bottom-16{bottom:4rem}.bottom-20{bottom:5rem}.bottom-24{bottom:6rem}.left-1{left:.25rem}.left-1\\/2{left:50%}.right-4{right:1rem}.top-0{top:0}.top-1{top:.25rem}.top-2{top:.5rem}.z-0{z-index:0}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-40{z-index:40}.z-50{z-index:50}.z-\\[1\\]{z-index:1}.m-3{margin:.75rem}.mx-auto{margin-left:auto;margin-right:auto}.-mt-1{margin-top:-.25rem}.mb-0{margin-bottom:0}.mb-0\\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.ml-1{margin-left:.25rem}.ml-1\\.5{margin-left:.375rem}.ml-2{margin-left:.5rem}.ml-4{margin-left:1rem}.ml-8{margin-left:2rem}.mr-1{margin-right:.25rem}.mt-0{margin-top:0}.mt-0\\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-2\\.5{margin-top:.625rem}.mt-3{margin-top:.75rem}.mt-3\\.5{margin-top:.875rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.contents{display:contents}.\\!hidden{display:none!important}.hidden{display:none}.h-0{height:0}.h-1{height:.25rem}.h-1\\.5{height:.375rem}.h-10{height:2.5rem}.h-11{height:2.75rem}.h-12{height:3rem}.h-2{height:.5rem}.h-24{height:6rem}.h-3{height:.75rem}.h-3\\.5{height:.875rem}.h-4{height:1rem}.h-44{height:11rem}.h-5{height:1.25rem}.h-52{height:13rem}.h-56{height:14rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-\\[100dvh\\]{height:100dvh}.h-\\[3px\\]{height:3px}.h-full{height:100%}.h-screen{height:100vh}.max-h-56{max-height:14rem}.max-h-72{max-height:18rem}.max-h-80{max-height:20rem}.max-h-\\[88vh\\]{max-height:88vh}.min-h-\\[56px\\]{min-height:56px}.min-h-full{min-height:100%}.w-1{width:.25rem}.w-1\\.5{width:.375rem}.w-10{width:2.5rem}.w-11{width:2.75rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-16{width:4rem}.w-3{width:.75rem}.w-3\\.5{width:.875rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-\\[22px\\]{width:22px}.w-full{width:100%}.min-w-0{min-width:0}.min-w-\\[140px\\]{min-width:140px}.min-w-\\[160px\\]{min-width:160px}.min-w-\\[16px\\]{min-width:16px}.min-w-\\[30\\%\\]{min-width:30%}.max-w-\\[230px\\]{max-width:230px}.max-w-\\[48\\%\\]{max-width:48%}.max-w-\\[80\\%\\]{max-width:80%}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1{--tw-translate-x:-0.25rem}.-translate-x-1,.-translate-x-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-x-1\\/2{--tw-translate-x:-50%}.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}@keyframes spin{to{transform:rotate(1turn)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid-cols-7{grid-template-columns:repeat(7,minmax(0,1fr))}.grid-cols-\\[46px_1fr\\]{grid-template-columns:46px 1fr}.grid-cols-\\[92px_1fr\\]{grid-template-columns:92px 1fr}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.items-stretch{align-items:stretch}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0{gap:0}.gap-0\\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-x-3{-moz-column-gap:.75rem;column-gap:.75rem}.gap-y-3{row-gap:.75rem}.gap-y-3\\.5{row-gap:.875rem}.space-y-0>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0px*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0px*var(--tw-space-y-reverse))}.space-y-0\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.125rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.125rem*var(--tw-space-y-reverse))}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-stone-200>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(231 229 228/var(--tw-divide-opacity,1))}.self-center{align-self:center}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.overflow-x-hidden{overflow-x:hidden}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.break-words{overflow-wrap:break-word}.break-all{word-break:break-all}.rounded{border-radius:.25rem}.rounded-\\[14px\\]{border-radius:14px}.rounded-\\[28px\\]{border-radius:28px}.rounded-\\[3px\\]{border-radius:3px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-b{border-bottom-right-radius:.25rem;border-bottom-left-radius:.25rem}.rounded-t{border-top-left-radius:.25rem;border-top-right-radius:.25rem}.border{border-width:1px}.border-2{border-width:2px}.border-\\[1\\.5px\\]{border-width:1.5px}.border-x{border-left-width:1px;border-right-width:1px}.border-b{border-bottom-width:1px}.border-l{border-left-width:1px}.border-l-2{border-left-width:2px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-t-2{border-top-width:2px}.border-dashed{border-style:dashed}.border-\\[\\#F4EFE4\\]{--tw-border-opacity:1;border-color:rgb(244 239 228/var(--tw-border-opacity,1))}.border-amber-600{--tw-border-opacity:1;border-color:rgb(217 119 6/var(--tw-border-opacity,1))}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254/var(--tw-border-opacity,1))}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254/var(--tw-border-opacity,1))}.border-blue-300{--tw-border-opacity:1;border-color:rgb(147 197 253/var(--tw-border-opacity,1))}.border-blue-400{--tw-border-opacity:1;border-color:rgb(96 165 250/var(--tw-border-opacity,1))}.border-blue-50{--tw-border-opacity:1;border-color:rgb(239 246 255/var(--tw-border-opacity,1))}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity,1))}.border-blue-600{--tw-border-opacity:1;border-color:rgb(37 99 235/var(--tw-border-opacity,1))}.border-blue-700{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.border-blue-800{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.border-blue-900{--tw-border-opacity:1;border-color:rgb(30 58 138/var(--tw-border-opacity,1))}.border-blue-950{--tw-border-opacity:1;border-color:rgb(23 37 84/var(--tw-border-opacity,1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183/var(--tw-border-opacity,1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255/var(--tw-border-opacity,1))}.border-purple-200{--tw-border-opacity:1;border-color:rgb(233 213 255/var(--tw-border-opacity,1))}.border-purple-300{--tw-border-opacity:1;border-color:rgb(216 180 254/var(--tw-border-opacity,1))}.border-purple-400{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.border-purple-50{--tw-border-opacity:1;border-color:rgb(250 245 255/var(--tw-border-opacity,1))}.border-purple-500{--tw-border-opacity:1;border-color:rgb(168 85 247/var(--tw-border-opacity,1))}.border-purple-600{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.border-purple-700{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.border-purple-900{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.border-purple-950{--tw-border-opacity:1;border-color:rgb(59 7 100/var(--tw-border-opacity,1))}.border-rose-100{--tw-border-opacity:1;border-color:rgb(255 228 230/var(--tw-border-opacity,1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211/var(--tw-border-opacity,1))}.border-rose-300{--tw-border-opacity:1;border-color:rgb(253 164 175/var(--tw-border-opacity,1))}.border-rose-400{--tw-border-opacity:1;border-color:rgb(251 113 133/var(--tw-border-opacity,1))}.border-rose-50{--tw-border-opacity:1;border-color:rgb(255 241 242/var(--tw-border-opacity,1))}.border-rose-500{--tw-border-opacity:1;border-color:rgb(244 63 94/var(--tw-border-opacity,1))}.border-rose-600{--tw-border-opacity:1;border-color:rgb(225 29 72/var(--tw-border-opacity,1))}.border-rose-700{--tw-border-opacity:1;border-color:rgb(190 18 60/var(--tw-border-opacity,1))}.border-rose-800{--tw-border-opacity:1;border-color:rgb(159 18 57/var(--tw-border-opacity,1))}.border-rose-900{--tw-border-opacity:1;border-color:rgb(136 19 55/var(--tw-border-opacity,1))}.border-rose-950{--tw-border-opacity:1;border-color:rgb(76 5 25/var(--tw-border-opacity,1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225/var(--tw-border-opacity,1))}.border-slate-400{--tw-border-opacity:1;border-color:rgb(148 163 184/var(--tw-border-opacity,1))}.border-slate-50{--tw-border-opacity:1;border-color:rgb(248 250 252/var(--tw-border-opacity,1))}.border-slate-500{--tw-border-opacity:1;border-color:rgb(100 116 139/var(--tw-border-opacity,1))}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity,1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59/var(--tw-border-opacity,1))}.border-slate-900{--tw-border-opacity:1;border-color:rgb(15 23 42/var(--tw-border-opacity,1))}.border-slate-950{--tw-border-opacity:1;border-color:rgb(2 6 23/var(--tw-border-opacity,1))}.border-stone-100{--tw-border-opacity:1;border-color:rgb(245 245 244/var(--tw-border-opacity,1))}.border-stone-200{--tw-border-opacity:1;border-color:rgb(231 229 228/var(--tw-border-opacity,1))}.border-stone-200\\/30{border-color:hsla(20,6%,90%,.3)}.border-stone-300{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.border-stone-400{--tw-border-opacity:1;border-color:rgb(168 162 158/var(--tw-border-opacity,1))}.border-stone-50{--tw-border-opacity:1;border-color:rgb(250 250 249/var(--tw-border-opacity,1))}.border-stone-500{--tw-border-opacity:1;border-color:rgb(120 113 108/var(--tw-border-opacity,1))}.border-stone-600{--tw-border-opacity:1;border-color:rgb(87 83 78/var(--tw-border-opacity,1))}.border-stone-700{--tw-border-opacity:1;border-color:rgb(68 64 60/var(--tw-border-opacity,1))}.border-stone-800{--tw-border-opacity:1;border-color:rgb(41 37 36/var(--tw-border-opacity,1))}.border-stone-900{--tw-border-opacity:1;border-color:rgb(28 25 23/var(--tw-border-opacity,1))}.border-stone-950{--tw-border-opacity:1;border-color:rgb(12 10 9/var(--tw-border-opacity,1))}.border-transparent{border-color:transparent}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255/var(--tw-border-opacity,1))}.bg-\\[\\#EDEAE0\\]{--tw-bg-opacity:1;background-color:rgb(237 234 224/var(--tw-bg-opacity,1))}.bg-\\[\\#F4EFE4\\]{--tw-bg-opacity:1;background-color:rgb(244 239 228/var(--tw-bg-opacity,1))}.bg-\\[\\#F5F3EC\\]{--tw-bg-opacity:1;background-color:rgb(245 243 236/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F5\\]{--tw-bg-opacity:1;background-color:rgb(250 248 245/var(--tw-bg-opacity,1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235/var(--tw-bg-opacity,1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0/var(--tw-bg-opacity,1))}.bg-black\\/40{background-color:rgba(0,0,0,.4)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254/var(--tw-bg-opacity,1))}.bg-blue-200{--tw-bg-opacity:1;background-color:rgb(191 219 254/var(--tw-bg-opacity,1))}.bg-blue-300{--tw-bg-opacity:1;background-color:rgb(147 197 253/var(--tw-bg-opacity,1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250/var(--tw-bg-opacity,1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.bg-blue-800{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.bg-blue-900{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84/var(--tw-bg-opacity,1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105/var(--tw-bg-opacity,1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255/var(--tw-bg-opacity,1))}.bg-purple-200{--tw-bg-opacity:1;background-color:rgb(233 213 255/var(--tw-bg-opacity,1))}.bg-purple-300{--tw-bg-opacity:1;background-color:rgb(216 180 254/var(--tw-bg-opacity,1))}.bg-purple-400{--tw-bg-opacity:1;background-color:rgb(192 132 252/var(--tw-bg-opacity,1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255/var(--tw-bg-opacity,1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234/var(--tw-bg-opacity,1))}.bg-purple-700{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.bg-purple-800{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.bg-purple-900{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.bg-purple-950{--tw-bg-opacity:1;background-color:rgb(59 7 100/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-200{--tw-bg-opacity:1;background-color:rgb(254 205 211/var(--tw-bg-opacity,1))}.bg-rose-300{--tw-bg-opacity:1;background-color:rgb(253 164 175/var(--tw-bg-opacity,1))}.bg-rose-400{--tw-bg-opacity:1;background-color:rgb(251 113 133/var(--tw-bg-opacity,1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242/var(--tw-bg-opacity,1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94/var(--tw-bg-opacity,1))}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-rose-700{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.bg-rose-800{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.bg-rose-900{--tw-bg-opacity:1;background-color:rgb(136 19 55/var(--tw-bg-opacity,1))}.bg-rose-950{--tw-bg-opacity:1;background-color:rgb(76 5 25/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225/var(--tw-bg-opacity,1))}.bg-slate-400{--tw-bg-opacity:1;background-color:rgb(148 163 184/var(--tw-bg-opacity,1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.bg-slate-500{--tw-bg-opacity:1;background-color:rgb(100 116 139/var(--tw-bg-opacity,1))}.bg-slate-600{--tw-bg-opacity:1;background-color:rgb(71 85 105/var(--tw-bg-opacity,1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23/var(--tw-bg-opacity,1))}.bg-slate-950\\/70{background-color:rgba(2,6,23,.7)}.bg-stone-100{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.bg-stone-200{--tw-bg-opacity:1;background-color:rgb(231 229 228/var(--tw-bg-opacity,1))}.bg-stone-300{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.bg-stone-400{--tw-bg-opacity:1;background-color:rgb(168 162 158/var(--tw-bg-opacity,1))}.bg-stone-50{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.bg-stone-500{--tw-bg-opacity:1;background-color:rgb(120 113 108/var(--tw-bg-opacity,1))}.bg-stone-600{--tw-bg-opacity:1;background-color:rgb(87 83 78/var(--tw-bg-opacity,1))}.bg-stone-700{--tw-bg-opacity:1;background-color:rgb(68 64 60/var(--tw-bg-opacity,1))}.bg-stone-800{--tw-bg-opacity:1;background-color:rgb(41 37 36/var(--tw-bg-opacity,1))}.bg-stone-900{--tw-bg-opacity:1;background-color:rgb(28 25 23/var(--tw-bg-opacity,1))}.bg-stone-950{--tw-bg-opacity:1;background-color:rgb(12 10 9/var(--tw-bg-opacity,1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.object-cover{-o-object-fit:cover;object-fit:cover}.p-1{padding:.25rem}.p-1\\.5{padding:.375rem}.p-2{padding:.5rem}.p-2\\.5{padding:.625rem}.p-3{padding:.75rem}.p-3\\.5{padding:.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-0{padding-left:0;padding-right:0}.px-0\\.5{padding-left:.125rem;padding-right:.125rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-\\[22px\\]{padding-left:22px;padding-right:22px}.py-0{padding-top:0;padding-bottom:0}.py-0\\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-px{padding-top:1px;padding-bottom:1px}.pb-0{padding-bottom:0}.pb-0\\.5{padding-bottom:.125rem}.pb-1{padding-bottom:.25rem}.pb-2{padding-bottom:.5rem}.pb-28{padding-bottom:7rem}.pb-3{padding-bottom:.75rem}.pb-3\\.5{padding-bottom:.875rem}.pb-5{padding-bottom:1.25rem}.pb-8{padding-bottom:2rem}.pl-3{padding-left:.75rem}.pl-3\\.5{padding-left:.875rem}.pl-4{padding-left:1rem}.pr-1{padding-right:.25rem}.pr-4{padding-right:1rem}.pt-0{padding-top:0}.pt-0\\.5{padding-top:.125rem}.pt-1{padding-top:.25rem}.pt-1\\.5{padding-top:.375rem}.pt-2{padding-top:.5rem}.pt-4{padding-top:1rem}.pt-5{padding-top:1.25rem}.pt-6{padding-top:1.5rem}.pt-7{padding-top:1.75rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-\\[10px\\]{font-size:10px}.text-\\[11px\\]{font-size:11px}.text-\\[12px\\]{font-size:12px}.text-\\[13px\\]{font-size:13px}.text-\\[14px\\]{font-size:14px}.text-\\[15px\\]{font-size:15px}.text-\\[22px\\]{font-size:22px}.text-\\[24px\\]{font-size:24px}.text-\\[28px\\]{font-size:28px}.text-\\[32px\\]{font-size:32px}.text-\\[34px\\]{font-size:34px}.text-\\[44px\\]{font-size:44px}.text-\\[9px\\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-light{font-weight:300}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.normal-case{text-transform:none}.italic{font-style:italic}.leading-\\[1\\.05\\]{line-height:1.05}.leading-\\[1\\.06\\]{line-height:1.06}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-\\[0\\.14em\\]{letter-spacing:.14em}.tracking-\\[0\\.16em\\]{letter-spacing:.16em}.tracking-normal{letter-spacing:0}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-black{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.text-blue-100{--tw-text-opacity:1;color:rgb(219 234 254/var(--tw-text-opacity,1))}.text-blue-200{--tw-text-opacity:1;color:rgb(191 219 254/var(--tw-text-opacity,1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-blue-50{--tw-text-opacity:1;color:rgb(239 246 255/var(--tw-text-opacity,1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235/var(--tw-text-opacity,1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216/var(--tw-text-opacity,1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175/var(--tw-text-opacity,1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138/var(--tw-text-opacity,1))}.text-blue-950{--tw-text-opacity:1;color:rgb(23 37 84/var(--tw-text-opacity,1))}.text-purple-100{--tw-text-opacity:1;color:rgb(243 232 255/var(--tw-text-opacity,1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255/var(--tw-text-opacity,1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252/var(--tw-text-opacity,1))}.text-purple-50{--tw-text-opacity:1;color:rgb(250 245 255/var(--tw-text-opacity,1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247/var(--tw-text-opacity,1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234/var(--tw-text-opacity,1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206/var(--tw-text-opacity,1))}.text-purple-800{--tw-text-opacity:1;color:rgb(107 33 168/var(--tw-text-opacity,1))}.text-purple-900{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.text-purple-950{--tw-text-opacity:1;color:rgb(59 7 100/var(--tw-text-opacity,1))}.text-rose-100{--tw-text-opacity:1;color:rgb(255 228 230/var(--tw-text-opacity,1))}.text-rose-200{--tw-text-opacity:1;color:rgb(254 205 211/var(--tw-text-opacity,1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-50{--tw-text-opacity:1;color:rgb(255 241 242/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57/var(--tw-text-opacity,1))}.text-rose-900{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.text-rose-950{--tw-text-opacity:1;color:rgb(76 5 25/var(--tw-text-opacity,1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-50{--tw-text-opacity:1;color:rgb(248 250 252/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23/var(--tw-text-opacity,1))}.text-stone-100{--tw-text-opacity:1;color:rgb(245 245 244/var(--tw-text-opacity,1))}.text-stone-200{--tw-text-opacity:1;color:rgb(231 229 228/var(--tw-text-opacity,1))}.text-stone-300{--tw-text-opacity:1;color:rgb(214 211 209/var(--tw-text-opacity,1))}.text-stone-400{--tw-text-opacity:1;color:rgb(168 162 158/var(--tw-text-opacity,1))}.text-stone-50{--tw-text-opacity:1;color:rgb(250 250 249/var(--tw-text-opacity,1))}.text-stone-500{--tw-text-opacity:1;color:rgb(120 113 108/var(--tw-text-opacity,1))}.text-stone-600{--tw-text-opacity:1;color:rgb(87 83 78/var(--tw-text-opacity,1))}.text-stone-700{--tw-text-opacity:1;color:rgb(68 64 60/var(--tw-text-opacity,1))}.text-stone-800{--tw-text-opacity:1;color:rgb(41 37 36/var(--tw-text-opacity,1))}.text-stone-900{--tw-text-opacity:1;color:rgb(28 25 23/var(--tw-text-opacity,1))}.text-stone-950{--tw-text-opacity:1;color:rgb(12 10 9/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.text-white\\/80{color:hsla(0,0%,100%,.8)}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.opacity-0{opacity:0}.opacity-50{opacity:.5}.opacity-60{opacity:.6}.opacity-70{opacity:.7}.opacity-75{opacity:.75}.opacity-80{opacity:.8}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-2xl,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.shadow-sm,.shadow-xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.ease-in{transition-timing-function:cubic-bezier(.4,0,1,1)}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.ease-out{transition-timing-function:cubic-bezier(0,0,.2,1)}.\\[out\\:json\\]{out:json}.\\[timeout\\:20\\]{timeout:20}#root,body,html{margin:0;height:100%;background:#f5f3ec;color-scheme:light}.file\\:mr-2::file-selector-button{margin-right:.5rem}.file\\:border-0::file-selector-button{border-width:0}.file\\:bg-purple-900::file-selector-button{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.file\\:px-2\\.5::file-selector-button{padding-left:.625rem;padding-right:.625rem}.file\\:py-1\\.5::file-selector-button{padding-top:.375rem;padding-bottom:.375rem}.file\\:text-\\[10px\\]::file-selector-button{font-size:10px}.file\\:uppercase::file-selector-button{text-transform:uppercase}.file\\:tracking-wider::file-selector-button{letter-spacing:.05em}.file\\:text-white::file-selector-button{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:border-blue-800:hover{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.hover\\:border-purple-400:hover{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.hover\\:border-purple-600:hover{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.hover\\:border-purple-700:hover{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.hover\\:border-purple-800:hover{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.hover\\:border-purple-900:hover{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.hover\\:bg-blue-50:hover{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.hover\\:bg-blue-600:hover{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.hover\\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.hover\\:bg-blue-800:hover{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.hover\\:bg-blue-900:hover{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.hover\\:bg-purple-700:hover{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.hover\\:bg-purple-800:hover{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.hover\\:bg-purple-900:hover{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.hover\\:bg-rose-600:hover{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.hover\\:bg-rose-700:hover{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.hover\\:bg-rose-800:hover{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.hover\\:bg-stone-100:hover{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.hover\\:bg-stone-300:hover{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.hover\\:bg-stone-50:hover{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.hover\\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.hover\\:bg-white\\/10:hover{background-color:hsla(0,0%,100%,.1)}.hover\\:text-purple-900:hover{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.hover\\:text-rose-700:hover{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.hover\\:text-rose-900:hover{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.hover\\:text-slate-700:hover{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.hover\\:text-slate-900:hover{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.hover\\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:opacity-100:hover{opacity:1}.focus\\:border-stone-300:focus{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.disabled\\:opacity-30:disabled{opacity:.3}.disabled\\:opacity-40:disabled{opacity:.4}.disabled\\:opacity-50:disabled{opacity:.5}@media (max-width:359px){.max-\\[359px\\]\\:h-10{height:2.5rem}.max-\\[359px\\]\\:w-10{width:2.5rem}.max-\\[359px\\]\\:text-\\[18px\\]{font-size:18px}.max-\\[359px\\]\\:text-\\[28px\\]{font-size:28px}.max-\\[359px\\]\\:text-\\[9px\\]{font-size:9px}}@media (min-width:600px){.min-\\[600px\\]\\:max-w-\\[640px\\]{max-width:640px}}@media (min-width:640px){.sm\\:items-center{align-items:center}}@media (min-width:820px){.min-\\[820px\\]\\:max-w-\\[820px\\]{max-width:820px}}";
-const PACT_CSS = "\n@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap');\nhtml, body { margin: 0; height: 100%; overflow: hidden; overscroll-behavior: none; }\nbody { position: fixed; inset: 0; width: 100%; }\n.font-sans, .font-sans input, .font-sans textarea, .font-sans select, .font-sans button { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }\n.font-sans { font-weight: 400; }\n.font-light, .font-normal { font-weight: 400 !important; }\n.font-medium { font-weight: 600 !important; }\n.font-semibold { font-weight: 700 !important; }\n.font-editorial { font-family: 'Fraunces', Georgia, serif; font-weight: 500 !important; letter-spacing: -0.01em !important; line-height: 1.12; font-optical-sizing: auto; }\n.font-pact { font-family: 'Fraunces', Georgia, serif; font-weight: 600 !important; text-transform: uppercase; letter-spacing: 0.14em; line-height: 1; }\n.font-mono { font-family: 'Inter', sans-serif !important; font-weight: 600; font-variant-numeric: tabular-nums; }\n.no-scrollbar::-webkit-scrollbar { display: none; }\n.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }\nbutton { border-radius: 12px; }\ninput, textarea, select { border-radius: 10px; }\ndiv.border:not([class*=\"rounded\"]), form.border:not([class*=\"rounded\"]), label.border:not([class*=\"rounded\"]), section.border:not([class*=\"rounded\"]) { border-radius: 16px; }\ndiv[class*=\"bg-purple-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]), div[class*=\"bg-slate-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]), div[class*=\"bg-blue-9\"]:not([class*=\"rounded\"]) { border-radius: 16px; }\n.shadow-sm, .shadow-xl { box-shadow: none !important; }\n.border-l-4 { border-radius: 4px; }\n@keyframes pact-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-4px) } }\n.pact-bob { animation: pact-bob 3.2s ease-in-out infinite; }\n@media (prefers-reduced-motion: reduce) { .pact-bob { animation: none; } }\n.bg-purple-950{background-color:#12251C!important}\n.hover\\:bg-purple-950:hover{background-color:#12251C!important}\n.text-purple-950{color:#12251C!important}\n.hover\\:text-purple-950:hover{color:#12251C!important}\n.border-purple-950{border-color:#12251C!important}\n.hover\\:border-purple-950:hover{border-color:#12251C!important}\n.focus\\:border-purple-950:focus{border-color:#12251C!important}\n.bg-purple-900{background-color:#1F3A2E!important}\n.hover\\:bg-purple-900:hover{background-color:#1F3A2E!important}\n.text-purple-900{color:#1F3A2E!important}\n.hover\\:text-purple-900:hover{color:#1F3A2E!important}\n.border-purple-900{border-color:#1F3A2E!important}\n.hover\\:border-purple-900:hover{border-color:#1F3A2E!important}\n.focus\\:border-purple-900:focus{border-color:#1F3A2E!important}\n.bg-purple-800{background-color:#2C4A3B!important}\n.hover\\:bg-purple-800:hover{background-color:#2C4A3B!important}\n.text-purple-800{color:#2C4A3B!important}\n.hover\\:text-purple-800:hover{color:#2C4A3B!important}\n.border-purple-800{border-color:#2C4A3B!important}\n.hover\\:border-purple-800:hover{border-color:#2C4A3B!important}\n.focus\\:border-purple-800:focus{border-color:#2C4A3B!important}\n.bg-purple-700{background-color:#3F6B55!important}\n.hover\\:bg-purple-700:hover{background-color:#3F6B55!important}\n.text-purple-700{color:#3F6B55!important}\n.hover\\:text-purple-700:hover{color:#3F6B55!important}\n.border-purple-700{border-color:#3F6B55!important}\n.hover\\:border-purple-700:hover{border-color:#3F6B55!important}\n.focus\\:border-purple-700:focus{border-color:#3F6B55!important}\n.bg-purple-600{background-color:#4F7A63!important}\n.hover\\:bg-purple-600:hover{background-color:#4F7A63!important}\n.text-purple-600{color:#4F7A63!important}\n.hover\\:text-purple-600:hover{color:#4F7A63!important}\n.border-purple-600{border-color:#4F7A63!important}\n.hover\\:border-purple-600:hover{border-color:#4F7A63!important}\n.focus\\:border-purple-600:focus{border-color:#4F7A63!important}\n.bg-purple-500{background-color:#5F8C73!important}\n.hover\\:bg-purple-500:hover{background-color:#5F8C73!important}\n.text-purple-500{color:#5F8C73!important}\n.hover\\:text-purple-500:hover{color:#5F8C73!important}\n.border-purple-500{border-color:#5F8C73!important}\n.hover\\:border-purple-500:hover{border-color:#5F8C73!important}\n.focus\\:border-purple-500:focus{border-color:#5F8C73!important}\n.bg-purple-400{background-color:#8FB09D!important}\n.hover\\:bg-purple-400:hover{background-color:#8FB09D!important}\n.text-purple-400{color:#8FB09D!important}\n.hover\\:text-purple-400:hover{color:#8FB09D!important}\n.border-purple-400{border-color:#8FB09D!important}\n.hover\\:border-purple-400:hover{border-color:#8FB09D!important}\n.focus\\:border-purple-400:focus{border-color:#8FB09D!important}\n.bg-purple-300{background-color:#B5CABD!important}\n.hover\\:bg-purple-300:hover{background-color:#B5CABD!important}\n.text-purple-300{color:#B5CABD!important}\n.hover\\:text-purple-300:hover{color:#B5CABD!important}\n.border-purple-300{border-color:#B5CABD!important}\n.hover\\:border-purple-300:hover{border-color:#B5CABD!important}\n.focus\\:border-purple-300:focus{border-color:#B5CABD!important}\n.bg-purple-200{background-color:#D5E0D8!important}\n.hover\\:bg-purple-200:hover{background-color:#D5E0D8!important}\n.text-purple-200{color:#D5E0D8!important}\n.hover\\:text-purple-200:hover{color:#D5E0D8!important}\n.border-purple-200{border-color:#D5E0D8!important}\n.hover\\:border-purple-200:hover{border-color:#D5E0D8!important}\n.focus\\:border-purple-200:focus{border-color:#D5E0D8!important}\n.bg-purple-100{background-color:#E6EDE8!important}\n.hover\\:bg-purple-100:hover{background-color:#E6EDE8!important}\n.text-purple-100{color:#E6EDE8!important}\n.hover\\:text-purple-100:hover{color:#E6EDE8!important}\n.border-purple-100{border-color:#E6EDE8!important}\n.hover\\:border-purple-100:hover{border-color:#E6EDE8!important}\n.focus\\:border-purple-100:focus{border-color:#E6EDE8!important}\n.bg-purple-50{background-color:#F0F4F1!important}\n.hover\\:bg-purple-50:hover{background-color:#F0F4F1!important}\n.text-purple-50{color:#F0F4F1!important}\n.hover\\:text-purple-50:hover{color:#F0F4F1!important}\n.border-purple-50{border-color:#F0F4F1!important}\n.hover\\:border-purple-50:hover{border-color:#F0F4F1!important}\n.focus\\:border-purple-50:focus{border-color:#F0F4F1!important}\n.bg-rose-950{background-color:#3A1F10!important}\n.hover\\:bg-rose-950:hover{background-color:#3A1F10!important}\n.text-rose-950{color:#3A1F10!important}\n.hover\\:text-rose-950:hover{color:#3A1F10!important}\n.border-rose-950{border-color:#3A1F10!important}\n.hover\\:border-rose-950:hover{border-color:#3A1F10!important}\n.focus\\:border-rose-950:focus{border-color:#3A1F10!important}\n.bg-rose-900{background-color:#6B3A1E!important}\n.hover\\:bg-rose-900:hover{background-color:#6B3A1E!important}\n.text-rose-900{color:#6B3A1E!important}\n.hover\\:text-rose-900:hover{color:#6B3A1E!important}\n.border-rose-900{border-color:#6B3A1E!important}\n.hover\\:border-rose-900:hover{border-color:#6B3A1E!important}\n.focus\\:border-rose-900:focus{border-color:#6B3A1E!important}\n.bg-rose-800{background-color:#8A4A27!important}\n.hover\\:bg-rose-800:hover{background-color:#8A4A27!important}\n.text-rose-800{color:#8A4A27!important}\n.hover\\:text-rose-800:hover{color:#8A4A27!important}\n.border-rose-800{border-color:#8A4A27!important}\n.hover\\:border-rose-800:hover{border-color:#8A4A27!important}\n.focus\\:border-rose-800:focus{border-color:#8A4A27!important}\n.bg-rose-700{background-color:#A65F37!important}\n.hover\\:bg-rose-700:hover{background-color:#A65F37!important}\n.text-rose-700{color:#A65F37!important}\n.hover\\:text-rose-700:hover{color:#A65F37!important}\n.border-rose-700{border-color:#A65F37!important}\n.hover\\:border-rose-700:hover{border-color:#A65F37!important}\n.focus\\:border-rose-700:focus{border-color:#A65F37!important}\n.bg-rose-600{background-color:#B5683A!important}\n.hover\\:bg-rose-600:hover{background-color:#B5683A!important}\n.text-rose-600{color:#B5683A!important}\n.hover\\:text-rose-600:hover{color:#B5683A!important}\n.border-rose-600{border-color:#B5683A!important}\n.hover\\:border-rose-600:hover{border-color:#B5683A!important}\n.focus\\:border-rose-600:focus{border-color:#B5683A!important}\n.bg-rose-500{background-color:#C77E52!important}\n.hover\\:bg-rose-500:hover{background-color:#C77E52!important}\n.text-rose-500{color:#C77E52!important}\n.hover\\:text-rose-500:hover{color:#C77E52!important}\n.border-rose-500{border-color:#C77E52!important}\n.hover\\:border-rose-500:hover{border-color:#C77E52!important}\n.focus\\:border-rose-500:focus{border-color:#C77E52!important}\n.bg-rose-400{background-color:#D9945F!important}\n.hover\\:bg-rose-400:hover{background-color:#D9945F!important}\n.text-rose-400{color:#D9945F!important}\n.hover\\:text-rose-400:hover{color:#D9945F!important}\n.border-rose-400{border-color:#D9945F!important}\n.hover\\:border-rose-400:hover{border-color:#D9945F!important}\n.focus\\:border-rose-400:focus{border-color:#D9945F!important}\n.bg-rose-300{background-color:#E6B38C!important}\n.hover\\:bg-rose-300:hover{background-color:#E6B38C!important}\n.text-rose-300{color:#E6B38C!important}\n.hover\\:text-rose-300:hover{color:#E6B38C!important}\n.border-rose-300{border-color:#E6B38C!important}\n.hover\\:border-rose-300:hover{border-color:#E6B38C!important}\n.focus\\:border-rose-300:focus{border-color:#E6B38C!important}\n.bg-rose-200{background-color:#F0D1B8!important}\n.hover\\:bg-rose-200:hover{background-color:#F0D1B8!important}\n.text-rose-200{color:#F0D1B8!important}\n.hover\\:text-rose-200:hover{color:#F0D1B8!important}\n.border-rose-200{border-color:#F0D1B8!important}\n.hover\\:border-rose-200:hover{border-color:#F0D1B8!important}\n.focus\\:border-rose-200:focus{border-color:#F0D1B8!important}\n.bg-rose-100{background-color:#F6E4D5!important}\n.hover\\:bg-rose-100:hover{background-color:#F6E4D5!important}\n.text-rose-100{color:#F6E4D5!important}\n.hover\\:text-rose-100:hover{color:#F6E4D5!important}\n.border-rose-100{border-color:#F6E4D5!important}\n.hover\\:border-rose-100:hover{border-color:#F6E4D5!important}\n.focus\\:border-rose-100:focus{border-color:#F6E4D5!important}\n.bg-rose-50{background-color:#FAF1EA!important}\n.hover\\:bg-rose-50:hover{background-color:#FAF1EA!important}\n.text-rose-50{color:#FAF1EA!important}\n.hover\\:text-rose-50:hover{color:#FAF1EA!important}\n.border-rose-50{border-color:#FAF1EA!important}\n.hover\\:border-rose-50:hover{border-color:#FAF1EA!important}\n.focus\\:border-rose-50:focus{border-color:#FAF1EA!important}\n.bg-blue-950{background-color:#14282B!important}\n.hover\\:bg-blue-950:hover{background-color:#14282B!important}\n.text-blue-950{color:#14282B!important}\n.hover\\:text-blue-950:hover{color:#14282B!important}\n.border-blue-950{border-color:#14282B!important}\n.hover\\:border-blue-950:hover{border-color:#14282B!important}\n.focus\\:border-blue-950:focus{border-color:#14282B!important}\n.bg-blue-900{background-color:#1E3F44!important}\n.hover\\:bg-blue-900:hover{background-color:#1E3F44!important}\n.text-blue-900{color:#1E3F44!important}\n.hover\\:text-blue-900:hover{color:#1E3F44!important}\n.border-blue-900{border-color:#1E3F44!important}\n.hover\\:border-blue-900:hover{border-color:#1E3F44!important}\n.focus\\:border-blue-900:focus{border-color:#1E3F44!important}\n.bg-blue-800{background-color:#2A5359!important}\n.hover\\:bg-blue-800:hover{background-color:#2A5359!important}\n.text-blue-800{color:#2A5359!important}\n.hover\\:text-blue-800:hover{color:#2A5359!important}\n.border-blue-800{border-color:#2A5359!important}\n.hover\\:border-blue-800:hover{border-color:#2A5359!important}\n.focus\\:border-blue-800:focus{border-color:#2A5359!important}\n.bg-blue-700{background-color:#3A6A70!important}\n.hover\\:bg-blue-700:hover{background-color:#3A6A70!important}\n.text-blue-700{color:#3A6A70!important}\n.hover\\:text-blue-700:hover{color:#3A6A70!important}\n.border-blue-700{border-color:#3A6A70!important}\n.hover\\:border-blue-700:hover{border-color:#3A6A70!important}\n.focus\\:border-blue-700:focus{border-color:#3A6A70!important}\n.bg-blue-600{background-color:#4C7F85!important}\n.hover\\:bg-blue-600:hover{background-color:#4C7F85!important}\n.text-blue-600{color:#4C7F85!important}\n.hover\\:text-blue-600:hover{color:#4C7F85!important}\n.border-blue-600{border-color:#4C7F85!important}\n.hover\\:border-blue-600:hover{border-color:#4C7F85!important}\n.focus\\:border-blue-600:focus{border-color:#4C7F85!important}\n.bg-blue-500{background-color:#639499!important}\n.hover\\:bg-blue-500:hover{background-color:#639499!important}\n.text-blue-500{color:#639499!important}\n.hover\\:text-blue-500:hover{color:#639499!important}\n.border-blue-500{border-color:#639499!important}\n.hover\\:border-blue-500:hover{border-color:#639499!important}\n.focus\\:border-blue-500:focus{border-color:#639499!important}\n.bg-blue-400{background-color:#8FB2B6!important}\n.hover\\:bg-blue-400:hover{background-color:#8FB2B6!important}\n.text-blue-400{color:#8FB2B6!important}\n.hover\\:text-blue-400:hover{color:#8FB2B6!important}\n.border-blue-400{border-color:#8FB2B6!important}\n.hover\\:border-blue-400:hover{border-color:#8FB2B6!important}\n.focus\\:border-blue-400:focus{border-color:#8FB2B6!important}\n.bg-blue-300{background-color:#A8C4C6!important}\n.hover\\:bg-blue-300:hover{background-color:#A8C4C6!important}\n.text-blue-300{color:#A8C4C6!important}\n.hover\\:text-blue-300:hover{color:#A8C4C6!important}\n.border-blue-300{border-color:#A8C4C6!important}\n.hover\\:border-blue-300:hover{border-color:#A8C4C6!important}\n.focus\\:border-blue-300:focus{border-color:#A8C4C6!important}\n.bg-blue-200{background-color:#CADCDD!important}\n.hover\\:bg-blue-200:hover{background-color:#CADCDD!important}\n.text-blue-200{color:#CADCDD!important}\n.hover\\:text-blue-200:hover{color:#CADCDD!important}\n.border-blue-200{border-color:#CADCDD!important}\n.hover\\:border-blue-200:hover{border-color:#CADCDD!important}\n.focus\\:border-blue-200:focus{border-color:#CADCDD!important}\n.bg-blue-100{background-color:#E1ECED!important}\n.hover\\:bg-blue-100:hover{background-color:#E1ECED!important}\n.text-blue-100{color:#E1ECED!important}\n.hover\\:text-blue-100:hover{color:#E1ECED!important}\n.border-blue-100{border-color:#E1ECED!important}\n.hover\\:border-blue-100:hover{border-color:#E1ECED!important}\n.focus\\:border-blue-100:focus{border-color:#E1ECED!important}\n.bg-blue-50{background-color:#EEF4F5!important}\n.hover\\:bg-blue-50:hover{background-color:#EEF4F5!important}\n.text-blue-50{color:#EEF4F5!important}\n.hover\\:text-blue-50:hover{color:#EEF4F5!important}\n.border-blue-50{border-color:#EEF4F5!important}\n.hover\\:border-blue-50:hover{border-color:#EEF4F5!important}\n.focus\\:border-blue-50:focus{border-color:#EEF4F5!important}\n.bg-slate-950{background-color:#0F0F0D!important}\n.hover\\:bg-slate-950:hover{background-color:#0F0F0D!important}\n.text-slate-950{color:#0F0F0D!important}\n.hover\\:text-slate-950:hover{color:#0F0F0D!important}\n.border-slate-950{border-color:#0F0F0D!important}\n.hover\\:border-slate-950:hover{border-color:#0F0F0D!important}\n.focus\\:border-slate-950:focus{border-color:#0F0F0D!important}\n.bg-slate-900{background-color:#1A1A17!important}\n.hover\\:bg-slate-900:hover{background-color:#1A1A17!important}\n.text-slate-900{color:#1A1A17!important}\n.hover\\:text-slate-900:hover{color:#1A1A17!important}\n.border-slate-900{border-color:#1A1A17!important}\n.hover\\:border-slate-900:hover{border-color:#1A1A17!important}\n.focus\\:border-slate-900:focus{border-color:#1A1A17!important}\n.bg-slate-800{background-color:#2A2A26!important}\n.hover\\:bg-slate-800:hover{background-color:#2A2A26!important}\n.text-slate-800{color:#2A2A26!important}\n.hover\\:text-slate-800:hover{color:#2A2A26!important}\n.border-slate-800{border-color:#2A2A26!important}\n.hover\\:border-slate-800:hover{border-color:#2A2A26!important}\n.focus\\:border-slate-800:focus{border-color:#2A2A26!important}\n.bg-slate-700{background-color:#3E3D37!important}\n.hover\\:bg-slate-700:hover{background-color:#3E3D37!important}\n.text-slate-700{color:#3E3D37!important}\n.hover\\:text-slate-700:hover{color:#3E3D37!important}\n.border-slate-700{border-color:#3E3D37!important}\n.hover\\:border-slate-700:hover{border-color:#3E3D37!important}\n.focus\\:border-slate-700:focus{border-color:#3E3D37!important}\n.bg-slate-600{background-color:#55534B!important}\n.hover\\:bg-slate-600:hover{background-color:#55534B!important}\n.text-slate-600{color:#55534B!important}\n.hover\\:text-slate-600:hover{color:#55534B!important}\n.border-slate-600{border-color:#55534B!important}\n.hover\\:border-slate-600:hover{border-color:#55534B!important}\n.focus\\:border-slate-600:focus{border-color:#55534B!important}\n.bg-slate-500{background-color:#6B6960!important}\n.hover\\:bg-slate-500:hover{background-color:#6B6960!important}\n.text-slate-500{color:#6B6960!important}\n.hover\\:text-slate-500:hover{color:#6B6960!important}\n.border-slate-500{border-color:#6B6960!important}\n.hover\\:border-slate-500:hover{border-color:#6B6960!important}\n.focus\\:border-slate-500:focus{border-color:#6B6960!important}\n.bg-slate-400{background-color:#8A877D!important}\n.hover\\:bg-slate-400:hover{background-color:#8A877D!important}\n.text-slate-400{color:#8A877D!important}\n.hover\\:text-slate-400:hover{color:#8A877D!important}\n.border-slate-400{border-color:#8A877D!important}\n.hover\\:border-slate-400:hover{border-color:#8A877D!important}\n.focus\\:border-slate-400:focus{border-color:#8A877D!important}\n.bg-slate-300{background-color:#B5B1A5!important}\n.hover\\:bg-slate-300:hover{background-color:#B5B1A5!important}\n.text-slate-300{color:#B5B1A5!important}\n.hover\\:text-slate-300:hover{color:#B5B1A5!important}\n.border-slate-300{border-color:#B5B1A5!important}\n.hover\\:border-slate-300:hover{border-color:#B5B1A5!important}\n.focus\\:border-slate-300:focus{border-color:#B5B1A5!important}\n.bg-slate-200{background-color:#D6D1C4!important}\n.hover\\:bg-slate-200:hover{background-color:#D6D1C4!important}\n.text-slate-200{color:#D6D1C4!important}\n.hover\\:text-slate-200:hover{color:#D6D1C4!important}\n.border-slate-200{border-color:#D6D1C4!important}\n.hover\\:border-slate-200:hover{border-color:#D6D1C4!important}\n.focus\\:border-slate-200:focus{border-color:#D6D1C4!important}\n.bg-slate-100{background-color:#E7E3D8!important}\n.hover\\:bg-slate-100:hover{background-color:#E7E3D8!important}\n.text-slate-100{color:#E7E3D8!important}\n.hover\\:text-slate-100:hover{color:#E7E3D8!important}\n.border-slate-100{border-color:#E7E3D8!important}\n.hover\\:border-slate-100:hover{border-color:#E7E3D8!important}\n.focus\\:border-slate-100:focus{border-color:#E7E3D8!important}\n.bg-slate-50{background-color:#F1EEE6!important}\n.hover\\:bg-slate-50:hover{background-color:#F1EEE6!important}\n.text-slate-50{color:#F1EEE6!important}\n.hover\\:text-slate-50:hover{color:#F1EEE6!important}\n.border-slate-50{border-color:#F1EEE6!important}\n.hover\\:border-slate-50:hover{border-color:#F1EEE6!important}\n.focus\\:border-slate-50:focus{border-color:#F1EEE6!important}\n.bg-stone-950{background-color:#1A1A17!important}\n.hover\\:bg-stone-950:hover{background-color:#1A1A17!important}\n.text-stone-950{color:#1A1A17!important}\n.hover\\:text-stone-950:hover{color:#1A1A17!important}\n.border-stone-950{border-color:#1A1A17!important}\n.hover\\:border-stone-950:hover{border-color:#1A1A17!important}\n.focus\\:border-stone-950:focus{border-color:#1A1A17!important}\n.bg-stone-900{background-color:#25241F!important}\n.hover\\:bg-stone-900:hover{background-color:#25241F!important}\n.text-stone-900{color:#25241F!important}\n.hover\\:text-stone-900:hover{color:#25241F!important}\n.border-stone-900{border-color:#25241F!important}\n.hover\\:border-stone-900:hover{border-color:#25241F!important}\n.focus\\:border-stone-900:focus{border-color:#25241F!important}\n.bg-stone-800{background-color:#33322B!important}\n.hover\\:bg-stone-800:hover{background-color:#33322B!important}\n.text-stone-800{color:#33322B!important}\n.hover\\:text-stone-800:hover{color:#33322B!important}\n.border-stone-800{border-color:#33322B!important}\n.hover\\:border-stone-800:hover{border-color:#33322B!important}\n.focus\\:border-stone-800:focus{border-color:#33322B!important}\n.bg-stone-700{background-color:#47453D!important}\n.hover\\:bg-stone-700:hover{background-color:#47453D!important}\n.text-stone-700{color:#47453D!important}\n.hover\\:text-stone-700:hover{color:#47453D!important}\n.border-stone-700{border-color:#47453D!important}\n.hover\\:border-stone-700:hover{border-color:#47453D!important}\n.focus\\:border-stone-700:focus{border-color:#47453D!important}\n.bg-stone-600{background-color:#5C5A52!important}\n.hover\\:bg-stone-600:hover{background-color:#5C5A52!important}\n.text-stone-600{color:#5C5A52!important}\n.hover\\:text-stone-600:hover{color:#5C5A52!important}\n.border-stone-600{border-color:#5C5A52!important}\n.hover\\:border-stone-600:hover{border-color:#5C5A52!important}\n.focus\\:border-stone-600:focus{border-color:#5C5A52!important}\n.bg-stone-500{background-color:#6B6960!important}\n.hover\\:bg-stone-500:hover{background-color:#6B6960!important}\n.text-stone-500{color:#6B6960!important}\n.hover\\:text-stone-500:hover{color:#6B6960!important}\n.border-stone-500{border-color:#6B6960!important}\n.hover\\:border-stone-500:hover{border-color:#6B6960!important}\n.focus\\:border-stone-500:focus{border-color:#6B6960!important}\n.bg-stone-400{background-color:#8A877D!important}\n.hover\\:bg-stone-400:hover{background-color:#8A877D!important}\n.text-stone-400{color:#8A877D!important}\n.hover\\:text-stone-400:hover{color:#8A877D!important}\n.border-stone-400{border-color:#8A877D!important}\n.hover\\:border-stone-400:hover{border-color:#8A877D!important}\n.focus\\:border-stone-400:focus{border-color:#8A877D!important}\n.bg-stone-300{background-color:#CFCABD!important}\n.hover\\:bg-stone-300:hover{background-color:#CFCABD!important}\n.text-stone-300{color:#CFCABD!important}\n.hover\\:text-stone-300:hover{color:#CFCABD!important}\n.border-stone-300{border-color:#CFCABD!important}\n.hover\\:border-stone-300:hover{border-color:#CFCABD!important}\n.focus\\:border-stone-300:focus{border-color:#CFCABD!important}\n.bg-stone-200{background-color:#D9D4C6!important}\n.hover\\:bg-stone-200:hover{background-color:#D9D4C6!important}\n.text-stone-200{color:#D9D4C6!important}\n.hover\\:text-stone-200:hover{color:#D9D4C6!important}\n.border-stone-200{border-color:#D9D4C6!important}\n.hover\\:border-stone-200:hover{border-color:#D9D4C6!important}\n.focus\\:border-stone-200:focus{border-color:#D9D4C6!important}\n.bg-stone-100{background-color:#ECE8DD!important}\n.hover\\:bg-stone-100:hover{background-color:#ECE8DD!important}\n.text-stone-100{color:#ECE8DD!important}\n.hover\\:text-stone-100:hover{color:#ECE8DD!important}\n.border-stone-100{border-color:#ECE8DD!important}\n.hover\\:border-stone-100:hover{border-color:#ECE8DD!important}\n.focus\\:border-stone-100:focus{border-color:#ECE8DD!important}\n.bg-stone-50{background-color:#F3F0E8!important}\n.hover\\:bg-stone-50:hover{background-color:#F3F0E8!important}\n.text-stone-50{color:#F3F0E8!important}\n.hover\\:text-stone-50:hover{color:#F3F0E8!important}\n.border-stone-50{border-color:#F3F0E8!important}\n.hover\\:border-stone-50:hover{border-color:#F3F0E8!important}\n.focus\\:border-stone-50:focus{border-color:#F3F0E8!important}\n.bg-white{background-color:#FBF9F3!important}\n.bg-\\[\\#FAF8F5\\]{background-color:#F3F0E8!important}\n.bg-\\[\\#F5F3EC\\]{background-color:#F5F3EC!important}\n.bg-slate-950\\/70{background-color:rgba(26,26,23,.7)!important}\n.border-stone-200\\/30{border-color:rgba(217,212,198,.3)!important}\nhtml{-webkit-text-size-adjust:100%;text-size-adjust:100%}html,body{max-width:100%;overflow-x:hidden}\ninput[type=date],input[type=time],input[type=search],select{-webkit-appearance:none;appearance:none;min-width:0;max-width:100%;box-sizing:border-box}\ninput[type=date],input[type=time]{min-height:2rem;text-align:left}\ninput[type=search]::-webkit-search-decoration,input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none}\n@supports (-webkit-touch-callout:none){input:not([type=checkbox]):not([type=radio]):not([type=file]),select,textarea{font-size:16px!important}}\n\nhtml:not([data-pact-theme]) .bg-\\[\\#F5F3EC\\]{background-color:#F4EFE4!important}\nhtml:not([data-pact-theme]) .bg-\\[\\#EDEAE0\\]{background-color:#EAE3D2!important}\nhtml:not([data-pact-theme]) .bg-\\[\\#FAF8F5\\]{background-color:#F8F3E7!important}\nhtml:not([data-pact-theme]) .bg-white{background-color:#FBF8F0!important}\nhtml:not([data-pact-theme]) .border-stone-200{border-color:#DDD5C2!important}\nhtml:not([data-pact-theme]) .border-stone-300{border-color:#CFC7B4!important}\nhtml:not([data-pact-theme]) [data-pact-glass]{background:rgba(244,239,228,.84)!important}\nhtml:not([data-pact-theme]) [data-pact-glass=\"nav\"]{background:rgba(244,239,228,.97)!important}\n.lg-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;animation:lg-fade 1s ease-out both}\n.lg-bg>*{position:absolute}\n.lg-blob{border-radius:50%;will-change:transform}\n.lg-clay{background:radial-gradient(circle,rgba(200,100,60,.20),rgba(200,100,60,0) 70%)}\n.lg-forest{background:radial-gradient(circle,rgba(31,58,46,.15),rgba(31,58,46,0) 70%)}\n.lg-rules{left:0;right:0;top:-240px;bottom:0;opacity:.55;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 39px,rgba(31,58,46,.07) 39px,rgba(31,58,46,.07) 40px);animation:lg-rules 45s linear infinite}\n.lg-hours{left:0;right:0;top:-224px;bottom:0;opacity:.6;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 55px,rgba(31,58,46,.075) 55px,rgba(31,58,46,.075) 56px);animation:lg-hours 70s linear infinite}\n.lg-spin{animation:lg-spin 140s linear infinite}\n.lg-spin-slow{animation:lg-spin 90s linear infinite reverse}\n.lg-hand{transform-origin:50% 50%;animation:lg-spin 60s linear infinite}\n.lg-sweep{left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,100,60,.45),transparent);animation:lg-sweep 22s ease-in-out infinite alternate}\n.lg-dash{stroke-dasharray:3 9;animation:lg-dash 40s linear infinite}\n.lg-pin{border-radius:50%;background:rgba(200,100,60,.55);width:7px;height:7px}\n.lg-pin::after{content:'';position:absolute;inset:-1px;border-radius:50%;border:1.5px solid rgba(200,100,60,.5);animation:lg-ring 3.6s ease-out infinite;animation-delay:inherit}\n.lg-grow{stroke-dasharray:420;stroke-dashoffset:420;animation:lg-grow 16s ease-in-out infinite}\n.lg-leaf{transform-box:fill-box;transform-origin:center;animation:lg-pulse 5s ease-in-out infinite}\n.lg-ringline{border-radius:50%;border:1.5px solid rgba(31,58,46,.12)}\n.lg-ringline.c{border-color:rgba(200,100,60,.22)}\n.lg-mote{width:6px;height:6px;border-radius:50%;background:rgba(200,100,60,.35);animation:lg-float 14s ease-in infinite}\n.lg-ring{position:absolute;border-radius:50%;background:rgba(200,100,60,.45);animation:lg-ring 2.8s ease-out infinite}\n.lg-breathe{animation:lg-breathe 4s ease-in-out infinite}\n@keyframes lg-fade{from{opacity:0}to{opacity:1}}\n@keyframes lg-rules{to{transform:translateY(-240px)}}\n@keyframes lg-hours{to{transform:translateY(-224px)}}\n@keyframes lg-spin{to{transform:rotate(360deg)}}\n@keyframes lg-sweep{from{top:12%}to{top:88%}}\n@keyframes lg-dash{to{stroke-dashoffset:-240}}\n@keyframes lg-ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(3.4);opacity:0}}\n@keyframes lg-grow{0%{stroke-dashoffset:420;opacity:0}12%{opacity:1}55%{stroke-dashoffset:0;opacity:1}85%{stroke-dashoffset:0;opacity:.9}100%{stroke-dashoffset:0;opacity:0}}\n@keyframes lg-pulse{0%,100%{transform:scale(.7);opacity:.35}50%{transform:scale(1.25);opacity:.9}}\n@keyframes lg-float{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:.8}100%{transform:translateY(-70vh) scale(1.2);opacity:0}}\n@keyframes lg-d1{0%,100%{transform:translate(-30px,0) scale(1)}50%{transform:translate(40px,60px) scale(1.15)}}\n@keyframes lg-d2{0%,100%{transform:translate(0,0) scale(1.1)}50%{transform:translate(-55px,-45px) scale(.95)}}\n@keyframes lg-l1{0%,100%{transform:translate(0,0)}50%{transform:translate(38px,10px)}}\n@keyframes lg-l2{0%,100%{transform:translate(0,0)}50%{transform:translate(-36px,22px)}}\n@keyframes lg-l3{0%,100%{transform:translate(0,0)}50%{transform:translate(8px,-34px)}}\n@keyframes lg-breathe{0%,100%{box-shadow:0 0 0 0 rgba(200,100,60,0)}50%{box-shadow:0 0 0 6px rgba(200,100,60,.13)}}\n@keyframes lg-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}\n.lg-d1{animation:lg-d1 28s ease-in-out infinite}\n.lg-d2{animation:lg-d2 34s ease-in-out infinite}\n.lg-l1{animation:lg-l1 24s ease-in-out infinite}\n.lg-l2{animation:lg-l2 30s ease-in-out infinite}\n.lg-l3{animation:lg-l3 27s ease-in-out infinite}\n.lg-rise{animation:lg-rise .7s ease-out both}\nhtml[data-pact-theme$=\"-dark\"] .lg-bg{opacity:.55}\n@media (prefers-reduced-motion: reduce){.lg-bg *,.lg-bg,.lg-breathe,.lg-rise,.lg-pulse-dot{animation:none!important}.lg-grow{stroke-dashoffset:0;opacity:.6}}\n.lg-pulse-dot{animation:lg-ring 2.8s ease-out infinite}\n\nbutton:not([class*=\"rounded\"]){border-radius:2px}\ninput:not([class*=\"rounded\"]),textarea:not([class*=\"rounded\"]),select:not([class*=\"rounded\"]){border-radius:3px}\ndiv.border:not([class*=\"rounded\"]),form.border:not([class*=\"rounded\"]),label.border:not([class*=\"rounded\"]),section.border:not([class*=\"rounded\"]){border-radius:3px}\ndiv[class*=\"bg-purple-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]),div[class*=\"bg-slate-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]),div[class*=\"bg-blue-9\"]:not([class*=\"rounded\"]){border-radius:3px}\n\n[class*=\"rounded-\"]:not(.rounded-full):not([class*=\"rounded-t\"]):not([class*=\"rounded-b\"]){border-radius:2px!important}\n[class*=\"rounded-full\"][class*=\"px-\"],[class*=\"rounded-full\"][class*=\"min-w\"]{border-radius:2px!important}\ninput,textarea,select,button,label.border,div.border,form.border,section.border{border-radius:2px}\n.lg-pill{border-radius:2px}\n";
+const ROAM_CSS = "*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:\"\"}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width:640px){.container{max-width:640px}}@media (min-width:768px){.container{max-width:768px}}@media (min-width:1024px){.container{max-width:1024px}}@media (min-width:1280px){.container{max-width:1280px}}@media (min-width:1536px){.container{max-width:1536px}}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.visible{visibility:visible}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.inset-x-0{left:0;right:0}.inset-x-3{left:.75rem;right:.75rem}.-left-\\[34px\\]{left:-34px}.-left-\\[7px\\]{left:-7px}.-right-1{right:-.25rem}.-right-1\\.5{right:-.375rem}.-top-1{top:-.25rem}.-top-1\\.5{top:-.375rem}.-top-2{top:-.5rem}.bottom-0{bottom:0}.bottom-16{bottom:4rem}.bottom-2{bottom:.5rem}.bottom-20{bottom:5rem}.bottom-24{bottom:6rem}.left-1{left:.25rem}.left-1\\/2{left:50%}.left-2{left:.5rem}.left-2\\.5{left:.625rem}.left-3{left:.75rem}.left-\\[34px\\]{left:34px}.right-0{right:0}.right-1{right:.25rem}.right-1\\.5{right:.375rem}.right-3{right:.75rem}.right-4{right:1rem}.top-0{top:0}.top-0\\.5{top:.125rem}.top-1{top:.25rem}.top-1\\.5{top:.375rem}.top-1\\/2{top:50%}.top-2{top:.5rem}.z-0{z-index:0}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-40{z-index:40}.z-50{z-index:50}.z-\\[1\\]{z-index:1}.m-3{margin:.75rem}.mx-auto{margin-left:auto;margin-right:auto}.-mb-px{margin-bottom:-1px}.-mt-1{margin-top:-.25rem}.mb-0{margin-bottom:0}.mb-0\\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.ml-1{margin-left:.25rem}.ml-1\\.5{margin-left:.375rem}.ml-2{margin-left:.5rem}.ml-4{margin-left:1rem}.ml-8{margin-left:2rem}.mr-1{margin-right:.25rem}.mt-0{margin-top:0}.mt-0\\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-2\\.5{margin-top:.625rem}.mt-3{margin-top:.75rem}.mt-3\\.5{margin-top:.875rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.mt-auto{margin-top:auto}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.contents{display:contents}.\\!hidden{display:none!important}.hidden{display:none}.h-0{height:0}.h-1{height:.25rem}.h-1\\.5{height:.375rem}.h-10{height:2.5rem}.h-11{height:2.75rem}.h-12{height:3rem}.h-2{height:.5rem}.h-2\\.5{height:.625rem}.h-24{height:6rem}.h-3{height:.75rem}.h-3\\.5{height:.875rem}.h-4{height:1rem}.h-44{height:11rem}.h-5{height:1.25rem}.h-52{height:13rem}.h-56{height:14rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-\\[100dvh\\]{height:100dvh}.h-\\[3px\\]{height:3px}.h-full{height:100%}.h-screen{height:100vh}.max-h-56{max-height:14rem}.max-h-72{max-height:18rem}.max-h-80{max-height:20rem}.max-h-\\[88vh\\]{max-height:88vh}.min-h-\\[56px\\]{min-height:56px}.min-h-full{min-height:100%}.w-1{width:.25rem}.w-1\\.5{width:.375rem}.w-10{width:2.5rem}.w-11{width:2.75rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-16{width:4rem}.w-2{width:.5rem}.w-2\\.5{width:.625rem}.w-3{width:.75rem}.w-3\\.5{width:.875rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-\\[22px\\]{width:22px}.w-\\[84px\\]{width:84px}.w-full{width:100%}.min-w-0{min-width:0}.min-w-\\[10px\\]{min-width:10px}.min-w-\\[140px\\]{min-width:140px}.min-w-\\[160px\\]{min-width:160px}.min-w-\\[16px\\]{min-width:16px}.min-w-\\[30\\%\\]{min-width:30%}.max-w-\\[230px\\]{max-width:230px}.max-w-\\[48\\%\\]{max-width:48%}.max-w-\\[50\\%\\]{max-width:50%}.max-w-\\[80\\%\\]{max-width:80%}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1{--tw-translate-x:-0.25rem}.-translate-x-1,.-translate-x-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-x-1\\/2{--tw-translate-x:-50%}.-translate-y-1{--tw-translate-y:-0.25rem}.-translate-y-1,.-translate-y-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-1\\/2{--tw-translate-y:-50%}.-translate-y-\\[3px\\],.translate-y-\\[-3px\\]{--tw-translate-y:-3px}.-translate-y-\\[3px\\],.transform,.translate-y-\\[-3px\\]{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}@keyframes spin{to{transform:rotate(1turn)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid-cols-7{grid-template-columns:repeat(7,minmax(0,1fr))}.grid-cols-\\[22px_1fr_64px_34px\\]{grid-template-columns:22px 1fr 64px 34px}.grid-cols-\\[46px_1fr\\]{grid-template-columns:46px 1fr}.grid-cols-\\[92px_1fr\\]{grid-template-columns:92px 1fr}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.items-baseline{align-items:baseline}.items-stretch{align-items:stretch}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0{gap:0}.gap-0\\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-3\\.5{gap:.875rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-x-2{-moz-column-gap:.5rem;column-gap:.5rem}.gap-x-2\\.5{-moz-column-gap:.625rem;column-gap:.625rem}.gap-x-3{-moz-column-gap:.75rem;column-gap:.75rem}.gap-y-1{row-gap:.25rem}.gap-y-3{row-gap:.75rem}.gap-y-3\\.5{row-gap:.875rem}.gap-y-5{row-gap:1.25rem}.space-y-0>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0px*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0px*var(--tw-space-y-reverse))}.space-y-0\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.125rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.125rem*var(--tw-space-y-reverse))}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-stone-200>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(231 229 228/var(--tw-divide-opacity,1))}.self-center{align-self:center}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.overflow-x-hidden{overflow-x:hidden}.truncate{overflow:hidden;text-overflow:ellipsis}.truncate,.whitespace-nowrap{white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.break-words{overflow-wrap:break-word}.break-all{word-break:break-all}.rounded{border-radius:.25rem}.rounded-\\[14px\\]{border-radius:14px}.rounded-\\[28px\\]{border-radius:28px}.rounded-\\[3px\\]{border-radius:3px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-b{border-bottom-right-radius:.25rem;border-bottom-left-radius:.25rem}.rounded-t{border-top-left-radius:.25rem;border-top-right-radius:.25rem}.border{border-width:1px}.border-2{border-width:2px}.border-\\[1\\.5px\\]{border-width:1.5px}.border-x{border-left-width:1px;border-right-width:1px}.border-b{border-bottom-width:1px}.border-b-\\[1\\.5px\\]{border-bottom-width:1.5px}.border-b-\\[3px\\]{border-bottom-width:3px}.border-l{border-left-width:1px}.border-l-2{border-left-width:2px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-t-2{border-top-width:2px}.border-t-\\[3px\\]{border-top-width:3px}.border-dashed{border-style:dashed}.border-dotted{border-style:dotted}.border-double{border-style:double}.border-\\[\\#1B2A22\\]{--tw-border-opacity:1;border-color:rgb(27 42 34/var(--tw-border-opacity,1))}.border-\\[\\#1B2A22\\]\\/25{border-color:rgba(27,42,34,.25)}.border-\\[\\#1B2A22\\]\\/30{border-color:rgba(27,42,34,.3)}.border-\\[\\#1B2A22\\]\\/40{border-color:rgba(27,42,34,.4)}.border-\\[\\#1B2A22\\]\\/50{border-color:rgba(27,42,34,.5)}.border-\\[\\#1B2A22\\]\\/60{border-color:rgba(27,42,34,.6)}.border-\\[\\#1B2A22\\]\\/70{border-color:rgba(27,42,34,.7)}.border-\\[\\#1F3A2E\\]{--tw-border-opacity:1;border-color:rgb(31 58 46/var(--tw-border-opacity,1))}.border-\\[\\#C8643C\\]{--tw-border-opacity:1;border-color:rgb(200 100 60/var(--tw-border-opacity,1))}.border-\\[\\#F4EFE4\\]{--tw-border-opacity:1;border-color:rgb(244 239 228/var(--tw-border-opacity,1))}.border-amber-600{--tw-border-opacity:1;border-color:rgb(217 119 6/var(--tw-border-opacity,1))}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254/var(--tw-border-opacity,1))}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254/var(--tw-border-opacity,1))}.border-blue-300{--tw-border-opacity:1;border-color:rgb(147 197 253/var(--tw-border-opacity,1))}.border-blue-400{--tw-border-opacity:1;border-color:rgb(96 165 250/var(--tw-border-opacity,1))}.border-blue-50{--tw-border-opacity:1;border-color:rgb(239 246 255/var(--tw-border-opacity,1))}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity,1))}.border-blue-600{--tw-border-opacity:1;border-color:rgb(37 99 235/var(--tw-border-opacity,1))}.border-blue-700{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.border-blue-800{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.border-blue-900{--tw-border-opacity:1;border-color:rgb(30 58 138/var(--tw-border-opacity,1))}.border-blue-950{--tw-border-opacity:1;border-color:rgb(23 37 84/var(--tw-border-opacity,1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183/var(--tw-border-opacity,1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255/var(--tw-border-opacity,1))}.border-purple-200{--tw-border-opacity:1;border-color:rgb(233 213 255/var(--tw-border-opacity,1))}.border-purple-300{--tw-border-opacity:1;border-color:rgb(216 180 254/var(--tw-border-opacity,1))}.border-purple-400{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.border-purple-50{--tw-border-opacity:1;border-color:rgb(250 245 255/var(--tw-border-opacity,1))}.border-purple-500{--tw-border-opacity:1;border-color:rgb(168 85 247/var(--tw-border-opacity,1))}.border-purple-600{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.border-purple-700{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.border-purple-900{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.border-purple-950{--tw-border-opacity:1;border-color:rgb(59 7 100/var(--tw-border-opacity,1))}.border-rose-100{--tw-border-opacity:1;border-color:rgb(255 228 230/var(--tw-border-opacity,1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211/var(--tw-border-opacity,1))}.border-rose-300{--tw-border-opacity:1;border-color:rgb(253 164 175/var(--tw-border-opacity,1))}.border-rose-400{--tw-border-opacity:1;border-color:rgb(251 113 133/var(--tw-border-opacity,1))}.border-rose-50{--tw-border-opacity:1;border-color:rgb(255 241 242/var(--tw-border-opacity,1))}.border-rose-500{--tw-border-opacity:1;border-color:rgb(244 63 94/var(--tw-border-opacity,1))}.border-rose-600{--tw-border-opacity:1;border-color:rgb(225 29 72/var(--tw-border-opacity,1))}.border-rose-700{--tw-border-opacity:1;border-color:rgb(190 18 60/var(--tw-border-opacity,1))}.border-rose-800{--tw-border-opacity:1;border-color:rgb(159 18 57/var(--tw-border-opacity,1))}.border-rose-900{--tw-border-opacity:1;border-color:rgb(136 19 55/var(--tw-border-opacity,1))}.border-rose-950{--tw-border-opacity:1;border-color:rgb(76 5 25/var(--tw-border-opacity,1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225/var(--tw-border-opacity,1))}.border-slate-400{--tw-border-opacity:1;border-color:rgb(148 163 184/var(--tw-border-opacity,1))}.border-slate-50{--tw-border-opacity:1;border-color:rgb(248 250 252/var(--tw-border-opacity,1))}.border-slate-500{--tw-border-opacity:1;border-color:rgb(100 116 139/var(--tw-border-opacity,1))}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity,1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59/var(--tw-border-opacity,1))}.border-slate-900{--tw-border-opacity:1;border-color:rgb(15 23 42/var(--tw-border-opacity,1))}.border-slate-950{--tw-border-opacity:1;border-color:rgb(2 6 23/var(--tw-border-opacity,1))}.border-stone-100{--tw-border-opacity:1;border-color:rgb(245 245 244/var(--tw-border-opacity,1))}.border-stone-200{--tw-border-opacity:1;border-color:rgb(231 229 228/var(--tw-border-opacity,1))}.border-stone-200\\/30{border-color:hsla(20,6%,90%,.3)}.border-stone-300{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.border-stone-400{--tw-border-opacity:1;border-color:rgb(168 162 158/var(--tw-border-opacity,1))}.border-stone-50{--tw-border-opacity:1;border-color:rgb(250 250 249/var(--tw-border-opacity,1))}.border-stone-500{--tw-border-opacity:1;border-color:rgb(120 113 108/var(--tw-border-opacity,1))}.border-stone-600{--tw-border-opacity:1;border-color:rgb(87 83 78/var(--tw-border-opacity,1))}.border-stone-700{--tw-border-opacity:1;border-color:rgb(68 64 60/var(--tw-border-opacity,1))}.border-stone-800{--tw-border-opacity:1;border-color:rgb(41 37 36/var(--tw-border-opacity,1))}.border-stone-900{--tw-border-opacity:1;border-color:rgb(28 25 23/var(--tw-border-opacity,1))}.border-stone-950{--tw-border-opacity:1;border-color:rgb(12 10 9/var(--tw-border-opacity,1))}.border-transparent{border-color:transparent}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255/var(--tw-border-opacity,1))}.bg-\\[\\#1F3A2E\\]{--tw-bg-opacity:1;background-color:rgb(31 58 46/var(--tw-bg-opacity,1))}.bg-\\[\\#C8643C\\]{--tw-bg-opacity:1;background-color:rgb(200 100 60/var(--tw-bg-opacity,1))}.bg-\\[\\#E6DFCF\\]{--tw-bg-opacity:1;background-color:rgb(230 223 207/var(--tw-bg-opacity,1))}.bg-\\[\\#EDEAE0\\]{--tw-bg-opacity:1;background-color:rgb(237 234 224/var(--tw-bg-opacity,1))}.bg-\\[\\#F4EFE4\\]{--tw-bg-opacity:1;background-color:rgb(244 239 228/var(--tw-bg-opacity,1))}.bg-\\[\\#F5F3EC\\]{--tw-bg-opacity:1;background-color:rgb(245 243 236/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F2\\]{--tw-bg-opacity:1;background-color:rgb(250 248 242/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F5\\]{--tw-bg-opacity:1;background-color:rgb(250 248 245/var(--tw-bg-opacity,1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235/var(--tw-bg-opacity,1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0/var(--tw-bg-opacity,1))}.bg-black\\/40{background-color:rgba(0,0,0,.4)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254/var(--tw-bg-opacity,1))}.bg-blue-200{--tw-bg-opacity:1;background-color:rgb(191 219 254/var(--tw-bg-opacity,1))}.bg-blue-300{--tw-bg-opacity:1;background-color:rgb(147 197 253/var(--tw-bg-opacity,1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250/var(--tw-bg-opacity,1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.bg-blue-800{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.bg-blue-900{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84/var(--tw-bg-opacity,1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105/var(--tw-bg-opacity,1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255/var(--tw-bg-opacity,1))}.bg-purple-200{--tw-bg-opacity:1;background-color:rgb(233 213 255/var(--tw-bg-opacity,1))}.bg-purple-300{--tw-bg-opacity:1;background-color:rgb(216 180 254/var(--tw-bg-opacity,1))}.bg-purple-400{--tw-bg-opacity:1;background-color:rgb(192 132 252/var(--tw-bg-opacity,1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255/var(--tw-bg-opacity,1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234/var(--tw-bg-opacity,1))}.bg-purple-700{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.bg-purple-800{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.bg-purple-900{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.bg-purple-950{--tw-bg-opacity:1;background-color:rgb(59 7 100/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-200{--tw-bg-opacity:1;background-color:rgb(254 205 211/var(--tw-bg-opacity,1))}.bg-rose-300{--tw-bg-opacity:1;background-color:rgb(253 164 175/var(--tw-bg-opacity,1))}.bg-rose-400{--tw-bg-opacity:1;background-color:rgb(251 113 133/var(--tw-bg-opacity,1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242/var(--tw-bg-opacity,1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94/var(--tw-bg-opacity,1))}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-rose-700{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.bg-rose-800{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.bg-rose-900{--tw-bg-opacity:1;background-color:rgb(136 19 55/var(--tw-bg-opacity,1))}.bg-rose-950{--tw-bg-opacity:1;background-color:rgb(76 5 25/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225/var(--tw-bg-opacity,1))}.bg-slate-400{--tw-bg-opacity:1;background-color:rgb(148 163 184/var(--tw-bg-opacity,1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.bg-slate-500{--tw-bg-opacity:1;background-color:rgb(100 116 139/var(--tw-bg-opacity,1))}.bg-slate-600{--tw-bg-opacity:1;background-color:rgb(71 85 105/var(--tw-bg-opacity,1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23/var(--tw-bg-opacity,1))}.bg-slate-950\\/70{background-color:rgba(2,6,23,.7)}.bg-stone-100{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.bg-stone-200{--tw-bg-opacity:1;background-color:rgb(231 229 228/var(--tw-bg-opacity,1))}.bg-stone-300{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.bg-stone-400{--tw-bg-opacity:1;background-color:rgb(168 162 158/var(--tw-bg-opacity,1))}.bg-stone-50{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.bg-stone-500{--tw-bg-opacity:1;background-color:rgb(120 113 108/var(--tw-bg-opacity,1))}.bg-stone-600{--tw-bg-opacity:1;background-color:rgb(87 83 78/var(--tw-bg-opacity,1))}.bg-stone-700{--tw-bg-opacity:1;background-color:rgb(68 64 60/var(--tw-bg-opacity,1))}.bg-stone-800{--tw-bg-opacity:1;background-color:rgb(41 37 36/var(--tw-bg-opacity,1))}.bg-stone-900{--tw-bg-opacity:1;background-color:rgb(28 25 23/var(--tw-bg-opacity,1))}.bg-stone-950{--tw-bg-opacity:1;background-color:rgb(12 10 9/var(--tw-bg-opacity,1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.bg-white\\/40{background-color:hsla(0,0%,100%,.4)}.bg-white\\/50{background-color:hsla(0,0%,100%,.5)}.object-cover{-o-object-fit:cover;object-fit:cover}.p-1{padding:.25rem}.p-1\\.5{padding:.375rem}.p-2{padding:.5rem}.p-2\\.5{padding:.625rem}.p-3{padding:.75rem}.p-3\\.5{padding:.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-0{padding-left:0;padding-right:0}.px-0\\.5{padding-left:.125rem;padding-right:.125rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-\\[22px\\]{padding-left:22px;padding-right:22px}.py-0{padding-top:0;padding-bottom:0}.py-0\\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-px{padding-top:1px;padding-bottom:1px}.pb-0{padding-bottom:0}.pb-0\\.5{padding-bottom:.125rem}.pb-1{padding-bottom:.25rem}.pb-2{padding-bottom:.5rem}.pb-28{padding-bottom:7rem}.pb-3{padding-bottom:.75rem}.pb-3\\.5{padding-bottom:.875rem}.pb-5{padding-bottom:1.25rem}.pb-8{padding-bottom:2rem}.pl-3{padding-left:.75rem}.pl-3\\.5{padding-left:.875rem}.pl-4{padding-left:1rem}.pl-9{padding-left:2.25rem}.pr-1{padding-right:.25rem}.pr-3{padding-right:.75rem}.pr-4{padding-right:1rem}.pt-0{padding-top:0}.pt-0\\.5{padding-top:.125rem}.pt-1{padding-top:.25rem}.pt-1\\.5{padding-top:.375rem}.pt-2{padding-top:.5rem}.pt-3{padding-top:.75rem}.pt-4{padding-top:1rem}.pt-5{padding-top:1.25rem}.pt-6{padding-top:1.5rem}.pt-7{padding-top:1.75rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-\\[10\\.5px\\]{font-size:10.5px}.text-\\[10px\\]{font-size:10px}.text-\\[11px\\]{font-size:11px}.text-\\[12\\.5px\\]{font-size:12.5px}.text-\\[12px\\]{font-size:12px}.text-\\[13px\\]{font-size:13px}.text-\\[14px\\]{font-size:14px}.text-\\[15px\\]{font-size:15px}.text-\\[22px\\]{font-size:22px}.text-\\[24px\\]{font-size:24px}.text-\\[28px\\]{font-size:28px}.text-\\[32px\\]{font-size:32px}.text-\\[44px\\]{font-size:44px}.text-\\[52px\\]{font-size:52px}.text-\\[8px\\]{font-size:8px}.text-\\[9\\.5px\\]{font-size:9.5px}.text-\\[9px\\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.font-light{font-weight:300}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.normal-case{text-transform:none}.italic{font-style:italic}.tabular-nums{--tw-numeric-spacing:tabular-nums;font-variant-numeric:var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction)}.leading-\\[\\.7\\]{line-height:.7}.leading-\\[0\\.85\\]{line-height:.85}.leading-\\[1\\.02\\]{line-height:1.02}.leading-\\[1\\.05\\]{line-height:1.05}.leading-\\[1\\.06\\]{line-height:1.06}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-\\[0\\.08em\\]{letter-spacing:.08em}.tracking-\\[0\\.12em\\]{letter-spacing:.12em}.tracking-\\[0\\.14em\\]{letter-spacing:.14em}.tracking-\\[0\\.16em\\]{letter-spacing:.16em}.tracking-\\[0\\.18em\\]{letter-spacing:.18em}.tracking-\\[0\\.2em\\]{letter-spacing:.2em}.tracking-normal{letter-spacing:0}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-\\[\\#1B2A22\\]{--tw-text-opacity:1;color:rgb(27 42 34/var(--tw-text-opacity,1))}.text-\\[\\#1B2A22\\]\\/50{color:rgba(27,42,34,.5)}.text-\\[\\#1B2A22\\]\\/60{color:rgba(27,42,34,.6)}.text-\\[\\#1B2A22\\]\\/70{color:rgba(27,42,34,.7)}.text-\\[\\#1B2A22\\]\\/75{color:rgba(27,42,34,.75)}.text-\\[\\#1B2A22\\]\\/80{color:rgba(27,42,34,.8)}.text-\\[\\#1F3A2E\\]{--tw-text-opacity:1;color:rgb(31 58 46/var(--tw-text-opacity,1))}.text-\\[\\#C8643C\\]{--tw-text-opacity:1;color:rgb(200 100 60/var(--tw-text-opacity,1))}.text-\\[\\#F4EFE4\\]{--tw-text-opacity:1;color:rgb(244 239 228/var(--tw-text-opacity,1))}.text-black{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.text-blue-100{--tw-text-opacity:1;color:rgb(219 234 254/var(--tw-text-opacity,1))}.text-blue-200{--tw-text-opacity:1;color:rgb(191 219 254/var(--tw-text-opacity,1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-blue-50{--tw-text-opacity:1;color:rgb(239 246 255/var(--tw-text-opacity,1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235/var(--tw-text-opacity,1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216/var(--tw-text-opacity,1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175/var(--tw-text-opacity,1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138/var(--tw-text-opacity,1))}.text-blue-950{--tw-text-opacity:1;color:rgb(23 37 84/var(--tw-text-opacity,1))}.text-purple-100{--tw-text-opacity:1;color:rgb(243 232 255/var(--tw-text-opacity,1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255/var(--tw-text-opacity,1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252/var(--tw-text-opacity,1))}.text-purple-50{--tw-text-opacity:1;color:rgb(250 245 255/var(--tw-text-opacity,1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247/var(--tw-text-opacity,1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234/var(--tw-text-opacity,1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206/var(--tw-text-opacity,1))}.text-purple-800{--tw-text-opacity:1;color:rgb(107 33 168/var(--tw-text-opacity,1))}.text-purple-900{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.text-purple-950{--tw-text-opacity:1;color:rgb(59 7 100/var(--tw-text-opacity,1))}.text-rose-100{--tw-text-opacity:1;color:rgb(255 228 230/var(--tw-text-opacity,1))}.text-rose-200{--tw-text-opacity:1;color:rgb(254 205 211/var(--tw-text-opacity,1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-50{--tw-text-opacity:1;color:rgb(255 241 242/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57/var(--tw-text-opacity,1))}.text-rose-900{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.text-rose-950{--tw-text-opacity:1;color:rgb(76 5 25/var(--tw-text-opacity,1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-50{--tw-text-opacity:1;color:rgb(248 250 252/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23/var(--tw-text-opacity,1))}.text-stone-100{--tw-text-opacity:1;color:rgb(245 245 244/var(--tw-text-opacity,1))}.text-stone-200{--tw-text-opacity:1;color:rgb(231 229 228/var(--tw-text-opacity,1))}.text-stone-300{--tw-text-opacity:1;color:rgb(214 211 209/var(--tw-text-opacity,1))}.text-stone-400{--tw-text-opacity:1;color:rgb(168 162 158/var(--tw-text-opacity,1))}.text-stone-50{--tw-text-opacity:1;color:rgb(250 250 249/var(--tw-text-opacity,1))}.text-stone-500{--tw-text-opacity:1;color:rgb(120 113 108/var(--tw-text-opacity,1))}.text-stone-600{--tw-text-opacity:1;color:rgb(87 83 78/var(--tw-text-opacity,1))}.text-stone-700{--tw-text-opacity:1;color:rgb(68 64 60/var(--tw-text-opacity,1))}.text-stone-800{--tw-text-opacity:1;color:rgb(41 37 36/var(--tw-text-opacity,1))}.text-stone-900{--tw-text-opacity:1;color:rgb(28 25 23/var(--tw-text-opacity,1))}.text-stone-950{--tw-text-opacity:1;color:rgb(12 10 9/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.text-white\\/80{color:hsla(0,0%,100%,.8)}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.no-underline{text-decoration-line:none}.opacity-0{opacity:0}.opacity-50{opacity:.5}.opacity-60{opacity:.6}.opacity-70{opacity:.7}.opacity-75{opacity:.75}.opacity-80{opacity:.8}.opacity-90{opacity:.9}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-2xl,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.shadow-sm,.shadow-xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.grayscale{--tw-grayscale:grayscale(100%)}.filter,.grayscale{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.ease-in{transition-timing-function:cubic-bezier(.4,0,1,1)}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.ease-out{transition-timing-function:cubic-bezier(0,0,.2,1)}.\\[out\\:json\\]{out:json}.\\[timeout\\:20\\]{timeout:20}#root,body,html{margin:0;height:100%;background:#f5f3ec;color-scheme:light}.file\\:mr-2::file-selector-button{margin-right:.5rem}.file\\:border-0::file-selector-button{border-width:0}.file\\:bg-purple-900::file-selector-button{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.file\\:px-2\\.5::file-selector-button{padding-left:.625rem;padding-right:.625rem}.file\\:py-1\\.5::file-selector-button{padding-top:.375rem;padding-bottom:.375rem}.file\\:text-\\[10px\\]::file-selector-button{font-size:10px}.file\\:uppercase::file-selector-button{text-transform:uppercase}.file\\:tracking-wider::file-selector-button{letter-spacing:.05em}.file\\:text-white::file-selector-button{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:border-blue-800:hover{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.hover\\:border-purple-400:hover{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.hover\\:border-purple-600:hover{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.hover\\:border-purple-700:hover{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.hover\\:border-purple-800:hover{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.hover\\:border-purple-900:hover{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.hover\\:bg-blue-50:hover{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.hover\\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.hover\\:bg-blue-800:hover{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.hover\\:bg-blue-900:hover{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.hover\\:bg-purple-700:hover{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.hover\\:bg-purple-800:hover{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.hover\\:bg-purple-900:hover{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.hover\\:bg-rose-600:hover{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.hover\\:bg-rose-700:hover{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.hover\\:bg-rose-800:hover{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.hover\\:bg-stone-100:hover{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.hover\\:bg-stone-300:hover{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.hover\\:bg-stone-50:hover{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.hover\\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.hover\\:bg-white\\/10:hover{background-color:hsla(0,0%,100%,.1)}.hover\\:text-purple-900:hover{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.hover\\:text-rose-700:hover{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.hover\\:text-rose-900:hover{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.hover\\:text-slate-700:hover{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.hover\\:text-slate-900:hover{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.hover\\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:opacity-100:hover{opacity:1}.focus\\:border-stone-300:focus{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.disabled\\:opacity-30:disabled{opacity:.3}.disabled\\:opacity-40:disabled{opacity:.4}.disabled\\:opacity-50:disabled{opacity:.5}@media (max-width:359px){.max-\\[359px\\]\\:text-\\[24px\\]{font-size:24px}.max-\\[359px\\]\\:text-\\[9px\\]{font-size:9px}}@media (min-width:600px){.min-\\[600px\\]\\:max-w-\\[640px\\]{max-width:640px}}@media (min-width:640px){.sm\\:items-center{align-items:center}}@media (min-width:820px){.min-\\[820px\\]\\:max-w-\\[820px\\]{max-width:820px}}";
+const PACT_CSS = "\n@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap');\nhtml, body { margin: 0; height: 100%; overflow: hidden; overscroll-behavior: none; }\nbody { position: fixed; inset: 0; width: 100%; }\n.font-sans, .font-sans input, .font-sans textarea, .font-sans select, .font-sans button { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }\n.font-sans { font-weight: 400; }\n.font-light, .font-normal { font-weight: 400 !important; }\n.font-medium { font-weight: 600 !important; }\n.font-semibold { font-weight: 700 !important; }\n.font-editorial { font-family: 'Fraunces', Georgia, serif; font-weight: 500 !important; letter-spacing: -0.01em !important; line-height: 1.12; font-optical-sizing: auto; }\n.font-pact { font-family: 'Fraunces', Georgia, serif; font-weight: 600 !important; text-transform: uppercase; letter-spacing: 0.14em; line-height: 1; }\n.font-mono { font-family: 'Inter', sans-serif !important; font-weight: 600; font-variant-numeric: tabular-nums; }\n.no-scrollbar::-webkit-scrollbar { display: none; }\n.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }\nbutton { border-radius: 12px; }\ninput, textarea, select { border-radius: 10px; }\ndiv.border:not([class*=\"rounded\"]), form.border:not([class*=\"rounded\"]), label.border:not([class*=\"rounded\"]), section.border:not([class*=\"rounded\"]) { border-radius: 16px; }\ndiv[class*=\"bg-purple-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]), div[class*=\"bg-slate-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]), div[class*=\"bg-blue-9\"]:not([class*=\"rounded\"]) { border-radius: 16px; }\n.shadow-sm, .shadow-xl { box-shadow: none !important; }\n.border-l-4 { border-radius: 4px; }\n@keyframes pact-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-4px) } }\n.pact-bob { animation: pact-bob 3.2s ease-in-out infinite; }\n@media (prefers-reduced-motion: reduce) { .pact-bob { animation: none; } }\n.bg-purple-950{background-color:#12251C!important}\n.hover\\:bg-purple-950:hover{background-color:#12251C!important}\n.text-purple-950{color:#12251C!important}\n.hover\\:text-purple-950:hover{color:#12251C!important}\n.border-purple-950{border-color:#12251C!important}\n.hover\\:border-purple-950:hover{border-color:#12251C!important}\n.focus\\:border-purple-950:focus{border-color:#12251C!important}\n.bg-purple-900{background-color:#1F3A2E!important}\n.hover\\:bg-purple-900:hover{background-color:#1F3A2E!important}\n.text-purple-900{color:#1F3A2E!important}\n.hover\\:text-purple-900:hover{color:#1F3A2E!important}\n.border-purple-900{border-color:#1F3A2E!important}\n.hover\\:border-purple-900:hover{border-color:#1F3A2E!important}\n.focus\\:border-purple-900:focus{border-color:#1F3A2E!important}\n.bg-purple-800{background-color:#2C4A3B!important}\n.hover\\:bg-purple-800:hover{background-color:#2C4A3B!important}\n.text-purple-800{color:#2C4A3B!important}\n.hover\\:text-purple-800:hover{color:#2C4A3B!important}\n.border-purple-800{border-color:#2C4A3B!important}\n.hover\\:border-purple-800:hover{border-color:#2C4A3B!important}\n.focus\\:border-purple-800:focus{border-color:#2C4A3B!important}\n.bg-purple-700{background-color:#3F6B55!important}\n.hover\\:bg-purple-700:hover{background-color:#3F6B55!important}\n.text-purple-700{color:#3F6B55!important}\n.hover\\:text-purple-700:hover{color:#3F6B55!important}\n.border-purple-700{border-color:#3F6B55!important}\n.hover\\:border-purple-700:hover{border-color:#3F6B55!important}\n.focus\\:border-purple-700:focus{border-color:#3F6B55!important}\n.bg-purple-600{background-color:#4F7A63!important}\n.hover\\:bg-purple-600:hover{background-color:#4F7A63!important}\n.text-purple-600{color:#4F7A63!important}\n.hover\\:text-purple-600:hover{color:#4F7A63!important}\n.border-purple-600{border-color:#4F7A63!important}\n.hover\\:border-purple-600:hover{border-color:#4F7A63!important}\n.focus\\:border-purple-600:focus{border-color:#4F7A63!important}\n.bg-purple-500{background-color:#5F8C73!important}\n.hover\\:bg-purple-500:hover{background-color:#5F8C73!important}\n.text-purple-500{color:#5F8C73!important}\n.hover\\:text-purple-500:hover{color:#5F8C73!important}\n.border-purple-500{border-color:#5F8C73!important}\n.hover\\:border-purple-500:hover{border-color:#5F8C73!important}\n.focus\\:border-purple-500:focus{border-color:#5F8C73!important}\n.bg-purple-400{background-color:#8FB09D!important}\n.hover\\:bg-purple-400:hover{background-color:#8FB09D!important}\n.text-purple-400{color:#8FB09D!important}\n.hover\\:text-purple-400:hover{color:#8FB09D!important}\n.border-purple-400{border-color:#8FB09D!important}\n.hover\\:border-purple-400:hover{border-color:#8FB09D!important}\n.focus\\:border-purple-400:focus{border-color:#8FB09D!important}\n.bg-purple-300{background-color:#B5CABD!important}\n.hover\\:bg-purple-300:hover{background-color:#B5CABD!important}\n.text-purple-300{color:#B5CABD!important}\n.hover\\:text-purple-300:hover{color:#B5CABD!important}\n.border-purple-300{border-color:#B5CABD!important}\n.hover\\:border-purple-300:hover{border-color:#B5CABD!important}\n.focus\\:border-purple-300:focus{border-color:#B5CABD!important}\n.bg-purple-200{background-color:#D5E0D8!important}\n.hover\\:bg-purple-200:hover{background-color:#D5E0D8!important}\n.text-purple-200{color:#D5E0D8!important}\n.hover\\:text-purple-200:hover{color:#D5E0D8!important}\n.border-purple-200{border-color:#D5E0D8!important}\n.hover\\:border-purple-200:hover{border-color:#D5E0D8!important}\n.focus\\:border-purple-200:focus{border-color:#D5E0D8!important}\n.bg-purple-100{background-color:#E6EDE8!important}\n.hover\\:bg-purple-100:hover{background-color:#E6EDE8!important}\n.text-purple-100{color:#E6EDE8!important}\n.hover\\:text-purple-100:hover{color:#E6EDE8!important}\n.border-purple-100{border-color:#E6EDE8!important}\n.hover\\:border-purple-100:hover{border-color:#E6EDE8!important}\n.focus\\:border-purple-100:focus{border-color:#E6EDE8!important}\n.bg-purple-50{background-color:#F0F4F1!important}\n.hover\\:bg-purple-50:hover{background-color:#F0F4F1!important}\n.text-purple-50{color:#F0F4F1!important}\n.hover\\:text-purple-50:hover{color:#F0F4F1!important}\n.border-purple-50{border-color:#F0F4F1!important}\n.hover\\:border-purple-50:hover{border-color:#F0F4F1!important}\n.focus\\:border-purple-50:focus{border-color:#F0F4F1!important}\n.bg-rose-950{background-color:#3A1F10!important}\n.hover\\:bg-rose-950:hover{background-color:#3A1F10!important}\n.text-rose-950{color:#3A1F10!important}\n.hover\\:text-rose-950:hover{color:#3A1F10!important}\n.border-rose-950{border-color:#3A1F10!important}\n.hover\\:border-rose-950:hover{border-color:#3A1F10!important}\n.focus\\:border-rose-950:focus{border-color:#3A1F10!important}\n.bg-rose-900{background-color:#6B3A1E!important}\n.hover\\:bg-rose-900:hover{background-color:#6B3A1E!important}\n.text-rose-900{color:#6B3A1E!important}\n.hover\\:text-rose-900:hover{color:#6B3A1E!important}\n.border-rose-900{border-color:#6B3A1E!important}\n.hover\\:border-rose-900:hover{border-color:#6B3A1E!important}\n.focus\\:border-rose-900:focus{border-color:#6B3A1E!important}\n.bg-rose-800{background-color:#8A4A27!important}\n.hover\\:bg-rose-800:hover{background-color:#8A4A27!important}\n.text-rose-800{color:#8A4A27!important}\n.hover\\:text-rose-800:hover{color:#8A4A27!important}\n.border-rose-800{border-color:#8A4A27!important}\n.hover\\:border-rose-800:hover{border-color:#8A4A27!important}\n.focus\\:border-rose-800:focus{border-color:#8A4A27!important}\n.bg-rose-700{background-color:#A65F37!important}\n.hover\\:bg-rose-700:hover{background-color:#A65F37!important}\n.text-rose-700{color:#A65F37!important}\n.hover\\:text-rose-700:hover{color:#A65F37!important}\n.border-rose-700{border-color:#A65F37!important}\n.hover\\:border-rose-700:hover{border-color:#A65F37!important}\n.focus\\:border-rose-700:focus{border-color:#A65F37!important}\n.bg-rose-600{background-color:#B5683A!important}\n.hover\\:bg-rose-600:hover{background-color:#B5683A!important}\n.text-rose-600{color:#B5683A!important}\n.hover\\:text-rose-600:hover{color:#B5683A!important}\n.border-rose-600{border-color:#B5683A!important}\n.hover\\:border-rose-600:hover{border-color:#B5683A!important}\n.focus\\:border-rose-600:focus{border-color:#B5683A!important}\n.bg-rose-500{background-color:#C77E52!important}\n.hover\\:bg-rose-500:hover{background-color:#C77E52!important}\n.text-rose-500{color:#C77E52!important}\n.hover\\:text-rose-500:hover{color:#C77E52!important}\n.border-rose-500{border-color:#C77E52!important}\n.hover\\:border-rose-500:hover{border-color:#C77E52!important}\n.focus\\:border-rose-500:focus{border-color:#C77E52!important}\n.bg-rose-400{background-color:#D9945F!important}\n.hover\\:bg-rose-400:hover{background-color:#D9945F!important}\n.text-rose-400{color:#D9945F!important}\n.hover\\:text-rose-400:hover{color:#D9945F!important}\n.border-rose-400{border-color:#D9945F!important}\n.hover\\:border-rose-400:hover{border-color:#D9945F!important}\n.focus\\:border-rose-400:focus{border-color:#D9945F!important}\n.bg-rose-300{background-color:#E6B38C!important}\n.hover\\:bg-rose-300:hover{background-color:#E6B38C!important}\n.text-rose-300{color:#E6B38C!important}\n.hover\\:text-rose-300:hover{color:#E6B38C!important}\n.border-rose-300{border-color:#E6B38C!important}\n.hover\\:border-rose-300:hover{border-color:#E6B38C!important}\n.focus\\:border-rose-300:focus{border-color:#E6B38C!important}\n.bg-rose-200{background-color:#F0D1B8!important}\n.hover\\:bg-rose-200:hover{background-color:#F0D1B8!important}\n.text-rose-200{color:#F0D1B8!important}\n.hover\\:text-rose-200:hover{color:#F0D1B8!important}\n.border-rose-200{border-color:#F0D1B8!important}\n.hover\\:border-rose-200:hover{border-color:#F0D1B8!important}\n.focus\\:border-rose-200:focus{border-color:#F0D1B8!important}\n.bg-rose-100{background-color:#F6E4D5!important}\n.hover\\:bg-rose-100:hover{background-color:#F6E4D5!important}\n.text-rose-100{color:#F6E4D5!important}\n.hover\\:text-rose-100:hover{color:#F6E4D5!important}\n.border-rose-100{border-color:#F6E4D5!important}\n.hover\\:border-rose-100:hover{border-color:#F6E4D5!important}\n.focus\\:border-rose-100:focus{border-color:#F6E4D5!important}\n.bg-rose-50{background-color:#FAF1EA!important}\n.hover\\:bg-rose-50:hover{background-color:#FAF1EA!important}\n.text-rose-50{color:#FAF1EA!important}\n.hover\\:text-rose-50:hover{color:#FAF1EA!important}\n.border-rose-50{border-color:#FAF1EA!important}\n.hover\\:border-rose-50:hover{border-color:#FAF1EA!important}\n.focus\\:border-rose-50:focus{border-color:#FAF1EA!important}\n.bg-blue-950{background-color:#14282B!important}\n.hover\\:bg-blue-950:hover{background-color:#14282B!important}\n.text-blue-950{color:#14282B!important}\n.hover\\:text-blue-950:hover{color:#14282B!important}\n.border-blue-950{border-color:#14282B!important}\n.hover\\:border-blue-950:hover{border-color:#14282B!important}\n.focus\\:border-blue-950:focus{border-color:#14282B!important}\n.bg-blue-900{background-color:#1E3F44!important}\n.hover\\:bg-blue-900:hover{background-color:#1E3F44!important}\n.text-blue-900{color:#1E3F44!important}\n.hover\\:text-blue-900:hover{color:#1E3F44!important}\n.border-blue-900{border-color:#1E3F44!important}\n.hover\\:border-blue-900:hover{border-color:#1E3F44!important}\n.focus\\:border-blue-900:focus{border-color:#1E3F44!important}\n.bg-blue-800{background-color:#2A5359!important}\n.hover\\:bg-blue-800:hover{background-color:#2A5359!important}\n.text-blue-800{color:#2A5359!important}\n.hover\\:text-blue-800:hover{color:#2A5359!important}\n.border-blue-800{border-color:#2A5359!important}\n.hover\\:border-blue-800:hover{border-color:#2A5359!important}\n.focus\\:border-blue-800:focus{border-color:#2A5359!important}\n.bg-blue-700{background-color:#3A6A70!important}\n.hover\\:bg-blue-700:hover{background-color:#3A6A70!important}\n.text-blue-700{color:#3A6A70!important}\n.hover\\:text-blue-700:hover{color:#3A6A70!important}\n.border-blue-700{border-color:#3A6A70!important}\n.hover\\:border-blue-700:hover{border-color:#3A6A70!important}\n.focus\\:border-blue-700:focus{border-color:#3A6A70!important}\n.bg-blue-600{background-color:#4C7F85!important}\n.hover\\:bg-blue-600:hover{background-color:#4C7F85!important}\n.text-blue-600{color:#4C7F85!important}\n.hover\\:text-blue-600:hover{color:#4C7F85!important}\n.border-blue-600{border-color:#4C7F85!important}\n.hover\\:border-blue-600:hover{border-color:#4C7F85!important}\n.focus\\:border-blue-600:focus{border-color:#4C7F85!important}\n.bg-blue-500{background-color:#639499!important}\n.hover\\:bg-blue-500:hover{background-color:#639499!important}\n.text-blue-500{color:#639499!important}\n.hover\\:text-blue-500:hover{color:#639499!important}\n.border-blue-500{border-color:#639499!important}\n.hover\\:border-blue-500:hover{border-color:#639499!important}\n.focus\\:border-blue-500:focus{border-color:#639499!important}\n.bg-blue-400{background-color:#8FB2B6!important}\n.hover\\:bg-blue-400:hover{background-color:#8FB2B6!important}\n.text-blue-400{color:#8FB2B6!important}\n.hover\\:text-blue-400:hover{color:#8FB2B6!important}\n.border-blue-400{border-color:#8FB2B6!important}\n.hover\\:border-blue-400:hover{border-color:#8FB2B6!important}\n.focus\\:border-blue-400:focus{border-color:#8FB2B6!important}\n.bg-blue-300{background-color:#A8C4C6!important}\n.hover\\:bg-blue-300:hover{background-color:#A8C4C6!important}\n.text-blue-300{color:#A8C4C6!important}\n.hover\\:text-blue-300:hover{color:#A8C4C6!important}\n.border-blue-300{border-color:#A8C4C6!important}\n.hover\\:border-blue-300:hover{border-color:#A8C4C6!important}\n.focus\\:border-blue-300:focus{border-color:#A8C4C6!important}\n.bg-blue-200{background-color:#CADCDD!important}\n.hover\\:bg-blue-200:hover{background-color:#CADCDD!important}\n.text-blue-200{color:#CADCDD!important}\n.hover\\:text-blue-200:hover{color:#CADCDD!important}\n.border-blue-200{border-color:#CADCDD!important}\n.hover\\:border-blue-200:hover{border-color:#CADCDD!important}\n.focus\\:border-blue-200:focus{border-color:#CADCDD!important}\n.bg-blue-100{background-color:#E1ECED!important}\n.hover\\:bg-blue-100:hover{background-color:#E1ECED!important}\n.text-blue-100{color:#E1ECED!important}\n.hover\\:text-blue-100:hover{color:#E1ECED!important}\n.border-blue-100{border-color:#E1ECED!important}\n.hover\\:border-blue-100:hover{border-color:#E1ECED!important}\n.focus\\:border-blue-100:focus{border-color:#E1ECED!important}\n.bg-blue-50{background-color:#EEF4F5!important}\n.hover\\:bg-blue-50:hover{background-color:#EEF4F5!important}\n.text-blue-50{color:#EEF4F5!important}\n.hover\\:text-blue-50:hover{color:#EEF4F5!important}\n.border-blue-50{border-color:#EEF4F5!important}\n.hover\\:border-blue-50:hover{border-color:#EEF4F5!important}\n.focus\\:border-blue-50:focus{border-color:#EEF4F5!important}\n.bg-slate-950{background-color:#0F0F0D!important}\n.hover\\:bg-slate-950:hover{background-color:#0F0F0D!important}\n.text-slate-950{color:#0F0F0D!important}\n.hover\\:text-slate-950:hover{color:#0F0F0D!important}\n.border-slate-950{border-color:#0F0F0D!important}\n.hover\\:border-slate-950:hover{border-color:#0F0F0D!important}\n.focus\\:border-slate-950:focus{border-color:#0F0F0D!important}\n.bg-slate-900{background-color:#1A1A17!important}\n.hover\\:bg-slate-900:hover{background-color:#1A1A17!important}\n.text-slate-900{color:#1A1A17!important}\n.hover\\:text-slate-900:hover{color:#1A1A17!important}\n.border-slate-900{border-color:#1A1A17!important}\n.hover\\:border-slate-900:hover{border-color:#1A1A17!important}\n.focus\\:border-slate-900:focus{border-color:#1A1A17!important}\n.bg-slate-800{background-color:#2A2A26!important}\n.hover\\:bg-slate-800:hover{background-color:#2A2A26!important}\n.text-slate-800{color:#2A2A26!important}\n.hover\\:text-slate-800:hover{color:#2A2A26!important}\n.border-slate-800{border-color:#2A2A26!important}\n.hover\\:border-slate-800:hover{border-color:#2A2A26!important}\n.focus\\:border-slate-800:focus{border-color:#2A2A26!important}\n.bg-slate-700{background-color:#3E3D37!important}\n.hover\\:bg-slate-700:hover{background-color:#3E3D37!important}\n.text-slate-700{color:#3E3D37!important}\n.hover\\:text-slate-700:hover{color:#3E3D37!important}\n.border-slate-700{border-color:#3E3D37!important}\n.hover\\:border-slate-700:hover{border-color:#3E3D37!important}\n.focus\\:border-slate-700:focus{border-color:#3E3D37!important}\n.bg-slate-600{background-color:#55534B!important}\n.hover\\:bg-slate-600:hover{background-color:#55534B!important}\n.text-slate-600{color:#55534B!important}\n.hover\\:text-slate-600:hover{color:#55534B!important}\n.border-slate-600{border-color:#55534B!important}\n.hover\\:border-slate-600:hover{border-color:#55534B!important}\n.focus\\:border-slate-600:focus{border-color:#55534B!important}\n.bg-slate-500{background-color:#6B6960!important}\n.hover\\:bg-slate-500:hover{background-color:#6B6960!important}\n.text-slate-500{color:#6B6960!important}\n.hover\\:text-slate-500:hover{color:#6B6960!important}\n.border-slate-500{border-color:#6B6960!important}\n.hover\\:border-slate-500:hover{border-color:#6B6960!important}\n.focus\\:border-slate-500:focus{border-color:#6B6960!important}\n.bg-slate-400{background-color:#8A877D!important}\n.hover\\:bg-slate-400:hover{background-color:#8A877D!important}\n.text-slate-400{color:#8A877D!important}\n.hover\\:text-slate-400:hover{color:#8A877D!important}\n.border-slate-400{border-color:#8A877D!important}\n.hover\\:border-slate-400:hover{border-color:#8A877D!important}\n.focus\\:border-slate-400:focus{border-color:#8A877D!important}\n.bg-slate-300{background-color:#B5B1A5!important}\n.hover\\:bg-slate-300:hover{background-color:#B5B1A5!important}\n.text-slate-300{color:#B5B1A5!important}\n.hover\\:text-slate-300:hover{color:#B5B1A5!important}\n.border-slate-300{border-color:#B5B1A5!important}\n.hover\\:border-slate-300:hover{border-color:#B5B1A5!important}\n.focus\\:border-slate-300:focus{border-color:#B5B1A5!important}\n.bg-slate-200{background-color:#D6D1C4!important}\n.hover\\:bg-slate-200:hover{background-color:#D6D1C4!important}\n.text-slate-200{color:#D6D1C4!important}\n.hover\\:text-slate-200:hover{color:#D6D1C4!important}\n.border-slate-200{border-color:#D6D1C4!important}\n.hover\\:border-slate-200:hover{border-color:#D6D1C4!important}\n.focus\\:border-slate-200:focus{border-color:#D6D1C4!important}\n.bg-slate-100{background-color:#E7E3D8!important}\n.hover\\:bg-slate-100:hover{background-color:#E7E3D8!important}\n.text-slate-100{color:#E7E3D8!important}\n.hover\\:text-slate-100:hover{color:#E7E3D8!important}\n.border-slate-100{border-color:#E7E3D8!important}\n.hover\\:border-slate-100:hover{border-color:#E7E3D8!important}\n.focus\\:border-slate-100:focus{border-color:#E7E3D8!important}\n.bg-slate-50{background-color:#F1EEE6!important}\n.hover\\:bg-slate-50:hover{background-color:#F1EEE6!important}\n.text-slate-50{color:#F1EEE6!important}\n.hover\\:text-slate-50:hover{color:#F1EEE6!important}\n.border-slate-50{border-color:#F1EEE6!important}\n.hover\\:border-slate-50:hover{border-color:#F1EEE6!important}\n.focus\\:border-slate-50:focus{border-color:#F1EEE6!important}\n.bg-stone-950{background-color:#1A1A17!important}\n.hover\\:bg-stone-950:hover{background-color:#1A1A17!important}\n.text-stone-950{color:#1A1A17!important}\n.hover\\:text-stone-950:hover{color:#1A1A17!important}\n.border-stone-950{border-color:#1A1A17!important}\n.hover\\:border-stone-950:hover{border-color:#1A1A17!important}\n.focus\\:border-stone-950:focus{border-color:#1A1A17!important}\n.bg-stone-900{background-color:#25241F!important}\n.hover\\:bg-stone-900:hover{background-color:#25241F!important}\n.text-stone-900{color:#25241F!important}\n.hover\\:text-stone-900:hover{color:#25241F!important}\n.border-stone-900{border-color:#25241F!important}\n.hover\\:border-stone-900:hover{border-color:#25241F!important}\n.focus\\:border-stone-900:focus{border-color:#25241F!important}\n.bg-stone-800{background-color:#33322B!important}\n.hover\\:bg-stone-800:hover{background-color:#33322B!important}\n.text-stone-800{color:#33322B!important}\n.hover\\:text-stone-800:hover{color:#33322B!important}\n.border-stone-800{border-color:#33322B!important}\n.hover\\:border-stone-800:hover{border-color:#33322B!important}\n.focus\\:border-stone-800:focus{border-color:#33322B!important}\n.bg-stone-700{background-color:#47453D!important}\n.hover\\:bg-stone-700:hover{background-color:#47453D!important}\n.text-stone-700{color:#47453D!important}\n.hover\\:text-stone-700:hover{color:#47453D!important}\n.border-stone-700{border-color:#47453D!important}\n.hover\\:border-stone-700:hover{border-color:#47453D!important}\n.focus\\:border-stone-700:focus{border-color:#47453D!important}\n.bg-stone-600{background-color:#5C5A52!important}\n.hover\\:bg-stone-600:hover{background-color:#5C5A52!important}\n.text-stone-600{color:#5C5A52!important}\n.hover\\:text-stone-600:hover{color:#5C5A52!important}\n.border-stone-600{border-color:#5C5A52!important}\n.hover\\:border-stone-600:hover{border-color:#5C5A52!important}\n.focus\\:border-stone-600:focus{border-color:#5C5A52!important}\n.bg-stone-500{background-color:#6B6960!important}\n.hover\\:bg-stone-500:hover{background-color:#6B6960!important}\n.text-stone-500{color:#6B6960!important}\n.hover\\:text-stone-500:hover{color:#6B6960!important}\n.border-stone-500{border-color:#6B6960!important}\n.hover\\:border-stone-500:hover{border-color:#6B6960!important}\n.focus\\:border-stone-500:focus{border-color:#6B6960!important}\n.bg-stone-400{background-color:#8A877D!important}\n.hover\\:bg-stone-400:hover{background-color:#8A877D!important}\n.text-stone-400{color:#8A877D!important}\n.hover\\:text-stone-400:hover{color:#8A877D!important}\n.border-stone-400{border-color:#8A877D!important}\n.hover\\:border-stone-400:hover{border-color:#8A877D!important}\n.focus\\:border-stone-400:focus{border-color:#8A877D!important}\n.bg-stone-300{background-color:#CFCABD!important}\n.hover\\:bg-stone-300:hover{background-color:#CFCABD!important}\n.text-stone-300{color:#CFCABD!important}\n.hover\\:text-stone-300:hover{color:#CFCABD!important}\n.border-stone-300{border-color:#CFCABD!important}\n.hover\\:border-stone-300:hover{border-color:#CFCABD!important}\n.focus\\:border-stone-300:focus{border-color:#CFCABD!important}\n.bg-stone-200{background-color:#D9D4C6!important}\n.hover\\:bg-stone-200:hover{background-color:#D9D4C6!important}\n.text-stone-200{color:#D9D4C6!important}\n.hover\\:text-stone-200:hover{color:#D9D4C6!important}\n.border-stone-200{border-color:#D9D4C6!important}\n.hover\\:border-stone-200:hover{border-color:#D9D4C6!important}\n.focus\\:border-stone-200:focus{border-color:#D9D4C6!important}\n.bg-stone-100{background-color:#ECE8DD!important}\n.hover\\:bg-stone-100:hover{background-color:#ECE8DD!important}\n.text-stone-100{color:#ECE8DD!important}\n.hover\\:text-stone-100:hover{color:#ECE8DD!important}\n.border-stone-100{border-color:#ECE8DD!important}\n.hover\\:border-stone-100:hover{border-color:#ECE8DD!important}\n.focus\\:border-stone-100:focus{border-color:#ECE8DD!important}\n.bg-stone-50{background-color:#F3F0E8!important}\n.hover\\:bg-stone-50:hover{background-color:#F3F0E8!important}\n.text-stone-50{color:#F3F0E8!important}\n.hover\\:text-stone-50:hover{color:#F3F0E8!important}\n.border-stone-50{border-color:#F3F0E8!important}\n.hover\\:border-stone-50:hover{border-color:#F3F0E8!important}\n.focus\\:border-stone-50:focus{border-color:#F3F0E8!important}\n.bg-white{background-color:#FBF9F3!important}\n.bg-\\[\\#FAF8F5\\]{background-color:#F3F0E8!important}\n.bg-\\[\\#F5F3EC\\]{background-color:#F5F3EC!important}\n.bg-slate-950\\/70{background-color:rgba(26,26,23,.7)!important}\n.border-stone-200\\/30{border-color:rgba(217,212,198,.3)!important}\nhtml{-webkit-text-size-adjust:100%;text-size-adjust:100%}html,body{max-width:100%;overflow-x:hidden}\ninput[type=date],input[type=time],input[type=search],select{-webkit-appearance:none;appearance:none;min-width:0;max-width:100%;box-sizing:border-box}\ninput[type=date],input[type=time]{min-height:2rem;text-align:left}\ninput[type=search]::-webkit-search-decoration,input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none}\n@supports (-webkit-touch-callout:none){input:not([type=checkbox]):not([type=radio]):not([type=file]),select,textarea{font-size:16px!important}}\n\nhtml:not([data-pact-theme]) .bg-\\[\\#F5F3EC\\]{background-color:#F4EFE4!important}\nhtml:not([data-pact-theme]) .bg-\\[\\#EDEAE0\\]{background-color:#EAE3D2!important}\nhtml:not([data-pact-theme]) .bg-\\[\\#FAF8F5\\]{background-color:#F8F3E7!important}\nhtml:not([data-pact-theme]) .bg-white{background-color:#FBF8F0!important}\nhtml:not([data-pact-theme]) .border-stone-200{border-color:#DDD5C2!important}\nhtml:not([data-pact-theme]) .border-stone-300{border-color:#CFC7B4!important}\nhtml:not([data-pact-theme]) [data-pact-glass]{background:rgba(244,239,228,.84)!important}\nhtml:not([data-pact-theme]) [data-pact-glass=\"nav\"]{background:rgba(244,239,228,.97)!important}\n.lg-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;animation:lg-fade 1s ease-out both}\n.lg-bg>*{position:absolute}\n.lg-blob{border-radius:50%;will-change:transform}\n.lg-clay{background:radial-gradient(circle,rgba(200,100,60,.20),rgba(200,100,60,0) 70%)}\n.lg-forest{background:radial-gradient(circle,rgba(31,58,46,.15),rgba(31,58,46,0) 70%)}\n.lg-rules{left:0;right:0;top:-240px;bottom:0;opacity:.55;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 39px,rgba(31,58,46,.07) 39px,rgba(31,58,46,.07) 40px);animation:lg-rules 45s linear infinite}\n.lg-hours{left:0;right:0;top:-224px;bottom:0;opacity:.6;background-image:repeating-linear-gradient(to bottom,transparent 0,transparent 55px,rgba(31,58,46,.075) 55px,rgba(31,58,46,.075) 56px);animation:lg-hours 70s linear infinite}\n.lg-spin{animation:lg-spin 140s linear infinite}\n.lg-spin-slow{animation:lg-spin 90s linear infinite reverse}\n.lg-hand{transform-origin:50% 50%;animation:lg-spin 60s linear infinite}\n.lg-sweep{left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,100,60,.45),transparent);animation:lg-sweep 22s ease-in-out infinite alternate}\n.lg-dash{stroke-dasharray:3 9;animation:lg-dash 40s linear infinite}\n.lg-pin{border-radius:50%;background:rgba(200,100,60,.55);width:7px;height:7px}\n.lg-pin::after{content:'';position:absolute;inset:-1px;border-radius:50%;border:1.5px solid rgba(200,100,60,.5);animation:lg-ring 3.6s ease-out infinite;animation-delay:inherit}\n.lg-grow{stroke-dasharray:420;stroke-dashoffset:420;animation:lg-grow 16s ease-in-out infinite}\n.lg-leaf{transform-box:fill-box;transform-origin:center;animation:lg-pulse 5s ease-in-out infinite}\n.lg-ringline{border-radius:50%;border:1.5px solid rgba(31,58,46,.12)}\n.lg-ringline.c{border-color:rgba(200,100,60,.22)}\n.lg-mote{width:6px;height:6px;border-radius:50%;background:rgba(200,100,60,.35);animation:lg-float 14s ease-in infinite}\n.lg-ring{position:absolute;border-radius:50%;background:rgba(200,100,60,.45);animation:lg-ring 2.8s ease-out infinite}\n.lg-breathe{animation:lg-breathe 4s ease-in-out infinite}\n@keyframes lg-fade{from{opacity:0}to{opacity:1}}\n@keyframes lg-rules{to{transform:translateY(-240px)}}\n@keyframes lg-hours{to{transform:translateY(-224px)}}\n@keyframes lg-spin{to{transform:rotate(360deg)}}\n@keyframes lg-sweep{from{top:12%}to{top:88%}}\n@keyframes lg-dash{to{stroke-dashoffset:-240}}\n@keyframes lg-ring{0%{transform:scale(1);opacity:.7}100%{transform:scale(3.4);opacity:0}}\n@keyframes lg-grow{0%{stroke-dashoffset:420;opacity:0}12%{opacity:1}55%{stroke-dashoffset:0;opacity:1}85%{stroke-dashoffset:0;opacity:.9}100%{stroke-dashoffset:0;opacity:0}}\n@keyframes lg-pulse{0%,100%{transform:scale(.7);opacity:.35}50%{transform:scale(1.25);opacity:.9}}\n@keyframes lg-float{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:.8}100%{transform:translateY(-70vh) scale(1.2);opacity:0}}\n@keyframes lg-d1{0%,100%{transform:translate(-30px,0) scale(1)}50%{transform:translate(40px,60px) scale(1.15)}}\n@keyframes lg-d2{0%,100%{transform:translate(0,0) scale(1.1)}50%{transform:translate(-55px,-45px) scale(.95)}}\n@keyframes lg-l1{0%,100%{transform:translate(0,0)}50%{transform:translate(38px,10px)}}\n@keyframes lg-l2{0%,100%{transform:translate(0,0)}50%{transform:translate(-36px,22px)}}\n@keyframes lg-l3{0%,100%{transform:translate(0,0)}50%{transform:translate(8px,-34px)}}\n@keyframes lg-breathe{0%,100%{box-shadow:0 0 0 0 rgba(200,100,60,0)}50%{box-shadow:0 0 0 6px rgba(200,100,60,.13)}}\n@keyframes lg-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}\n.lg-d1{animation:lg-d1 28s ease-in-out infinite}\n.lg-d2{animation:lg-d2 34s ease-in-out infinite}\n.lg-l1{animation:lg-l1 24s ease-in-out infinite}\n.lg-l2{animation:lg-l2 30s ease-in-out infinite}\n.lg-l3{animation:lg-l3 27s ease-in-out infinite}\n.lg-rise{animation:lg-rise .7s ease-out both}\nhtml[data-pact-theme$=\"-dark\"] .lg-bg{opacity:.55}\n@media (prefers-reduced-motion: reduce){.lg-bg *,.lg-bg,.lg-breathe,.lg-rise,.lg-pulse-dot{animation:none!important}.lg-grow{stroke-dashoffset:0;opacity:.6}}\n.lg-pulse-dot{animation:lg-ring 2.8s ease-out infinite}\n\nbutton:not([class*=\"rounded\"]){border-radius:2px}\ninput:not([class*=\"rounded\"]),textarea:not([class*=\"rounded\"]),select:not([class*=\"rounded\"]){border-radius:3px}\ndiv.border:not([class*=\"rounded\"]),form.border:not([class*=\"rounded\"]),label.border:not([class*=\"rounded\"]),section.border:not([class*=\"rounded\"]){border-radius:3px}\ndiv[class*=\"bg-purple-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]),div[class*=\"bg-slate-9\"]:not([class*=\"rounded\"]):not([class*=\"border-l\"]),div[class*=\"bg-blue-9\"]:not([class*=\"rounded\"]){border-radius:3px}\n\n[class*=\"rounded-\"]:not(.rounded-full):not([class*=\"rounded-t\"]):not([class*=\"rounded-b\"]){border-radius:2px!important}\n[class*=\"rounded-full\"][class*=\"px-\"],[class*=\"rounded-full\"][class*=\"min-w\"]{border-radius:2px!important}\ninput,textarea,select,button,label.border,div.border,form.border,section.border{border-radius:2px}\n.lg-pill{border-radius:2px}\n\n.np-title{font-family:'Fraunces',Georgia,serif;font-weight:600;font-style:italic;font-size:30px;letter-spacing:-.02em;line-height:1;margin:0;color:#1B2A22;text-align:center;flex:1;white-space:nowrap}\n@media (max-width:359px){.np-title{font-size:25px}}\n.np-rule{margin-top:8px;border-top:3px solid #1B2A22;border-bottom:1px solid #1B2A22;height:2px}\n.np-dateline{display:flex;justify-content:space-between;gap:8px;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:5px 0 4px;border-bottom:1px solid #1B2A22;color:#1B2A22;white-space:nowrap}\n.np-dateline span{overflow:hidden;text-overflow:ellipsis}\n.np-flag,.np-skin [class*=\"text-purple-800\"][class*=\"uppercase\"][class*=\"tracking-widest\"]{background:#1B2A22;color:#F4EFE4!important;padding:3px 8px;display:inline-flex;align-items:center;letter-spacing:.18em;font-size:10px;font-weight:600;text-transform:uppercase;width:fit-content}\n.np-kicker{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:400;font-size:11px;letter-spacing:0;text-transform:none;margin-left:8px;opacity:.85}\n.np-skin div[class*=\"p-4\"][class*=\"bg-white\"][class*=\"border\"]{background:#FAF8F2!important;border:1px solid #1B2A22!important;border-top:3px double #1B2A22!important;box-shadow:4px 4px 0 rgba(31,58,46,.10)!important;border-radius:0!important}\n\n.np-sc{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#5A675F}\n.np-halftone{background:radial-gradient(circle,rgba(244,239,228,.28) .9px,transparent 1.5px) 0 0/5px 5px}\n.np-barcode{height:26px;background-image:repeating-linear-gradient(90deg,#1B2A22 0,#1B2A22 2px,transparent 2px,transparent 4px,#1B2A22 4px,#1B2A22 5px,transparent 5px,transparent 8px)}\n\n.np-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}\n.np-grid>*{grid-column:span 2}\n.np-grid>.np-tile{grid-column:span 1}\n.np-cols{overflow:hidden}\n.np-dropcap{float:left;font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:38px;line-height:.85;padding:3px 6px 0 0;color:#1B2A22}\n";
 
 // =====================================================================
 // ROAM HELPERS: time maths, slot finder, calendar (ICS) parser, accounts
@@ -1752,10 +1753,6 @@ function LedgerBg({ tab }) {
       <div className="lg-rules" />
       <div className="lg-blob lg-clay lg-d1" style={{ width: 300, height: 300, left: -90, top: -70 }} />
       <div className="lg-blob lg-forest lg-d2" style={{ width: 340, height: 340, right: -130, bottom: 120 }} />
-      <svg className="lg-spin" width="260" height="260" viewBox="0 0 30 30" style={{ right: -70, top: 250, opacity: 0.06 }}>
-        <circle cx="15" cy="15" r="14" fill="none" stroke={F} strokeWidth=".6" strokeDasharray="1.2 1.2" /><circle cx="15" cy="15" r="11" fill="none" stroke={F} strokeWidth=".4" />
-        <path d="M9 20V10h6a3.2 3.2 0 0 1 0 6.4H9" fill="none" stroke={F} strokeWidth="1.2" strokeLinecap="round" />
-      </svg>
     </div>
   );
 }
@@ -1852,6 +1849,19 @@ const Avatar = ({ src, name, size = 36 }) => (
   src ? <img src={src} alt="" style={{ width: size, height: size }} className="rounded-full object-cover shrink-0 border border-stone-300" />
       : <div style={{ width: size, height: size, fontSize: size * 0.42 }} className="rounded-full bg-purple-800 text-white flex items-center justify-center shrink-0 font-medium">{(String(name || '?').trim()[0] || '?').toUpperCase()}</div>
 );
+
+const MUG_TONES = [['#4F7A63', '#1F3A2E'], ['#5F8C73', '#2C4A3B'], ['#3F6B55', '#12251C'], ['#8FB09D', '#3F6B55']];
+// Square, halftone-printed portrait (newspaper style). Shows the person's photo if they have one, else their initial.
+const Mug = ({ src, name, w = 88, h = 88, dot = false, tone = 0 }) => {
+  const [c1, c2] = MUG_TONES[Math.abs(tone) % 4];
+  return (
+    <div data-mug className="relative shrink-0 flex items-center justify-center overflow-hidden" style={{ width: w, height: h === 'sq' ? undefined : h, aspectRatio: h === 'sq' ? '1 / 1' : undefined, background: src ? '#1F3A2E' : `linear-gradient(135deg,${c1},${c2})` }}>
+      {src ? <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover" /> : <span className="font-editorial text-[#F4EFE4]" style={{ fontSize: typeof w === 'number' && typeof h === 'number' ? Math.round(Math.min(w, h) * 0.42) : 34, lineHeight: 1 }}>{(String(name || '?').trim()[0] || '?').toUpperCase()}</span>}
+      <span className="np-halftone absolute inset-0 pointer-events-none" />
+      {dot && <span className="absolute right-1.5 top-1.5 w-2.5 h-2.5 rounded-full bg-rose-700 border-[1.5px] border-[#F4EFE4]" />}
+    </div>
+  );
+};
 
 const PrivacyNotice = ({ onClose }) => {
   const contact = (typeof window !== 'undefined' && window.PACT_CONTACT) || 'the person who invited you to use Pact';
@@ -2047,6 +2057,335 @@ function AuthScreen({ onAuth, onGuest }) {
   );
 }
 
+// ---------------------------------------------------------------------------------------------
+// Schedule "Listings": a TV-guide grid. Your day first; tap "time matching" to add friends who chose to share.
+// ---------------------------------------------------------------------------------------------
+const LST_PX = 30;
+const lstLanes = (blocks) => {
+  const sorted = [...blocks].sort((a, b) => a.s - b.s || a.e - b.e);
+  const lanes = []; const out = [];
+  sorted.forEach(b => {
+    let i = lanes.findIndex(end => end <= b.s);
+    if (i < 0) { i = lanes.length; lanes.push(0); }
+    lanes[i] = b.e; out.push({ ...b, lane: i });
+  });
+  const n = Math.max(1, lanes.length);
+  return out.map(b => ({ ...b, lanes: n }));
+};
+function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMatch, onTapTask, onShare, onAdd, nowMin }) {
+  const all = [...mine, ...friends.flatMap(f => f.blocks)];
+  const H0 = Math.min(8, all.length ? Math.floor(Math.min(...all.map(b => b.s)) / 60) : 8);
+  const H1 = Math.max(22, all.length ? Math.ceil(Math.max(...all.map(b => b.e)) / 60) : 22);
+  const hours = Array.from({ length: H1 - H0 + 1 }, (_, i) => H0 + i);
+  const height = (H1 - H0) * LST_PX;
+  const top = (m) => ((m - H0 * 60) / 60) * LST_PX;
+  const cols = [{ id: 'me', name: 'You', blocks: mine, ok: true, mine: true }, ...(matching ? friends : [])];
+  // Windows when everyone shown is free for an hour or more.
+  const busyAt = (m) => cols.some(c => c.ok && c.blocks.some(b => m >= b.s && m < b.e));
+  const free = []; let cur = null;
+  if (matching && friends.some(f => f.ok)) {
+    for (let m = Math.max(H0 * 60, 8 * 60); m < Math.min(H1 * 60, 22 * 60); m += 15) {
+      if (!busyAt(m)) { if (!cur) cur = { s: m, e: m + 15 }; else cur.e = m + 15; } else if (cur) { if (cur.e - cur.s >= 60) free.push(cur); cur = null; }
+    }
+    if (cur && cur.e - cur.s >= 60) free.push(cur);
+  }
+  const grid = `34px repeat(${cols.length}, minmax(${matching ? 92 : 120}px, 1fr))`;
+  return (
+    <section data-listings className="border-[1.5px] border-[#1B2A22] bg-[#F4EFE4]" style={{ borderRadius: 0 }}>
+      <div className="flex items-center justify-between gap-2 px-3 py-2 border-b-[3px] border-double border-[#1B2A22]">
+        <div className="min-w-0">
+          <div className="text-[9px] uppercase tracking-[0.18em] text-[#1F3A2E] font-medium">Listings</div>
+          <div className="font-editorial text-[15px] leading-tight text-[#1B2A22] truncate">{matching ? 'You and your friends' : 'Your day at a glance'}</div>
+        </div>
+        <div className="flex gap-1.5 shrink-0">
+          <button data-add-plan-listing onClick={onAdd} className="px-2 py-1.5 border border-[#1B2A22] text-[9px] uppercase tracking-wider font-medium">+ Plan</button>
+          {canMatch && <button data-match-toggle aria-pressed={matching} onClick={onToggleMatch} className={`px-2 py-1.5 border border-[#1B2A22] text-[9px] uppercase tracking-wider font-medium ${matching ? 'bg-[#1F3A2E] text-[#F4EFE4]' : 'bg-transparent text-[#1B2A22]'}`}>{matching ? 'Hide matching' : 'Expand for time matching'}</button>}
+        </div>
+      </div>
+      <div className="overflow-x-auto no-scrollbar">
+        <div className="relative" style={{ minWidth: matching ? 34 + cols.length * 92 : undefined }}>
+          <div className="grid border-b border-[#1B2A22]" style={{ gridTemplateColumns: grid }}>
+            <div />
+            {cols.map(c => (
+              <div key={c.id} className="px-1.5 py-1 border-l border-[#1B2A22]/40 min-w-0">
+                <div className="text-[10px] uppercase tracking-wider font-medium text-[#1B2A22] truncate">{c.name}</div>
+                {!c.mine && <div className="text-[9px] text-[#1B2A22]/60 truncate">{c.ok ? (c.titles ? 'with titles' : 'busy only') + (c.until ? ' · to ' + new Date(c.until + 'T12:00:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' }) : '') : 'not shared'}</div>}
+              </div>
+            ))}
+          </div>
+          <div className="relative grid" style={{ gridTemplateColumns: grid, height }}>
+            <div className="relative">
+              {hours.slice(0, -1).map(h => <div key={h} className="absolute right-1 text-[9px] text-[#1B2A22]/60 tabular-nums" style={{ top: top(h * 60) - 1 }}>{pad2(h)}</div>)}
+            </div>
+            {cols.map(c => {
+              const lanes = lstLanes(c.blocks);
+              return (
+                <div key={c.id} data-list-col={c.id} className="relative border-l border-[#1B2A22]/40" style={{ backgroundImage: 'repeating-linear-gradient(to bottom, transparent 0, transparent ' + (LST_PX - 1) + 'px, rgba(27,42,34,.14) ' + (LST_PX - 1) + 'px, rgba(27,42,34,.14) ' + LST_PX + 'px)' }}>
+                  {!c.ok && <div className="absolute inset-0 flex items-center justify-center text-center px-1" style={{ backgroundImage: 'repeating-linear-gradient(135deg, transparent 0 5px, rgba(27,42,34,.08) 5px 6px)' }}><span className="text-[9px] uppercase tracking-wider text-[#1B2A22]/60 bg-[#F4EFE4] px-1">Not shared</span></div>}
+                  {lanes.map((b, i) => {
+                    const h = Math.max(16, ((b.e - b.s) / 60) * LST_PX - 2);
+                    const w = 100 / b.lanes;
+                    return (
+                      <button key={i} data-list-block={c.mine ? b.id : undefined} disabled={!c.mine} onClick={() => c.mine && onTapTask(b.id)}
+                        className={`absolute overflow-hidden text-left px-1 border ${c.mine ? 'bg-[#1F3A2E] text-[#F4EFE4] border-[#1B2A22]' : 'bg-[#E6DFCF] text-[#1B2A22] border-[#1B2A22]/70'} ${b.done ? 'opacity-50' : ''}`}
+                        style={{ top: top(b.s) + 1, height: h, left: `calc(${b.lane * w}% + 2px)`, width: `calc(${w}% - 4px)`, borderRadius: 0, lineHeight: 1.15 }}>
+                        <span className="block text-[10px] font-medium truncate">{b.t}</span>
+                        {h >= 34 && <span className="block text-[9px] opacity-75 tabular-nums truncate">{fromMins(b.s)}–{fromMins(b.e)}</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              );
+            })}
+            {nowMin != null && nowMin >= H0 * 60 && nowMin <= H1 * 60 && <div className="absolute left-[34px] right-0 border-t-2 border-[#C8643C] pointer-events-none" style={{ top: top(nowMin) }}><span className="absolute -left-[34px] -top-2 text-[8px] bg-[#C8643C] text-white px-0.5">NOW</span></div>}
+            {free.map((f, i) => (
+              <div key={i} data-all-free className="absolute pointer-events-none border-2 border-dashed border-[#C8643C]" style={{ left: 34, right: 0, top: top(f.s), height: top(f.e) - top(f.s), background: 'rgba(200,100,60,.10)' }}>
+                <span className="absolute right-1 top-0.5 text-[9px] uppercase tracking-[0.14em] font-medium text-[#C8643C] bg-[#F4EFE4] px-1">All free</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      {matching && (
+        <div className="px-3 py-2 border-t-[3px] border-double border-[#1B2A22] space-y-1.5">
+          {free.length > 0 ? free.map((f, i) => (
+            <div key={i} className="flex items-center justify-between gap-2">
+              <span className="text-[11px] text-[#1B2A22]">Everyone is free <b className="tabular-nums">{fromMins(f.s)}–{fromMins(f.e)}</b></span>
+              <button data-suggest-plan onClick={onAdd} className="px-2 py-1 bg-[#C8643C] text-white text-[9px] uppercase tracking-wider font-medium">Suggest a plan</button>
+            </div>
+          )) : <div className="text-[11px] text-[#1B2A22]/70">{friends.some(f => f.ok) ? 'No hour where everyone is free on this day. Try another day.' : 'None of your friends are sharing this day with you yet.'}</div>}
+          <button data-share-open onClick={onShare} className="text-[10px] uppercase tracking-wider underline text-[#1F3A2E]">Choose who sees my schedule</button>
+        </div>
+      )}
+      {!matching && canMatch && <div className="px-3 py-1.5 border-t border-[#1B2A22]/40"><button data-share-open onClick={onShare} className="text-[10px] uppercase tracking-wider underline text-[#1F3A2E]">Sharing settings</button></div>}
+    </section>
+  );
+}
+
+// Who can see when you're busy, and until when. Each person is chosen separately and it switches itself off.
+function ShareSchedulePanel({ friends, grants, onSet, onClose }) {
+  const [opts, setOpts] = useState({});
+  const getO = (id) => opts[id] || { days: 3, titles: false };
+  const setO = (id, p) => setOpts(o => ({ ...o, [id]: { ...getO(id), ...p } }));
+  const DUR = [[3, '3 days'], [7, 'A week'], [14, '2 weeks']];
+  return (
+    <section data-share-panel className="border-[1.5px] border-[#1B2A22] bg-[#F4EFE4]" style={{ borderRadius: 0 }}>
+      <div className="flex items-center justify-between px-3 py-2 border-b-[3px] border-double border-[#1B2A22]">
+        <div><div className="text-[9px] uppercase tracking-[0.18em] text-[#1F3A2E] font-medium">Your choice</div><div className="font-editorial text-[15px] text-[#1B2A22] leading-tight">Who can see when I'm busy</div></div>
+        <button data-share-close onClick={onClose} aria-label="Close" className="w-7 h-7 border border-[#1B2A22] flex items-center justify-center"><X size={14} /></button>
+      </div>
+      <p className="px-3 pt-2 text-[11px] leading-snug text-[#1B2A22]/80">Friends only see the times you're busy, not the details, unless you tick "show plan titles". Sharing stops by itself on the end date. Plans you mark Private are never included.</p>
+      <div className="p-3 space-y-2.5">
+        {friends.length === 0 && <div className="text-[11px] text-[#1B2A22]/70">Add friends in the Social tab first.</div>}
+        {friends.map(f => {
+          const g = grants.find(x => x.friend_id === f.userId);
+          const o = getO(f.userId);
+          return (
+            <div key={f.userId} data-share-row={f.userId} className="border border-[#1B2A22]/50 p-2.5 space-y-2 bg-white/40">
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[12px] font-medium text-[#1B2A22] truncate">{f.name}</span>
+                {g ? <span className="text-[10px] text-[#1F3A2E] shrink-0">Sharing to {new Date(g.until + 'T12:00:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })}{g.titles ? ' · titles' : ''}</span> : <span className="text-[10px] text-[#1B2A22]/50 shrink-0">Not sharing</span>}
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {DUR.map(([d, label]) => <button key={d} data-share-days={d} aria-pressed={o.days === d} onClick={() => setO(f.userId, { days: d })} className={`px-2 py-1 border text-[10px] ${o.days === d ? 'bg-[#1F3A2E] text-[#F4EFE4] border-[#1F3A2E]' : 'border-[#1B2A22]/60'}`}>{label}</button>)}
+              </div>
+              <label className="flex items-center gap-2 text-[11px] text-[#1B2A22]"><input type="checkbox" checked={o.titles} onChange={e => setO(f.userId, { titles: e.target.checked })} /> Show plan titles (otherwise just "Busy")</label>
+              <div className="flex gap-1.5">
+                <button data-share-save onClick={() => onSet(f.userId, o.days, o.titles)} className="px-2.5 py-1.5 bg-[#1F3A2E] text-[#F4EFE4] text-[10px] uppercase tracking-wider font-medium">{g ? 'Update' : 'Share'}</button>
+                {g && <button data-share-stop onClick={() => onSet(f.userId, 0, false)} className="px-2.5 py-1.5 border border-[#1B2A22] text-[10px] uppercase tracking-wider font-medium">Stop sharing</button>}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+// ---------------------------------------------------------------------------------------------
+// Development: an index of skills with sparklines; opening one shows it as a book of chapters.
+// ---------------------------------------------------------------------------------------------
+const ROMAN = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX'];
+const skillSpark = (skill, weeks = 8) => {
+  const steps = skill.steps || []; if (!steps.length) return Array(weeks).fill(0);
+  const today = todayDateStr();
+  return Array.from({ length: weeks }, (_, i) => {
+    const end = addDaysStr(today, -(weeks - 1 - i) * 7);
+    return steps.filter(s => s.done && (!s.doneDate || s.doneDate <= end)).length / steps.length;
+  });
+};
+function Spark({ pts }) {
+  const w = 64, h = 18;
+  const d = pts.map((v, i) => (i * (w / (pts.length - 1))).toFixed(1) + ',' + (h - 2 - v * (h - 4)).toFixed(1)).join(' ');
+  return <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} aria-hidden="true" className="shrink-0"><polyline points={d} fill="none" stroke="#1F3A2E" strokeWidth="1.5" /><circle cx={w} cy={h - 2 - pts[pts.length - 1] * (h - 4)} r="2" fill="#C8643C" /></svg>;
+}
+function SkillIndex({ branches, selectedId, onOpen, invites, onAccept, onDecline }) {
+  let n = 0;
+  return (
+    <div data-skill-index className="space-y-2">
+      {invites.map(v => (
+        <div key={v.id} data-buddy-invite className="border-[1.5px] border-[#C8643C] bg-[#F4EFE4] p-2.5 space-y-1.5">
+          <div className="text-[9px] uppercase tracking-[0.18em] text-[#C8643C] font-medium">Invitation</div>
+          <div className="text-[12px] text-[#1B2A22]"><b>{v.friend_name}</b> wants to learn <b>{v.skill}</b> with you.</div>
+          <div className="flex gap-1.5"><button data-buddy-join onClick={() => onAccept(v)} className="px-2.5 py-1.5 bg-[#1F3A2E] text-[#F4EFE4] text-[10px] uppercase tracking-wider font-medium">Join them</button><button data-buddy-decline onClick={() => onDecline(v)} className="px-2.5 py-1.5 border border-[#1B2A22] text-[10px] uppercase tracking-wider font-medium">Not now</button></div>
+        </div>
+      ))}
+      <div className="border-[1.5px] border-[#1B2A22] bg-[#F4EFE4]">
+        <div className="grid grid-cols-[22px_1fr_64px_34px] gap-x-2 px-2.5 py-1.5 border-b-[3px] border-double border-[#1B2A22] text-[9px] uppercase tracking-[0.14em] text-[#1F3A2E] font-medium"><span>No.</span><span>Skill</span><span>8 weeks</span><span className="text-right">Done</span></div>
+        {branches.length === 0 && <div className="p-3 text-[11px] text-[#1B2A22]/70">No skills yet. Add an area to begin.</div>}
+        {branches.map(b => (
+          <div key={b.id}>
+            <div className="px-2.5 py-1 bg-[#E6DFCF] text-[9px] uppercase tracking-[0.16em] text-[#1B2A22] font-medium">{b.name}</div>
+            {b.skills.map(sk => {
+              n += 1; const done = sk.steps.filter(s => s.done).length, pct = sk.steps.length ? Math.round(done / sk.steps.length * 100) : 0;
+              return (
+                <button key={sk.id} data-skill-row={sk.id} onClick={() => onOpen(b.id, sk.id)} className={`w-full grid grid-cols-[22px_1fr_64px_34px] gap-x-2 items-center px-2.5 py-2 text-left border-b border-[#1B2A22]/25 ${selectedId === sk.id ? 'bg-white/50' : ''}`}>
+                  <span className="font-editorial text-[13px] text-[#C8643C]">{n}</span>
+                  <span className="min-w-0"><span className="block text-[13px] font-medium text-[#1B2A22] truncate">{sk.name}</span><span className="block text-[10px] text-[#1B2A22]/60 truncate">{sk.timeframe} · {done} of {sk.steps.length} chapters</span></span>
+                  <Spark pts={skillSpark(sk)} />
+                  <span className="text-right text-[12px] tabular-nums font-medium text-[#1B2A22]">{pct}%</span>
+                </button>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+function SkillChapters({ skill, branch, number, onBack, onToggle, buddy }) {
+  const done = skill.steps.filter(s => s.done).length, total = skill.steps.length, pct = total ? Math.round(done / total * 100) : 0;
+  return (
+    <section data-skill-chapters className="border-[1.5px] border-[#1B2A22] bg-[#F4EFE4]">
+      <div className="flex items-center justify-between px-3 py-2 border-b border-[#1B2A22]/50">
+        <button data-skill-back onClick={onBack} className="flex items-center gap-1 text-[10px] uppercase tracking-wider font-medium text-[#1B2A22]"><ArrowLeft size={13} /> All skills</button>
+        <span className="text-[9px] uppercase tracking-[0.16em] text-[#1F3A2E] truncate max-w-[50%]">{branch.name}</span>
+      </div>
+      <div className="px-3 pt-3 pb-2 flex items-end gap-3 border-b-[3px] border-double border-[#1B2A22]">
+        <div className="font-editorial text-[52px] leading-[0.85] text-[#C8643C] shrink-0">{number}</div>
+        <div className="min-w-0 pb-0.5">
+          <h3 className="font-editorial text-[22px] leading-tight text-[#1B2A22] break-words">{skill.name}</h3>
+          <div className="text-[10px] uppercase tracking-wider text-[#1B2A22]/70 mt-0.5">{skill.timeframe} · {pct}% read</div>
+        </div>
+      </div>
+      {skill.goal && <p className="px-3 pt-2 text-[12px] italic leading-snug text-[#1B2A22]/80">{skill.goal}</p>}
+      <div className="px-3 pt-2 pb-1 text-[9px] uppercase tracking-[0.18em] text-[#1F3A2E] font-medium">Contents</div>
+      <ol className="px-3 pb-3">
+        {skill.steps.map((st, i) => (
+          <li key={st.id}>
+            <button data-chapter-row={st.id} onClick={() => onToggle(st)} className="w-full flex items-baseline gap-1.5 py-1.5 text-left">
+              <span className="font-editorial text-[13px] text-[#C8643C] w-8 shrink-0">{ROMAN[i] || i + 1}.</span>
+              <span className={`text-[12.5px] min-w-0 ${st.done ? 'line-through text-[#1B2A22]/50' : 'text-[#1B2A22]'}`}>{st.title || 'Untitled chapter'}</span>
+              <span className="flex-1 border-b border-dotted border-[#1B2A22]/50 translate-y-[-3px] min-w-[10px]" />
+              <span className={`text-[10px] tabular-nums shrink-0 ${st.done ? 'text-[#1F3A2E] font-medium' : 'text-[#1B2A22]/60'}`}>{st.done ? 'read' : (st.target || 'to do')}</span>
+            </button>
+          </li>
+        ))}
+        {skill.steps.length === 0 && <li className="text-[11px] text-[#1B2A22]/60 py-1">No chapters yet. Add some below.</li>}
+      </ol>
+      {buddy}
+    </section>
+  );
+}
+function BuddyPanel({ skill, friends, entry, onInvite, onEnd, onRespond }) {
+  const [pick, setPick] = useState(null); const [note, setNote] = useState('');
+  const myDone = skill.steps.filter(s => s.done).length, myTotal = skill.steps.length;
+  const bar = (label, p) => { const d = p && p.done != null ? p.done : 0, t = p && p.total ? p.total : myTotal; const pc = t ? Math.round(d / t * 100) : 0; return (
+    <div><div className="flex justify-between text-[11px] text-[#1B2A22]"><span className="font-medium truncate">{label}</span><span className="tabular-nums">{d}/{t}{p && p.last ? ' · ' + p.last : ''}</span></div><div className="h-1.5 bg-[#E6DFCF] border border-[#1B2A22]/30"><div className="h-full bg-[#1F3A2E]" style={{ width: pc + '%' }} /></div></div>); };
+  return (
+    <div data-buddy-panel className="border-t-[3px] border-double border-[#1B2A22] px-3 py-3 space-y-2">
+      <div className="text-[9px] uppercase tracking-[0.18em] text-[#C8643C] font-medium">Learn it together</div>
+      {!entry && (<>
+        {friends.length === 0 ? <p className="text-[11px] text-[#1B2A22]/70">Add friends in the Social tab, then you can learn this with one of them.</p> : (<>
+          <p className="text-[11px] text-[#1B2A22]/80 leading-snug">Invite a friend to follow these chapters with you. You each tick your own; you both see how far the other has got.</p>
+          <div className="flex flex-wrap gap-1.5">{friends.map(f => <button key={f.userId} data-buddy-pick={f.userId} aria-pressed={pick === f.userId} onClick={() => setPick(pick === f.userId ? null : f.userId)} className={`px-2.5 py-1 text-[10px] border ${pick === f.userId ? 'bg-[#1F3A2E] text-[#F4EFE4] border-[#1F3A2E]' : 'border-[#1B2A22]/60 text-[#1B2A22]'}`}>{f.name}</button>)}</div>
+          {pick && <input data-buddy-note type="text" maxLength={200} value={note} onChange={e => setNote(e.target.value)} placeholder="Add a note (optional)" aria-label="Add a note (optional)" className="w-full bg-white border border-[#1B2A22]/50 px-2 py-1.5 text-xs" />}
+          <button data-buddy-invite-send disabled={!pick} onClick={() => { onInvite(pick, note); setNote(''); setPick(null); }} className="px-3 py-1.5 bg-[#C8643C] text-white text-[10px] uppercase tracking-wider font-medium disabled:opacity-40">Invite</button>
+        </>)}
+      </>)}
+      {entry && entry.status === 'invited' && entry.is_owner && <p data-buddy-waiting className="text-[11px] text-[#1B2A22]/80">Waiting for {entry.friend_name} to join.</p>}
+      {entry && entry.status === 'invited' && !entry.is_owner && (<div className="space-y-1.5"><p className="text-[11px] text-[#1B2A22]">{entry.friend_name} invited you to learn this together.</p><div className="flex gap-1.5"><button onClick={() => onRespond(entry, true)} className="px-2.5 py-1.5 bg-[#1F3A2E] text-[#F4EFE4] text-[10px] uppercase tracking-wider">Join</button><button onClick={() => onRespond(entry, false)} className="px-2.5 py-1.5 border border-[#1B2A22] text-[10px] uppercase tracking-wider">Not now</button></div></div>)}
+      {entry && entry.status === 'active' && (<div data-buddy-active className="space-y-2">
+        {bar('You', { done: myDone, total: myTotal })}
+        {bar(entry.friend_name, entry.their_progress)}
+        {entry.note && <p className="text-[11px] italic text-[#1B2A22]/70">"{entry.note}"</p>}
+      </div>)}
+      {entry && <button data-buddy-end onClick={() => onEnd(entry)} className="text-[10px] uppercase tracking-wider underline text-[#1B2A22]/70">{entry.status === 'active' ? 'Stop learning together' : 'Cancel invitation'}</button>}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------------------------
+// Ideas pictures. The places database has no photos, so: a real photo when Wikipedia has one for that exact
+// place (checked by name AND distance, so we never show the wrong building), otherwise a newspaper-style illustration.
+// ---------------------------------------------------------------------------------------------
+const IDEA_ART = {
+  Food: { bg: '#C8643C', fg: '#F4EFE4', Icon: Utensils },
+  Indoor: { bg: '#1F3A2E', fg: '#F4EFE4', Icon: Landmark },
+  Outdoor: { bg: '#4F7A63', fg: '#F4EFE4', Icon: Trees },
+  Sports: { bg: '#1B2A22', fg: '#F4EFE4', Icon: Dumbbell },
+  Shopping: { bg: '#B08A3E', fg: '#1B2A22', Icon: ShoppingBag },
+  Trips: { bg: '#3A6A70', fg: '#F4EFE4', Icon: MapPin }
+};
+const photoCache = {};
+const kmBetween = (a, b, c, d) => { const R = 6371, rad = Math.PI / 180, dl = (c - a) * rad, dn = (d - b) * rad; const x = Math.sin(dl / 2) ** 2 + Math.cos(a * rad) * Math.cos(c * rad) * Math.sin(dn / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(x)); };
+function useIdeaPhoto(idea) {
+  const key = (idea.title || '') + '|' + (idea.lat != null ? idea.lat.toFixed(2) : '');
+  const [src, setSrc] = useState(idea.img || photoCache[key] || null);
+  useEffect(() => {
+    if (idea.img) { setSrc(idea.img); return; }
+    if (key in photoCache) { setSrc(photoCache[key]); return; }
+    if (idea.lat == null || !idea.title || typeof fetch === 'undefined') return;
+    let dead = false;
+    const t = setTimeout(async () => {
+      try {
+        const r = await fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(String(idea.title).replace(/\s+/g, '_')), { headers: { Accept: 'application/json' } });
+        if (!r.ok) { photoCache[key] = null; return; }
+        const j = await r.json();
+        const ok = j && j.type === 'standard' && j.thumbnail && j.thumbnail.source && j.coordinates && kmBetween(idea.lat, idea.lon, j.coordinates.lat, j.coordinates.lon) < 1.5;
+        photoCache[key] = ok ? j.thumbnail.source : null;
+        if (!dead && ok) setSrc(photoCache[key]);
+      } catch (e) { photoCache[key] = null; }
+    }, 150 + Math.random() * 600);
+    return () => { dead = true; clearTimeout(t); };
+  }, [key]);
+  return src;
+}
+function IdeaPic({ idea, tall }) {
+  const src = useIdeaPhoto(idea);
+  const base = IDEA_ART[idea.category] || IDEA_ART.Indoor;
+  const kw = String(idea.sub1 || '') + ' ' + String(idea.title || '');
+  const pick = [[/bakery|brunch|caf[eé]|coffee|tea/i, Coffee], [/pizza/i, Pizza], [/pub|bar|beer|cocktail/i, Beer], [/hike|walk|park|mountain|trail|climb/i, Mountain], [/cinema|film|theatre/i, Film], [/music|gig|club/i, Music], [/art|gallery|museum|craft|pottery/i, Palette], [/book/i, BookOpen], [/flight|trip|city break|weekend/i, Plane]].find(([r]) => r.test(kw));
+  const shades = [0, 1, 2].map(i => i); let h = 0; String(idea.title || '').split('').forEach(ch => { h = (h * 31 + ch.charCodeAt(0)) % 3; });
+  const art = { ...base, bg: base.bg, Icon: pick ? pick[1] : base.Icon }; const Icon = art.Icon; const tint = ['rgba(0,0,0,0)', 'rgba(27,42,34,.18)', 'rgba(244,239,228,.14)'][h];
+  const [broken, setBroken] = useState(false);
+  return (
+    <div data-idea-pic={src && !broken ? 'photo' : 'art'} className="relative overflow-hidden border-b-[1.5px] border-[#1B2A22]" style={{ aspectRatio: tall ? '16 / 9' : '4 / 3', background: art.bg, boxShadow: 'inset 0 0 0 999px ' + tint }}>
+      {src && !broken ? <img src={src} alt="" loading="lazy" onError={() => setBroken(true)} className="absolute inset-0 w-full h-full object-cover" style={{ filter: 'grayscale(.25) contrast(1.05)' }} /> : (<>
+        <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(rgba(244,239,228,.28) 1.2px, transparent 1.6px)', backgroundSize: '7px 7px' }} />
+        <Icon size={tall ? 64 : 44} strokeWidth={1.2} color={art.fg} className="absolute right-3 bottom-2 opacity-90" />
+        <div className="absolute left-2.5 top-2 text-[9px] uppercase tracking-[0.2em] font-medium" style={{ color: art.fg }}>{idea.category}</div>
+      </>)}
+    </div>
+  );
+}
+function IdeaTile({ idea, onOpen, fav, onFav }) {
+  return (
+    <article data-idea-tile className="np-tile border-[1.5px] border-[#1B2A22] bg-[#F4EFE4] flex flex-col min-w-0">
+      <button onClick={onOpen} aria-label={'Open ' + idea.title} className="text-left"><IdeaPic idea={idea} /></button>
+      <div className="p-2.5 flex-1 flex flex-col gap-1 min-w-0">
+        <div className="text-[9px] uppercase tracking-[0.14em] text-[#1F3A2E] font-medium truncate">{idea.sub1}{idea.distance ? ' · ' + idea.distance : ''}</div>
+        <button onClick={onOpen} className="text-left"><h4 className="font-editorial text-[14px] leading-tight text-[#1B2A22] break-words" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{idea.title}</h4></button>
+        <p className="text-[11px] leading-snug text-[#1B2A22]/75" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{idea.desc}</p>
+        <div className="mt-auto pt-1.5 flex items-center justify-between">
+          <span className="text-[10px] text-[#1B2A22]/70 tabular-nums">{idea.rating ? '★ ' + idea.rating : ''}{idea.price ? (idea.rating ? ' · ' : '') + idea.price : ''}</span>
+          <button data-fav-heart aria-label={fav ? 'Remove ' + idea.title + ' from favourites' : 'Save ' + idea.title + ' to favourites'} aria-pressed={fav} onClick={onFav} className={fav ? 'text-[#C8643C]' : 'text-[#1B2A22]/60'}><Heart size={15} fill={fav ? 'currentColor' : 'none'} /></button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
 function AppInner({ onReset }) {
   // --- NAVIGATION & CLOCK STATE ---
   const [activeTab, setActiveTab] = useState('home'); // 'home', 'schedule', 'ideas', 'skills' (Development), 'social', 'profile'
@@ -2083,6 +2422,13 @@ function AppInner({ onReset }) {
   const [inviteBusy, setInviteBusy] = useState(false);
   const [editEvent, setEditEvent] = useState(null);    // { id, title, date, start, end, location }
   const sharedRef = useRef({ seen: null });
+  // Opening Pact from a phone notification lands on the right tab (e.g. /?tab=social).
+  useEffect(() => {
+    try {
+      const t = new URLSearchParams(window.location.search).get('tab');
+      if (t && ['home', 'schedule', 'ideas', 'skills', 'social', 'profile'].includes(t)) setActiveTab(t);
+    } catch (e) { /* ignore */ }
+  }, []);
   const startedParams = useRef(false);
   // --- Your People (stored with the rest of your data) ---
   const [people, setPeople] = useState([]);
@@ -2118,7 +2464,7 @@ function AppInner({ onReset }) {
   const pushToast = (text, kind = 'info', action = null) => {
     const id = Date.now() + Math.random();
     setToasts(prev => [...prev.slice(-3), { id, text, kind, action }]);
-    if (kind !== 'reminder') setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 3500);
+    setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 2000);
     return id;
   };
   // ---- Notification centre: invites, messages, new friends, plan changes ----
@@ -2356,6 +2702,14 @@ function AppInner({ onReset }) {
   ]);
 
   const [expandedTaskId, setExpandedTaskId] = useState(101);
+  const [skillOpen, setSkillOpen] = useState(false);
+  const [buddies, setBuddies] = useState([]);
+  // ---- schedule listings: friends who share with me, my own sharing choices ----
+  const [matching, setMatching] = useState(false);
+  const [sharePanel, setSharePanel] = useState(false);
+  const [schedShared, setSchedShared] = useState([]);
+  const [schedGrants, setSchedGrants] = useState([]);
+  const [schedLoaded, setSchedLoaded] = useState(false);
   const [reclaimedMinutes, setReclaimedMinutes] = useState(null);
   const [showSocialNudge, setShowSocialNudge] = useState(true);
   const [socialNudgeStep, setSocialNudgeStep] = useState('initial');
@@ -3326,8 +3680,9 @@ function AppInner({ onReset }) {
     if (!have) handleLoadMoreLiveIdeas();
   }, [filterKey, activeTab]);
   useEffect(() => { if (adventurousMode && activeTab === 'ideas') shuffleAdventure(); }, [filterKey]);
-  const [ideaShown, setIdeaShown] = useState(6);
-  useEffect(() => { setIdeaShown(6); }, [filterKey]);
+  const [ideaShown, setIdeaShown] = useState(13);
+  const [ideaOpenId, setIdeaOpenId] = useState(null);
+  useEffect(() => { setIdeaShown(13); setIdeaOpenId(null); }, [filterKey]);
   const ideaListAll = ideasFeed
     .filter(item => item.category === selectedIdeaCategory)
     .filter(item => String(item.city || 'Manchester').toLowerCase() === loc.city.toLowerCase())
@@ -3366,8 +3721,8 @@ function AppInner({ onReset }) {
     setIdeaSearchRes({ q, items: items.slice(0, 40), busy: false });
   };
   const seeMoreIdeas = async () => {
-    if (ideaShown < ideaListAll.length) { setIdeaShown(n => n + 6); return; }
-    setIdeaShown(n => n + 6);
+    if (ideaShown < ideaListAll.length) { setIdeaShown(n => n + 12); return; }
+    setIdeaShown(n => n + 12);
     await handleLoadMoreLiveIdeas(true);
   };
   const getMatchedVenues = () => {
@@ -4214,6 +4569,89 @@ function AppInner({ onReset }) {
     return () => clearTimeout(id);
   }, [tasks, hydrated]);
   const pactFriends = friendsList.filter(f => f.userId);
+  const loadSched = async () => {
+    if (!authUserRef.current || !authUserRef.current.cloud) return;
+    try {
+      const [sh, gr] = await Promise.all([cloud.schedulesSharedWithMe(), cloud.myScheduleGrants()]);
+      setSchedShared(sh); setSchedGrants(gr); setSchedLoaded(true);
+    } catch (e) { /* offline or not set up yet: the grid just shows your own day */ }
+  };
+  useEffect(() => { if (hydrated && authUser && authUser.cloud && activeTab === 'schedule') loadSched(); }, [activeTab, hydrated, authUser && authUser.email]);
+  // Publish only the busy blocks of people I chose to share with. Private plans are never included. Clears itself when sharing stops.
+  const publishSchedRef = useRef('');
+  useEffect(() => {
+    if (!hydrated || !authUser || !authUser.cloud || !schedLoaded) return;
+    const t0 = todayDateStr(), t1 = addDaysStr(t0, 31);
+    const blocks = schedGrants.length === 0 ? [] : tasks
+      .filter(t => t.date && t.date >= t0 && t.date <= t1 && t.startTime && t.endTime && !t.hideFromFriends)
+      .slice(0, 240).map(t => ({ d: t.date, s: t.startTime, e: t.endTime, t: String(t.title || 'Busy').slice(0, 60) }));
+    const sig = JSON.stringify(blocks);
+    if (sig === publishSchedRef.current) return;
+    const timer = setTimeout(() => { cloud.setMySchedule(blocks).then(() => { publishSchedRef.current = sig; }).catch(() => {}); }, 2500);
+    return () => clearTimeout(timer);
+  }, [tasks, schedGrants, schedLoaded, hydrated, authUser && authUser.email]);
+  // ---- learn a skill with a friend ----
+  const loadBuddies = async () => {
+    if (!authUserRef.current || !authUserRef.current.cloud) return;
+    try { setBuddies(await cloud.mySkillBuddies()); } catch (e) { /* not set up yet or offline */ }
+  };
+  useEffect(() => { if (hydrated && authUser && authUser.cloud && activeTab === 'skills') loadBuddies(); }, [activeTab, hydrated, authUser && authUser.email]);
+  useEffect(() => { if (!(hydrated && authUser && authUser.cloud && activeTab === 'skills' && skillOpen)) return; const t = setInterval(loadBuddies, 20000); return () => clearInterval(t); }, [activeTab, skillOpen, hydrated, authUser && authUser.email]);
+  const skillProgress = (sk) => { const done = sk.steps.filter(x => x.done).length; const last = [...sk.steps].reverse().find(x => x.done); return { done, total: sk.steps.length, pct: sk.steps.length ? Math.round(done / sk.steps.length * 100) : 0, last: last ? String(last.title).slice(0, 40) : '' }; };
+  const inviteBuddy = async (sk, friendId, note) => {
+    try {
+      const r = await cloud.inviteSkillBuddy(friendId, sk.name, { goal: sk.goal, timeframe: sk.timeframe, chapters: sk.steps.map(x => x.title).slice(0, 30) }, skillProgress(sk), note);
+      pushToast(r === 'ok' ? 'Invitation sent.' : r === 'exists' ? 'You are already learning this together.' : r === 'not_friends' ? 'You can only invite friends you are connected to.' : 'Could not send the invitation.', 'info');
+      loadBuddies();
+    } catch (e) { pushToast('Could not send the invitation. Check your connection.', 'info'); }
+  };
+  const respondBuddy = async (v, accept) => {
+    try {
+      let mine = {};
+      if (accept) {
+        // Add the skill to my own map (under "Learning together") if I do not already have it.
+        const have = Object.values(skillForest).flatMap(d => d.branches).flatMap(b => b.skills).find(x => x.name.toLowerCase() === v.skill.toLowerCase());
+        if (!have) {
+          const pl = v.plan || {}, t = Date.now();
+          const sk = { id: 's_' + t, name: v.skill, goal: pl.goal || ('Learn ' + v.skill + ' with ' + v.friend_name), timeframe: pl.timeframe || '4 Weeks', x: 180, y: 40, steps: (pl.chapters || []).map((c, i) => ({ id: 'st_' + t + '_' + i, title: c, done: false, comment: '' })) };
+          if (!sk.steps.length) sk.steps = [{ id: 'st_' + t, title: 'First steps in ' + v.skill, done: false, comment: '' }];
+          setSkillForest(prev => {
+            const dom = skillTreeDomain; const d = prev[dom]; const ex = d.branches.find(b => b.name === 'Learning together');
+            return { ...prev, [dom]: { branches: ex ? d.branches.map(b => b === ex ? { ...b, skills: [...b.skills, sk] } : b) : [...d.branches, { id: 'br_' + t, name: 'Learning together', x: 180, y: 125, skills: [sk] }] } };
+          });
+          mine = skillProgress(sk);
+        } else mine = skillProgress(have);
+      }
+      await cloud.respondSkillBuddy(v.id, accept, mine);
+      if (accept) pushToast('You are learning ' + v.skill + ' with ' + v.friend_name + '.', 'info');
+      loadBuddies();
+    } catch (e) { pushToast('Could not answer. Check your connection.', 'info'); }
+  };
+  const endBuddy = async (v) => { try { await cloud.endSkillBuddy(v.id); loadBuddies(); } catch (e) { pushToast('Could not end it. Check your connection.', 'info'); } };
+  // Keep my side of every active buddy skill up to date.
+  const buddySigRef = useRef({});
+  useEffect(() => {
+    if (!hydrated || !authUser || !authUser.cloud) return;
+    const all = Object.values(skillForest).flatMap(d => d.branches).flatMap(b => b.skills);
+    const timer = setTimeout(() => {
+      (buddies || []).filter(v => v.status === 'active').forEach(v => {
+        const sk = all.find(x => x.name.toLowerCase() === v.skill.toLowerCase()); if (!sk) return;
+        const pr = skillProgress(sk), sig = JSON.stringify(pr);
+        if (buddySigRef.current[v.id] === sig || JSON.stringify(v.my_progress) === sig) { buddySigRef.current[v.id] = sig; return; }
+        cloud.updateSkillProgress(v.id, pr).then(() => { buddySigRef.current[v.id] = sig; }).catch(() => {});
+      });
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [skillForest, buddies, hydrated, authUser && authUser.email]);
+  const setScheduleShare = async (friendId, days, titles) => {
+    try {
+      const r = await cloud.setScheduleGrant(friendId, days, titles);
+      if (r !== 'ok') { pushToast(r === 'not_friends' ? 'You can only share with friends you are connected to.' : 'Could not change sharing.', 'info'); return; }
+      pushToast(days > 0 ? 'Schedule shared.' : 'Sharing stopped.', 'info');
+      publishSchedRef.current = '';
+      await loadSched();
+    } catch (e) { pushToast('Could not change sharing. Check your connection.', 'info'); }
+  };
   const unreadBy = Object.fromEntries(inboxRows.map(r => [r.user_id, r.unread || 0]));
   const unreadTotal = inboxRows.reduce((n, r) => n + (r.unread || 0), 0);
   const pendingInvites = sharedEvents.filter(e => !e.is_owner && e.my_status === 'invited');
@@ -4272,8 +4710,8 @@ function AppInner({ onReset }) {
     const d = e.details || {}; const srv = { title: e.title, date: d.date || '', startTime: d.start || '', endTime: d.end || d.start || '', location: d.location || '' };
     setTasks(prev => prev.some(t => t.sharedId === e.id) ? prev : [...prev, { id: Date.now(), ...srv, duration: durationOf(srv.startTime, srv.endTime), status: 'pending', type: 'social', categoryColor: 'social', transportMode: 'Walk', travelTime: 10, distance: '', leaveByNote: '', notes: 'Joint event', rating: null, reviewNote: '', withPerson: null, meetingType: 'Friendly', sharedId: e.id, sharedRole: e.is_owner ? 'owner' : 'guest', sharedSig: sharedSig(srv) }]);
   };
-  const searchFriend = async () => {
-    const h = cleanHandle(friendQuery);
+  const searchFriend = async (q) => {
+    const h = cleanHandle(typeof q === 'string' ? q : friendQuery);
     if (h.length < 3) { setFriendMsg('Type their full username, like @maya_lin.'); setFriendFound(null); return; }
     setFriendBusy(true); setFriendMsg(''); setFriendFound(null);
     try { setFriendFound((await cloud.findUser(h)) || 'none'); } catch (e) { setFriendMsg("Couldn't search right now. Check your connection and try again."); }
@@ -4622,8 +5060,13 @@ function AppInner({ onReset }) {
   latestRef.current = { profile: userProfile, tasks, medications, lifeCadenceItems, reminderCfg, authUser, hydrated, dailyMeals, water, reading, moodLogs, todayMood, setupOpen: setupOpen || userProfile.onboarded === false };
   const sendReminder = (title, body, date) => {
     pushToast(`${title}: ${body}`, 'reminder', date ? { label: 'View', date } : null);
+    setNotifs(prev => [{ id: Date.now() + Math.random(), text: `${title}: ${body}`, kind: 'reminder', at: Date.now(), read: false }, ...prev].slice(0, 50));
     try {
-      if (latestRef.current.reminderCfg.browser && typeof Notification !== 'undefined' && Notification.permission === 'granted') new Notification('Pact: ' + title, { body });
+      if (latestRef.current.reminderCfg.browser && typeof Notification !== 'undefined' && Notification.permission === 'granted' && document.visibilityState === 'hidden') {
+        const o = { body, icon: '/icons/icon-192.png', tag: 'rem-' + title };
+        if (navigator.serviceWorker && navigator.serviceWorker.ready) navigator.serviceWorker.ready.then(reg => reg.showNotification('Pact: ' + title, o)).catch(() => { try { new Notification('Pact: ' + title, o); } catch (e) { /* ignore */ } });
+        else new Notification('Pact: ' + title, o);
+      }
     } catch (e) { /* ignore */ }
   };
   const runReminders = () => {
@@ -4696,9 +5139,62 @@ function AppInner({ onReset }) {
       if (typeof Notification === 'undefined') { pushToast("This browser can't show device notifications, so Pact will remind you inside the app.", 'info'); return; }
       const perm = await Notification.requestPermission();
       setReminderCfg({ browser: perm === 'granted' });
-      pushToast(perm === 'granted' ? 'Device notifications are on.' : 'Notifications are blocked. Allow them in your browser or phone settings.', 'info');
+      if (perm !== 'granted') { pushToast('Notifications are blocked. Allow them in your browser or phone settings.', 'info'); return; }
+      const r = await subscribePush();
+      if (r === 'ok') { try { store.set('pact:push', '1'); } catch (e) { /* ignore */ } syncFutureReminders(); pushToast('Phone notifications are on.', 'info'); }
+      else if (r === 'no-key') pushToast('Alerts will show while Pact is open. Closed-app alerts need the one-time push setup (see README).', 'info');
+      else pushToast('Alerts are on while Pact is open. Closed-app alerts could not be set up on this device.', 'info');
     } catch (e) { pushToast('Could not turn on device notifications.', 'info'); }
   };
+  // Subscribe this device to Web Push and tell the database where to send alerts. -> 'ok' | 'no-key' | 'unsupported' | 'error'
+  const subscribePush = async () => {
+    try {
+      const key = typeof window !== 'undefined' && window.PACT_CONFIG && window.PACT_CONFIG.vapidPublicKey;
+      if (!key) return 'no-key';
+      if (!cloud.enabled || !('serviceWorker' in navigator) || !('PushManager' in window)) return 'unsupported';
+      const reg = await navigator.serviceWorker.ready;
+      let sub = await reg.pushManager.getSubscription();
+      if (!sub) {
+        const raw = atob(key.replace(/-/g, '+').replace(/_/g, '/').padEnd(Math.ceil(key.length / 4) * 4, '='));
+        const bytes = new Uint8Array(raw.length); for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+        sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: bytes });
+      }
+      const res = await cloud.savePushSub(sub);
+      return res === 'ok' ? 'ok' : 'error';
+    } catch (e) { return 'error'; }
+  };
+  // Upload the next few days of reminders so the server can send them when Pact is closed.
+  const buildFutureReminders = () => {
+    const L = latestRef.current; if (!L || !L.hydrated || !L.reminderCfg.enabled) return [];
+    const C = L.reminderCfg, lead = Number(C.leadMins) || 15, out = [];
+    const base = new Date(); base.setHours(0, 0, 0, 0);
+    const iso = (dateStr, mins) => { const [y, m, d] = dateStr.split('-').map(Number); return new Date(y, m - 1, d, 0, mins, 0, 0); };
+    const inQuiet = (mins) => { if (!C.quiet) return false; const f = toMins(C.quietFrom), t2 = toMins(C.quietTo); return f > t2 ? (mins >= f || mins < t2) : (mins >= f && mins < t2); };
+    const push = (key, at, title, body, url) => { if (at.getTime() > Date.now() + 30000 && at.getTime() < Date.now() + 8 * 864e5) out.push({ key, at: at.toISOString(), title, body, url }); };
+    if (C.plans) L.tasks.filter(t => t.date && t.status !== 'done' && t.startTime).forEach(t => {
+      const st = toMins(t.startTime), readyAt = readyStartFor(t, st, L.profile), remindAt = readyAt - lead;
+      if (!inQuiet(remindAt)) push(`t:${t.id}:pre`, iso(t.date, remindAt), t.title, `starts at ${t.startTime}${t.location ? ' at ' + t.location : ''}. Start getting ready at ${fromMins(readyAt)}.`, '/?tab=schedule');
+      if (!inQuiet(st)) push(`t:${t.id}:now`, iso(t.date, st), t.title, `starting now (${t.startTime}).`, '/?tab=schedule');
+    });
+    if (C.medicine) L.medications.filter(m => m.time).forEach(m => {
+      const mt = toMins(m.time);
+      for (let i = 0; i < 3; i++) { const d = new Date(base); d.setDate(d.getDate() + i); const ds = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); if (!(i === 0 && m.taken) && !inQuiet(mt)) push(`m:${m.id}:${ds}`, iso(ds, mt), m.name, `time to take it (scheduled ${m.time}).`, '/'); }
+    });
+    return out;
+  };
+  const syncTimer = useRef(null);
+  const syncFutureReminders = () => {
+    if (syncTimer.current) clearTimeout(syncTimer.current);
+    syncTimer.current = setTimeout(() => {
+      try { if (store.get('pact:push') !== '1' || !cloud.enabled) return; cloud.syncReminders(buildFutureReminders()).catch(() => {}); } catch (e) { /* ignore */ }
+    }, 4000);
+  };
+  useEffect(() => { syncFutureReminders(); }, [tasks, medications, userProfile.reminders, hydrated, authUser && authUser.email]);
+  // Keep this device's push address fresh each time the app opens.
+  useEffect(() => {
+    if (!authUser || !hydrated || typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
+    subscribePush().then(r => { if (r === 'ok') { try { store.set('pact:push', '1'); } catch (e) { /* ignore */ } } });
+  }, [authUser && authUser.email, hydrated]);
 
 
   useEffect(() => {
@@ -4732,6 +5228,23 @@ function AppInner({ onReset }) {
     const h = setTimeout(async () => { try { await cloud.setMyStatus(mood, today, list); statusSentRef.current = payload; } catch (e) { /* status columns not set up yet */ } }, 2500);
     return () => clearTimeout(h);
   }, [hydrated, tasks, moodLogs, userProfile.share, authUser && authUser.email]);
+  // ---- Masthead weather (Open-Meteo, cached 30 min) ----
+  const [mastWx, setMastWx] = useState(null);
+  useEffect(() => {
+    if (!authUser) return;
+    let dead = false;
+    const l = getLoc(userProfile); const key = 'pact:wx:' + String(l.city).toLowerCase();
+    try { const c = JSON.parse(localStorage.getItem(key) || 'null'); if (c && Date.now() - c.at < 30 * 60000) { setMastWx(c); return; } } catch (e) { /* ignore */ }
+    (async () => {
+      try {
+        const { lat, lon } = await resolveCoords(l);
+        const j = await fetchJSON(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&timezone=auto`, {}, 8000);
+        const c = j.current || {}; const v = { t: Math.round(c.temperature_2m), w: WMO[c.weather_code] || '', at: Date.now() };
+        if (!dead && Number.isFinite(v.t)) { setMastWx(v); try { localStorage.setItem(key, JSON.stringify(v)); } catch (e) { /* ignore */ } }
+      } catch (e) { /* offline: the masthead just shows the city */ }
+    })();
+    return () => { dead = true; };
+  }, [authUser && authUser.email, userProfile.location && userProfile.location.city]);
   // --- SIGN-IN GATE ---
   if (!authUser && !authReady) return <div className="w-full max-w-md min-[600px]:max-w-[640px] min-[820px]:max-w-[820px] mx-auto bg-[#F5F3EC]" style={{ height: '100dvh' }} />;
   if (!authUser) {
@@ -4916,34 +5429,41 @@ function AppInner({ onReset }) {
       {/* =========================================================
           ULTRA-CLEAN SKINNY HEADER (No Logo, "Welcome back, [Name]")
          ========================================================= */}
-      <header data-pact-glass className="pt-5 pb-2 sticky top-0 z-20 px-5 backdrop-blur-md" style={{ background: 'rgba(244,239,228,0.84)' }}>
-        <div className="relative flex justify-between items-center h-11 mb-2 gap-2">
-          <div className="flex items-center gap-2 min-w-0 select-none"><PactSeal size={30} /><h1 className="font-pact text-[22px] max-[359px]:text-[18px] text-slate-900">PACT</h1></div>
-          <div className="flex items-center gap-1.5">
-          <button
-            onClick={() => setActiveTab('profile')}
-            className={`w-11 h-11 max-[359px]:w-10 max-[359px]:h-10 rounded-full border-[1.5px] flex items-center justify-center transition-colors ${
-              activeTab === 'profile' ? 'bg-purple-900 text-white border-purple-900' : 'bg-transparent border-slate-900 text-slate-900'
-            }`}
-            title="Profile, Friends & Data"
-            aria-label="Profile, friends and data"
-          >
-            <User size={19} />
-          </button>
-          
-          <button data-bell onClick={() => { setBellOpen(o => !o); setNotifs(prev => prev.map(n => ({ ...n, read: true }))); }} className="relative w-11 h-11 max-[359px]:w-10 max-[359px]:h-10 rounded-full border-[1.5px] border-slate-900 text-slate-900 flex items-center justify-center" title="Notifications" aria-label="Notifications">
-            <Bell size={19} />
-            {notifs.some(n => !n.read) && <span data-bell-dot className="absolute -top-1 -right-1 min-w-[16px] h-4 px-1 bg-rose-700 text-white text-[9px] flex items-center justify-center">{notifs.filter(n => !n.read).length}</span>}
-          </button>
-          <button
-            onClick={() => { setLinkedTargetId(null); setPlannerResultsStep(false); setScheduleConflictWarning(null); setPlannerOpen(true); }}
-            className="w-11 h-11 max-[359px]:w-10 max-[359px]:h-10 rounded-full bg-purple-900 hover:bg-purple-800 text-white flex items-center justify-center transition-all"
-            title="Plan something"
-            aria-label="Plan"
-          >
-            <Plus size={22} />
-          </button>
+      <header data-pact-glass className="pt-3 pb-2 sticky top-0 z-20 px-5 backdrop-blur-md" style={{ background: 'rgba(244,239,228,0.84)' }}>
+        <div className="relative flex justify-between items-center gap-2">
+          <div className="flex items-center gap-1.5 w-[84px]">
+            <button
+              onClick={() => setActiveTab('profile')}
+              className={`w-9 h-9 border flex items-center justify-center transition-colors ${activeTab === 'profile' ? 'bg-slate-900 text-[#F4EFE4] border-slate-900' : 'bg-transparent border-slate-900 text-slate-900'}`}
+              style={{ borderRadius: 0 }}
+              title="Profile, Friends & Data"
+              aria-label="Profile, friends and data"
+            >
+              <User size={16} />
+            </button>
           </div>
+          <h1 data-masthead className="np-title select-none">The Pact</h1>
+          <div className="flex items-center gap-1.5 w-[84px] justify-end">
+            <button data-bell onClick={() => { setBellOpen(o => !o); setNotifs(prev => prev.map(n => ({ ...n, read: true }))); }} className="relative w-9 h-9 border border-slate-900 text-slate-900 flex items-center justify-center" style={{ borderRadius: 0 }} title="Notifications" aria-label="Notifications">
+              <Bell size={16} />
+              {notifs.some(n => !n.read) && <span data-bell-dot className="absolute -top-1.5 -right-1.5 min-w-[16px] h-4 px-1 bg-rose-700 text-white text-[9px] flex items-center justify-center">{notifs.filter(n => !n.read).length}</span>}
+            </button>
+            <button
+              onClick={() => { setLinkedTargetId(null); setPlannerResultsStep(false); setScheduleConflictWarning(null); setPlannerOpen(true); }}
+              className="w-9 h-9 bg-purple-900 hover:bg-purple-800 text-white flex items-center justify-center transition-all"
+              style={{ borderRadius: 0 }}
+              title="Plan something"
+              aria-label="Plan"
+            >
+              <Plus size={18} />
+            </button>
+          </div>
+        </div>
+        <div className="np-rule" />
+        <div data-dateline className="np-dateline">
+          <span>{new Date().toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}</span>
+          <span>{getLoc(userProfile).city}{mastWx ? ` · ${mastWx.t}°C${mastWx.w ? ' ' + mastWx.w : ''}` : ''}</span>
+          <span>No. {Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000)}</span>
         </div>
 
 
@@ -4954,7 +5474,7 @@ function AppInner({ onReset }) {
               <span className="flex gap-3 text-[10px] text-stone-500">{notifs.length > 0 && <button onClick={() => setNotifs([])} className="underline">Clear</button>}<button onClick={() => setBellOpen(false)} className="underline">Close</button></span>
             </div>
             {typeof Notification !== 'undefined' && Notification.permission === 'default' && (
-              <div className="px-3 py-2 bg-[#FAF8F5] border-b border-stone-200 text-[11px] text-stone-600 leading-snug">Want a phone alert when something arrives? <button data-notif-enable onClick={enableDeviceNotifications} className="underline text-purple-800">Turn on device alerts</button>. They show while Pact is open or running in the background; they can't wake a fully closed app yet.</div>
+              <div className="px-3 py-2 bg-[#FAF8F5] border-b border-stone-200 text-[11px] text-stone-600 leading-snug">Want a phone alert when something arrives? <button data-notif-enable onClick={enableDeviceNotifications} className="underline text-purple-800">Turn on device alerts</button>. They also arrive when Pact is closed once push is set up.</div>
             )}
             {notifs.length === 0 && <p className="px-3 py-4 text-[11px] text-stone-500">Nothing yet. You'll see friend requests, messages, invites and plan changes here.</p>}
             {notifs.map(n => (
@@ -5024,7 +5544,7 @@ function AppInner({ onReset }) {
             TAB 1: HOME DASHBOARD
            ========================================================= */}
         {activeTab === 'home' && (
-          <div className="flex flex-col gap-5 animate-in fade-in duration-300">
+          <div className="np-skin flex flex-col gap-5 animate-in fade-in duration-300">
 
             <button data-voice-home onClick={startVoice} className="lg-breathe flex items-center gap-3 px-3 py-2 min-h-[56px] bg-transparent border-[1.5px] border-slate-900 rounded-[28px] text-left" style={{ order: -9 }}>
               <span className="w-10 h-10 rounded-full bg-purple-900 text-white flex items-center justify-center shrink-0"><Mic size={18} /></span>
@@ -5046,7 +5566,7 @@ function AppInner({ onReset }) {
                 return (
                   <div className="min-w-0">
                     <div className="text-[11px] uppercase tracking-[0.16em] text-stone-500 font-medium">{new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}</div>
-                    <h2 data-home-greeting className="font-editorial text-[34px] max-[359px]:text-[28px] leading-[1.06] text-slate-900 mt-1.5">{hr < 12 ? 'Good morning' : hr < 18 ? 'Good afternoon' : 'Good evening'},<br /><em>{accountInfo.name.split(' ')[0]}.</em></h2>
+                    <h2 data-home-greeting className="font-editorial text-[28px] max-[359px]:text-[24px] leading-[1.06] text-slate-900 mt-1.5">{hr < 12 ? 'Good morning' : hr < 18 ? 'Good afternoon' : 'Good evening'},<br /><em>{accountInfo.name.split(' ')[0]}.</em></h2>
                     <p className="text-[14px] leading-snug text-stone-700 mt-2.5">{line}</p>
                   </div>
                 );
@@ -5103,7 +5623,7 @@ function AppInner({ onReset }) {
             <div className="p-4 bg-white border border-stone-200 shadow-sm space-y-3">
               <div className="flex justify-between items-start">
                 <div>
-                  <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Weekly Targets</span>
+                  <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Weekly Targets<span className="np-kicker">The scoreboard</span></span>
                   <h2 className="font-editorial text-lg font-normal text-slate-900 mt-0.5">
                     What do you want to get done this week?
                   </h2>
@@ -5413,7 +5933,7 @@ function AppInner({ onReset }) {
                 <div className="flex items-center gap-2">
                   <Utensils size={16} className="text-purple-800" />
                   <div>
-                    <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Nutrition & Fridge Stock</span>
+                    <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Nutrition & Fridge Stock<span className="np-kicker">Food pages</span></span>
                     <h3 className="font-editorial text-base font-normal text-slate-900">Daily Meals & Batch Prep</h3>
                   </div>
                 </div>
@@ -5742,7 +6262,7 @@ function AppInner({ onReset }) {
               const free = getFreeGaps(todayS, calCtx, 45, { from: Math.max(8 * 60, roundUpTo(nowM, 15)) });
               return (
                 <div data-glance className="space-y-3" style={{ order: -8 }}>
-                  <span className="text-[11px] uppercase tracking-[0.16em] text-stone-500 font-medium">Today at a glance</span>
+                  <span className="np-flag">Today at a glance<span className="np-kicker">Front page</span></span>
                   {todays.length === 0 && <div className="text-sm text-stone-600">Nothing planned today.</div>}
                   <div>
                     {todays.map((t, i) => {
@@ -5778,13 +6298,12 @@ function AppInner({ onReset }) {
                       );
                     })}
                   </div>
-                  <div className="flex items-center gap-2 text-[12px] text-stone-600 flex-wrap">
-                    <span><strong className="text-slate-900">{todays.length}</strong> {todays.length === 1 ? 'plan' : 'plans'}</span><span aria-hidden="true">·</span>
-                    <span>daily cap <strong className="text-slate-900">{userProfile.dailyActivityCap}</strong></span><span aria-hidden="true">·</span>
-                    <span><strong className="text-slate-900">{free.length}</strong> free windows</span>
+                  <div data-glance-stats className="grid grid-cols-3 border-t-[3px] border-b border-slate-900">
+                    {[[todays.length, todays.length === 1 ? 'Plan' : 'Plans'], [free.length, 'Free windows'], [nextT ? fromMins(readyStartFor(nextT, toMins(nextT.startTime), userProfile)) : '–', 'Get ready']].map(([n, l], i) => (
+                      <div key={l} className={`py-2.5 ${i ? 'pl-3 border-l border-slate-900' : ''}`}><div className="font-editorial text-[28px] leading-none">{n}</div><div className="text-[9.5px] uppercase tracking-[0.12em] text-stone-500 mt-1.5">{l}</div></div>
+                    ))}
                   </div>
-                  <div className="text-xs text-slate-800">{nextT ? <>Next: <strong>{nextT.title}</strong> at {nextT.startTime}</> : 'Nothing else planned today.'}</div>
-                  {free[0] && <div className="text-[11px] text-stone-600">Next free window: {fromMins(free[0].s)}–{fromMins(free[0].e)}</div>}
+                  {free[0] && <div className="text-[12px] text-stone-600">Next free window <strong className="text-slate-900">{fromMins(free[0].s)}–{fromMins(free[0].e)}</strong></div>}
                   <button onClick={() => { setSelectedDateStr(todayS); setActiveTab('schedule'); }} className="text-[10px] uppercase tracking-wider text-purple-900 underline font-medium">Open schedule</button>
                 </div>
               );
@@ -5793,7 +6312,7 @@ function AppInner({ onReset }) {
             {/* NEW WIDGET: WEEK AHEAD */}
             {!widgetHidden('weekahead') && (
               <div className="p-4 bg-white border border-stone-200 space-y-2" style={{ order: widgetOrder('weekahead') }}>
-                <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Week ahead</span>
+                <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Week ahead<span className="np-kicker">The forecast</span></span>
                 {Array.from({ length: 7 }, (_, i) => addDaysStr(todayDateStr(), i)).map(d => {
                   const ts = tasks.filter(t => t.date === d).sort((a, b) => a.startTime.localeCompare(b.startTime));
                   return (
@@ -5810,7 +6329,7 @@ function AppInner({ onReset }) {
             {/* NEW WIDGET: QUICK NOTES */}
             {!widgetHidden('notes') && (
               <div className="p-4 bg-white border border-stone-200 space-y-2" style={{ order: widgetOrder('notes') }}>
-                <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium flex items-center gap-1.5"><StickyNote size={12} /> Quick notes</span>
+                <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium flex items-center gap-1.5"><StickyNote size={12} /> Quick notes<span className="np-kicker">Scribbles</span></span>
                 <textarea
                   rows={4}
                   value={homeNotes}
@@ -5830,7 +6349,7 @@ function AppInner({ onReset }) {
               return (
                 <div className="p-4 bg-white border border-stone-200 space-y-2" style={{ order: widgetOrder('hydration') }}>
                   <div className="flex justify-between items-center">
-                    <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium flex items-center gap-1.5"><Droplets size={12} /> Hydration</span>
+                    <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium flex items-center gap-1.5"><Droplets size={12} /> Hydration<span className="np-kicker">Tide table</span></span>
                     <span className="text-xs font-medium">{count} / {WATER_GOAL} glasses</span>
                   </div>
                   <div className="flex gap-1 flex-wrap">
@@ -5867,7 +6386,7 @@ function AppInner({ onReset }) {
               return (
                 <div className="p-4 bg-white border border-stone-200 space-y-2.5" style={{ order: widgetOrder('reading') }}>
                   <div className="flex justify-between items-center">
-                    <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Reading</span>
+                    <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Reading<span className="np-kicker">Book review</span></span>
                     <span className="text-[10px] text-stone-600">{streak > 0 ? `${streak}-day streak` : 'No streak yet'} · {(reading.finished || []).length} finished</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
@@ -6121,6 +6640,25 @@ function AppInner({ onReset }) {
               </div>
             )}
 
+            {/* Listings: your day first; friends' columns only when they chose to share */}
+            {(() => {
+              const mineBlocks = filteredTasks.filter(t => t.startTime && t.endTime).map(t => ({ id: t.id, s: toMins(t.startTime), e: Math.max(toMins(t.startTime) + 15, toMins(t.endTime)), t: t.title, done: t.status === 'completed' || t.status === 'done' }));
+              const friendCols = pactFriends.map(f => {
+                const sh = schedShared.find(x => x.owner_id === f.userId);
+                const ok = !!sh && selectedDateStr <= sh.until;
+                const blocks = ok ? (sh.blocks || []).filter(b => b.d === selectedDateStr).map(b => ({ s: toMins(b.s), e: Math.max(toMins(b.s) + 15, toMins(b.e)), t: b.t || 'Busy' })) : [];
+                return { id: f.userId, name: f.name, ok, until: sh && sh.until, titles: sh && sh.titles, blocks };
+              });
+              const nowM = selectedDateStr === todayDateStr() ? new Date().getHours() * 60 + new Date().getMinutes() : null;
+              return (<>
+                <ScheduleListings date={selectedDateStr} mine={mineBlocks} friends={friendCols} matching={matching} canMatch={!!(authUser && authUser.cloud) && pactFriends.length > 0}
+                  onToggleMatch={() => { setMatching(m => !m); loadSched(); }} onShare={() => setSharePanel(true)} nowMin={nowM}
+                  onTapTask={(id) => { setExpandedTaskId(id); setTimeout(() => { const el = document.querySelector('[data-task-card="' + id + '"]'); if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 60); }}
+                  onAdd={() => { setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }} />
+                {sharePanel && <ShareSchedulePanel friends={pactFriends} grants={schedGrants} onSet={setScheduleShare} onClose={() => setSharePanel(false)} />}
+              </>);
+            })()}
+
             {/* Today's Timeline List */}
             <div className="space-y-3">
               {filteredTasks.length === 0 && (
@@ -6136,6 +6674,7 @@ function AppInner({ onReset }) {
                 return (
                   <div
                     key={task.id}
+                    data-task-card={task.id}
                     className="bg-white border border-stone-200 shadow-sm transition-all"
                     style={{ borderLeftWidth: '5px', borderLeftColor: borderColor }}
                   >
@@ -6367,11 +6906,11 @@ function AppInner({ onReset }) {
             TAB 4: IDEAS (CURATED DISCOVERY, DEALS & TARGET QUOTA)
            ========================================================= */}
         {activeTab === 'ideas' && (
-          <div className="space-y-4 animate-in fade-in duration-300">
+          <div className="np-skin flex flex-col gap-4 animate-in fade-in duration-300">
 
             {/* Unfilled Weekly Target Nudge Banner */}
             {weeklyTargets.some(t => t.current < t.target) && (
-              <div className="p-3.5 bg-blue-900 text-white flex justify-between items-center">
+              <div style={{ order: 40 }} className="p-3.5 bg-blue-900 text-white flex justify-between items-center">
                 <div>
                   <span className="text-[10px] uppercase tracking-widest text-rose-300 font-medium">Weekly Target Quota</span>
                   <p className="text-xs mt-0.5">
@@ -6464,7 +7003,7 @@ function AppInner({ onReset }) {
             </div>
 
             {/* Smart Pattern & Local Deals Banner */}
-            <div className="p-3.5 bg-purple-900 text-white space-y-1">
+            <div style={{ order: 41 }} className="p-3.5 bg-purple-900 text-white space-y-1">
               <div className="text-[10px] uppercase tracking-widest text-rose-300 font-medium">Ideas near you</div>
               <p className="text-xs leading-relaxed">
                 {loc.isHome ? 'These are example picks to get you started. Scroll down and tap "See more" to find real places near you. Check prices and offers with the venue.' : `Tap "See more" at the bottom to find real places near ${loc.city}. Check prices and offers with the venue.`}
@@ -6473,8 +7012,8 @@ function AppInner({ onReset }) {
 
             </>}
 
-            {/* Filtered Ideas Cards */}
-            <div className="space-y-3">
+            {/* Filtered Ideas Cards: lead story, then a two-column front page of picture cards */}
+            <div className="np-grid">
               {!showFavs && !ideaSearchRes && !adventurousMode && !ideasFeed.some(i => i.category === selectedIdeaCategory && String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase()) && (
                 <div data-ideas-empty className="p-4 bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">No {selectedIdeaCategory.toLowerCase()} ideas for {loc.city} yet. Tap "See more" below to find some near you.</div>
               )}
@@ -6514,13 +7053,18 @@ function AppInner({ onReset }) {
               {(ideaSearchRes ? ideaSearchRes.items : showFavs ? favourites : adventurousMode
                 ? adventurePicks
                 : ideaListAll.slice(0, ideaShown)
-              ).map(idea => (
+              ).map((idea, idx) => (idx !== 0 && ideaOpenId !== idea.id) ? (
+                  <IdeaTile key={idea.id} idea={idea} fav={isFav(idea)} onFav={() => toggleFav(idea)} onOpen={() => setIdeaOpenId(idea.id)} />
+              ) : (
                   <div
                     key={idea.id}
-                    className={`p-4 border space-y-2.5 ${
+                    data-idea-full
+                    className={`${idx === 0 ? '' : ''} border space-y-2.5 overflow-hidden ${
                       idea.category === 'Trips' ? 'bg-slate-900 text-white border-slate-800' : 'bg-white text-slate-900 border-stone-200'
                     }`}
                   >
+                    <IdeaPic idea={idea} tall />
+                    <div className="p-4 space-y-2.5">
                     <div className="flex justify-between items-start">
                       <div>
                         <span className={`text-[10px] uppercase tracking-widest font-medium ${idea.category === 'Trips' ? 'text-rose-300' : 'text-purple-800'}`}>
@@ -6625,6 +7169,8 @@ function AppInner({ onReset }) {
                         + Schedule
                       </button>
                     </div>
+                    {idx !== 0 && <button data-idea-collapse onClick={() => setIdeaOpenId(null)} className="text-[10px] uppercase tracking-wider underline opacity-70">Show less</button>}
+                    </div>
                   </div>
                 ))}
 
@@ -6641,18 +7187,18 @@ function AppInner({ onReset }) {
             TAB 5: SKILLS (LIVING BRANCHING SVG TREE OF LIFE)
            ========================================================= */}
         {activeTab === 'skills' && (
-          <div className="space-y-4 animate-in fade-in duration-300">
+          <div className="np-skin flex flex-col gap-4 animate-in fade-in duration-300">
 
-            <div className="p-4 bg-[#EDEAE0] border border-stone-300 space-y-2.5">
+            <div className={`${skillOpen ? 'hidden' : ''} p-4 bg-[#EDEAE0] border border-stone-300 space-y-2.5`}>
               <div>
                 <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Development</span>
                 <h3 className="font-editorial text-lg font-normal">Grow the skills you care about</h3>
               </div>
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  ['1', 'Pick an area', 'Choose Work or Personal, then an area like Data or Art.'],
-                  ['2', 'Open a skill', 'Tap a skill on the map to see its goal and milestones.'],
-                  ['3', 'Do the next step', 'Tick milestones off and book study time from the courses.']
+                  ['1', 'Pick a list', 'Work or Personal, grouped by area like Data or Art.'],
+                  ['2', 'Open a skill', 'Tap a skill in the list to read it as chapters.'],
+                  ['3', 'Tick chapters off', 'Book study time, or learn a skill with a friend.']
                 ].map(([n, t, d]) => (
                   <div key={n} className="p-2 bg-white border border-stone-200">
                     <div className="w-5 h-5 bg-purple-900 text-white text-[10px] font-medium flex items-center justify-center">{n}</div>
@@ -6664,7 +7210,7 @@ function AppInner({ onReset }) {
             </div>
 
             {/* WEEKLY DEVELOPMENT SUMMARY */}
-            <div className="p-4 bg-white border border-stone-300 space-y-3" data-dev-summary>
+            <div style={{ order: 2 }} className={`${skillOpen ? 'hidden' : ''} p-4 bg-white border border-stone-300 space-y-3`} data-dev-summary>
               <div className="flex justify-between items-center gap-2">
                 <div>
                   <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Weekly summary</span>
@@ -6727,9 +7273,9 @@ function AppInner({ onReset }) {
             </div>
 
             <div className="p-4 bg-white border border-stone-200 space-y-3">
-              <div className="flex justify-between items-center">
+              <div className={`${skillOpen ? 'hidden' : ''} flex justify-between items-center`}>
                 <div>
-                  <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Step 1 · Choose an area</span>
+                  <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Your skills</span>
                   <h3 className="font-editorial text-lg font-normal">Your Development map</h3>
                 </div>
                 <div className="flex border border-stone-300">
@@ -6761,21 +7307,21 @@ function AppInner({ onReset }) {
               </div>
 
               {/* Interactive SVG Branching Tree Visualization */}
-              <div className="bg-slate-900 text-white p-3 relative">
+              <div data-skill-map className={`${skillOpen ? 'hidden' : ''} text-[#1B2A22] relative space-y-2`}>
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-[10px] uppercase tracking-widest text-rose-300">
+                  <span className="text-[10px] uppercase tracking-widest text-[#1F3A2E] font-medium">
                     Tap a skill to open it
                   </span>
                   <div className="flex gap-1.5">
                     <button
                       onClick={() => { setShowAddBranchModal(!showAddBranchModal); setShowAddSkillModal(false); }}
-                      className="px-2 py-0.5 bg-blue-700 hover:bg-blue-600 text-white text-[10px] uppercase tracking-wider"
+                      className="px-2 py-0.5 bg-[#1F3A2E] text-[#F4EFE4] text-[10px] uppercase tracking-wider"
                     >
                       + New area
                     </button>
                     <button
                       onClick={() => { setShowAddSkillModal(!showAddSkillModal); setShowAddBranchModal(false); }}
-                      className="px-2 py-0.5 bg-rose-700 hover:bg-rose-600 text-white text-[10px] uppercase tracking-wider"
+                      className="px-2 py-0.5 bg-[#C8643C] text-white text-[10px] uppercase tracking-wider"
                     >
                       + New skill
                     </button>
@@ -6783,22 +7329,22 @@ function AppInner({ onReset }) {
                 </div>
 
                 {showAddBranchModal && (
-                  <div className="p-2.5 bg-slate-800 border border-slate-600 space-y-2 mb-2">
-                    <div className="text-[10px] uppercase tracking-wider text-blue-300">Add a new area (a group of skills)</div>
+                  <div className="p-2.5 bg-white border border-[#1B2A22]/50 text-[#1B2A22] space-y-2 mb-2">
+                    <div className="text-[10px] uppercase tracking-wider text-[#1F3A2E]">Add a new area (a group of skills)</div>
                     <div className="grid grid-cols-2 gap-1.5">
                       <input
                         type="text"
                         placeholder="Area (e.g. Languages)"
                         value={newBranchName}
                         onChange={e => setNewBranchName(e.target.value)}
-                        className="bg-slate-900 border border-slate-600 px-2 py-1 text-xs text-white"
+                        className="bg-white border border-[#1B2A22]/50 px-2 py-1 text-xs text-[#1B2A22]"
                       />
                       <input
                         type="text"
                         placeholder="First Skill (e.g. Japanese)"
                         value={newBranchFirstSkill}
                         onChange={e => setNewBranchFirstSkill(e.target.value)}
-                        className="bg-slate-900 border border-slate-600 px-2 py-1 text-xs text-white"
+                        className="bg-white border border-[#1B2A22]/50 px-2 py-1 text-xs text-[#1B2A22]"
                       />
                     </div>
                     <button
@@ -6841,7 +7387,7 @@ function AppInner({ onReset }) {
                         setNewBranchFirstSkill('');
                         setShowAddBranchModal(false);
                       }}
-                      className="w-full py-1 bg-blue-700 text-white text-[10px] uppercase tracking-wider font-medium"
+                      className="w-full py-1 bg-[#1F3A2E] text-[#F4EFE4] text-[10px] uppercase tracking-wider font-medium"
                     >
                       Add area
                     </button>
@@ -6855,9 +7401,9 @@ function AppInner({ onReset }) {
                       placeholder={`New skill in ${activeBranch.name}...`}
                       value={newSkillName}
                       onChange={e => setNewSkillName(e.target.value)}
-                      className="flex-1 bg-slate-800 border border-slate-600 px-2 py-1 text-xs text-white"
+                      className="flex-1 bg-white border border-[#1B2A22]/50 text-[#1B2A22] px-2 py-1 text-xs text-[#1B2A22]"
                     />
-                    <select aria-label="New skill target duration" value={newSkillTimeframe} onChange={e => setNewSkillTimeframe(e.target.value)} className="bg-slate-800 border border-slate-600 px-1.5 py-1 text-xs text-white">
+                    <select aria-label="New skill target duration" value={newSkillTimeframe} onChange={e => setNewSkillTimeframe(e.target.value)} className="bg-white border border-[#1B2A22]/50 text-[#1B2A22] px-1.5 py-1 text-xs text-[#1B2A22]">
                       {TARGET_DURATIONS.map(d => <option key={d} value={d}>{d}</option>)}
                     </select>
                     <button
@@ -6892,71 +7438,31 @@ function AppInner({ onReset }) {
                         setNewSkillName('');
                         setShowAddSkillModal(false);
                       }}
-                      className="px-2.5 py-1 bg-purple-700 text-white text-xs"
+                      className="px-2.5 py-1 bg-[#1F3A2E] text-[#F4EFE4] text-xs"
                     >
                       Sprout
                     </button>
                   </div>
                 )}
 
-                {(() => {
-                  const L = layoutForest(currentForest.branches);
-                  const rootY = L.height / 2;
-                  return (
-                    <svg viewBox={`0 0 360 ${L.height}`} className="w-full" style={{ height: 'auto' }}>
-                      {/* Root */}
-                      <rect x="4" y={rootY - 26} width="50" height="52" fill="#B5683A" />
-                      <text x="29" y={rootY - 3} textAnchor="middle" fill="#ffffff" fontSize="8" fontWeight="600">ROOT</text>
-                      <text x="29" y={rootY + 9} textAnchor="middle" fill="#ffffff" fontSize="6.2">FOUNDATION</text>
-
-                      {L.placed.map(({ branch, cy, leafs }) => {
-                        const isSelBranch = selectedBranchId === branch.id;
-                        const nameLines = wrapLabel(branch.name, 17, 2);
-                        return (
-                          <g key={branch.id}>
-                            <path
-                              d={`M54 ${rootY} C 70 ${rootY}, 70 ${cy}, 86 ${cy}`}
-                              stroke={isSelBranch ? '#C77E52' : '#1F3A2E'}
-                              strokeWidth={isSelBranch ? '3.5' : '2.5'}
-                              fill="none"
-                            />
-                            {leafs.map(({ skill, cy: ly, lines }) => {
-                              const completedSteps = skill.steps.filter(st => st.done).length;
-                              const isSel = selectedSkillId === skill.id;
-                              const total = lines.length + 1;
-                              const y0 = ly - (total * 10) / 2 + 8;
-                              return (
-                                <g key={skill.id} onClick={() => { setSelectedBranchId(branch.id); setSelectedSkillId(skill.id); }} className="cursor-pointer">
-                                  <path
-                                    d={`M186 ${cy} C 196 ${cy}, 196 ${ly}, 206 ${ly}`}
-                                    stroke={isSel ? '#3A6A70' : '#4F7A63'}
-                                    strokeWidth={isSel ? '3' : '2'}
-                                    fill="none"
-                                  />
-                                  <circle cx="214" cy={ly} r={isSel ? 9 : 7.5} fill={isSel ? '#B5683A' : '#2A5359'} stroke="#ffffff" strokeWidth="1.5" />
-                                  {lines.map((ln, li) => (
-                                    <text key={li} x="230" y={y0 + li * 10} fill="#ffffff" fontSize="9" fontWeight="600">{ln}</text>
-                                  ))}
-                                  <text x="230" y={y0 + lines.length * 10} fill="#B5CABD" fontSize="7.5">{completedSteps}/{skill.steps.length} steps</text>
-                                </g>
-                              );
-                            })}
-                            <g onClick={() => { setSelectedBranchId(branch.id); if (branch.skills[0]) setSelectedSkillId(branch.skills[0].id); }} className="cursor-pointer">
-                              <rect x="86" y={cy - 16} width="100" height="32" fill={isSelBranch ? '#1F3A2E' : '#2C4A3B'} stroke="#8FB09D" strokeWidth="1" />
-                              {nameLines.map((ln, li) => (
-                                <text key={li} x="136" y={cy + 3 - ((nameLines.length - 1) * 5) + li * 10} textAnchor="middle" fill="#ffffff" fontSize="8.5">{ln}</text>
-                              ))}
-                            </g>
-                          </g>
-                        );
-                      })}
-                    </svg>
-                  );
-                })()}
+                <SkillIndex branches={currentForest.branches} selectedId={skillOpen ? activeSkill && activeSkill.id : null}
+                  invites={(buddies || []).filter(v => v.status === 'invited' && !v.is_owner)}
+                  onOpen={(bid, sid) => { setSelectedBranchId(bid); setSelectedSkillId(sid); setSkillOpen(true); try { document.getElementById('pact-main').scrollTo({ top: 0 }); } catch (e) { /* ignore */ } }}
+                  onAccept={(v) => respondBuddy(v, true)} onDecline={(v) => respondBuddy(v, false)} />
               </div>
 
+              {/* Chapters view (a skill opened from the index) */}
+              {skillOpen && activeSkill && (
+                <SkillChapters skill={activeSkill} branch={activeBranch}
+                  number={Math.max(1, currentForest.branches.flatMap(b => b.skills).findIndex(x => x.id === activeSkill.id) + 1)}
+                  onBack={() => setSkillOpen(false)}
+                  onToggle={(st) => patchStep(activeSkill.id, st.id, { done: !st.done, doneDate: st.done ? null : todayDateStr() })}
+                  buddy={<BuddyPanel skill={activeSkill} friends={pactFriends} entry={(buddies || []).find(v => v.skill.toLowerCase() === activeSkill.name.toLowerCase() && (v.status === 'invited' || v.status === 'active'))}
+                    onInvite={(fid, note) => inviteBuddy(activeSkill, fid, note)} onEnd={endBuddy} onRespond={respondBuddy} />} />
+              )}
+
               {/* Selected Skill Leaf Details & Editable Upskilling Plan */}
-              {activeSkill && (
+              {skillOpen && activeSkill && (
                 <div className="p-3.5 bg-[#FAF8F5] border border-stone-300 space-y-3">
                   <div className="space-y-2">
                     <span className="text-[10px] uppercase tracking-widest text-blue-800 font-medium">Edit this area and skill</span>
@@ -7111,7 +7617,7 @@ function AppInner({ onReset }) {
               )}
 
               {/* Course & Upskilling Suggestions with Multi-Reason Dismissal */}
-              <div className="space-y-2.5 pt-1">
+              {skillOpen && <div className="space-y-2.5 pt-1">
                 <div className="flex justify-between items-center">
                   <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">
                     Step 3 · Courses for "{activeSkill?.name}"
@@ -7140,7 +7646,7 @@ function AppInner({ onReset }) {
                 {(activeSkill && (activeSkill.hiddenResources || []).length > 0) && (
                   <button onClick={() => patchSkill(activeSkill.id, { hiddenResources: [] })} className="text-[10px] text-stone-500 underline">Show hidden suggestions again</button>
                 )}
-              </div>
+              </div>}
             </div>
           </div>
         )}
@@ -7149,11 +7655,11 @@ function AppInner({ onReset }) {
             TAB 6: SOCIAL (SHARED FRIEND SYNC & COMMUNITY EVENTS)
            ========================================================= */}
         {activeTab === 'social' && (
-          <div className="space-y-4 animate-in fade-in duration-300">
+          <div className="np-skin space-y-4 animate-in fade-in duration-300">
 
-            <div data-social-subnav className="grid grid-cols-3 border border-stone-300 bg-white">
+            <div data-social-subnav className="grid grid-cols-3 border-b border-slate-900">
               {[{ id: 'plans', label: 'Plans' }, { id: 'friends', label: 'Friend Book' }, { id: 'people', label: 'Your People' }].map(tab => (
-                <button key={tab.id} data-social-sub={tab.id} onClick={() => setSocialSub(tab.id)} className={`py-2 px-0.5 text-[10px] uppercase tracking-wider font-medium ${socialSub === tab.id ? 'bg-purple-900 text-white' : 'text-slate-700 hover:bg-stone-100'}`}>
+                <button key={tab.id} data-social-sub={tab.id} onClick={() => setSocialSub(tab.id)} className={`py-2.5 px-0.5 text-[10.5px] whitespace-nowrap uppercase tracking-[0.08em] font-medium ${socialSub === tab.id ? 'border-b-[3px] border-rose-700 text-slate-900 font-semibold -mb-px' : 'text-stone-500'}`}>
                   {tab.label}{tab.id === 'friends' && (friendReqs.filter(r => r.direction === 'incoming').length + unreadTotal) > 0 ? <span data-friend-badge className="ml-1.5 px-1.5 py-px bg-rose-700 text-white text-[9px] tracking-wider">{friendReqs.filter(r => r.direction === 'incoming').length + unreadTotal}</span> : null}
                   {tab.id === 'plans' && pendingInvites.length > 0 ? <span className="ml-1.5 px-1.5 py-px bg-rose-700 text-white text-[9px] tracking-wider">{pendingInvites.length}</span> : null}
                 </button>
@@ -7161,6 +7667,20 @@ function AppInner({ onReset }) {
             </div>
 
             {socialSub === 'plans' && (<>
+
+            {/* Invitations as the front-page story */}
+            {pendingInvites.slice(0, 3).map(e => { const d = e.details || {}; const who = e.owner_name || 'A friend'; return (
+              <article key={e.id} data-invite-story className="border-t-[3px] border-slate-900 pt-2 space-y-2">
+                <span className="np-flag">Invitation<span className="np-kicker">Society pages</span></span>
+                <h2 className="font-editorial text-[28px] leading-[1.02]">{who} invites you to {e.title}.</h2>
+                <div className="np-sc" style={{ color: '#B8532B', fontWeight: 600 }}>{d.date ? prettyDate(d.date) : 'Date to be confirmed'}{d.location ? ` — ${d.location}` : ''}</div>
+                <p className="np-cols text-[12px] leading-relaxed text-stone-700"><span className="np-dropcap">{who.trim()[0] || 'A'}</span>{who.trim().slice(1)} has proposed {d.start ? d.start + (d.end && d.end !== d.start ? '–' + d.end : '') : 'a time'}{d.location ? ' at ' + d.location : ''}. Reply below and it joins your schedule with your getting-ready time worked out.</p>
+                <div className="flex gap-2">
+                  <button data-story-accept onClick={() => answerEvent(e.id, 'accepted')} className="flex-1 h-11 bg-purple-900 text-white text-[13px] font-semibold" style={{ borderRadius: 0 }}>Accept</button>
+                  <button data-story-decline onClick={() => answerEvent(e.id, 'declined')} className="flex-1 h-11 border border-slate-900 text-[13px] font-semibold" style={{ borderRadius: 0 }}>Not this time</button>
+                </div>
+              </article>
+            ); })}
 
             {/* Invite a friend to a plan */}
             <div data-invite-card className="p-4 bg-white border border-stone-200 space-y-3">
@@ -7336,30 +7856,57 @@ function AppInner({ onReset }) {
             </>)}
 
             {socialSub === 'friends' && (
-              <div className="p-4 bg-white border border-stone-200 space-y-3">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Social Circle</span>
-                    <h3 className="font-editorial text-base font-normal">Friend Book & Beta Invites</h3>
-                  </div>
+              <div data-friendbook className="space-y-4">
+                <div className="flex justify-between items-center gap-2">
+                  <span className="np-flag">Friend Book<span className="np-kicker">Who&rsquo;s who</span></span>
                   <button
                     onClick={() => {
                       navigator.clipboard?.writeText('Join me on Pact: ' + window.location.origin);
                       setInviteCopied(true);
                       setTimeout(() => setInviteCopied(false), 2500);
                     }}
-                    className="px-2.5 py-1 bg-rose-700 text-white text-[10px] uppercase tracking-wider font-medium flex items-center gap-1"
+                    className="px-2.5 py-1.5 border border-slate-900 text-[10px] uppercase tracking-wider font-medium flex items-center gap-1"
+                    style={{ borderRadius: 0 }}
                   >
-                    <Share2 size={11} /> {inviteCopied ? 'Link Copied!' : 'Invite Link'}
+                    <Share2 size={11} /> {inviteCopied ? 'Link copied' : 'Invite link'}
                   </button>
                 </div>
+
+                <div className="relative">
+                  <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-500" />
+                  <input data-friendbook-search type="search" aria-label="Search friends and requests" placeholder="Search friends, requests or @username" value={friendBookQ} onChange={e => setFriendBookQ(e.target.value)} className="w-full border border-slate-900 bg-transparent pl-9 pr-3 h-11 text-[13px]" style={{ borderRadius: 0 }} />
+                </div>
+
+                {(() => {
+                  const fq = friendBookQ.trim().toLowerCase();
+                  const hit = (r) => !fq || (String(r.display_name || '') + ' ' + r.username).toLowerCase().includes(fq);
+                  const ins = friendReqs.filter(r => r.direction === 'incoming').filter(hit);
+                  const outs = friendReqs.filter(r => r.direction === 'outgoing').filter(hit);
+                  if (!ins.length && !outs.length) return null;
+                  return (
+                    <div data-friend-requests className="space-y-2">
+                      <div className="border-t-[3px] border-slate-900 pt-1.5 np-sc">Friend requests &middot; {ins.length + outs.length}</div>
+                      {ins.map(r => (
+                        <div key={r.id} data-friend-request className="border border-slate-900 bg-[#FAF8F2] p-3 flex items-center gap-3">
+                          <Mug src={r.avatar} name={r.display_name || r.username} w={44} h={44} />
+                          <div className="flex-1 min-w-0 text-[13px] leading-snug"><span className="font-semibold">{r.display_name || r.username}</span> <span className="text-stone-500">@{r.username}</span> wants to be friends</div>
+                          <div className="flex flex-col gap-1.5 shrink-0">
+                            <button data-friend-accept onClick={() => answerFriendReq(r, true)} className="px-2.5 py-1.5 bg-purple-900 text-white text-[10px] uppercase tracking-wider" style={{ borderRadius: 0 }}>Accept</button>
+                            <button data-friend-decline onClick={() => answerFriendReq(r, false)} className="px-2.5 py-1.5 border border-slate-900 text-[10px] uppercase tracking-wider" style={{ borderRadius: 0 }}>Decline</button>
+                          </div>
+                        </div>
+                      ))}
+                      {outs.length > 0 && <p data-friend-waiting className="text-[11px] text-stone-500">Waiting for a reply from: {outs.map(r => r.display_name || '@' + r.username).join(', ')}</p>}
+                    </div>
+                  );
+                })()}
 
                 {authUser && authUser.cloud ? (
                   <div data-friend-search className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
                     <div className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Find a friend on Pact</div>
                     <div className="flex gap-2">
                       <input type="text" aria-label="Friend's username" placeholder="Their @username, e.g. @maya_lin" value={friendQuery} onChange={e => setFriendQuery(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') searchFriend(); }} className="flex-1 min-w-0 bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
-                      <button data-friend-find onClick={searchFriend} disabled={friendBusy || !friendQuery.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider font-medium disabled:opacity-50">{friendBusy ? '...' : 'Find'}</button>
+                      <button data-friend-find onClick={() => searchFriend()} disabled={friendBusy || !friendQuery.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider font-medium disabled:opacity-50">{friendBusy ? '...' : 'Find'}</button>
                     </div>
                     <p className="text-[10px] text-stone-500 leading-snug">Your username: <strong>{accountInfo.username || '(not set)'}</strong>. Share it so friends can find you. They need to type it exactly.</p>
                     {friendFound === 'none' && <p data-friend-none className="text-[11px] text-stone-600">No one found with that username. Check the spelling with them.</p>}
@@ -7372,16 +7919,6 @@ function AppInner({ onReset }) {
                       </div>
                     )}
                     {friendMsg && <p data-friend-msg className="text-[11px] text-stone-600">{friendMsg}</p>}
-                    {friendReqs.filter(r => r.direction === 'incoming').map(r => (
-                      <div key={r.id} data-friend-request className="p-2.5 bg-white border border-rose-200 flex justify-between items-center gap-2">
-                        <div className="text-xs"><span className="font-medium text-slate-900">{r.display_name || r.username}</span> <span className="text-stone-400">@{r.username}</span> wants to be friends</div>
-                        <div className="flex gap-1.5 shrink-0">
-                          <button data-friend-accept onClick={() => answerFriendReq(r, true)} className="px-2 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Accept</button>
-                          <button data-friend-decline onClick={() => answerFriendReq(r, false)} className="px-2 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Decline</button>
-                        </div>
-                      </div>
-                    ))}
-                    {friendReqs.filter(r => r.direction === 'outgoing').length > 0 && <p className="text-[10px] text-stone-500">Waiting for a reply from: {friendReqs.filter(r => r.direction === 'outgoing').map(r => '@' + r.username).join(', ')}</p>}
                   </div>
                 ) : (
                   <p className="text-[11px] text-stone-500 leading-snug">Sign in with an account to find friends by username.</p>
@@ -7407,26 +7944,35 @@ function AppInner({ onReset }) {
                   </button>
                 </div>
 
-                {friendsList.length > 3 && <input data-friendbook-search type="search" aria-label="Search your friends" placeholder="Search your friends by name or @username" value={friendBookQ} onChange={e => setFriendBookQ(e.target.value)} className="w-full bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs" />}
-                {friendBookQ.trim() && friendsList.filter(fr => (fr.name + ' ' + fr.handle + ' ' + (fr.bio || '')).toLowerCase().includes(friendBookQ.trim().toLowerCase())).length === 0 && <p className="text-[11px] text-stone-500">No friends match that.</p>}
-                <div className="space-y-2">
-                  {friendsList.filter(fr => !friendBookQ.trim() || (fr.name + ' ' + fr.handle + ' ' + (fr.bio || '')).toLowerCase().includes(friendBookQ.trim().toLowerCase())).map(fr => (
-                    <div key={fr.id} data-friend-row className="p-2.5 bg-[#FAF8F5] border border-stone-200 flex justify-between items-center gap-2">
-                      <div data-friend-open onClick={() => fr.userId && openFriendProfile(fr)} className={`flex items-center gap-2.5 min-w-0 ${fr.userId ? 'cursor-pointer' : ''}`}>
-                        <Avatar src={fr.avatar} name={fr.name} size={36} />
-                        <div className="min-w-0">
-                          <div className="text-xs font-medium text-slate-900">{fr.name} <span className="text-stone-400 font-normal">{fr.handle}</span></div>
-                          {fr.bio ? <div data-friend-bio className="text-[10px] text-stone-600 leading-snug">{fr.bio}</div> : <div className="text-[10px] text-stone-500">{fr.type} • Last hangout: {fr.lastSeen}</div>}
+                {(() => {
+                  const fq = friendBookQ.trim().toLowerCase();
+                  const list = friendsList.filter(fr => !fq || (fr.name + ' ' + fr.handle + ' ' + (fr.bio || '')).toLowerCase().includes(fq));
+                  return (<>
+                    <div className="border-t-[3px] border-slate-900 pt-1.5 np-sc">Your friends &middot; {list.length}</div>
+                    {fq && list.length === 0 && (
+                      <div className="space-y-2">
+                        <p data-friendbook-empty className="text-[12px] text-stone-600">No friends match &ldquo;{friendBookQ}&rdquo;.</p>
+                        {authUser && authUser.cloud && <button data-friendbook-findpact onClick={() => { setFriendQuery(friendBookQ); searchFriend(friendBookQ); }} className="px-3 py-2 border border-slate-900 text-[11px] uppercase tracking-wider font-medium" style={{ borderRadius: 0 }}>Search Pact for {friendBookQ.trim()}</button>}
+                      </div>
+                    )}
+                    <div data-friend-wall className="grid grid-cols-3 gap-x-2.5 gap-y-5">
+                      {list.map((fr, i) => (
+                        <div key={fr.id} data-friend-row className="min-w-0">
+                          <div data-friend-open onClick={() => fr.userId && openFriendProfile(fr)} className={fr.userId ? 'cursor-pointer' : ''}>
+                            <Mug src={fr.avatar} name={fr.name} w="100%" h="sq" tone={i} dot={!!(fr.userId && unreadBy[fr.userId])} />
+                            <div className="font-editorial text-[14px] leading-tight mt-1.5 break-words">{fr.name}</div>
+                            <div className="text-[10.5px] text-stone-500 leading-snug mt-0.5 break-words" style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{fr.bio ? <span data-friend-bio>{fr.bio}</span> : `${fr.type} • ${fr.lastSeen}`}</div>
+                          </div>
+                          <div className="mt-1.5 flex flex-wrap gap-x-2.5 gap-y-1 text-[10px] uppercase tracking-wider">
+                            {fr.userId && <button data-friend-message onClick={() => openChat(fr)} className="font-semibold underline" style={{ borderRadius: 0 }}>Message{unreadBy[fr.userId] ? <span className="ml-1 px-1 bg-rose-700 text-white no-underline">{unreadBy[fr.userId]}</span> : null}</button>}
+                            <button data-friend-invite onClick={() => { setInviteDraft({ taskId: '', friend: fr.name }); setInviteOut(null); setSocialSub('plans'); setActiveTab('social'); }} className="underline" style={{ borderRadius: 0 }}>Invite</button>
+                            <button data-friend-remove onClick={() => unfriend(fr)} aria-label={`Remove ${fr.name}`} className="text-stone-400" style={{ borderRadius: 0 }}>Remove</button>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-1 shrink-0">
-                      {fr.userId && <button data-friend-message onClick={() => openChat(fr)} className="px-2.5 py-1 bg-purple-800 text-white text-[10px] uppercase tracking-wider">Message{unreadBy[fr.userId] ? <span data-unread className="ml-1 px-1 bg-rose-600 text-white">{unreadBy[fr.userId]}</span> : null}</button>}
-                      <button data-friend-remove onClick={() => unfriend(fr)} aria-label={`Remove ${fr.name}`} className="px-2 py-1 text-[10px] text-stone-400 hover:text-rose-700">Remove</button>
-                      <button data-friend-invite onClick={() => { setInviteDraft({ taskId: '', friend: fr.name }); setInviteOut(null); setSocialSub('plans'); setActiveTab('social'); }} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider font-medium">Invite</button>
-                      </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </>);
+                })()}
 
                 {chatWith && (
                   <div data-chat className="border border-purple-300 bg-white">
@@ -7686,7 +8232,7 @@ function AppInner({ onReset }) {
             TAB 7: PROFILE (ACCOUNT, FRIENDS, RETIRED/UNEMPLOYED, DATA)
            ========================================================= */}
         {activeTab === 'profile' && (
-          <div className="space-y-4 animate-in fade-in duration-300">
+          <div className="np-skin space-y-4 animate-in fade-in duration-300">
 
             {/* Profile Sub-Navigation */}
             <div className="grid grid-cols-2 border border-stone-300 bg-white">
@@ -7707,6 +8253,39 @@ function AppInner({ onReset }) {
 
             {profileSubTab === 'settings' && (
               <div className="space-y-4">
+                {/* Press pass */}
+                <div data-press-pass className="border border-slate-900 bg-[#FAF8F2]">
+                  <div className="bg-slate-900 text-[#F4EFE4] px-3 py-1.5 text-[10px] tracking-[0.2em] uppercase flex justify-between"><span>The Pact · Press</span><span>Member</span></div>
+                  <div className="p-3.5 flex gap-3.5">
+                    <Mug src={myProfile.avatar} name={accountInfo.name} w={104} h={124} />
+                    <div className="min-w-0 flex-1">
+                      <div className="font-editorial text-[24px] leading-[1.02] break-words">{accountInfo.name || 'Your name'}</div>
+                      <div className="text-[12px] text-stone-500 mt-1 break-all">{accountInfo.username ? String(accountInfo.username).replace(/^@?/, '@') : ''}</div>
+                      <div className="np-sc mt-2.5">Editor of</div><div className="text-[13px]">Your own life</div>
+                      <div className="np-sc mt-2">Based in</div><div className="text-[13px]">{getLoc(userProfile).city}</div>
+                    </div>
+                  </div>
+                  <div className="px-3.5 pb-3.5"><div className="np-barcode" /></div>
+                </div>
+                {myProfile.bio ? (
+                  <div className="flex gap-2.5 items-start"><span className="font-editorial text-[44px] leading-[.7] text-rose-700 select-none">&ldquo;</span><p data-press-bio className="font-editorial italic text-[15px] leading-snug" style={{ fontWeight: 400 }}>{myProfile.bio}</p></div>
+                ) : (
+                  <button onClick={() => document.querySelector('[data-profile-card]') && document.querySelector('[data-profile-card]').scrollIntoView({ behavior: 'smooth' })} className="text-[12px] text-stone-500 underline text-left">Add a short description friends will see</button>
+                )}
+                <div data-style-guide>
+                  <div className="border-t-[3px] border-slate-900 pt-1.5 np-sc">Style guide</div>
+                  {[
+                    ['Look and feel', ((THEME_PALETTES[themeNow.palette] && themeNow.palette) || 'classic') + ' · ' + themeNow.mode, '[data-theme-card]'],
+                    ['Reminders', reminderCfg.enabled ? reminderCfg.leadMins + ' min before' : 'Off', '[data-reminder-cats]'],
+                    ['Sharing', shareCfg.acts === 'off' ? 'Private' : shareCfg.acts === 'busy' ? 'Busy only' : 'With titles', '[data-share-card]'],
+                    ['Voice shortcut', 'How to set up', '[data-voice-help]'],
+                    ['Privacy', 'Read the notice', '[data-open-privacy]']
+                  ].map(([l, v, sel]) => (
+                    <button key={l} onClick={() => { const el = document.querySelector(sel); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }} className="w-full flex items-baseline gap-1.5 py-2.5 border-b border-stone-300 text-left">
+                      <span className="text-[14px]">{l}</span><span className="flex-1 border-b-[1.5px] border-dotted border-stone-400 -translate-y-[3px]" /><span className="text-[12px] text-stone-500">{v}</span>
+                    </button>
+                  ))}
+                </div>
                 {/* Install */}
                 {!isStandalone && (
                   <div data-install-card className="p-4 bg-white border border-stone-200 space-y-2">
@@ -7759,7 +8338,7 @@ function AppInner({ onReset }) {
 
                 {/* Profile picture and description (friends see these in their Friend Book) */}
                 <div data-profile-card className="p-4 bg-white border border-stone-200 space-y-3">
-                  <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Your profile</span>
+                  <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Edit your profile</span>
                   <div className="flex items-center gap-3">
                     <Avatar src={myProfile.avatar} name={accountInfo.name} size={64} />
                     <div className="space-y-1.5">

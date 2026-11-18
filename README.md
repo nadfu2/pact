@@ -142,7 +142,7 @@ Profile -> Account -> "Your profile". The picture is cropped and shrunk to 128px
 The mic card on Home, the mic button inside Roamie, and the home-screen shortcut `/?voice=1` (long-press the installed Pact icon on Android) open a voice sheet. It uses the browser's speech recognition (Chrome, Edge, Safari) so what you say is sent to that browser vendor's speech service. Check the words, tap "Add it", and Roamie adds the plan. A true home-screen widget is not possible for a web app; the shortcut is the closest equivalent. `/?tab=schedule` opens the Schedule.
 
 ## Notifications
-The bell in the header collects: friend requests, friends accepting or adding you, new messages, new invites, and changes or cancellations to plans you accepted. Checked every 45 seconds and whenever you open the Social tab. With "Turn on device alerts" allowed, they also appear as phone alerts while Pact is open or running in the background. A fully closed app cannot be woken yet: that needs a push server (Web Push with VAPID keys plus a Supabase function), which is the next step if wanted.
+The bell in the header collects: friend requests, friends accepting or adding you, new messages, new invites, and changes or cancellations to plans you accepted. Checked every 45 seconds and whenever you open the Social tab. In-app banners disappear after 2 seconds (everything stays in the bell). Phone alerts when Pact is closed need the one-time setup in "Phone notifications" below.
 
 ## Reminders
 A reminder set to "15 min before" now fires 15 minutes before your getting-ready time begins (travel plus prep buffer), not before the start time. The message says when to start getting ready.
@@ -163,4 +163,27 @@ Tap a friend in the Friend Book to open their profile: picture, description, dai
 Your People -> "Add someone by their Pact username" fills in name, picture and description (phone and email are never shared). Contact import accepts any file type, several files, iPhone vCards, Google CSV, or a pasted list. `/?add=<text>` adds a plan from text (used by an iPhone Shortcut for a one-tap voice button; steps are in Profile -> Account).
 
 ## Updating an existing install
-Run `supabase/RUN_IN_SUPABASE.sql` once in the Supabase SQL editor (now includes 0006 profile pictures and 0007 friend status) (it is safe to run more than once), upload the source to GitHub, then re-run `tools/import_places.py --city <name> --load` for each city.
+Run `supabase/RUN_IN_SUPABASE.sql` once in the Supabase SQL editor (now includes 0006 profile pictures, 0007 friend status and 0008 schedule sharing, learning buddies and push) (it is safe to run more than once), upload the source to GitHub, then re-run `tools/import_places.py --city <name> --load` for each city.
+
+## The Pact newspaper redesign
+Masthead on every tab (location and weather). Schedule is a TV-guide "Listings" grid; Ideas is a lead story plus a two-column front page of picture cards; Development is a skills index with sparklines that opens each skill as a book of chapters; Social is a photo wall with invitations as the front-page story and a searchable Friend Book; Profile is a press pass.
+
+## Schedule listings and time matching
+Your own day is the default. "Expand for time matching" adds a column per friend who is sharing with you and marks the hours when everyone is free. Sharing is the sharer's choice, per friend: 3 days, a week or 2 weeks, with or without plan titles. It ends by itself (the database returns nothing after the end date), can be stopped at any time, and plans marked Private are never uploaded. Backend: `schedule_grants`, `profiles.sched`, `set_my_schedule`, `set_schedule_grant`, `my_schedule_grants`, `schedules_shared_with_me` (migration 0008). Friends without a grant show as "Not shared".
+
+## Learn a skill with a friend
+Open a skill, then "Learn it together" and pick a friend. They get a message and an invitation in Development; joining adds the skill (and its chapters) to their own map. Each person ticks their own chapters and sees the other's progress. Backend: `skill_buddies` and its RPCs (migration 0008).
+
+## Ideas pictures
+The places database has no photos. A card shows a real photo only when Wikipedia has one for that exact place (matched by name and by being within 1.5 km, so it never shows the wrong building). Everything else gets a newspaper-style illustration for its category, so every card has a picture.
+
+## Phone notifications (when Pact is closed)
+How it works: your phone registers with its push service; the database (message, friend request and due-reminder triggers) asks your Cloudflare site at `/api/push` to deliver; the service worker shows it. The app uploads the next days of reminders so they still arrive when Pact is closed. If Pact is open and in front, only the in-app banner shows.
+One-time setup (about 10 minutes):
+1. Keys: `node scripts/make-vapid-keys.mjs` prints a key pair and a secret (or use the ones supplied with this release). Put the PUBLIC key in `public/config.js` (`vapidPublicKey`).
+2. Cloudflare -> your Pages project -> Settings -> Variables and Secrets: add `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` (as a Secret), `VAPID_SUBJECT` (for example `https://pact-wdm.pages.dev`) and `PUSH_SECRET`. Redeploy.
+3. Supabase -> Database -> Extensions: enable `pg_net` and `pg_cron` (the SQL tries to; some projects need the toggle).
+4. Run `supabase/RUN_IN_SUPABASE.sql`, then once: `insert into public.push_config values (1, 'https://YOUR-SITE/api/push', 'THE-SAME-PUSH_SECRET') on conflict (id) do update set url = excluded.url, secret = excluded.secret;`
+5. On each phone: open Pact, Profile or the bell -> "Turn on device alerts" and allow notifications.
+iPhone: iOS 16.4 or newer, and Pact must be added to the Home Screen first (Share -> Add to Home Screen) and opened from there; Safari tabs cannot receive push. Android and desktop Chrome work from the browser.
+Not verified end to end in the build environment (it cannot reach real push services or a phone): the database triggers, the encryption and signing in `functions/api/push.js` (decrypted back with an independent implementation), the service worker handlers and the in-app flow are tested; the final delivery to a physical phone needs your first real test.
