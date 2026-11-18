@@ -267,3 +267,16 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
   - Reminders; Calendar and hours (sync, blocked hours, getting-ready times); Location and places (incl. keep up to date)
   - About you (account, sign out, delete account, life situation); What friends can see; Health records and exports (with your health agreement and a withdraw button); Privacy and data; Assistant and advanced (AI key, redo setup).
 - Nothing was removed. Old links to the Data and Life tabs open the matching screens.
+
+## v10.9 - Properly sharp profile photos
+- Photos are now saved up to 720px (was 128px, then 480px). This needs the database limit raised: run `supabase/UPGRADE_PHOTOS.sql` once in Supabase > SQL Editor. Until then the app falls back to the smaller picture and says so.
+- Pictures uploaded before this stay as small as they were. Re-upload them once.
+
+## v10.10 - Phone alerts check
+- Profile > Reminders > **Phone alerts**: "Check phone alerts" tests each step (device, permission, registration, saved to your account, database knows your website, pg_net, pg_cron, last delivery) and says in plain words what is missing. "Send a test alert" sends a real push through the whole chain.
+- Needs `supabase/UPGRADE_PUSH_CHECK.sql` run once in Supabase (also appended to RUN_IN_SUPABASE.sql). `functions/api/push.js` now also returns the push service's status codes.
+- The service worker now always shows a notification when a push arrives, even if Pact is open. iPhone and Chrome cancel a device's alerts if pushes arrive and nothing is shown.
+
+## v10.11
+- Roamie is now a desk bell: paper pill "Ask Roamie" with an engraved bell, shrinks to just the bell while you scroll down. Same bell in the chat header.
+- Profile photos: saved as WebP where the phone supports it (sharper at the same size), and tries the biggest size first. Run `supabase/UPGRADE_PHOTOS.sql` once and re-upload photos for full 720px sharpness.

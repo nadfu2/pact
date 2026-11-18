@@ -1,6 +1,6 @@
 // Pact service worker: lets the app install to the home screen and open offline.
 // Pages: network first (so updates arrive), falling back to the cached copy. Never caches API or database calls.
-const CACHE = 'pact-shell-v14';
+const CACHE = 'pact-shell-v17';
 const SHELL = ['/', '/assets/app.js', '/assets/app.css', '/manifest.webmanifest', '/icons/icon-192.png'];
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL).catch(() => {})).then(() => self.skipWaiting())); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
@@ -21,12 +21,11 @@ self.addEventListener('notificationclick', (e) => {
 });
 
 // A push arrives from the server (a message, a friend request, a reminder), even when Pact is closed.
-// If Pact is open and in front, the app shows its own banner, so we stay quiet to avoid a double alert.
 self.addEventListener('push', (e) => {
   let d = {};
   try { d = e.data ? e.data.json() : {}; } catch (err) { d = { title: 'Pact', body: e.data ? e.data.text() : '' }; }
   e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
-    if (list.some(c => c.visibilityState === 'visible' && c.focused)) return;
+    // Always show it: iPhone and Chrome cancel a device's alerts if a push arrives and nothing is shown (even while Pact is open).
     return self.registration.showNotification(d.title || 'Pact', {
       body: d.body || '', icon: '/icons/icon-192.png', badge: '/icons/icon-192.png',
       tag: d.tag || 'pact', renotify: true, data: { url: d.url || '/' }

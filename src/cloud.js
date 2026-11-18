@@ -201,6 +201,16 @@ export const cloud = {
     if (error) throw new Error(error.message || 'could not save');
     return data;
   },
+  async pushStatus() {
+    const { data, error } = await sb.rpc('push_status');
+    if (error) throw new Error(error.message || 'could not check');
+    return data;
+  },
+  async sendTestPush() {
+    const { data, error } = await sb.rpc('send_test_push');
+    if (error) throw new Error(error.message || 'could not send');
+    return data;
+  },
   async deletePushSub(endpoint) {
     await sb.rpc('delete_push_sub', { p_endpoint: endpoint });
   },

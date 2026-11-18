@@ -83,5 +83,5 @@ export async function onRequest({ request, env }) {
   if (!subs.length) return json(200, { sent: 0 });
   const message = JSON.stringify({ title: String(b.title || 'Pact').slice(0, 80), body: String(b.body || '').slice(0, 160), url: String(b.url || '/').slice(0, 200), tag: String(b.tag || 'pact').slice(0, 60) });
   const results = await Promise.all(subs.map(s => sendOne(s, message, env).catch(() => ({ ok: false, status: 0, endpoint: s && s.endpoint }))));
-  return json(200, { sent: results.filter(r => r.ok).length, gone: results.filter(r => r.status === 404 || r.status === 410).map(r => r.endpoint) });
+  return json(200, { sent: results.filter(r => r.ok).length, statuses: results.map(r => r.status), gone: results.filter(r => r.status === 404 || r.status === 410).map(r => r.endpoint) });
 }
