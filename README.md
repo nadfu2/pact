@@ -232,3 +232,8 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - Mood is no longer on Log or Minimal Home (the Energy button replaces it). Low battery now shows a single "Stop press" strip.
 - Classic layout is unchanged (old inline widgets).
 - New file `src/v10.jsx`. `renderDetail` in App portals each old widget into its tile slot. Service worker cache is `pact-shell-v6`.
+
+### v10.1
+- Voice is now a small round mic bubble beside the Widgets button (no full-width row).
+- Opened tile widgets (Meals, Medicine, Life admin, Week ahead, Countdown) are restyled flat to match the engraved tiles.
+- Medicine clock row no longer relies on a button for its layout (steadier centring on iPhone). Cache `pact-shell-v7`.

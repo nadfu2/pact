@@ -4,6 +4,20 @@ import React, { useId, useRef } from 'react';
 import { INK, MUT, CLAY, FOR, RULE, BG, SOFT } from './groups.jsx';
 import { normJob } from './v9.jsx';
 
+
+const FP_CSS = `
+.np-skin [data-fp-slot] div[class*="p-4"][class*="bg-white"][class*="border"]{background:transparent!important;border:0!important;box-shadow:none!important;padding:2px 0 6px!important;border-radius:0!important}
+.np-skin [data-fp-slot] span[class*="uppercase"][class*="tracking-widest"]{background:none!important;color:#C8643C!important;padding:0!important;display:block!important;font-size:9.5px!important;letter-spacing:.22em!important;font-weight:700!important}
+.np-skin [data-fp-slot] .np-kicker{display:none!important}
+.np-skin [data-fp-slot] h3{font-family:'Fraunces',Georgia,serif;font-style:italic;font-weight:600!important;font-size:15px!important;letter-spacing:0!important;color:#1B2A22}
+.np-skin [data-fp-slot] .flex.items-center.gap-2>svg{display:none!important}
+.np-skin [data-fp-slot] div[class*="bg-[#FAF8F5]"]{background:transparent!important;border:0!important;border-top:1px solid #CFC7B4!important;border-radius:0!important;padding-left:0!important;padding-right:0!important}
+.np-skin [data-fp-slot] input,.np-skin [data-fp-slot] select{border-radius:0!important;background:transparent!important;border:1px solid #1B2A22!important;font-family:'Fraunces',Georgia,serif}
+.np-skin [data-fp-slot] button{border-radius:0!important}
+.np-skin [data-fp-slot] button[class*="bg-"]{background:#1B2A22!important;color:#F4EFE4!important;border:0!important}
+.np-skin [data-fp-slot] button[class*="border-stone-300"]{background:transparent!important;color:#1B2A22!important;border:1px solid #1B2A22!important}
+.np-skin [data-fp-slot] div[class*="border"][class*="border-stone-200"]{border-color:#CFC7B4!important;background:transparent!important;border-radius:0!important}
+`;
 const SAND = '#EBE2CC';
 const FRS = { fontFamily: 'Fraunces, Georgia, serif' };
 const pt = (r, a, c = 50) => { const t = a * Math.PI / 180; return [c + r * Math.sin(t), c - r * Math.cos(t)]; };
@@ -36,7 +50,7 @@ export function Clock({ time, band, size = 92 }) {
   const nums = [['XII', 0], ['III', 90], ['VI', 180], ['IX', 270]].map(([l, a]) => { const [x, y] = pt(31, a); return <text key={l} x={f1(x)} y={f1(y + 2.4)} textAnchor="middle" fontSize="7" fill={INK} fontStyle="italic" fontWeight="600" style={FRS}>{l}</text>; });
   const [hx, hy] = pt(25, hourA), [mx, my] = pt(37, minA);
   return (
-    <svg data-fp-clock width={size} height={size} viewBox="0 0 100 100" aria-hidden>
+    <svg data-fp-clock width={size} height={size} viewBox="0 0 100 100" aria-hidden style={{ display: 'block' }}>
       <circle cx="50" cy="50" r="47" fill={BG} stroke={INK} strokeWidth="1.3" /><circle cx="50" cy="50" r="44.5" fill="none" stroke={INK} strokeWidth=".4" />
       {ticks}{nums}
       {Array.from({ length: 12 }, (_, k) => <ellipse key={k} cx="50" cy="50" rx="20" ry="6.5" fill="none" stroke={INK} strokeWidth=".28" transform={`rotate(${k * 15} 50 50)`} />)}
@@ -154,7 +168,7 @@ export default function FrontPage({ hidden, open, setOpen, registerSlot, meds, s
   const medTile = show('medicine') && (
     <section data-fp-tile="medicine" style={{ position: 'relative', borderTop: `3px double ${INK}`, borderBottom: `1px solid ${INK}`, overflow: 'hidden' }}>
       <Dots />
-      <button data-fp-open="medicine" aria-expanded={open === 'medicine'} onClick={() => toggle('medicine')} style={{ position: 'relative', display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', textAlign: 'left', background: 'none', border: 0, padding: '10px 0 0', borderRadius: 0 }}>
+      <div data-fp-open="medicine" role="button" tabIndex={0} aria-expanded={open === 'medicine'} onClick={() => toggle('medicine')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle('medicine'); } }} style={{ position: 'relative', display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', textAlign: 'left', padding: '10px 0 0', cursor: 'pointer' }}>
         <div>
           <div style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}><Kicker>{meds.length === 0 ? 'Medicine' : nextMed ? 'Medicine · next dose' : 'Medicine · all taken'}</Kicker><CloseTag on={open === 'medicine'} /></div>
           {meds.length === 0
@@ -164,8 +178,8 @@ export default function FrontPage({ hidden, open, setOpen, registerSlot, meds, s
               <div style={{ ...FRS, fontStyle: 'italic', fontSize: 13, color: MUT, maxWidth: 190 }}>{nextMed.name}</div></>
               : <div style={{ ...FRS, fontWeight: 700, fontSize: 30, lineHeight: 1, marginTop: 6 }}>All done <span style={{ color: FOR }}>&#10003;</span></div>}
         </div>
-        <div style={{ paddingRight: 4 }}><Clock time={clockT} band={!!nextMed} /></div>
-      </button>
+        <div style={{ paddingRight: 4, display: 'flex', alignItems: 'center', alignSelf: 'center', flex: 'none' }}><Clock time={clockT} band={!!nextMed} /></div>
+      </div>
       {meds.length > 0 && <div data-fp-pillbox style={{ position: 'relative', display: 'flex', gap: 6, flexWrap: 'wrap', margin: '6px 0 12px' }}>
         {sortedMeds.map(m => {
           const isNext = nextMed && nextMed.id === m.id, t = fmt12(m.time);
@@ -257,6 +271,7 @@ export default function FrontPage({ hidden, open, setOpen, registerSlot, meds, s
 
   return (
     <div data-fp style={{ display: 'flex', flexDirection: 'column', order: -5 }}>
+      <style>{FP_CSS}</style>
       {medTile}
       {row(mealsTile, cdTile, 'meals', 'countdown')}
       {row(weekTile, adminTile, 'weekahead', 'cadence')}
