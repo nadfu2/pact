@@ -10007,7 +10007,8 @@ function AppInner({ onReset }) {
                   {[['ideas', 'Ideas', 'Things to do, near you'], ['skills', 'Development', 'Skills and what you are learning'], ['profile', 'Profile and comfort', 'Text size, settings, your account']].map(([id, l, sub]) => (
                     <button key={id} data-more-item={id} onClick={() => { setMoreOpen(false); setActiveTab(id); if (id === 'profile') setProfileSubTab('life'); }} className="w-full text-left" style={{ borderRadius: 0, padding: '14px 0', borderBottom: '1px solid #CFC7B4' }}><div className="font-fr" style={{ fontWeight: 600, fontSize: 21 }}>{l}</div><div style={{ fontSize: 14, color: '#5A675F' }}>{sub}</div></button>
                   ))}
-                  <button data-more-close onClick={() => setMoreOpen(false)} className="w-full" style={{ marginTop: 14, height: 52, border: '2px solid #1B2A22', fontWeight: 700, fontSize: 16, borderRadius: 0 }}>Close</button>
+                  <button data-more-fullapp onClick={() => { patchProfile({ comfort: { ...(userProfile.comfort || {}), size: 'normal', bigButtons: false, simpleNav: false } }); setMoreOpen(false); setCalmFull(false); setActiveTab('home'); }} className="w-full" style={{ marginTop: 14, height: 52, background: '#1B2A22', color: '#F4EFE4', fontWeight: 700, fontSize: 16, borderRadius: 0 }}>Back to the full app</button>
+                  <button data-more-close onClick={() => setMoreOpen(false)} className="w-full" style={{ marginTop: 10, height: 52, border: '2px solid #1B2A22', fontWeight: 700, fontSize: 16, borderRadius: 0 }}>Close</button>
                 </div>
               </div>
             </Portal>
