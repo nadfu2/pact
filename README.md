@@ -297,3 +297,4 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - Removed the "Next free window / Open schedule" lines from Home and the "Your skills, ranked by momentum" line from Development.
 - Home: quick-log buttons are small separate squares.
 - Schedule: removed the hint line; "Find a time" (friends' free hours) and "Who sees mine" are now two labelled buttons under the headline.
+- Schedule: day grid now runs midnight to midnight and scrolls (opens on your next plan, or now); hour numbers sit under their lines. Drag the handle on a new-plan block to set its length. "Activity colours" is collapsible.
