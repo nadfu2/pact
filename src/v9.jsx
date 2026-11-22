@@ -148,12 +148,10 @@ export function LogHome({ variant, profile, patch, today, water, setWater, water
   const noteLines = String(notes || '').split('\n').filter(l => l.trim()).length;
   const LEV = { low: 'Low', steady: 'Steady', high: 'High' };
   const Q = ({ id, label, cap, onTap, hot, children, aria }) => (
-    <button data-log-btn={id} aria-label={aria || label} onClick={onTap} style={{ width: 76, height: 76, flexShrink: 0, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'space-between', padding: '8px 8px 7px', textAlign: 'left', background: hot ? 'rgba(200,100,60,.10)' : 'rgba(250,244,224,.55)', border: `1.5px solid ${hot ? CLAY : INK}`, borderRadius: 0 }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-        <span style={{ fontSize: 8.5, letterSpacing: '.14em', textTransform: 'uppercase', color: hot ? CLAY : MUT, fontWeight: 700 }}>{label}</span>
-        <span style={{ display: 'inline-flex', color: hot ? CLAY : INK, transform: 'scale(.8)', transformOrigin: 'right center' }}>{children}</span>
-      </div>
-      <div data-log-cap={id} style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontWeight: 600, fontSize: 14, lineHeight: 1.1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%' }}>{cap}</div>
+    <button data-log-btn={id} aria-label={aria || label} onClick={onTap} style={{ width: 72, height: 72, flexShrink: 0, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3, padding: 4, textAlign: 'center', background: hot ? 'rgba(200,100,60,.10)' : 'rgba(250,244,224,.55)', border: `1.5px solid ${hot ? CLAY : INK}`, borderRadius: 0 }}>
+      <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', height: 22, color: hot ? CLAY : INK }}>{children}</span>
+      <span style={{ fontSize: 8.5, letterSpacing: '.14em', textTransform: 'uppercase', color: hot ? CLAY : MUT, fontWeight: 700, lineHeight: 1 }}>{label}</span>
+      <div data-log-cap={id} style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontWeight: 600, fontSize: 12.5, lineHeight: 1.1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '100%' }}>{cap}</div>
     </button>);
   const lastK = LOG_BUTTONS.map(([k]) => k).filter(k => btns.includes(k)).pop();
   const gp = goals.total ? goals.done / goals.total : 0;
@@ -162,7 +160,7 @@ export function LogHome({ variant, profile, patch, today, water, setWater, water
     <div data-log-home={variant} style={{ order: -6 }}>
       {variant === 'log' ? (
         <>
-          {btns.length > 0 && <div data-log-strip style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          {btns.length > 0 && <div data-log-strip style={{ display: 'flex', justifyContent: 'space-between', gap: 8 }}>
             {btns.includes('water') && <Q id="water" last={lastK === 'water'} label="Water" cap={`${wc} of ${waterGoal}`} hot onTap={() => setWater({ date: today, count: Math.min(40, wc + 1) })} aria="Add a glass of water"><span style={{ fontSize: 22, lineHeight: 1 }}>+</span></Q>}
             {btns.includes('energy') && <Q id="energy" last={lastK === 'energy'} label="Energy" cap={lvl ? LEV[lvl] : 'Log'} onTap={() => setSheet('energy')}><Ico d={ICO.energy} /></Q>}
             {btns.includes('pages') && <Q id="pages" last={lastK === 'pages'} label="Pages" cap={reading.page ? `p.${reading.page}` : (pages ? `${pages} today` : 'Log')} onTap={() => setSheet('pages')}><Ico d={ICO.pages} /></Q>}
