@@ -279,6 +279,7 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 
 ## v10.11
 - Roamie is now a desk bell: paper pill "Ask Roamie" with an engraved bell, shrinks to just the bell while you scroll down. Same bell in the chat header.
+- Development tab: tree removed; a few faint dots drift slowly upward instead.
 - Simple view: More menu has a "Back to the full app" button (resets text size, tabs, button size).
 - Home: Widgets panel now has a "Redo setup" button.
 - Profile photos: saved as WebP where the phone supports it (sharper at the same size), and tries the biggest size first. Run `supabase/UPGRADE_PHOTOS.sql` once and re-upload photos for full 720px sharpness.
