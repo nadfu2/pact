@@ -298,3 +298,7 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - Home: quick-log buttons are small separate squares.
 - Schedule: removed the hint line; "Find a time" (friends' free hours) and "Who sees mine" are now two labelled buttons under the headline.
 - Schedule: day grid now runs midnight to midnight and scrolls (opens on your next plan, or now); hour numbers sit under their lines. Drag the handle on a new-plan block to set its length. "Activity colours" is collapsible.
+
+## v10.15
+- New planner (src/planner.jsx): one question per screen. Go out asks casual / formal / meeting (and who with); an event can be one that is on, one already booked (name it, optional host and place) or one you host; tasks are one screen; place search for somewhere you have already chosen; fine-tune folded away.
+- Tapping a time in Schedule carries the day, start time and length into the planner.

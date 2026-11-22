@@ -5,6 +5,7 @@ import { findSkillPlan, planMilestones, planResources, skillPlanLabel } from './
 import { LogHome, LayoutPicker, JobWidget, DevStrip, homeStyleOf, LOG_HIDES } from './v9.jsx';
 import FrontPage, { JobFace } from './v10.jsx';
 import PushCheck from './push.jsx';
+import PlannerWizard from './planner.jsx';
 import { SITUATIONS, SIT_HINTS, presetPatch, hasSit, comfortOf, ZOOM, LifePanel, EnergyCard, CalmHome, JobHunt, TermPanel, RotaPanel, BudgetCard, CirclePanel, priceNum, budgetLeft, budgetPass, dstr as gDstr } from './groups.jsx';
 import {
   ArrowLeft,
@@ -57,7 +58,7 @@ import {
 
 
 // Pre-compiled Tailwind CSS for this app, so it renders the same regardless of the host's Tailwind version.
-const ROAM_CSS = "*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:\"\"}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width:640px){.container{max-width:640px}}@media (min-width:768px){.container{max-width:768px}}@media (min-width:1024px){.container{max-width:1024px}}@media (min-width:1280px){.container{max-width:1280px}}@media (min-width:1536px){.container{max-width:1536px}}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.visible{visibility:visible}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.inset-x-0{left:0;right:0}.inset-x-3{left:.75rem;right:.75rem}.-left-\\[7px\\]{left:-7px}.-right-1{right:-.25rem}.-right-1\\.5{right:-.375rem}.-top-1{top:-.25rem}.-top-1\\.5{top:-.375rem}.-top-2{top:-.5rem}.bottom-0{bottom:0}.bottom-16{bottom:4rem}.bottom-2{bottom:.5rem}.bottom-20{bottom:5rem}.bottom-24{bottom:6rem}.left-0{left:0}.left-1{left:.25rem}.left-1\\/2{left:50%}.left-2{left:.5rem}.left-2\\.5{left:.625rem}.left-3{left:.75rem}.right-0{right:0}.right-1{right:.25rem}.right-1\\.5{right:.375rem}.right-3{right:.75rem}.right-4{right:1rem}.top-0{top:0}.top-0\\.5{top:.125rem}.top-1{top:.25rem}.top-1\\.5{top:.375rem}.top-1\\/2{top:50%}.top-2{top:.5rem}.z-0{z-index:0}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-40{z-index:40}.z-50{z-index:50}.z-\\[1\\]{z-index:1}.z-\\[300\\]{z-index:300}.col-span-2{grid-column:span 2/span 2}.m-3{margin:.75rem}.mx-auto{margin-left:auto;margin-right:auto}.-mb-px{margin-bottom:-1px}.-mt-1{margin-top:-.25rem}.mb-0{margin-bottom:0}.mb-0\\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.ml-1{margin-left:.25rem}.ml-1\\.5{margin-left:.375rem}.ml-2{margin-left:.5rem}.ml-4{margin-left:1rem}.ml-8{margin-left:2rem}.mr-1{margin-right:.25rem}.mt-0{margin-top:0}.mt-0\\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-2\\.5{margin-top:.625rem}.mt-3{margin-top:.75rem}.mt-3\\.5{margin-top:.875rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.mt-auto{margin-top:auto}.block{display:block}.inline-block{display:inline-block}.inline{display:inline}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.contents{display:contents}.\\!hidden{display:none!important}.hidden{display:none}.h-0{height:0}.h-1{height:.25rem}.h-1\\.5{height:.375rem}.h-10{height:2.5rem}.h-11{height:2.75rem}.h-12{height:3rem}.h-2{height:.5rem}.h-2\\.5{height:.625rem}.h-24{height:6rem}.h-3{height:.75rem}.h-3\\.5{height:.875rem}.h-4{height:1rem}.h-44{height:11rem}.h-5{height:1.25rem}.h-52{height:13rem}.h-56{height:14rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-\\[100dvh\\]{height:100dvh}.h-\\[30px\\]{height:30px}.h-\\[34px\\]{height:34px}.h-\\[38px\\]{height:38px}.h-\\[3px\\]{height:3px}.h-full{height:100%}.h-screen{height:100vh}.max-h-48{max-height:12rem}.max-h-56{max-height:14rem}.max-h-72{max-height:18rem}.max-h-80{max-height:20rem}.max-h-\\[88dvh\\]{max-height:88dvh}.max-h-\\[88vh\\]{max-height:88vh}.max-h-\\[90dvh\\]{max-height:90dvh}.max-h-\\[90vh\\]{max-height:90vh}.min-h-full{min-height:100%}.w-1{width:.25rem}.w-1\\.5{width:.375rem}.w-10{width:2.5rem}.w-11{width:2.75rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-16{width:4rem}.w-2{width:.5rem}.w-2\\.5{width:.625rem}.w-3{width:.75rem}.w-3\\.5{width:.875rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-\\[22px\\]{width:22px}.w-\\[84px\\]{width:84px}.w-full{width:100%}.min-w-0{min-width:0}.min-w-\\[140px\\]{min-width:140px}.min-w-\\[160px\\]{min-width:160px}.min-w-\\[16px\\]{min-width:16px}.min-w-\\[30\\%\\]{min-width:30%}.max-w-\\[230px\\]{max-width:230px}.max-w-\\[48\\%\\]{max-width:48%}.max-w-\\[560px\\]{max-width:560px}.max-w-\\[80\\%\\]{max-width:80%}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1{--tw-translate-x:-0.25rem}.-translate-x-1,.-translate-x-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-x-1\\/2{--tw-translate-x:-50%}.-translate-y-1{--tw-translate-y:-0.25rem}.-translate-y-1,.-translate-y-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-1\\/2{--tw-translate-y:-50%}.-translate-y-px{--tw-translate-y:-1px}.-translate-y-px,.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}@keyframes spin{to{transform:rotate(1turn)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.resize-none{resize:none}.resize{resize:both}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid-cols-7{grid-template-columns:repeat(7,minmax(0,1fr))}.grid-cols-\\[46px_1fr\\]{grid-template-columns:46px 1fr}.grid-cols-\\[92px_1fr\\]{grid-template-columns:92px 1fr}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.items-baseline{align-items:baseline}.items-stretch{align-items:stretch}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0{gap:0}.gap-0\\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-3\\.5{gap:.875rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-x-2{-moz-column-gap:.5rem;column-gap:.5rem}.gap-x-2\\.5{-moz-column-gap:.625rem;column-gap:.625rem}.gap-x-3{-moz-column-gap:.75rem;column-gap:.75rem}.gap-y-1{row-gap:.25rem}.gap-y-3{row-gap:.75rem}.gap-y-3\\.5{row-gap:.875rem}.gap-y-5{row-gap:1.25rem}.space-y-0>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0px*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0px*var(--tw-space-y-reverse))}.space-y-0\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.125rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.125rem*var(--tw-space-y-reverse))}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-stone-200>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(231 229 228/var(--tw-divide-opacity,1))}.self-center{align-self:center}.self-stretch{align-self:stretch}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.overflow-x-hidden{overflow-x:hidden}.truncate{overflow:hidden;text-overflow:ellipsis}.truncate,.whitespace-nowrap{white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.break-words{overflow-wrap:break-word}.break-all{word-break:break-all}.rounded{border-radius:.25rem}.rounded-\\[3px\\]{border-radius:3px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-b{border-bottom-right-radius:.25rem;border-bottom-left-radius:.25rem}.rounded-t{border-top-left-radius:.25rem;border-top-right-radius:.25rem}.border{border-width:1px}.border-2{border-width:2px}.border-\\[1\\.5px\\]{border-width:1.5px}.border-x{border-left-width:1px;border-right-width:1px}.border-b{border-bottom-width:1px}.border-b-\\[1\\.5px\\]{border-bottom-width:1.5px}.border-b-\\[3px\\]{border-bottom-width:3px}.border-l{border-left-width:1px}.border-l-2{border-left-width:2px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-t-2{border-top-width:2px}.border-t-\\[3px\\]{border-top-width:3px}.border-dashed{border-style:dashed}.border-dotted{border-style:dotted}.border-double{border-style:double}.border-\\[\\#1B2A22\\]{--tw-border-opacity:1;border-color:rgb(27 42 34/var(--tw-border-opacity,1))}.border-\\[\\#1B2A22\\]\\/30{border-color:rgba(27,42,34,.3)}.border-\\[\\#1B2A22\\]\\/50{border-color:rgba(27,42,34,.5)}.border-\\[\\#1B2A22\\]\\/60{border-color:rgba(27,42,34,.6)}.border-\\[\\#1F3A2E\\]{--tw-border-opacity:1;border-color:rgb(31 58 46/var(--tw-border-opacity,1))}.border-\\[\\#C8643C\\]{--tw-border-opacity:1;border-color:rgb(200 100 60/var(--tw-border-opacity,1))}.border-\\[\\#F4EFE4\\]{--tw-border-opacity:1;border-color:rgb(244 239 228/var(--tw-border-opacity,1))}.border-amber-600{--tw-border-opacity:1;border-color:rgb(217 119 6/var(--tw-border-opacity,1))}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254/var(--tw-border-opacity,1))}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254/var(--tw-border-opacity,1))}.border-blue-300{--tw-border-opacity:1;border-color:rgb(147 197 253/var(--tw-border-opacity,1))}.border-blue-400{--tw-border-opacity:1;border-color:rgb(96 165 250/var(--tw-border-opacity,1))}.border-blue-50{--tw-border-opacity:1;border-color:rgb(239 246 255/var(--tw-border-opacity,1))}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity,1))}.border-blue-600{--tw-border-opacity:1;border-color:rgb(37 99 235/var(--tw-border-opacity,1))}.border-blue-700{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.border-blue-800{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.border-blue-900{--tw-border-opacity:1;border-color:rgb(30 58 138/var(--tw-border-opacity,1))}.border-blue-950{--tw-border-opacity:1;border-color:rgb(23 37 84/var(--tw-border-opacity,1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183/var(--tw-border-opacity,1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255/var(--tw-border-opacity,1))}.border-purple-200{--tw-border-opacity:1;border-color:rgb(233 213 255/var(--tw-border-opacity,1))}.border-purple-300{--tw-border-opacity:1;border-color:rgb(216 180 254/var(--tw-border-opacity,1))}.border-purple-400{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.border-purple-50{--tw-border-opacity:1;border-color:rgb(250 245 255/var(--tw-border-opacity,1))}.border-purple-500{--tw-border-opacity:1;border-color:rgb(168 85 247/var(--tw-border-opacity,1))}.border-purple-600{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.border-purple-700{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.border-purple-900{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.border-purple-950{--tw-border-opacity:1;border-color:rgb(59 7 100/var(--tw-border-opacity,1))}.border-rose-100{--tw-border-opacity:1;border-color:rgb(255 228 230/var(--tw-border-opacity,1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211/var(--tw-border-opacity,1))}.border-rose-300{--tw-border-opacity:1;border-color:rgb(253 164 175/var(--tw-border-opacity,1))}.border-rose-400{--tw-border-opacity:1;border-color:rgb(251 113 133/var(--tw-border-opacity,1))}.border-rose-50{--tw-border-opacity:1;border-color:rgb(255 241 242/var(--tw-border-opacity,1))}.border-rose-500{--tw-border-opacity:1;border-color:rgb(244 63 94/var(--tw-border-opacity,1))}.border-rose-600{--tw-border-opacity:1;border-color:rgb(225 29 72/var(--tw-border-opacity,1))}.border-rose-700{--tw-border-opacity:1;border-color:rgb(190 18 60/var(--tw-border-opacity,1))}.border-rose-800{--tw-border-opacity:1;border-color:rgb(159 18 57/var(--tw-border-opacity,1))}.border-rose-900{--tw-border-opacity:1;border-color:rgb(136 19 55/var(--tw-border-opacity,1))}.border-rose-950{--tw-border-opacity:1;border-color:rgb(76 5 25/var(--tw-border-opacity,1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225/var(--tw-border-opacity,1))}.border-slate-400{--tw-border-opacity:1;border-color:rgb(148 163 184/var(--tw-border-opacity,1))}.border-slate-50{--tw-border-opacity:1;border-color:rgb(248 250 252/var(--tw-border-opacity,1))}.border-slate-500{--tw-border-opacity:1;border-color:rgb(100 116 139/var(--tw-border-opacity,1))}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity,1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59/var(--tw-border-opacity,1))}.border-slate-900{--tw-border-opacity:1;border-color:rgb(15 23 42/var(--tw-border-opacity,1))}.border-slate-950{--tw-border-opacity:1;border-color:rgb(2 6 23/var(--tw-border-opacity,1))}.border-stone-100{--tw-border-opacity:1;border-color:rgb(245 245 244/var(--tw-border-opacity,1))}.border-stone-200{--tw-border-opacity:1;border-color:rgb(231 229 228/var(--tw-border-opacity,1))}.border-stone-200\\/30{border-color:hsla(20,6%,90%,.3)}.border-stone-300{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.border-stone-400{--tw-border-opacity:1;border-color:rgb(168 162 158/var(--tw-border-opacity,1))}.border-stone-50{--tw-border-opacity:1;border-color:rgb(250 250 249/var(--tw-border-opacity,1))}.border-stone-500{--tw-border-opacity:1;border-color:rgb(120 113 108/var(--tw-border-opacity,1))}.border-stone-600{--tw-border-opacity:1;border-color:rgb(87 83 78/var(--tw-border-opacity,1))}.border-stone-700{--tw-border-opacity:1;border-color:rgb(68 64 60/var(--tw-border-opacity,1))}.border-stone-800{--tw-border-opacity:1;border-color:rgb(41 37 36/var(--tw-border-opacity,1))}.border-stone-900{--tw-border-opacity:1;border-color:rgb(28 25 23/var(--tw-border-opacity,1))}.border-stone-950{--tw-border-opacity:1;border-color:rgb(12 10 9/var(--tw-border-opacity,1))}.border-transparent{border-color:transparent}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255/var(--tw-border-opacity,1))}.bg-\\[\\#1B2A22\\]{--tw-bg-opacity:1;background-color:rgb(27 42 34/var(--tw-bg-opacity,1))}.bg-\\[\\#1F3A2E\\]{--tw-bg-opacity:1;background-color:rgb(31 58 46/var(--tw-bg-opacity,1))}.bg-\\[\\#C8643C\\]{--tw-bg-opacity:1;background-color:rgb(200 100 60/var(--tw-bg-opacity,1))}.bg-\\[\\#E6DFCF\\]{--tw-bg-opacity:1;background-color:rgb(230 223 207/var(--tw-bg-opacity,1))}.bg-\\[\\#EDEAE0\\]{--tw-bg-opacity:1;background-color:rgb(237 234 224/var(--tw-bg-opacity,1))}.bg-\\[\\#F4EFE4\\]{--tw-bg-opacity:1;background-color:rgb(244 239 228/var(--tw-bg-opacity,1))}.bg-\\[\\#F5F3EC\\]{--tw-bg-opacity:1;background-color:rgb(245 243 236/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F2\\]{--tw-bg-opacity:1;background-color:rgb(250 248 242/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F5\\]{--tw-bg-opacity:1;background-color:rgb(250 248 245/var(--tw-bg-opacity,1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235/var(--tw-bg-opacity,1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0/var(--tw-bg-opacity,1))}.bg-black\\/40{background-color:rgba(0,0,0,.4)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254/var(--tw-bg-opacity,1))}.bg-blue-200{--tw-bg-opacity:1;background-color:rgb(191 219 254/var(--tw-bg-opacity,1))}.bg-blue-300{--tw-bg-opacity:1;background-color:rgb(147 197 253/var(--tw-bg-opacity,1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250/var(--tw-bg-opacity,1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.bg-blue-800{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.bg-blue-900{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84/var(--tw-bg-opacity,1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105/var(--tw-bg-opacity,1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255/var(--tw-bg-opacity,1))}.bg-purple-200{--tw-bg-opacity:1;background-color:rgb(233 213 255/var(--tw-bg-opacity,1))}.bg-purple-300{--tw-bg-opacity:1;background-color:rgb(216 180 254/var(--tw-bg-opacity,1))}.bg-purple-400{--tw-bg-opacity:1;background-color:rgb(192 132 252/var(--tw-bg-opacity,1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255/var(--tw-bg-opacity,1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234/var(--tw-bg-opacity,1))}.bg-purple-700{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.bg-purple-800{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.bg-purple-900{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.bg-purple-950{--tw-bg-opacity:1;background-color:rgb(59 7 100/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-200{--tw-bg-opacity:1;background-color:rgb(254 205 211/var(--tw-bg-opacity,1))}.bg-rose-300{--tw-bg-opacity:1;background-color:rgb(253 164 175/var(--tw-bg-opacity,1))}.bg-rose-400{--tw-bg-opacity:1;background-color:rgb(251 113 133/var(--tw-bg-opacity,1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242/var(--tw-bg-opacity,1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94/var(--tw-bg-opacity,1))}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-rose-700{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.bg-rose-800{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.bg-rose-900{--tw-bg-opacity:1;background-color:rgb(136 19 55/var(--tw-bg-opacity,1))}.bg-rose-950{--tw-bg-opacity:1;background-color:rgb(76 5 25/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225/var(--tw-bg-opacity,1))}.bg-slate-400{--tw-bg-opacity:1;background-color:rgb(148 163 184/var(--tw-bg-opacity,1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.bg-slate-500{--tw-bg-opacity:1;background-color:rgb(100 116 139/var(--tw-bg-opacity,1))}.bg-slate-600{--tw-bg-opacity:1;background-color:rgb(71 85 105/var(--tw-bg-opacity,1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-900\\/85{background-color:rgba(15,23,42,.85)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23/var(--tw-bg-opacity,1))}.bg-slate-950\\/70{background-color:rgba(2,6,23,.7)}.bg-stone-100{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.bg-stone-200{--tw-bg-opacity:1;background-color:rgb(231 229 228/var(--tw-bg-opacity,1))}.bg-stone-300{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.bg-stone-400{--tw-bg-opacity:1;background-color:rgb(168 162 158/var(--tw-bg-opacity,1))}.bg-stone-50{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.bg-stone-500{--tw-bg-opacity:1;background-color:rgb(120 113 108/var(--tw-bg-opacity,1))}.bg-stone-600{--tw-bg-opacity:1;background-color:rgb(87 83 78/var(--tw-bg-opacity,1))}.bg-stone-700{--tw-bg-opacity:1;background-color:rgb(68 64 60/var(--tw-bg-opacity,1))}.bg-stone-800{--tw-bg-opacity:1;background-color:rgb(41 37 36/var(--tw-bg-opacity,1))}.bg-stone-900{--tw-bg-opacity:1;background-color:rgb(28 25 23/var(--tw-bg-opacity,1))}.bg-stone-950{--tw-bg-opacity:1;background-color:rgb(12 10 9/var(--tw-bg-opacity,1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.bg-white\\/40{background-color:hsla(0,0%,100%,.4)}.object-cover{-o-object-fit:cover;object-fit:cover}.p-1{padding:.25rem}.p-1\\.5{padding:.375rem}.p-2{padding:.5rem}.p-2\\.5{padding:.625rem}.p-3{padding:.75rem}.p-3\\.5{padding:.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-0{padding-left:0;padding-right:0}.px-0\\.5{padding-left:.125rem;padding-right:.125rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-7{padding-left:1.75rem;padding-right:1.75rem}.px-\\[22px\\]{padding-left:22px;padding-right:22px}.py-0{padding-top:0;padding-bottom:0}.py-0\\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-3\\.5{padding-top:.875rem;padding-bottom:.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-px{padding-top:1px;padding-bottom:1px}.pb-0{padding-bottom:0}.pb-0\\.5{padding-bottom:.125rem}.pb-1{padding-bottom:.25rem}.pb-1\\.5{padding-bottom:.375rem}.pb-2{padding-bottom:.5rem}.pb-28{padding-bottom:7rem}.pb-3{padding-bottom:.75rem}.pb-3\\.5{padding-bottom:.875rem}.pb-5{padding-bottom:1.25rem}.pb-6{padding-bottom:1.5rem}.pb-7{padding-bottom:1.75rem}.pb-8{padding-bottom:2rem}.pl-1{padding-left:.25rem}.pl-2{padding-left:.5rem}.pl-3{padding-left:.75rem}.pl-4{padding-left:1rem}.pl-9{padding-left:2.25rem}.pr-1{padding-right:.25rem}.pr-3{padding-right:.75rem}.pr-4{padding-right:1rem}.pt-0{padding-top:0}.pt-0\\.5{padding-top:.125rem}.pt-1{padding-top:.25rem}.pt-1\\.5{padding-top:.375rem}.pt-2{padding-top:.5rem}.pt-3{padding-top:.75rem}.pt-4{padding-top:1rem}.pt-5{padding-top:1.25rem}.pt-6{padding-top:1.5rem}.pt-7{padding-top:1.75rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-\\[10\\.5px\\]{font-size:10.5px}.text-\\[10px\\]{font-size:10px}.text-\\[11\\.5px\\]{font-size:11.5px}.text-\\[11px\\]{font-size:11px}.text-\\[12px\\]{font-size:12px}.text-\\[13px\\]{font-size:13px}.text-\\[14px\\]{font-size:14px}.text-\\[15px\\]{font-size:15px}.text-\\[17px\\]{font-size:17px}.text-\\[22px\\]{font-size:22px}.text-\\[24px\\]{font-size:24px}.text-\\[28px\\]{font-size:28px}.text-\\[30px\\]{font-size:30px}.text-\\[32px\\]{font-size:32px}.text-\\[44px\\]{font-size:44px}.text-\\[9\\.5px\\]{font-size:9.5px}.text-\\[9px\\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.\\!font-semibold{font-weight:600!important}.font-bold{font-weight:700}.font-light{font-weight:300}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.normal-case{text-transform:none}.italic{font-style:italic}.tabular-nums{--tw-numeric-spacing:tabular-nums;font-variant-numeric:var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction)}.leading-\\[\\.7\\]{line-height:.7}.leading-\\[1\\.02\\]{line-height:1.02}.leading-\\[1\\.05\\]{line-height:1.05}.leading-\\[1\\.06\\]{line-height:1.06}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-\\[0\\.08em\\]{letter-spacing:.08em}.tracking-\\[0\\.12em\\]{letter-spacing:.12em}.tracking-\\[0\\.14em\\]{letter-spacing:.14em}.tracking-\\[0\\.16em\\]{letter-spacing:.16em}.tracking-\\[0\\.18em\\]{letter-spacing:.18em}.tracking-\\[0\\.1em\\]{letter-spacing:.1em}.tracking-\\[0\\.2em\\]{letter-spacing:.2em}.tracking-normal{letter-spacing:0}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-\\[\\#1B2A22\\]{--tw-text-opacity:1;color:rgb(27 42 34/var(--tw-text-opacity,1))}.text-\\[\\#1B2A22\\]\\/50{color:rgba(27,42,34,.5)}.text-\\[\\#1B2A22\\]\\/60{color:rgba(27,42,34,.6)}.text-\\[\\#1B2A22\\]\\/70{color:rgba(27,42,34,.7)}.text-\\[\\#1B2A22\\]\\/75{color:rgba(27,42,34,.75)}.text-\\[\\#1B2A22\\]\\/80{color:rgba(27,42,34,.8)}.text-\\[\\#1F3A2E\\]{--tw-text-opacity:1;color:rgb(31 58 46/var(--tw-text-opacity,1))}.text-\\[\\#C8643C\\]{--tw-text-opacity:1;color:rgb(200 100 60/var(--tw-text-opacity,1))}.text-\\[\\#F4EFE4\\]{--tw-text-opacity:1;color:rgb(244 239 228/var(--tw-text-opacity,1))}.text-black{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.text-blue-100{--tw-text-opacity:1;color:rgb(219 234 254/var(--tw-text-opacity,1))}.text-blue-200{--tw-text-opacity:1;color:rgb(191 219 254/var(--tw-text-opacity,1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-blue-50{--tw-text-opacity:1;color:rgb(239 246 255/var(--tw-text-opacity,1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235/var(--tw-text-opacity,1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216/var(--tw-text-opacity,1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175/var(--tw-text-opacity,1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138/var(--tw-text-opacity,1))}.text-blue-950{--tw-text-opacity:1;color:rgb(23 37 84/var(--tw-text-opacity,1))}.text-purple-100{--tw-text-opacity:1;color:rgb(243 232 255/var(--tw-text-opacity,1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255/var(--tw-text-opacity,1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252/var(--tw-text-opacity,1))}.text-purple-50{--tw-text-opacity:1;color:rgb(250 245 255/var(--tw-text-opacity,1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247/var(--tw-text-opacity,1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234/var(--tw-text-opacity,1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206/var(--tw-text-opacity,1))}.text-purple-800{--tw-text-opacity:1;color:rgb(107 33 168/var(--tw-text-opacity,1))}.text-purple-900{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.text-purple-950{--tw-text-opacity:1;color:rgb(59 7 100/var(--tw-text-opacity,1))}.text-rose-100{--tw-text-opacity:1;color:rgb(255 228 230/var(--tw-text-opacity,1))}.text-rose-200{--tw-text-opacity:1;color:rgb(254 205 211/var(--tw-text-opacity,1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-50{--tw-text-opacity:1;color:rgb(255 241 242/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57/var(--tw-text-opacity,1))}.text-rose-900{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.text-rose-950{--tw-text-opacity:1;color:rgb(76 5 25/var(--tw-text-opacity,1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-50{--tw-text-opacity:1;color:rgb(248 250 252/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23/var(--tw-text-opacity,1))}.text-stone-100{--tw-text-opacity:1;color:rgb(245 245 244/var(--tw-text-opacity,1))}.text-stone-200{--tw-text-opacity:1;color:rgb(231 229 228/var(--tw-text-opacity,1))}.text-stone-300{--tw-text-opacity:1;color:rgb(214 211 209/var(--tw-text-opacity,1))}.text-stone-400{--tw-text-opacity:1;color:rgb(168 162 158/var(--tw-text-opacity,1))}.text-stone-50{--tw-text-opacity:1;color:rgb(250 250 249/var(--tw-text-opacity,1))}.text-stone-500{--tw-text-opacity:1;color:rgb(120 113 108/var(--tw-text-opacity,1))}.text-stone-600{--tw-text-opacity:1;color:rgb(87 83 78/var(--tw-text-opacity,1))}.text-stone-700{--tw-text-opacity:1;color:rgb(68 64 60/var(--tw-text-opacity,1))}.text-stone-800{--tw-text-opacity:1;color:rgb(41 37 36/var(--tw-text-opacity,1))}.text-stone-900{--tw-text-opacity:1;color:rgb(28 25 23/var(--tw-text-opacity,1))}.text-stone-950{--tw-text-opacity:1;color:rgb(12 10 9/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.no-underline{text-decoration-line:none}.underline-offset-2{text-underline-offset:2px}.opacity-0{opacity:0}.opacity-50{opacity:.5}.opacity-60{opacity:.6}.opacity-70{opacity:.7}.opacity-75{opacity:.75}.opacity-80{opacity:.8}.opacity-90{opacity:.9}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-2xl,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.shadow-sm,.shadow-xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.outline{outline-style:solid}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.grayscale{--tw-grayscale:grayscale(100%)}.filter,.grayscale{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.ease-in{transition-timing-function:cubic-bezier(.4,0,1,1)}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.ease-out{transition-timing-function:cubic-bezier(0,0,.2,1)}.\\[out\\:json\\]{out:json}.\\[timeout\\:20\\]{timeout:20}#root,body,html{margin:0;height:100%;background:#f5f3ec;color-scheme:light}.file\\:mr-2::file-selector-button{margin-right:.5rem}.file\\:border-0::file-selector-button{border-width:0}.file\\:bg-purple-900::file-selector-button{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.file\\:px-2\\.5::file-selector-button{padding-left:.625rem;padding-right:.625rem}.file\\:py-1\\.5::file-selector-button{padding-top:.375rem;padding-bottom:.375rem}.file\\:text-\\[10px\\]::file-selector-button{font-size:10px}.file\\:uppercase::file-selector-button{text-transform:uppercase}.file\\:tracking-wider::file-selector-button{letter-spacing:.05em}.file\\:text-white::file-selector-button{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:border-blue-800:hover{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.hover\\:border-purple-400:hover{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.hover\\:border-purple-600:hover{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.hover\\:border-purple-700:hover{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.hover\\:border-purple-800:hover{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.hover\\:border-purple-900:hover{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.hover\\:bg-blue-50:hover{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.hover\\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.hover\\:bg-blue-800:hover{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.hover\\:bg-blue-900:hover{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.hover\\:bg-purple-700:hover{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.hover\\:bg-purple-800:hover{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.hover\\:bg-purple-900:hover{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.hover\\:bg-rose-600:hover{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.hover\\:bg-rose-800:hover{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.hover\\:bg-stone-100:hover{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.hover\\:bg-stone-300:hover{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.hover\\:bg-stone-50:hover{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.hover\\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.hover\\:bg-white\\/10:hover{background-color:hsla(0,0%,100%,.1)}.hover\\:text-purple-900:hover{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.hover\\:text-rose-700:hover{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.hover\\:text-rose-900:hover{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.hover\\:text-slate-700:hover{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.hover\\:text-slate-900:hover{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.hover\\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:opacity-100:hover{opacity:1}.focus\\:border-stone-300:focus{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.disabled\\:opacity-30:disabled{opacity:.3}.disabled\\:opacity-40:disabled{opacity:.4}.disabled\\:opacity-50:disabled{opacity:.5}@media (max-width:359px){.max-\\[359px\\]\\:text-\\[24px\\]{font-size:24px}.max-\\[359px\\]\\:text-\\[9px\\]{font-size:9px}}@media (min-width:600px){.min-\\[600px\\]\\:max-w-\\[640px\\]{max-width:640px}}@media (min-width:640px){.sm\\:items-center{align-items:center}}@media (min-width:820px){.min-\\[820px\\]\\:max-w-\\[820px\\]{max-width:820px}}";
+const ROAM_CSS = "*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:\"\"}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.container{width:100%}@media (min-width:640px){.container{max-width:640px}}@media (min-width:768px){.container{max-width:768px}}@media (min-width:1024px){.container{max-width:1024px}}@media (min-width:1280px){.container{max-width:1280px}}@media (min-width:1536px){.container{max-width:1536px}}.pointer-events-none{pointer-events:none}.pointer-events-auto{pointer-events:auto}.visible{visibility:visible}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0}.inset-x-0{left:0;right:0}.inset-x-3{left:.75rem;right:.75rem}.-left-\\[7px\\]{left:-7px}.-right-1{right:-.25rem}.-right-1\\.5{right:-.375rem}.-top-1{top:-.25rem}.-top-1\\.5{top:-.375rem}.-top-2{top:-.5rem}.bottom-0{bottom:0}.bottom-16{bottom:4rem}.bottom-2{bottom:.5rem}.bottom-20{bottom:5rem}.bottom-24{bottom:6rem}.left-0{left:0}.left-1{left:.25rem}.left-1\\/2{left:50%}.left-2{left:.5rem}.left-2\\.5{left:.625rem}.left-3{left:.75rem}.right-0{right:0}.right-1{right:.25rem}.right-1\\.5{right:.375rem}.right-3{right:.75rem}.right-4{right:1rem}.top-0{top:0}.top-0\\.5{top:.125rem}.top-1{top:.25rem}.top-1\\.5{top:.375rem}.top-1\\/2{top:50%}.top-2{top:.5rem}.z-0{z-index:0}.z-10{z-index:10}.z-20{z-index:20}.z-30{z-index:30}.z-40{z-index:40}.z-50{z-index:50}.z-\\[1\\]{z-index:1}.z-\\[300\\]{z-index:300}.col-span-2{grid-column:span 2/span 2}.m-3{margin:.75rem}.mx-auto{margin-left:auto;margin-right:auto}.-mb-px{margin-bottom:-1px}.-mt-1{margin-top:-.25rem}.mb-0{margin-bottom:0}.mb-0\\.5{margin-bottom:.125rem}.mb-1{margin-bottom:.25rem}.mb-2{margin-bottom:.5rem}.ml-1{margin-left:.25rem}.ml-1\\.5{margin-left:.375rem}.ml-2{margin-left:.5rem}.ml-4{margin-left:1rem}.ml-8{margin-left:2rem}.mr-1{margin-right:.25rem}.mt-0{margin-top:0}.mt-0\\.5{margin-top:.125rem}.mt-1{margin-top:.25rem}.mt-1\\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-2\\.5{margin-top:.625rem}.mt-3{margin-top:.75rem}.mt-3\\.5{margin-top:.875rem}.mt-4{margin-top:1rem}.mt-5{margin-top:1.25rem}.mt-6{margin-top:1.5rem}.mt-auto{margin-top:auto}.block{display:block}.inline-block{display:inline-block}.inline{display:inline}.flex{display:flex}.inline-flex{display:inline-flex}.table{display:table}.grid{display:grid}.contents{display:contents}.\\!hidden{display:none!important}.hidden{display:none}.h-0{height:0}.h-1{height:.25rem}.h-1\\.5{height:.375rem}.h-10{height:2.5rem}.h-11{height:2.75rem}.h-12{height:3rem}.h-2{height:.5rem}.h-2\\.5{height:.625rem}.h-24{height:6rem}.h-3{height:.75rem}.h-3\\.5{height:.875rem}.h-4{height:1rem}.h-44{height:11rem}.h-5{height:1.25rem}.h-52{height:13rem}.h-56{height:14rem}.h-6{height:1.5rem}.h-7{height:1.75rem}.h-8{height:2rem}.h-9{height:2.25rem}.h-\\[100dvh\\]{height:100dvh}.h-\\[30px\\]{height:30px}.h-\\[34px\\]{height:34px}.h-\\[38px\\]{height:38px}.h-\\[3px\\]{height:3px}.h-full{height:100%}.h-screen{height:100vh}.max-h-48{max-height:12rem}.max-h-56{max-height:14rem}.max-h-72{max-height:18rem}.max-h-80{max-height:20rem}.max-h-\\[88dvh\\]{max-height:88dvh}.max-h-\\[88vh\\]{max-height:88vh}.max-h-\\[90dvh\\]{max-height:90dvh}.max-h-\\[90vh\\]{max-height:90vh}.min-h-full{min-height:100%}.w-1{width:.25rem}.w-1\\.5{width:.375rem}.w-10{width:2.5rem}.w-11{width:2.75rem}.w-12{width:3rem}.w-14{width:3.5rem}.w-16{width:4rem}.w-2{width:.5rem}.w-2\\.5{width:.625rem}.w-3{width:.75rem}.w-3\\.5{width:.875rem}.w-4{width:1rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-7{width:1.75rem}.w-8{width:2rem}.w-9{width:2.25rem}.w-\\[22px\\]{width:22px}.w-\\[84px\\]{width:84px}.w-full{width:100%}.min-w-0{min-width:0}.min-w-\\[140px\\]{min-width:140px}.min-w-\\[160px\\]{min-width:160px}.min-w-\\[16px\\]{min-width:16px}.max-w-\\[230px\\]{max-width:230px}.max-w-\\[48\\%\\]{max-width:48%}.max-w-\\[560px\\]{max-width:560px}.max-w-\\[80\\%\\]{max-width:80%}.max-w-md{max-width:28rem}.max-w-sm{max-width:24rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.-translate-x-1{--tw-translate-x:-0.25rem}.-translate-x-1,.-translate-x-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-x-1\\/2{--tw-translate-x:-50%}.-translate-y-1{--tw-translate-y:-0.25rem}.-translate-y-1,.-translate-y-1\\/2{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-1\\/2{--tw-translate-y:-50%}.-translate-y-px{--tw-translate-y:-1px}.-translate-y-px,.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(.4,0,.6,1) infinite}@keyframes spin{to{transform:rotate(1turn)}}.animate-spin{animation:spin 1s linear infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;-moz-user-select:none;user-select:none}.resize-none{resize:none}.resize{resize:both}.list-disc{list-style-type:disc}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid-cols-7{grid-template-columns:repeat(7,minmax(0,1fr))}.grid-cols-\\[46px_1fr\\]{grid-template-columns:46px 1fr}.grid-cols-\\[92px_1fr\\]{grid-template-columns:92px 1fr}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.items-baseline{align-items:baseline}.items-stretch{align-items:stretch}.justify-start{justify-content:flex-start}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-0{gap:0}.gap-0\\.5{gap:.125rem}.gap-1{gap:.25rem}.gap-1\\.5{gap:.375rem}.gap-2{gap:.5rem}.gap-2\\.5{gap:.625rem}.gap-3{gap:.75rem}.gap-3\\.5{gap:.875rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-x-2{-moz-column-gap:.5rem;column-gap:.5rem}.gap-x-2\\.5{-moz-column-gap:.625rem;column-gap:.625rem}.gap-x-3{-moz-column-gap:.75rem;column-gap:.75rem}.gap-y-1{row-gap:.25rem}.gap-y-3{row-gap:.75rem}.gap-y-3\\.5{row-gap:.875rem}.gap-y-5{row-gap:1.25rem}.space-y-0>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0px*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0px*var(--tw-space-y-reverse))}.space-y-0\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.125rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.125rem*var(--tw-space-y-reverse))}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.space-y-1\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.375rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.375rem*var(--tw-space-y-reverse))}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-2\\.5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.625rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.625rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.divide-y>:not([hidden])~:not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px*(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px*var(--tw-divide-y-reverse))}.divide-stone-200>:not([hidden])~:not([hidden]){--tw-divide-opacity:1;border-color:rgb(231 229 228/var(--tw-divide-opacity,1))}.self-center{align-self:center}.self-stretch{align-self:stretch}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.overflow-x-hidden{overflow-x:hidden}.truncate{overflow:hidden;text-overflow:ellipsis}.truncate,.whitespace-nowrap{white-space:nowrap}.whitespace-pre-line{white-space:pre-line}.break-words{overflow-wrap:break-word}.break-all{word-break:break-all}.rounded{border-radius:.25rem}.rounded-\\[3px\\]{border-radius:3px}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:.5rem}.rounded-b{border-bottom-right-radius:.25rem;border-bottom-left-radius:.25rem}.rounded-t{border-top-left-radius:.25rem;border-top-right-radius:.25rem}.border{border-width:1px}.border-2{border-width:2px}.border-\\[1\\.5px\\]{border-width:1.5px}.border-x{border-left-width:1px;border-right-width:1px}.border-b{border-bottom-width:1px}.border-b-\\[1\\.5px\\]{border-bottom-width:1.5px}.border-b-\\[3px\\]{border-bottom-width:3px}.border-l{border-left-width:1px}.border-l-2{border-left-width:2px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-t-2{border-top-width:2px}.border-t-\\[3px\\]{border-top-width:3px}.border-dashed{border-style:dashed}.border-dotted{border-style:dotted}.border-double{border-style:double}.border-\\[\\#1B2A22\\]{--tw-border-opacity:1;border-color:rgb(27 42 34/var(--tw-border-opacity,1))}.border-\\[\\#1B2A22\\]\\/30{border-color:rgba(27,42,34,.3)}.border-\\[\\#1B2A22\\]\\/50{border-color:rgba(27,42,34,.5)}.border-\\[\\#1B2A22\\]\\/60{border-color:rgba(27,42,34,.6)}.border-\\[\\#1F3A2E\\]{--tw-border-opacity:1;border-color:rgb(31 58 46/var(--tw-border-opacity,1))}.border-\\[\\#C8643C\\]{--tw-border-opacity:1;border-color:rgb(200 100 60/var(--tw-border-opacity,1))}.border-\\[\\#F4EFE4\\]{--tw-border-opacity:1;border-color:rgb(244 239 228/var(--tw-border-opacity,1))}.border-amber-600{--tw-border-opacity:1;border-color:rgb(217 119 6/var(--tw-border-opacity,1))}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254/var(--tw-border-opacity,1))}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254/var(--tw-border-opacity,1))}.border-blue-300{--tw-border-opacity:1;border-color:rgb(147 197 253/var(--tw-border-opacity,1))}.border-blue-400{--tw-border-opacity:1;border-color:rgb(96 165 250/var(--tw-border-opacity,1))}.border-blue-50{--tw-border-opacity:1;border-color:rgb(239 246 255/var(--tw-border-opacity,1))}.border-blue-500{--tw-border-opacity:1;border-color:rgb(59 130 246/var(--tw-border-opacity,1))}.border-blue-600{--tw-border-opacity:1;border-color:rgb(37 99 235/var(--tw-border-opacity,1))}.border-blue-700{--tw-border-opacity:1;border-color:rgb(29 78 216/var(--tw-border-opacity,1))}.border-blue-800{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.border-blue-900{--tw-border-opacity:1;border-color:rgb(30 58 138/var(--tw-border-opacity,1))}.border-blue-950{--tw-border-opacity:1;border-color:rgb(23 37 84/var(--tw-border-opacity,1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183/var(--tw-border-opacity,1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255/var(--tw-border-opacity,1))}.border-purple-200{--tw-border-opacity:1;border-color:rgb(233 213 255/var(--tw-border-opacity,1))}.border-purple-300{--tw-border-opacity:1;border-color:rgb(216 180 254/var(--tw-border-opacity,1))}.border-purple-400{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.border-purple-50{--tw-border-opacity:1;border-color:rgb(250 245 255/var(--tw-border-opacity,1))}.border-purple-500{--tw-border-opacity:1;border-color:rgb(168 85 247/var(--tw-border-opacity,1))}.border-purple-600{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.border-purple-700{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.border-purple-800{--tw-border-opacity:1;border-color:rgb(107 33 168/var(--tw-border-opacity,1))}.border-purple-900{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.border-purple-950{--tw-border-opacity:1;border-color:rgb(59 7 100/var(--tw-border-opacity,1))}.border-rose-100{--tw-border-opacity:1;border-color:rgb(255 228 230/var(--tw-border-opacity,1))}.border-rose-200{--tw-border-opacity:1;border-color:rgb(254 205 211/var(--tw-border-opacity,1))}.border-rose-300{--tw-border-opacity:1;border-color:rgb(253 164 175/var(--tw-border-opacity,1))}.border-rose-400{--tw-border-opacity:1;border-color:rgb(251 113 133/var(--tw-border-opacity,1))}.border-rose-50{--tw-border-opacity:1;border-color:rgb(255 241 242/var(--tw-border-opacity,1))}.border-rose-500{--tw-border-opacity:1;border-color:rgb(244 63 94/var(--tw-border-opacity,1))}.border-rose-600{--tw-border-opacity:1;border-color:rgb(225 29 72/var(--tw-border-opacity,1))}.border-rose-700{--tw-border-opacity:1;border-color:rgb(190 18 60/var(--tw-border-opacity,1))}.border-rose-800{--tw-border-opacity:1;border-color:rgb(159 18 57/var(--tw-border-opacity,1))}.border-rose-900{--tw-border-opacity:1;border-color:rgb(136 19 55/var(--tw-border-opacity,1))}.border-rose-950{--tw-border-opacity:1;border-color:rgb(76 5 25/var(--tw-border-opacity,1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249/var(--tw-border-opacity,1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240/var(--tw-border-opacity,1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225/var(--tw-border-opacity,1))}.border-slate-400{--tw-border-opacity:1;border-color:rgb(148 163 184/var(--tw-border-opacity,1))}.border-slate-50{--tw-border-opacity:1;border-color:rgb(248 250 252/var(--tw-border-opacity,1))}.border-slate-500{--tw-border-opacity:1;border-color:rgb(100 116 139/var(--tw-border-opacity,1))}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105/var(--tw-border-opacity,1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59/var(--tw-border-opacity,1))}.border-slate-900{--tw-border-opacity:1;border-color:rgb(15 23 42/var(--tw-border-opacity,1))}.border-slate-950{--tw-border-opacity:1;border-color:rgb(2 6 23/var(--tw-border-opacity,1))}.border-stone-100{--tw-border-opacity:1;border-color:rgb(245 245 244/var(--tw-border-opacity,1))}.border-stone-200{--tw-border-opacity:1;border-color:rgb(231 229 228/var(--tw-border-opacity,1))}.border-stone-200\\/30{border-color:hsla(20,6%,90%,.3)}.border-stone-300{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.border-stone-400{--tw-border-opacity:1;border-color:rgb(168 162 158/var(--tw-border-opacity,1))}.border-stone-50{--tw-border-opacity:1;border-color:rgb(250 250 249/var(--tw-border-opacity,1))}.border-stone-500{--tw-border-opacity:1;border-color:rgb(120 113 108/var(--tw-border-opacity,1))}.border-stone-600{--tw-border-opacity:1;border-color:rgb(87 83 78/var(--tw-border-opacity,1))}.border-stone-700{--tw-border-opacity:1;border-color:rgb(68 64 60/var(--tw-border-opacity,1))}.border-stone-800{--tw-border-opacity:1;border-color:rgb(41 37 36/var(--tw-border-opacity,1))}.border-stone-900{--tw-border-opacity:1;border-color:rgb(28 25 23/var(--tw-border-opacity,1))}.border-stone-950{--tw-border-opacity:1;border-color:rgb(12 10 9/var(--tw-border-opacity,1))}.border-transparent{border-color:transparent}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255/var(--tw-border-opacity,1))}.bg-\\[\\#1F3A2E\\]{--tw-bg-opacity:1;background-color:rgb(31 58 46/var(--tw-bg-opacity,1))}.bg-\\[\\#C8643C\\]{--tw-bg-opacity:1;background-color:rgb(200 100 60/var(--tw-bg-opacity,1))}.bg-\\[\\#E6DFCF\\]{--tw-bg-opacity:1;background-color:rgb(230 223 207/var(--tw-bg-opacity,1))}.bg-\\[\\#EDEAE0\\]{--tw-bg-opacity:1;background-color:rgb(237 234 224/var(--tw-bg-opacity,1))}.bg-\\[\\#F4EFE4\\]{--tw-bg-opacity:1;background-color:rgb(244 239 228/var(--tw-bg-opacity,1))}.bg-\\[\\#F5F3EC\\]{--tw-bg-opacity:1;background-color:rgb(245 243 236/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F2\\]{--tw-bg-opacity:1;background-color:rgb(250 248 242/var(--tw-bg-opacity,1))}.bg-\\[\\#FAF8F5\\]{--tw-bg-opacity:1;background-color:rgb(250 248 245/var(--tw-bg-opacity,1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235/var(--tw-bg-opacity,1))}.bg-black{--tw-bg-opacity:1;background-color:rgb(0 0 0/var(--tw-bg-opacity,1))}.bg-black\\/40{background-color:rgba(0,0,0,.4)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254/var(--tw-bg-opacity,1))}.bg-blue-200{--tw-bg-opacity:1;background-color:rgb(191 219 254/var(--tw-bg-opacity,1))}.bg-blue-300{--tw-bg-opacity:1;background-color:rgb(147 197 253/var(--tw-bg-opacity,1))}.bg-blue-400{--tw-bg-opacity:1;background-color:rgb(96 165 250/var(--tw-bg-opacity,1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.bg-blue-500{--tw-bg-opacity:1;background-color:rgb(59 130 246/var(--tw-bg-opacity,1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235/var(--tw-bg-opacity,1))}.bg-blue-700{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.bg-blue-800{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.bg-blue-900{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.bg-blue-950{--tw-bg-opacity:1;background-color:rgb(23 37 84/var(--tw-bg-opacity,1))}.bg-emerald-600{--tw-bg-opacity:1;background-color:rgb(5 150 105/var(--tw-bg-opacity,1))}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255/var(--tw-bg-opacity,1))}.bg-purple-200{--tw-bg-opacity:1;background-color:rgb(233 213 255/var(--tw-bg-opacity,1))}.bg-purple-300{--tw-bg-opacity:1;background-color:rgb(216 180 254/var(--tw-bg-opacity,1))}.bg-purple-400{--tw-bg-opacity:1;background-color:rgb(192 132 252/var(--tw-bg-opacity,1))}.bg-purple-50{--tw-bg-opacity:1;background-color:rgb(250 245 255/var(--tw-bg-opacity,1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247/var(--tw-bg-opacity,1))}.bg-purple-600{--tw-bg-opacity:1;background-color:rgb(147 51 234/var(--tw-bg-opacity,1))}.bg-purple-700{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.bg-purple-800{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.bg-purple-900{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.bg-purple-950{--tw-bg-opacity:1;background-color:rgb(59 7 100/var(--tw-bg-opacity,1))}.bg-rose-100{--tw-bg-opacity:1;background-color:rgb(255 228 230/var(--tw-bg-opacity,1))}.bg-rose-200{--tw-bg-opacity:1;background-color:rgb(254 205 211/var(--tw-bg-opacity,1))}.bg-rose-300{--tw-bg-opacity:1;background-color:rgb(253 164 175/var(--tw-bg-opacity,1))}.bg-rose-400{--tw-bg-opacity:1;background-color:rgb(251 113 133/var(--tw-bg-opacity,1))}.bg-rose-50{--tw-bg-opacity:1;background-color:rgb(255 241 242/var(--tw-bg-opacity,1))}.bg-rose-500{--tw-bg-opacity:1;background-color:rgb(244 63 94/var(--tw-bg-opacity,1))}.bg-rose-600{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.bg-rose-700{--tw-bg-opacity:1;background-color:rgb(190 18 60/var(--tw-bg-opacity,1))}.bg-rose-800{--tw-bg-opacity:1;background-color:rgb(159 18 57/var(--tw-bg-opacity,1))}.bg-rose-900{--tw-bg-opacity:1;background-color:rgb(136 19 55/var(--tw-bg-opacity,1))}.bg-rose-950{--tw-bg-opacity:1;background-color:rgb(76 5 25/var(--tw-bg-opacity,1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-200{--tw-bg-opacity:1;background-color:rgb(226 232 240/var(--tw-bg-opacity,1))}.bg-slate-300{--tw-bg-opacity:1;background-color:rgb(203 213 225/var(--tw-bg-opacity,1))}.bg-slate-400{--tw-bg-opacity:1;background-color:rgb(148 163 184/var(--tw-bg-opacity,1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.bg-slate-500{--tw-bg-opacity:1;background-color:rgb(100 116 139/var(--tw-bg-opacity,1))}.bg-slate-600{--tw-bg-opacity:1;background-color:rgb(71 85 105/var(--tw-bg-opacity,1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85/var(--tw-bg-opacity,1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59/var(--tw-bg-opacity,1))}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.bg-slate-900\\/85{background-color:rgba(15,23,42,.85)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23/var(--tw-bg-opacity,1))}.bg-stone-100{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.bg-stone-200{--tw-bg-opacity:1;background-color:rgb(231 229 228/var(--tw-bg-opacity,1))}.bg-stone-300{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.bg-stone-400{--tw-bg-opacity:1;background-color:rgb(168 162 158/var(--tw-bg-opacity,1))}.bg-stone-50{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.bg-stone-500{--tw-bg-opacity:1;background-color:rgb(120 113 108/var(--tw-bg-opacity,1))}.bg-stone-600{--tw-bg-opacity:1;background-color:rgb(87 83 78/var(--tw-bg-opacity,1))}.bg-stone-700{--tw-bg-opacity:1;background-color:rgb(68 64 60/var(--tw-bg-opacity,1))}.bg-stone-800{--tw-bg-opacity:1;background-color:rgb(41 37 36/var(--tw-bg-opacity,1))}.bg-stone-900{--tw-bg-opacity:1;background-color:rgb(28 25 23/var(--tw-bg-opacity,1))}.bg-stone-950{--tw-bg-opacity:1;background-color:rgb(12 10 9/var(--tw-bg-opacity,1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.bg-white\\/40{background-color:hsla(0,0%,100%,.4)}.object-cover{-o-object-fit:cover;object-fit:cover}.p-1{padding:.25rem}.p-2{padding:.5rem}.p-2\\.5{padding:.625rem}.p-3{padding:.75rem}.p-3\\.5{padding:.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.px-0{padding-left:0;padding-right:0}.px-0\\.5{padding-left:.125rem;padding-right:.125rem}.px-1{padding-left:.25rem;padding-right:.25rem}.px-1\\.5{padding-left:.375rem;padding-right:.375rem}.px-2{padding-left:.5rem;padding-right:.5rem}.px-2\\.5{padding-left:.625rem;padding-right:.625rem}.px-3{padding-left:.75rem;padding-right:.75rem}.px-3\\.5{padding-left:.875rem;padding-right:.875rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-7{padding-left:1.75rem;padding-right:1.75rem}.px-\\[22px\\]{padding-left:22px;padding-right:22px}.py-0{padding-top:0;padding-bottom:0}.py-0\\.5{padding-top:.125rem;padding-bottom:.125rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}.py-1\\.5{padding-top:.375rem;padding-bottom:.375rem}.py-10{padding-top:2.5rem;padding-bottom:2.5rem}.py-2{padding-top:.5rem;padding-bottom:.5rem}.py-2\\.5{padding-top:.625rem;padding-bottom:.625rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}.py-3\\.5{padding-top:.875rem;padding-bottom:.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-px{padding-top:1px;padding-bottom:1px}.pb-0{padding-bottom:0}.pb-0\\.5{padding-bottom:.125rem}.pb-1{padding-bottom:.25rem}.pb-1\\.5{padding-bottom:.375rem}.pb-2{padding-bottom:.5rem}.pb-28{padding-bottom:7rem}.pb-3{padding-bottom:.75rem}.pb-3\\.5{padding-bottom:.875rem}.pb-5{padding-bottom:1.25rem}.pb-6{padding-bottom:1.5rem}.pb-7{padding-bottom:1.75rem}.pb-8{padding-bottom:2rem}.pl-1{padding-left:.25rem}.pl-2{padding-left:.5rem}.pl-3{padding-left:.75rem}.pl-4{padding-left:1rem}.pl-9{padding-left:2.25rem}.pr-1{padding-right:.25rem}.pr-3{padding-right:.75rem}.pr-4{padding-right:1rem}.pt-0{padding-top:0}.pt-0\\.5{padding-top:.125rem}.pt-1{padding-top:.25rem}.pt-1\\.5{padding-top:.375rem}.pt-2{padding-top:.5rem}.pt-3{padding-top:.75rem}.pt-4{padding-top:1rem}.pt-5{padding-top:1.25rem}.pt-6{padding-top:1.5rem}.pt-7{padding-top:1.75rem}.pt-8{padding-top:2rem}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.font-mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-5xl{font-size:3rem;line-height:1}.text-\\[10\\.5px\\]{font-size:10.5px}.text-\\[10px\\]{font-size:10px}.text-\\[11\\.5px\\]{font-size:11.5px}.text-\\[11px\\]{font-size:11px}.text-\\[12px\\]{font-size:12px}.text-\\[13px\\]{font-size:13px}.text-\\[14px\\]{font-size:14px}.text-\\[15px\\]{font-size:15px}.text-\\[17px\\]{font-size:17px}.text-\\[22px\\]{font-size:22px}.text-\\[24px\\]{font-size:24px}.text-\\[28px\\]{font-size:28px}.text-\\[30px\\]{font-size:30px}.text-\\[32px\\]{font-size:32px}.text-\\[44px\\]{font-size:44px}.text-\\[9\\.5px\\]{font-size:9.5px}.text-\\[9px\\]{font-size:9px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}.\\!font-semibold{font-weight:600!important}.font-bold{font-weight:700}.font-light{font-weight:300}.font-medium{font-weight:500}.font-normal{font-weight:400}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.normal-case{text-transform:none}.italic{font-style:italic}.tabular-nums{--tw-numeric-spacing:tabular-nums;font-variant-numeric:var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction)}.leading-\\[\\.7\\]{line-height:.7}.leading-\\[1\\.02\\]{line-height:1.02}.leading-\\[1\\.05\\]{line-height:1.05}.leading-\\[1\\.06\\]{line-height:1.06}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-\\[0\\.08em\\]{letter-spacing:.08em}.tracking-\\[0\\.12em\\]{letter-spacing:.12em}.tracking-\\[0\\.14em\\]{letter-spacing:.14em}.tracking-\\[0\\.16em\\]{letter-spacing:.16em}.tracking-\\[0\\.18em\\]{letter-spacing:.18em}.tracking-\\[0\\.1em\\]{letter-spacing:.1em}.tracking-\\[0\\.2em\\]{letter-spacing:.2em}.tracking-normal{letter-spacing:0}.tracking-wide{letter-spacing:.025em}.tracking-wider{letter-spacing:.05em}.tracking-widest{letter-spacing:.1em}.text-\\[\\#1B2A22\\]{--tw-text-opacity:1;color:rgb(27 42 34/var(--tw-text-opacity,1))}.text-\\[\\#1B2A22\\]\\/50{color:rgba(27,42,34,.5)}.text-\\[\\#1B2A22\\]\\/60{color:rgba(27,42,34,.6)}.text-\\[\\#1B2A22\\]\\/70{color:rgba(27,42,34,.7)}.text-\\[\\#1B2A22\\]\\/75{color:rgba(27,42,34,.75)}.text-\\[\\#1B2A22\\]\\/80{color:rgba(27,42,34,.8)}.text-\\[\\#1F3A2E\\]{--tw-text-opacity:1;color:rgb(31 58 46/var(--tw-text-opacity,1))}.text-\\[\\#C8643C\\]{--tw-text-opacity:1;color:rgb(200 100 60/var(--tw-text-opacity,1))}.text-\\[\\#F4EFE4\\]{--tw-text-opacity:1;color:rgb(244 239 228/var(--tw-text-opacity,1))}.text-black{--tw-text-opacity:1;color:rgb(0 0 0/var(--tw-text-opacity,1))}.text-blue-100{--tw-text-opacity:1;color:rgb(219 234 254/var(--tw-text-opacity,1))}.text-blue-200{--tw-text-opacity:1;color:rgb(191 219 254/var(--tw-text-opacity,1))}.text-blue-300{--tw-text-opacity:1;color:rgb(147 197 253/var(--tw-text-opacity,1))}.text-blue-400{--tw-text-opacity:1;color:rgb(96 165 250/var(--tw-text-opacity,1))}.text-blue-50{--tw-text-opacity:1;color:rgb(239 246 255/var(--tw-text-opacity,1))}.text-blue-500{--tw-text-opacity:1;color:rgb(59 130 246/var(--tw-text-opacity,1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235/var(--tw-text-opacity,1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216/var(--tw-text-opacity,1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175/var(--tw-text-opacity,1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138/var(--tw-text-opacity,1))}.text-blue-950{--tw-text-opacity:1;color:rgb(23 37 84/var(--tw-text-opacity,1))}.text-purple-100{--tw-text-opacity:1;color:rgb(243 232 255/var(--tw-text-opacity,1))}.text-purple-200{--tw-text-opacity:1;color:rgb(233 213 255/var(--tw-text-opacity,1))}.text-purple-300{--tw-text-opacity:1;color:rgb(216 180 254/var(--tw-text-opacity,1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252/var(--tw-text-opacity,1))}.text-purple-50{--tw-text-opacity:1;color:rgb(250 245 255/var(--tw-text-opacity,1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247/var(--tw-text-opacity,1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234/var(--tw-text-opacity,1))}.text-purple-700{--tw-text-opacity:1;color:rgb(126 34 206/var(--tw-text-opacity,1))}.text-purple-800{--tw-text-opacity:1;color:rgb(107 33 168/var(--tw-text-opacity,1))}.text-purple-900{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.text-purple-950{--tw-text-opacity:1;color:rgb(59 7 100/var(--tw-text-opacity,1))}.text-rose-100{--tw-text-opacity:1;color:rgb(255 228 230/var(--tw-text-opacity,1))}.text-rose-200{--tw-text-opacity:1;color:rgb(254 205 211/var(--tw-text-opacity,1))}.text-rose-300{--tw-text-opacity:1;color:rgb(253 164 175/var(--tw-text-opacity,1))}.text-rose-400{--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.text-rose-50{--tw-text-opacity:1;color:rgb(255 241 242/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-rose-600{--tw-text-opacity:1;color:rgb(225 29 72/var(--tw-text-opacity,1))}.text-rose-700{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.text-rose-800{--tw-text-opacity:1;color:rgb(159 18 57/var(--tw-text-opacity,1))}.text-rose-900{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.text-rose-950{--tw-text-opacity:1;color:rgb(76 5 25/var(--tw-text-opacity,1))}.text-slate-100{--tw-text-opacity:1;color:rgb(241 245 249/var(--tw-text-opacity,1))}.text-slate-200{--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-50{--tw-text-opacity:1;color:rgb(248 250 252/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.text-slate-900{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.text-slate-950{--tw-text-opacity:1;color:rgb(2 6 23/var(--tw-text-opacity,1))}.text-stone-100{--tw-text-opacity:1;color:rgb(245 245 244/var(--tw-text-opacity,1))}.text-stone-200{--tw-text-opacity:1;color:rgb(231 229 228/var(--tw-text-opacity,1))}.text-stone-300{--tw-text-opacity:1;color:rgb(214 211 209/var(--tw-text-opacity,1))}.text-stone-400{--tw-text-opacity:1;color:rgb(168 162 158/var(--tw-text-opacity,1))}.text-stone-50{--tw-text-opacity:1;color:rgb(250 250 249/var(--tw-text-opacity,1))}.text-stone-500{--tw-text-opacity:1;color:rgb(120 113 108/var(--tw-text-opacity,1))}.text-stone-600{--tw-text-opacity:1;color:rgb(87 83 78/var(--tw-text-opacity,1))}.text-stone-700{--tw-text-opacity:1;color:rgb(68 64 60/var(--tw-text-opacity,1))}.text-stone-800{--tw-text-opacity:1;color:rgb(41 37 36/var(--tw-text-opacity,1))}.text-stone-900{--tw-text-opacity:1;color:rgb(28 25 23/var(--tw-text-opacity,1))}.text-stone-950{--tw-text-opacity:1;color:rgb(12 10 9/var(--tw-text-opacity,1))}.text-transparent{color:transparent}.text-white{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.underline{text-decoration-line:underline}.line-through{text-decoration-line:line-through}.no-underline{text-decoration-line:none}.underline-offset-2{text-underline-offset:2px}.opacity-0{opacity:0}.opacity-50{opacity:.5}.opacity-60{opacity:.6}.opacity-70{opacity:.7}.opacity-75{opacity:.75}.opacity-80{opacity:.8}.opacity-90{opacity:.9}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgba(0,0,0,.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color)}.shadow-2xl,.shadow-lg{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color),0 4px 6px -4px var(--tw-shadow-color)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgba(0,0,0,.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color)}.shadow-sm,.shadow-xl{box-shadow:var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgba(0,0,0,.1),0 8px 10px -6px rgba(0,0,0,.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color),0 8px 10px -6px var(--tw-shadow-color)}.outline-none{outline:2px solid transparent;outline-offset:2px}.outline{outline-style:solid}.ring{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow,0 0 #0000)}.grayscale{--tw-grayscale:grayscale(100%)}.filter,.grayscale{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.ease-in{transition-timing-function:cubic-bezier(.4,0,1,1)}.ease-in-out{transition-timing-function:cubic-bezier(.4,0,.2,1)}.ease-out{transition-timing-function:cubic-bezier(0,0,.2,1)}.\\[out\\:json\\]{out:json}.\\[timeout\\:20\\]{timeout:20}#root,body,html{margin:0;height:100%;background:#f5f3ec;color-scheme:light}.file\\:mr-2::file-selector-button{margin-right:.5rem}.file\\:border-0::file-selector-button{border-width:0}.file\\:bg-purple-900::file-selector-button{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.file\\:px-2\\.5::file-selector-button{padding-left:.625rem;padding-right:.625rem}.file\\:py-1\\.5::file-selector-button{padding-top:.375rem;padding-bottom:.375rem}.file\\:text-\\[10px\\]::file-selector-button{font-size:10px}.file\\:uppercase::file-selector-button{text-transform:uppercase}.file\\:tracking-wider::file-selector-button{letter-spacing:.05em}.file\\:text-white::file-selector-button{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:border-blue-800:hover{--tw-border-opacity:1;border-color:rgb(30 64 175/var(--tw-border-opacity,1))}.hover\\:border-purple-400:hover{--tw-border-opacity:1;border-color:rgb(192 132 252/var(--tw-border-opacity,1))}.hover\\:border-purple-600:hover{--tw-border-opacity:1;border-color:rgb(147 51 234/var(--tw-border-opacity,1))}.hover\\:border-purple-700:hover{--tw-border-opacity:1;border-color:rgb(126 34 206/var(--tw-border-opacity,1))}.hover\\:border-purple-900:hover{--tw-border-opacity:1;border-color:rgb(88 28 135/var(--tw-border-opacity,1))}.hover\\:bg-blue-50:hover{--tw-bg-opacity:1;background-color:rgb(239 246 255/var(--tw-bg-opacity,1))}.hover\\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216/var(--tw-bg-opacity,1))}.hover\\:bg-blue-800:hover{--tw-bg-opacity:1;background-color:rgb(30 64 175/var(--tw-bg-opacity,1))}.hover\\:bg-blue-900:hover{--tw-bg-opacity:1;background-color:rgb(30 58 138/var(--tw-bg-opacity,1))}.hover\\:bg-purple-700:hover{--tw-bg-opacity:1;background-color:rgb(126 34 206/var(--tw-bg-opacity,1))}.hover\\:bg-purple-800:hover{--tw-bg-opacity:1;background-color:rgb(107 33 168/var(--tw-bg-opacity,1))}.hover\\:bg-purple-900:hover{--tw-bg-opacity:1;background-color:rgb(88 28 135/var(--tw-bg-opacity,1))}.hover\\:bg-rose-600:hover{--tw-bg-opacity:1;background-color:rgb(225 29 72/var(--tw-bg-opacity,1))}.hover\\:bg-stone-100:hover{--tw-bg-opacity:1;background-color:rgb(245 245 244/var(--tw-bg-opacity,1))}.hover\\:bg-stone-300:hover{--tw-bg-opacity:1;background-color:rgb(214 211 209/var(--tw-bg-opacity,1))}.hover\\:bg-stone-50:hover{--tw-bg-opacity:1;background-color:rgb(250 250 249/var(--tw-bg-opacity,1))}.hover\\:bg-white:hover{--tw-bg-opacity:1;background-color:rgb(255 255 255/var(--tw-bg-opacity,1))}.hover\\:bg-white\\/10:hover{background-color:hsla(0,0%,100%,.1)}.hover\\:text-purple-900:hover{--tw-text-opacity:1;color:rgb(88 28 135/var(--tw-text-opacity,1))}.hover\\:text-rose-700:hover{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.hover\\:text-rose-900:hover{--tw-text-opacity:1;color:rgb(136 19 55/var(--tw-text-opacity,1))}.hover\\:text-slate-700:hover{--tw-text-opacity:1;color:rgb(51 65 85/var(--tw-text-opacity,1))}.hover\\:text-slate-900:hover{--tw-text-opacity:1;color:rgb(15 23 42/var(--tw-text-opacity,1))}.hover\\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255/var(--tw-text-opacity,1))}.hover\\:opacity-100:hover{opacity:1}.focus\\:border-stone-300:focus{--tw-border-opacity:1;border-color:rgb(214 211 209/var(--tw-border-opacity,1))}.disabled\\:opacity-30:disabled{opacity:.3}.disabled\\:opacity-40:disabled{opacity:.4}.disabled\\:opacity-50:disabled{opacity:.5}@media (max-width:359px){.max-\\[359px\\]\\:text-\\[24px\\]{font-size:24px}.max-\\[359px\\]\\:text-\\[9px\\]{font-size:9px}}@media (min-width:600px){.min-\\[600px\\]\\:max-w-\\[640px\\]{max-width:640px}}@media (min-width:640px){.sm\\:items-center{align-items:center}}@media (min-width:820px){.min-\\[820px\\]\\:max-w-\\[820px\\]{max-width:820px}}";
 const V8_CSS = `
 .pact-hc [class*="text-stone-"],.pact-hc [class*="text-slate-4"],.pact-hc [class*="text-slate-5"],.pact-hc [class*="text-slate-6"]{color:#1B2A22!important}
 .pact-hc [style*="#5A675F"],.pact-hc [style*="#7C857F"],.pact-hc [style*="rgb(90, 103, 95)"],.pact-hc [style*="rgb(124, 133, 127)"]{color:#1B2A22!important}
@@ -4018,7 +4019,7 @@ function AppInner({ onReset }) {
 
   // Planner opens on the day you are looking at, not a fixed demo date.
   useEffect(() => {
-    if (!plannerOpen) return;
+    if (!plannerOpen) { setEventConfig(p => (p.slotPicked || p.planLabel) ? { ...p, slotPicked: false, planLabel: '' } : p); setPlannerMode('event'); return; }
     setEventConfig(p => ({ ...p, date: selectedDateStr }));
     setTaskConfig(p => ({ ...p, date: selectedDateStr, deadline: p.deadline < selectedDateStr ? addDaysStr(selectedDateStr, 4) : p.deadline }));
     setScheduleConflictWarning(null);
@@ -4085,7 +4086,7 @@ function AppInner({ onReset }) {
 
   const handleConfirmAddPlan = () => {
     if (plannerMode === 'event' || plannerMode === 'activity') {
-      const chosenVenue = selectedVenueMatch || displayedPlannerVenues[0];
+      const chosenVenue = displayedPlannerVenues.find(v => selectedVenueMatch && v.id === selectedVenueMatch.id) || displayedPlannerVenues[0];
       if (!chosenVenue) return;
       const [h, m] = eventConfig.startTime.split(':').map(Number);
       const endMins = h * 60 + m + Number(eventConfig.duration);
@@ -4097,8 +4098,8 @@ function AppInner({ onReset }) {
       const newTask = {
         id: Date.now(),
         title: plannerMode === 'event'
-          ? `${eventConfig.eventType}: ${chosenVenue.name}`
-          : `${eventConfig.activityDropdown} @ ${chosenVenue.name}`,
+          ? `${eventConfig.planLabel || eventConfig.eventType}: ${chosenVenue.name}`
+          : `${eventConfig.planLabel || eventConfig.activityDropdown} @ ${chosenVenue.name}`,
         duration: Number(eventConfig.duration),
         status: 'pending',
         startTime: eventConfig.startTime,
@@ -4115,7 +4116,7 @@ function AppInner({ onReset }) {
         rating: null,
         reviewNote: '',
         withPerson: null,
-        meetingType: 'Friendly'
+        meetingType: eventConfig.meetingType || 'Friendly'
       };
       setTasks(prev => [...prev, newTask]);
       setSelectedDateStr(eventConfig.date);
@@ -4184,6 +4185,42 @@ function AppInner({ onReset }) {
     setPlannerOpen(false);
     setPlannerResultsStep(false);
     setSurpriseConfig(prev => ({ ...prev, showPopup: false }));
+  };
+
+  // Add one plan you have already decided on (a booked event, one you host, a place you searched for).
+  const addPlanDirect = (p) => {
+    const d = Number(p.duration) || 60;
+    setTasks(prev => [...prev, {
+      id: Date.now(), title: p.title, duration: d, status: 'pending', startTime: p.startTime, endTime: fromMins(toMins(p.startTime) + d), date: p.date,
+      type: p.type || 'social', categoryColor: p.categoryColor || 'social', location: p.location || '', transportMode: 'Metrolink / Bus', travelTime: 25, distance: '',
+      leaveByNote: '', notes: p.notes || '', rating: null, reviewNote: '', withPerson: null, meetingType: p.meetingType || 'Friendly'
+    }]);
+    setSelectedDateStr(p.date);
+    if (linkedTargetId) { setWeeklyTargets(prev => prev.map(t => t.id === linkedTargetId ? { ...t, current: Math.min(t.target, t.current + 1) } : t)); setLinkedTargetId(null); }
+    setPlannerOpen(false); setPlannerResultsStep(false);
+  };
+  // Look a place up by name near you: our places database first, then the open map search.
+  const searchPlacesByName = async (q) => {
+    const { lat, lon } = await resolveCoords(loc);
+    const out = []; const seen = new Set();
+    const push = (name, addr, km) => { const k = String(name).toLowerCase(); if (!name || seen.has(k)) return; seen.add(k); out.push({ name, addr: addr || '', dist: km != null ? fmtDist(km, loc.country) : '' }); };
+    if (cloud.enabled) { try { const rows = await cloud.placesNear({ lat, lon, radiusKm: 25, categories: null, kinds: null, query: q, limit: 8 }); rows.forEach(r => push(r.name, r.address, r.distance_km)); } catch (e) { /* try the map search */ } }
+    if (out.length < 5) {
+      try {
+        const j = await fetchJSON(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&lat=${lat}&lon=${lon}&limit=8&lang=en`, {}, 7000);
+        (j.features || []).forEach(f => { const pr = f.properties || {}; if (!pr.name) return; const addr = [pr.street && (pr.housenumber ? pr.housenumber + ' ' : '') + pr.street, pr.postcode, pr.city].filter(Boolean).join(', '); push(pr.name, addr, null); });
+      } catch (e) { /* nothing more to try */ }
+    }
+    return out.slice(0, 8);
+  };
+  // What is on near you in the next couple of weeks (live search; empty if the service is unreachable).
+  const findEventsNear = async () => {
+    if (!(await geminiReady())) return [];
+    const schema = { type: "ARRAY", items: { type: "OBJECT", properties: { title: { type: "STRING" }, date: { type: "STRING" }, time: { type: "STRING" }, place: { type: "STRING" }, price: { type: "STRING" }, free: { type: "BOOLEAN" } }, propertyOrdering: ["title", "date", "time", "place", "price", "free"] } };
+    const prompt = `List 6 real, upcoming public events (concerts, comedy, markets, exhibitions, sport, festivals) in or near ${loc.label || loc.city} between ${todayDateStr()} and ${addDaysStr(todayDateStr(), 14)}. For each give title, date as YYYY-MM-DD, start time as HH:MM (24h), venue name, price (e.g. Free or £12), and free (true if no charge).`;
+    const res = await callGrounded(prompt, 'You list real upcoming local events. Return JSON only.', schema);
+    const arr = res && res.text ? JSON.parse(res.text) : [];
+    return (Array.isArray(arr) ? arr : []).filter(e => e && e.title && /^\d{4}-\d{2}-\d{2}$/.test(e.date || '') && e.date >= todayDateStr()).slice(0, 8);
   };
 
   const handleCompleteTaskWithClockCheck = (task) => {
@@ -7095,7 +7132,7 @@ function AppInner({ onReset }) {
                 <ScheduleListings date={selectedDateStr} mine={mineBlocks} friends={friendCols} matching={matching} canMatch={!!(authUser && authUser.cloud) && pactFriends.length > 0}
                   onToggleMatch={() => { setMatching(m => !m); loadSched(); }} onShare={() => setSharePanel(true)} nowMin={nowM} isToday={selectedDateStr === todayDateStr()}
                   onTapTask={(id) => setSheetTaskId(id)}
-                  onSlot={(m, e2) => { const t = fromMins(m); setEventConfig(c => ({ ...c, date: selectedDateStr, startTime: t, duration: Math.max(15, (e2 || m + 60) - m) })); setTaskConfig(c => ({ ...c, date: selectedDateStr, startTime: t })); setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }}
+                  onSlot={(m, e2) => { const t = fromMins(m); setEventConfig(c => ({ ...c, date: selectedDateStr, startTime: t, slotPicked: true, duration: Math.max(15, (e2 || m + 60) - m) })); setTaskConfig(c => ({ ...c, date: selectedDateStr, startTime: t })); setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }}
                   onAdd={() => { setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }} />
                 {sharePanel && <ShareSchedulePanel friends={pactFriends} grants={schedGrants} onSet={setScheduleShare} onClose={() => setSharePanel(false)} />}
               </>);
@@ -9235,586 +9272,19 @@ function AppInner({ onReset }) {
       {/* =========================================================
           MULTI-MODE SMART PLANNER MODAL (EVENT / TASK / ACTIVITY / SURPRISE)
          ========================================================= */}
-      {plannerOpen && (
-        <div className="fixed inset-0 bg-slate-950/70 z-40 flex items-center justify-center p-4">
-          <div className="bg-[#FAF8F5] border-2 border-slate-900 w-full max-w-md max-h-[88vh] overflow-y-auto p-5 space-y-4 shadow-2xl">
-            <div className="flex justify-between items-center border-b border-stone-300 pb-3">
-              <div>
-                <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Smart Concierge</span>
-                <h3 className="font-editorial text-lg font-normal">
-                  {linkedTargetId ? 'Plan Activity for Weekly Target' : 'What would you like to plan?'}
-                </h3>
-              </div>
-              <button onClick={() => setPlannerOpen(false)} className="p-1 text-stone-500 hover:text-slate-900">
-                <X size={18} />
-              </button>
-            </div>
-
-            {/* 4 Mode Selector Buttons */}
-            <div className="grid grid-cols-4 gap-1 bg-stone-200 p-1">
-              {[
-                { id: 'event', label: 'Event' },
-                { id: 'task', label: 'Task' },
-                { id: 'activity', label: 'Activity' },
-                { id: 'surprise', label: 'Surprise' }
-              ].map(m => (
-                <button
-                  key={m.id}
-                  onClick={() => { setPlannerMode(m.id); setPlannerResultsStep(false); setScheduleConflictWarning(null); }}
-                  className={`py-1.5 text-[10px] uppercase tracking-wider font-medium ${
-                    plannerMode === m.id ? 'bg-purple-900 text-white' : 'bg-white text-slate-700'
-                  }`}
-                >
-                  {m.label}
-                </button>
-              ))}
-            </div>
-
-            {/* MODE A: EVENT OR ACTIVITY */}
-            {(plannerMode === 'event' || plannerMode === 'activity') && !plannerResultsStep && (
-              <div className="space-y-3">
-                <div>
-                  <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">
-                    {plannerMode === 'event' ? 'Select Event Type' : 'Select Activity Category'}
-                  </label>
-                  {plannerMode === 'event' ? (
-                    <select
-                      value={eventConfig.eventType}
-                      onChange={e => setEventConfig({ ...eventConfig, eventType: e.target.value })}
-                      className="w-full bg-white border border-stone-300 px-3 py-2 text-xs"
-                    >
-                      <option value="Date Night (Serious)">Date Night (Uses Serious Prep Buffer)</option>
-                      <option value="Birthday Celebration">Birthday Celebration</option>
-                      <option value="Casual Friend Hangout">Casual Friend Hangout</option>
-                      <option value="Business Dinner">Business / Networking Dinner</option>
-                    </select>
-                  ) : (
-                    <select
-                      value={eventConfig.activityDropdown}
-                      onChange={e => setEventConfig({ ...eventConfig, activityDropdown: e.target.value })}
-                      className="w-full bg-white border border-stone-300 px-3 py-2 text-xs"
-                    >
-                      <option value="Outdoor Scenic Walk">Outdoor Scenic Walk</option>
-                      <option value="Bouldering / Movement">Bouldering / Movement</option>
-                      <option value="Pottery / Art Cafe">Pottery / Art Cafe</option>
-                      <option value="Gallery & Museum Visit">Gallery & Museum Visit</option>
-                    </select>
-                  )}
-                </div>
-
-                <div>
-                  <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">
-                    Vibe Keywords (AI matches Google Review descriptions & synonyms)
-                  </label>
-                  <input
-                    type="text"
-                    value={eventConfig.vibeKeywords}
-                    onChange={e => setEventConfig({ ...eventConfig, vibeKeywords: e.target.value })}
-                    placeholder="e.g., romantic, candlelit, cozy, vibrant, creative..."
-                    className="w-full bg-white border border-stone-300 px-3 py-1.5 text-xs"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <div data-planner-where className="col-span-2 border border-stone-300 bg-white p-2.5 space-y-2">
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="min-w-0">
-                        <div className="text-[10px] uppercase tracking-wider text-stone-600">Near</div>
-                        <div data-planner-near className="text-xs font-medium truncate">{[loc.city, userProfile.location && userProfile.location.postcode].filter(Boolean).join(' · ')}{locIsDefault ? ' (default)' : ''}</div>
-                      </div>
-                      <button type="button" data-planner-gps onClick={plannerUseGps} disabled={locBusy} className="shrink-0 px-2.5 py-1.5 bg-purple-900 text-white text-[10px] uppercase tracking-wider font-medium flex items-center gap-1 disabled:opacity-50"><MapPin size={11} /> Use my location</button>
-                    </div>
-                    <div className="flex gap-1.5">
-                      <input type="text" data-planner-pc aria-label="Search near a postcode or town" placeholder="Or type a postcode or town" value={pcDraft} onChange={e => setPcDraft(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') plannerSetPostcode(); }} className="flex-1 min-w-0 bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
-                      <button type="button" data-planner-pc-go onClick={plannerSetPostcode} disabled={locBusy || !pcDraft.trim()} className="px-2.5 py-1.5 border border-stone-400 text-[10px] uppercase tracking-wider disabled:opacity-40">Set</button>
-                    </div>
-                    {locAsk && (
-                      <div data-planner-autoask className="p-2 border border-stone-300 bg-[#FAF8F5] space-y-1.5">
-                        <p className="text-[11px] leading-snug text-slate-800">Keep this up to date automatically? Only while the app is open, and only when you have moved about half a kilometre.</p>
-                        <div className="flex gap-1.5">
-                          <button type="button" data-planner-auto-yes onClick={() => { patchProfile({ autoLocation: true }); setLocAsk(false); setLocMsg('Done. Your location will refresh when you open the app.'); }} className="px-2.5 py-1.5 bg-purple-900 text-white text-[10px] uppercase tracking-wider">Yes, keep it updated</button>
-                          <button type="button" data-planner-auto-no onClick={() => { patchProfile({ autoLocation: false }); setLocAsk(false); }} className="px-2.5 py-1.5 border border-stone-400 text-[10px] uppercase tracking-wider">No thanks</button>
-                        </div>
-                      </div>
-                    )}
-                    {locMsg && <p data-planner-locmsg className="text-[11px] text-stone-600 italic">{locMsg}</p>}
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">Budget</label>
-                    <div className="grid grid-cols-3 gap-1">
-                      {['£', '££', '£££'].map(b => (
-                        <button
-                          key={b}
-                          onClick={() => setEventConfig({ ...eventConfig, budget: b })}
-                          className={`py-1.5 text-xs border ${eventConfig.budget === b ? 'bg-blue-800 text-white border-blue-800' : 'bg-white border-stone-300'}`}
-                        >
-                          {b}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Dietary Requirement Multi-Select Chips */}
-                <div>
-                  <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">
-                    Dietary Requirements (Venues with options available)
-                  </label>
-                  <div className="flex flex-wrap gap-1.5">
-                    {dietaryOptionsList.map(diet => {
-                      const active = eventConfig.dietary.includes(diet);
-                      return (
-                        <button
-                          key={diet}
-                          onClick={() => {
-                            setEventConfig(prev => ({
-                              ...prev,
-                              dietary: active ? prev.dietary.filter(d => d !== diet) : [...prev.dietary, diet]
-                            }));
-                          }}
-                          className={`px-2 py-1 text-[10px] uppercase tracking-wider border ${
-                            active ? 'bg-purple-800 text-white border-purple-800' : 'bg-white text-slate-700 border-stone-300'
-                          }`}
-                        >
-                          {diet}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Suggested Best Slots + Manual Picker */}
-                <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase tracking-wider text-stone-600 block">
-                    Clash-free times for the selected day (or pick manually below)
-                  </label>
-                  <div className="text-[11px] text-stone-600">
-                    Free on <strong>{longDate(eventConfig.date)}</strong> for {Number(eventConfig.duration) || 60} min:
-                  </div>
-                  <div className="flex gap-1.5 flex-wrap">
-                    {eventSuggestions.map((s, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => {
-                          setEventConfig({ ...eventConfig, startTime: s.time });
-                          setScheduleConflictWarning(checkScheduleAndPrepConflict(eventConfig.date, s.time, eventConfig.eventType.includes('Serious')));
-                        }}
-                        className={`flex-1 min-w-[30%] p-1.5 border text-[10px] text-left ${eventConfig.startTime === s.time ? 'bg-purple-900 text-white border-purple-900' : 'bg-white border-stone-300 hover:border-purple-800'}`}
-                      >
-                        {s.label}
-                      </button>
-                    ))}
-                    {eventSuggestions.length === 0 && (
-                      <div className="w-full p-2 bg-rose-50 border border-rose-200 text-[11px] text-rose-800 flex items-center justify-between gap-2">
-                        <span>No clash-free window of that length on this day.</span>
-                        <button type="button" onClick={() => setEventConfig({ ...eventConfig, date: addDaysStr(eventConfig.date, 1) })} className="underline font-medium shrink-0">Try next day</button>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-2 pt-1">
-                    <input
-                      type="date"
-                      value={eventConfig.date}
-                      onChange={e => {
-                        const nextD = e.target.value;
-                        setEventConfig({ ...eventConfig, date: nextD });
-                        setScheduleConflictWarning(checkScheduleAndPrepConflict(nextD, eventConfig.startTime, eventConfig.eventType.includes('Serious')));
-                      }}
-                      className="bg-white border border-stone-300 px-2 py-1.5 text-xs"
-                    />
-                    <input
-                      type="time"
-                      value={eventConfig.startTime}
-                      onChange={e => {
-                        const nextT = e.target.value;
-                        setEventConfig({ ...eventConfig, startTime: nextT });
-                        setScheduleConflictWarning(checkScheduleAndPrepConflict(eventConfig.date, nextT, eventConfig.eventType.includes('Serious')));
-                      }}
-                      className="bg-white border border-stone-300 px-2 py-1.5 text-xs"
-                    />
-                  </div>
-                </div>
-
-                {renderSlotChips(eventConfig.date, Number(eventConfig.duration) || 60, eventConfig.startTime, (st) => {
-                  setEventConfig({ ...eventConfig, startTime: st });
-                  setScheduleConflictWarning(checkScheduleAndPrepConflict(eventConfig.date, st, eventConfig.eventType.includes('Serious')));
-                })}
-
-                {scheduleConflictWarning && (
-                  <div className="p-3 bg-rose-800 text-white text-xs flex items-start gap-2">
-                    <AlertTriangle size={16} className="shrink-0 mt-0.5" />
-                    <span>{scheduleConflictWarning}</span>
-                  </div>
-                )}
-
-                <button
-                  onClick={() => { setPlannerResultsStep(true); setSelectedVenueMatch(null); handleRefreshMoreVenues(true); }}
-                  className="w-full py-2.5 bg-purple-900 hover:bg-purple-800 text-white text-xs uppercase tracking-widest font-medium"
-                >
-                  Find places near {(userProfile.location && userProfile.location.postcode) || loc.city} for "{eventConfig.vibeKeywords}"
-                </button>
-              </div>
-            )}
-
-            {/* VENUE MATCH RESULTS POPUP STEP */}
-            {(plannerMode === 'event' || plannerMode === 'activity') && plannerResultsStep && (
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <div className="text-xs text-stone-600">
-                    Top places near <strong>{(userProfile.location && userProfile.location.postcode) || loc.city}</strong> matching <em>"{eventConfig.vibeKeywords}"</em>:
-                  </div>
-                  <button
-                    onClick={() => handleRefreshMoreVenues()}
-                    disabled={isSearchingLiveVenues}
-                    className="px-2.5 py-1 bg-blue-800 hover:bg-blue-900 text-white text-[10px] uppercase tracking-wider font-medium flex items-center gap-1 shrink-0"
-                  >
-                    <RefreshCw size={11} className={isSearchingLiveVenues ? 'animate-spin' : ''} />
-                    {isSearchingLiveVenues ? 'Searching...' : 'Refresh / More'}
-                  </button>
-                </div>
-
-                <div data-planner-sort className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider">
-                  <span className="text-stone-500">Sort</span>
-                  {[['best', 'Best match'], ['near', 'Nearest']].map(([k, l]) => (
-                    <button key={k} type="button" data-planner-sort-btn={k} onClick={() => { setVenueSort(k); setVenueRefreshOffset(0); }} className={`px-2 py-1 border ${venueSort === k ? 'bg-[#1B2A22] text-white border-[#1B2A22]' : 'border-stone-400 text-stone-700'}`}>{l}</button>
-                  ))}
-                </div>
-                {displayedPlannerVenues.length === 0 && (
-                  <div data-planner-empty className="p-3 bg-white border border-stone-200 text-xs text-stone-600 leading-relaxed">
-                    {isSearchingLiveVenues ? 'Searching...' : `I couldn't find ${venueIntent.label || 'places'} near ${loc.city} for "${eventConfig.vibeKeywords}" yet. Press Refresh / More, or try different keywords.`}
-                  </div>
-                )}
-                <div className="space-y-2.5">
-                  {displayedPlannerVenues.map(venue => {
-                    const isSelected = (selectedVenueMatch?.id || displayedPlannerVenues[0]?.id) === venue.id;
-                    return (
-                      <div
-                        key={venue.id}
-                        onClick={() => setSelectedVenueMatch(venue)}
-                        className={`p-3 border cursor-pointer transition-all ${
-                          isSelected ? 'bg-white border-2 border-purple-900' : 'bg-white border-stone-200 opacity-80'
-                        }`}
-                      >
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <h4 className="text-xs font-medium text-slate-900">{venue.name}</h4>
-                            <div className="text-[10px] text-stone-500">{venue.postcode} • {venue.price}{venue.rating ? ` • ★ ${venue.rating}` : ''}</div>
-                          </div>
-                          <span className="px-2 py-0.5 bg-purple-800 text-white text-[9px] uppercase tracking-wider">
-                            Review Match
-                          </span>
-                        </div>
-                        <p className="text-[11px] italic text-slate-700 mt-1.5 bg-[#FAF8F5] p-2 border-l-2 border-purple-800">
-                          {venue.reviewSnippet}
-                        </p>
-                        <div className="text-[10px] text-blue-900 mt-1 font-medium">
-                          {venue.transportNote}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setPlannerResultsStep(false)}
-                    className="px-3 py-2 bg-stone-200 text-slate-800 text-[10px] uppercase tracking-wider"
-                  >
-                    Back
-                  </button>
-                  <button
-                    onClick={handleConfirmAddPlan}
-                    disabled={displayedPlannerVenues.length === 0}
-                    className="flex-1 py-2 bg-purple-900 disabled:opacity-40 text-white text-xs uppercase tracking-widest font-medium"
-                  >
-                    Add Selected Venue to Weekly Schedule
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* MODE B: TASK ALLOCATOR (deadline, timing options, any number of conflict-free blocks) */}
-            {plannerMode === 'task' && taskPlan && (
-              <div className="space-y-3">
-                <div>
-                  <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">Task Name</label>
-                  <input
-                    type="text"
-                    value={taskConfig.title}
-                    onChange={e => setTaskConfig({ ...taskConfig, title: e.target.value })}
-                    className="w-full bg-white border border-stone-300 px-3 py-1.5 text-xs"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">Task Category</label>
-                    <select
-                      value={taskConfig.category}
-                      onChange={e => setTaskConfig({ ...taskConfig, category: e.target.value })}
-                      className="w-full bg-white border border-stone-300 px-2 py-1.5 text-xs"
-                    >
-                      <option value="Work & Study">Deep Study / Coding</option>
-                      <option value="Admin & Life">Life Admin / Errands</option>
-                      <option value="Creative Project">Creative Project</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">Deadline Date</label>
-                    <input
-                      type="date"
-                      value={taskConfig.deadline}
-                      onChange={e => setTaskConfig({ ...taskConfig, deadline: e.target.value })}
-                      className="w-full bg-white border border-stone-300 px-2 py-1.5 text-xs"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">Hours to Allocate</label>
-                    <input
-                      type="number"
-                      min="0.5"
-                      max="40"
-                      step="0.5"
-                      value={taskConfig.totalHours}
-                      onChange={e => setTaskConfig({ ...taskConfig, totalHours: Math.max(0.5, Number(e.target.value) || 0.5) })}
-                      className="w-full bg-white border border-stone-300 px-3 py-1.5 text-xs"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">Split Into Blocks</label>
-                    <div className="grid grid-cols-3 border border-stone-300 bg-white">
-                      <button
-                        type="button"
-                        aria-label="Fewer blocks"
-                        onClick={() => setTaskConfig({ ...taskConfig, blocks: Math.max(1, taskConfig.blocks - 1) })}
-                        className="py-1.5 text-sm hover:bg-stone-100"
-                      >
-                        −
-                      </button>
-                      <div className="py-1.5 text-xs text-center font-medium flex items-center justify-center">{taskConfig.blocks}</div>
-                      <button
-                        type="button"
-                        aria-label="More blocks"
-                        onClick={() => setTaskConfig({ ...taskConfig, blocks: Math.min(8, taskConfig.blocks + 1) })}
-                        className="py-1.5 text-sm hover:bg-stone-100"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <p className="text-[10px] text-stone-500 -mt-1">
-                  {taskConfig.blocks === 1
-                    ? 'One single sitting.'
-                    : `${taskConfig.blocks} sessions of about ${Math.floor(taskConfig.totalHours * 60 / taskConfig.blocks / 15) * 15 >= 60 ? `${Math.floor(taskConfig.totalHours * 60 / taskConfig.blocks / 60)}h ` : ''}${Math.round((taskConfig.totalHours * 60 / taskConfig.blocks) % 60) ? `${Math.round((taskConfig.totalHours * 60 / taskConfig.blocks) % 60)}m` : ''} each.`}
-                  {' '}Blocks are only placed in free time.
-                </p>
-
-                <div>
-                  <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">Best Time of Day</label>
-                  <div className="grid grid-cols-4 gap-1">
-                    {[
-                      { id: 'morning', label: 'Morning' },
-                      { id: 'afternoon', label: 'Afternoon' },
-                      { id: 'evening', label: 'Evening' },
-                      { id: 'any', label: 'Any time' }
-                    ].map(p => (
-                      <button
-                        key={p.id}
-                        type="button"
-                        onClick={() => setTaskConfig({ ...taskConfig, pref: p.id })}
-                        className={`py-1.5 text-[10px] uppercase border ${taskConfig.pref === p.id ? 'bg-blue-800 text-white border-blue-800' : 'bg-white border-stone-300'}`}
-                      >
-                        {p.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">Start From</label>
-                    <input
-                      type="date"
-                      value={taskConfig.date}
-                      onChange={e => setTaskConfig({ ...taskConfig, date: e.target.value })}
-                      className="w-full bg-white border border-stone-300 px-2 py-1.5 text-xs"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">Earliest Time</label>
-                    <input
-                      type="time"
-                      value={taskConfig.startTime}
-                      onChange={e => setTaskConfig({ ...taskConfig, startTime: e.target.value })}
-                      className="w-full bg-white border border-stone-300 px-2 py-1.5 text-xs"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <div className="text-[10px] uppercase tracking-wider text-slate-700 font-medium">Proposed Timing (no clashes)</div>
-                  {taskPlan.blocks.length === 0 && (
-                    <div className="p-2.5 bg-white border border-stone-300 text-xs text-stone-600">No free slot found before the deadline.</div>
-                  )}
-                  {taskPlan.blocks.map((blk, i) => (
-                    <div key={`${blk.date}-${blk.s}`} className="flex items-center justify-between gap-2 p-2.5 bg-white border border-stone-300 text-xs">
-                      <div className="min-w-0">
-                        <div className="font-medium">Part {i + 1}/{taskPlan.blocks.length} • {prettyDate(blk.date)}</div>
-                        <div className="text-[11px] text-stone-600 font-mono">{fromMins(blk.s)}–{fromMins(blk.e)} ({blk.len} min)</div>
-                      </div>
-                      {blk.options > 1 && (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const next = [...taskSkip];
-                            next[blk.index] = (next[blk.index] || 0) + 1;
-                            setTaskSkipState({ sig: taskSig, skip: next });
-                          }}
-                          className="shrink-0 px-2 py-1 bg-stone-200 hover:bg-stone-300 text-[10px] uppercase tracking-wider font-medium flex items-center gap-1"
-                        >
-                          <RefreshCw size={10} /> Other time
-                        </button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-
-                {taskPlan.warnings.map(w => (
-                  <div key={w} className="p-3 bg-rose-800 text-white text-xs flex items-start gap-2">
-                    <AlertTriangle size={16} className="shrink-0 mt-0.5" />
-                    <span>{w}</span>
-                  </div>
-                ))}
-
-                <button
-                  onClick={handleConfirmAddPlan}
-                  disabled={taskPlan.blocks.length === 0}
-                  className="w-full py-2.5 bg-blue-800 hover:bg-blue-900 text-white text-xs uppercase tracking-widest font-medium"
-                >
-                  {taskPlan.failed > 0 ? `Insert ${taskPlan.blocks.length} Block${taskPlan.blocks.length === 1 ? '' : 's'} That Fit` : 'Insert Task into Calendar'}
-                </button>
-              </div>
-            )}
-
-            {/* MODE C: SURPRISE ME! (BUDGET + DURATION + VIBE + DICE ROLLER POPUP) */}
-            {plannerMode === 'surprise' && (
-              <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">Max Budget</label>
-                    <select
-                      value={surpriseConfig.budget}
-                      onChange={e => setSurpriseConfig({ ...surpriseConfig, budget: e.target.value })}
-                      className="w-full bg-white border border-stone-300 px-2 py-1.5 text-xs"
-                    >
-                      <option value="Free">Free</option>
-                      <option value="£">£ (Under £15)</option>
-                      <option value="££">££ (£15–£35)</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">Duration (Mins)</label>
-                    <select
-                      value={surpriseConfig.duration}
-                      onChange={e => setSurpriseConfig({ ...surpriseConfig, duration: Number(e.target.value) })}
-                      className="w-full bg-white border border-stone-300 px-2 py-1.5 text-xs"
-                    >
-                      <option value={60}>60 mins</option>
-                      <option value={90}>90 mins</option>
-                      <option value={150}>150 mins</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">Vibe Dropdown</label>
-                  <select
-                    value={surpriseConfig.vibe}
-                    onChange={e => setSurpriseConfig({ ...surpriseConfig, vibe: e.target.value })}
-                    className="w-full bg-white border border-stone-300 px-3 py-1.5 text-xs"
-                  >
-                    <option value="Adventurous & Quirky">Adventurous & Quirky</option>
-                    <option value="Cozy & Cultural">Cozy & Cultural</option>
-                    <option value="Creative & Hands-On">Creative & Hands-On</option>
-                    <option value="Outdoor & Refreshing">Outdoor & Refreshing</option>
-                  </select>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">Day</label>
-                    <input
-                      type="date"
-                      value={surpriseConfig.day}
-                      onChange={e => setSurpriseConfig({ ...surpriseConfig, day: e.target.value })}
-                      className="w-full bg-white border border-stone-300 px-3 py-1.5 text-xs"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-wider text-stone-600 block mb-1">Start Time</label>
-                    <input
-                      type="time"
-                      value={surpriseConfig.startTime}
-                      onChange={e => setSurpriseConfig({ ...surpriseConfig, startTime: e.target.value })}
-                      className="w-full bg-white border border-stone-300 px-3 py-1.5 text-xs"
-                    />
-                  </div>
-                </div>
-                {renderSlotChips(surpriseConfig.day, surpriseConfig.duration, surpriseConfig.startTime, (st) => setSurpriseConfig(prev => ({ ...prev, startTime: st })))}
-
-                {!surpriseConfig.showPopup ? (
-                  <button
-                    onClick={rollSurprise}
-                    className="w-full py-2.5 bg-rose-700 hover:bg-rose-800 text-white text-xs uppercase tracking-widest font-medium flex items-center justify-center gap-2"
-                  >
-                    <Dices size={15} /> Reveal Surprise Activity
-                  </button>
-                ) : (
-                  <div className="p-4 bg-purple-900 text-white space-y-3 border-2 border-rose-400">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <span className="text-[10px] uppercase tracking-widest text-rose-300 font-medium">Mystery Pick</span>
-                        <h4 className="font-editorial text-base font-normal mt-0.5">
-                          {surprisePick ? surprisePick.title : ''}
-                        </h4>
-                      </div>
-                      <button
-                        onClick={rollSurprise}
-                        className="px-2.5 py-1 bg-rose-700 hover:bg-rose-600 text-white text-[10px] uppercase tracking-wider flex items-center gap-1"
-                        title="Roll another random idea"
-                      >
-                        <Dices size={12} /> {surpriseLoading ? 'Rolling…' : 'Roll Dice'}
-                      </button>
-                    </div>
-                    <p className="text-xs text-purple-100">
-                      {surprisePick ? surprisePick.desc : ''}
-                    </p>
-                    <div className="text-[10px] text-rose-200">
-                      {surprisePick ? `${surprisePick.location} • ${surprisePick.transport} • ${surprisePick.cost}` : ''}
-                    </div>
-                    {surprisePick && (
-                      <a href={surprisePick.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider text-white underline">
-                        <ExternalLink size={11} /> Find info &amp; tickets
-                      </a>
-                    )}
-                    <button
-                      onClick={handleConfirmAddPlan}
-                      className="w-full py-2 bg-white text-purple-950 text-xs uppercase tracking-widest font-medium"
-                    >
-                      Accept & Add to Weekly Schedule
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      {plannerOpen && <PlannerWizard c={{
+        plannerMode, setPlannerMode, linkedTargetId, eventConfig, setEventConfig, setTaskConfig, taskPlan, surpriseConfig, setSurpriseConfig, surprisePick, surpriseLoading, rollSurprise,
+        loc, userProfile, locIsDefault, locBusy, locMsg, locAsk, pcDraft, setPcDraft, plannerUseGps, plannerSetPostcode,
+        autoYes: () => { patchProfile({ autoLocation: true }); setLocAsk(false); setLocMsg('Done. Your location will refresh when you open the app.'); },
+        autoNo: () => { patchProfile({ autoLocation: false }); setLocAsk(false); },
+        venues: displayedPlannerVenues, selectedVenue: selectedVenueMatch, setSelectedVenue: setSelectedVenueMatch, setSelectedVenueMatch, refreshVenues: handleRefreshMoreVenues,
+        searchingVenues: isSearchingLiveVenues, venueSort, setVenueSort, setVenueRefreshOffset, venueIntent, dietaryOptionsList,
+        suggestStartTimes, checkScheduleAndPrepConflict, scheduleConflictWarning, setScheduleConflictWarning,
+        selectedDateStr, todayStr: todayDateStr(), addDays: addDaysStr, prettyDate, fromMins, toMins, dayWord: (d) => new Date(d + 'T12:00:00').toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric' }),
+        friendNames: pactFriends.map(f => f.name).filter(Boolean), searchPlaces: searchPlacesByName, findEvents: findEventsNear, addPlan: addPlanDirect, confirmPlan: handleConfirmAddPlan,
+        otherTime: (idx) => { const next = [...taskSkip]; next[idx] = (next[idx] || 0) + 1; setTaskSkipState({ sig: taskSig, skip: next }); },
+        onClose: () => { setPlannerOpen(false); setPlannerResultsStep(false); setLinkedTargetId(null); setEventConfig(p => ({ ...p, slotPicked: false, planLabel: '' })); }
+      }} />}
 
       {/* =========================================================
           ROAMIE AI ASSISTANT & BUG REPORT DRAWER
