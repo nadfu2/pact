@@ -2136,7 +2136,9 @@ function Headline({ title, sub }) {
     </div>
   );
 }
-function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMatch, onTapTask, onShare, onAdd, nowMin, isToday }) {
+function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMatch, onTapTask, onShare, onAdd, onSlot, nowMin, isToday }) {
+  const [ghost, setGhost] = useState(null);   // start minute of the tapped empty slot
+  useEffect(() => { setGhost(null); }, [date]);
   const cols = [{ id: 'me', name: 'You', blocks: mine, ok: true, mine: true }, ...(matching ? friends : [])];
   const all = cols.flatMap(c => c.blocks);
   const H0 = Math.min(8, all.length ? Math.floor(Math.min(...all.map(b => b.s)) / 60) : 8);
@@ -2154,15 +2156,23 @@ function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMat
   }
   const upcoming = mine.filter(b => !b.past).sort((a, b) => a.s - b.s)[0];
   const title = matching ? (free.length ? `Everyone’s free at ${hourWord(free[0].s)}.` : 'No hour works for everyone.') : mine.length === 0 ? 'A clear day.' : `${mine.length} plan${mine.length === 1 ? '' : 's'} ${isToday ? 'today' : 'that day'}.`;
-  const sub = matching ? 'See your friends’ day beside yours.' : upcoming ? `Next: ${upcoming.t} at ${fromMins(upcoming.s)}.` : canMatch ? 'Tap time matching to see your friends’ day beside yours.' : 'Nothing else planned.';
+  const sub = !matching && upcoming ? `Next: ${upcoming.t} at ${fromMins(upcoming.s)}.` : null;
   const grid = `34px repeat(${cols.length}, minmax(${matching ? 104 : 120}px, 1fr))`;
   const hoursLabels = []; for (let h = H0; h < H1; h += 2) hoursLabels.push(h);
   return (
     <section data-listings>
-      <KickerRow label="Schedule" right={canMatch
-        ? <button data-match-toggle aria-pressed={matching} onClick={onToggleMatch} style={{ ...kickerRightStyle, background: 'none', border: 0, padding: 0, color: '#1B2A22', fontWeight: 600 }}>{matching ? 'Hide time matching ▴' : 'Expand time matching ▾'}</button>
-        : <span style={kickerRightStyle}>Listings</span>} />
+      <KickerRow label="Schedule" right={<span style={kickerRightStyle}>Listings</span>} />
       <Headline title={title} sub={sub} />
+      <div style={{ display: 'grid', gridTemplateColumns: canMatch ? '1fr 1fr' : '1fr', gap: 8, marginTop: 14 }}>
+        {canMatch && <button data-match-toggle aria-pressed={matching} onClick={onToggleMatch} style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '9px 10px', textAlign: 'left', border: '1.5px solid #1B2A22', borderRadius: 0, background: matching ? '#1F3A2E' : 'transparent', color: matching ? '#F4EFE4' : '#1B2A22' }}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><circle cx="9" cy="8" r="3.2" /><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5" /><circle cx="17.5" cy="9" r="2.4" /><path d="M17 14.6c2.3.2 4 1.8 4 4.4" /></svg>
+          <span><b style={{ display: 'block', fontSize: 12.5, lineHeight: 1.15 }}>{matching ? 'Comparing days' : 'Find a time'}</b><span style={{ display: 'block', fontSize: 10.5, opacity: .75, lineHeight: 1.2, marginTop: 1 }}>{matching ? 'Tap to hide friends' : 'See friends’ free hours'}</span></span>
+        </button>}
+        <button data-share-open onClick={onShare} style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '9px 10px', textAlign: 'left', border: '1.5px solid #1B2A22', borderRadius: 0, background: 'transparent', color: '#1B2A22' }}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" /><circle cx="12" cy="12" r="2.8" /></svg>
+          <span><b style={{ display: 'block', fontSize: 12.5, lineHeight: 1.15 }}>Who sees mine</b><span style={{ display: 'block', fontSize: 10.5, opacity: .75, lineHeight: 1.2, marginTop: 1 }}>Set who can see</span></span>
+        </button>
+      </div>
       <div className="overflow-x-auto no-scrollbar" style={{ marginTop: 12 }}>
         <div style={{ minWidth: matching ? 34 + cols.length * 104 : undefined }}>
           <div style={{ display: 'grid', gridTemplateColumns: grid, borderTop: '3px solid #1B2A22', borderBottom: '1px solid #1B2A22' }}>
@@ -2174,7 +2184,17 @@ function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMat
               {hoursLabels.map(h => <div key={h} style={{ position: 'absolute', left: 0, top: top(h * 60) - 7, width: 28, textAlign: 'right', fontSize: 10, color: '#7C857F' }}>{pad2(h)}</div>)}
             </div>
             {cols.map(c => (
-              <div key={c.id} data-list-col={c.id} style={{ position: 'relative', borderLeft: '1px solid #1B2A22' }}>
+              <div key={c.id} data-list-col={c.id} onClick={c.mine ? (e) => {
+                if (e.target.closest('[data-list-block], [data-slot-ghost]')) return;
+                const r = e.currentTarget.getBoundingClientRect();
+                const mins = H0 * 60 + ((e.clientY - r.top) / LST_PX) * 60;
+                setGhost(Math.max(H0 * 60, Math.min(H1 * 60 - 30, Math.floor(mins / 15) * 15)));
+              } : undefined} style={{ position: 'relative', borderLeft: '1px solid #1B2A22', cursor: c.mine ? 'pointer' : undefined }}>
+                {c.mine && ghost != null && (
+                  <button data-slot-ghost onClick={() => onSlot && onSlot(ghost)} style={{ position: 'absolute', top: top(ghost), height: LST_PX - 1, left: 1, right: 2, boxSizing: 'border-box', border: '1.5px dashed #C8643C', background: 'rgba(200,100,60,.12)', color: '#1B2A22', textAlign: 'left', padding: '4px 7px', fontSize: 11, lineHeight: 1.2, zIndex: 2, borderRadius: 0 }}>
+                    <b style={{ display: 'block' }}>+ New plan</b><span style={{ color: '#5A675F' }}>{fromMins(ghost)}–{fromMins(ghost + 60)}</span>
+                  </button>
+                )}
                 {!c.ok && <div style={{ position: 'absolute', inset: 0, backgroundImage: HATCH, opacity: 0.35, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontSize: 9, letterSpacing: '.14em', textTransform: 'uppercase', background: '#F4EFE4', color: '#5A675F', padding: '2px 5px' }}>Not shared</span></div>}
                 {lstLanes(c.blocks).map((b, i) => {
                   const h = Math.max(24, ((b.e - b.s) / 60) * LST_PX - 1);
@@ -2190,17 +2210,13 @@ function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMat
                 })}
               </div>
             ))}
-            {mine.length === 0 && !matching && <div style={{ position: 'absolute', left: 34, right: 0, top: 18, textAlign: 'center', fontSize: 12, color: '#7C857F' }}>Nothing planned. Tap below to add something.</div>}
+            {mine.length === 0 && !matching && <div style={{ position: 'absolute', left: 34, right: 0, top: 18, textAlign: 'center', fontSize: 12, color: '#7C857F', pointerEvents: 'none' }}>Nothing planned. Tap a time to plan something.</div>}
             {nowMin != null && nowMin >= H0 * 60 && nowMin <= H1 * 60 && <div style={{ position: 'absolute', left: 34, right: 0, top: top(nowMin), borderTop: '1.5px solid #C8643C', pointerEvents: 'none' }} />}
             {free.map((f, i) => (
               <div key={i} data-all-free style={{ position: 'absolute', left: 35, right: 0, top: top(f.s), height: top(f.e) - top(f.s), background: 'rgba(200,100,60,.14)', borderTop: '1.5px dashed #C8643C', borderBottom: '1.5px dashed #C8643C', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, letterSpacing: '.14em', color: '#C8643C', fontWeight: 600, pointerEvents: 'none' }}>ALL FREE &middot; {pad2(Math.floor(f.s / 60))}&ndash;{pad2(Math.floor(f.e / 60))}</div>
             ))}
           </div>
         </div>
-      </div>
-      <div className="flex justify-between" style={{ marginTop: 8 }}>
-        <button data-share-open onClick={onShare} style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: '#5A675F', background: 'none', border: 0, padding: 0, textDecoration: 'underline' }}>{canMatch ? 'Who sees my schedule' : 'Sharing settings'}</button>
-        <button data-add-plan-listing onClick={onAdd} style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: '#1B2A22', background: 'none', border: 0, padding: 0, fontWeight: 600 }}>+ Add plan</button>
       </div>
       {matching && free.length > 0
         ? <button data-suggest-plan onClick={onAdd} style={{ marginTop: 12, width: '100%', height: 44, border: 0, background: '#1F3A2E', color: '#F4EFE4', fontSize: 13, fontWeight: 600, borderRadius: 0 }}>Suggest a plan for {fromMins(free[0].s)}&ndash;{fromMins(free[0].e)}</button>
@@ -2278,7 +2294,7 @@ function SkillIndex({ branches, domain, onDomain, onOpen, invites, onAccept, onD
   return (
     <div data-skill-index>
       <KickerRow label="Development" right={<span style={kickerRightStyle}><button data-domain-work onClick={() => onDomain('work')} style={{ background: 'none', border: 0, padding: 0, letterSpacing: 'inherit', textTransform: 'inherit', color: domain === 'work' ? '#1B2A22' : '#5A675F', fontWeight: domain === 'work' ? 700 : 400, textDecoration: domain === 'work' ? 'underline' : 'none' }}>Work</button> &middot; <button data-domain-personal onClick={() => onDomain('personal')} style={{ background: 'none', border: 0, padding: 0, letterSpacing: 'inherit', textTransform: 'inherit', color: domain === 'personal' ? '#1B2A22' : '#5A675F', fontWeight: domain === 'personal' ? 700 : 400, textDecoration: domain === 'personal' ? 'underline' : 'none' }}>Personal</button></span>} />
-      <Headline title={title} sub="Your skills, ranked by momentum." />
+      <Headline title={title} />
       {invites.map(v => (
         <div key={v.id} data-buddy-invite style={{ marginTop: 12, border: '3px double #1B2A22', padding: '12px 14px' }}>
           <div style={{ fontSize: 9, letterSpacing: '.2em', textTransform: 'uppercase', color: '#C8643C', fontWeight: 600 }}>Invitation</div>
@@ -6726,8 +6742,6 @@ function AppInner({ onReset }) {
                       <div key={l} className={`py-2.5 ${i ? 'pl-3 border-l border-slate-900' : ''}`}><div className="font-editorial text-[28px] leading-none">{n}</div><div className="text-[9.5px] uppercase tracking-[0.12em] text-stone-500 mt-1.5">{l}</div></div>
                     ))}
                   </div>
-                  {free[0] && <div className="text-[12px] text-stone-600">Next free window <strong className="text-slate-900">{fromMins(free[0].s)}–{fromMins(free[0].e)}</strong></div>}
-                  <button onClick={() => { setSelectedDateStr(todayS); setActiveTab('schedule'); }} className="text-[10px] uppercase tracking-wider text-purple-900 underline font-medium">Open schedule</button>
                 </div>
               );
             })()}
@@ -7065,6 +7079,7 @@ function AppInner({ onReset }) {
                 <ScheduleListings date={selectedDateStr} mine={mineBlocks} friends={friendCols} matching={matching} canMatch={!!(authUser && authUser.cloud) && pactFriends.length > 0}
                   onToggleMatch={() => { setMatching(m => !m); loadSched(); }} onShare={() => setSharePanel(true)} nowMin={nowM} isToday={selectedDateStr === todayDateStr()}
                   onTapTask={(id) => setSheetTaskId(id)}
+                  onSlot={(m) => { const t = fromMins(m); setEventConfig(c => ({ ...c, date: selectedDateStr, startTime: t })); setTaskConfig(c => ({ ...c, date: selectedDateStr, startTime: t })); setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }}
                   onAdd={() => { setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }} />
                 {sharePanel && <ShareSchedulePanel friends={pactFriends} grants={schedGrants} onSet={setScheduleShare} onClose={() => setSharePanel(false)} />}
               </>);

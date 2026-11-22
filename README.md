@@ -291,3 +291,9 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 ## v10.13
 - Home: Minimal and Classic layouts removed. Log is the only layout, redrawn as a ruled ledger strip (square cells, double rule on top). Weekly goals are now added from the goals sheet (See all).
 - Development: Job hunt card removed (it stays on Home). Background is gentle drifting seeds.
+
+## v10.14
+- Schedule: tap any empty time in the day view and a "+ New plan" block appears there; tap it and the planner opens with that day and start time filled in.
+- Removed the "Next free window / Open schedule" lines from Home and the "Your skills, ranked by momentum" line from Development.
+- Home: quick-log buttons are small separate squares.
+- Schedule: removed the hint line; "Find a time" (friends' free hours) and "Who sees mine" are now two labelled buttons under the headline.
