@@ -2517,6 +2517,7 @@ function AppInner({ onReset }) {
   const [usernameMsg, setUsernameMsg] = useState('');
   const [friendQuery, setFriendQuery] = useState('');
   const [friendBookQ, setFriendBookQ] = useState('');
+  const [delAsk, setDelAsk] = useState(null);   // plan id awaiting a second tap to delete
   const [taskEdit, setTaskEdit] = useState(null);   // { id,title,date,start,end,location } while changing a plan in Schedule
   const [taskInviteId, setTaskInviteId] = useState(null);
   const [myProfile, setMyProfile] = useState({ bio: '', avatar: '' });
@@ -3850,11 +3851,15 @@ function AppInner({ onReset }) {
   };
 
   const filterKey = selectedIdeaCategory + '|' + activeFilterLabels.join(',');
+  const autoIdeasTried = useRef('');
   useEffect(() => {
-    if (activeTab !== 'ideas' || !activeFilterLabels.length || showFavs || adventurousMode || isSearchingLiveIdeas) return;
-    const have = ideasFeed.some(i => i.category === selectedIdeaCategory && String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase() && ideaMatchesFilters(i, activeFilterDefs));
-    if (!have) handleLoadMoreLiveIdeas();
-  }, [filterKey, activeTab]);
+    if (activeTab !== 'ideas' || showFavs || adventurousMode || isSearchingLiveIdeas) return;
+    const haveN = ideasFeed.filter(i => i.category === selectedIdeaCategory && String(i.city || 'Manchester').toLowerCase() === loc.city.toLowerCase() && ideaMatchesFilters(i, activeFilterDefs)).length;
+    const key = filterKey + '|' + loc.city;
+    if (haveN >= 4 || autoIdeasTried.current === key) return;   // enough to show, or already tried this view
+    autoIdeasTried.current = key;
+    handleLoadMoreLiveIdeas(haveN > 0);
+  }, [filterKey, activeTab, loc.city, ideasFeed.length]);
   useEffect(() => { if (adventurousMode && activeTab === 'ideas') shuffleAdventure(); }, [filterKey]);
   const [ideaShown, setIdeaShown] = useState(4);
   const [ideaSearchOpen, setIdeaSearchOpen] = useState(false);
@@ -4942,6 +4947,16 @@ function AppInner({ onReset }) {
       pushToast(n > 0 ? `Updated. ${n} ${n === 1 ? 'person was' : 'people were'} told.` : 'Updated.', 'success');
       setEditEvent(null); await syncShared();
     } catch (e) { pushToast("Couldn't save that change right now.", 'error'); }
+  };
+  const deletePlan = async (task, everyone) => {
+    try {
+      if (task.sharedId && task.sharedRole === 'owner' && everyone) { await cloud.deleteSharedEvent(task.sharedId); }
+      else if (task.sharedId && task.sharedRole !== 'owner') { await cloud.respondToEvent(task.sharedId, 'declined', ''); }
+    } catch (er) { pushToast("Couldn't tell your friends just now, so nothing was deleted. Try again.", 'error'); return; }
+    setTasks(prev => prev.filter(t => t.id !== task.id));
+    setDelAsk(null); setSheetTaskId(null);
+    pushToast(task.sharedId && task.sharedRole === 'owner' && everyone ? 'Plan deleted for everyone.' : 'Plan deleted.', 'info');
+    if (task.sharedId) { try { await syncShared(); } catch (e) {} }
   };
   const cancelEvent = async (e) => {
     try { await cloud.deleteSharedEvent(e.id); setTasks(prev => prev.map(t => { if (t.sharedId !== e.id) return t; const { sharedId, sharedRole, sharedSig: _s, ...rest } = t; return rest; })); pushToast('Cancelled for everyone.', 'info'); await syncShared(); }
@@ -7161,6 +7176,18 @@ function AppInner({ onReset }) {
                               <button data-task-change onClick={() => setTaskEdit({ id: task.id, title: task.title, date: task.date, start: task.startTime, end: task.endTime, location: task.location || '' })} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider font-medium">Change plan</button>
                               <button data-task-invite onClick={() => { setTaskInviteId(taskInviteId === task.id ? null : task.id); setInviteSel([]); setInviteNote(''); }} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider font-medium">{task.sharedId ? 'Invite more friends' : 'Invite friends'}</button>
                               <button data-task-private aria-pressed={!!task.hideFromFriends} onClick={() => setTasks(prev => prev.map(x => x.id === task.id ? { ...x, hideFromFriends: !x.hideFromFriends } : x))} className={`px-2.5 py-1 border text-[10px] uppercase tracking-wider font-medium ${task.hideFromFriends ? 'bg-slate-900 text-white border-slate-900' : 'border-stone-400'}`}>{task.hideFromFriends ? 'Private (hidden)' : 'Mark private'}</button>
+                              {delAsk !== task.id ? (
+                                <button data-task-delete onClick={() => setDelAsk(task.id)} className="px-2.5 py-1 border border-rose-700 text-rose-700 text-[10px] uppercase tracking-wider font-medium">Delete plan</button>
+                              ) : (
+                                <span data-task-delete-confirm className="flex flex-wrap items-center gap-1.5 w-full p-2 border border-rose-700 bg-white">
+                                  <span className="text-[10px] text-slate-800 w-full">{task.sharedId && task.sharedRole === 'owner' ? 'This plan is shared. Delete it for everyone, or just remove it from your schedule?' : task.sharedId ? 'Remove this plan and decline it?' : 'Delete this plan?'}</span>
+                                  {task.sharedId && task.sharedRole === 'owner' ? (<>
+                                    <button data-task-delete-all onClick={() => deletePlan(task, true)} className="px-2.5 py-1 bg-rose-700 text-white text-[10px] uppercase tracking-wider">Delete for everyone</button>
+                                    <button data-task-delete-mine onClick={() => deletePlan(task, false)} className="px-2.5 py-1 border border-rose-700 text-rose-700 text-[10px] uppercase tracking-wider">Just mine</button>
+                                  </>) : <button data-task-delete-yes onClick={() => deletePlan(task, false)} className="px-2.5 py-1 bg-rose-700 text-white text-[10px] uppercase tracking-wider">Yes, delete</button>}
+                                  <button data-task-delete-no onClick={() => setDelAsk(null)} className="px-2.5 py-1 border border-stone-400 text-[10px] uppercase tracking-wider">Keep it</button>
+                                </span>
+                              )}
                               {task.sharedId && <span className="text-[10px] text-purple-800 self-center">Shared plan{task.sharedRole === 'owner' ? ': changes you make update for everyone' : ': organised by someone else'}</span>}
                             </div>
                           ) : (

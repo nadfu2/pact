@@ -283,3 +283,7 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - Simple view: More menu has a "Back to the full app" button (resets text size, tabs, button size).
 - Home: Widgets panel now has a "Redo setup" button.
 - Profile photos: saved as WebP where the phone supports it (sharper at the same size), and tries the biggest size first. Run `supabase/UPGRADE_PHOTOS.sql` once and re-upload photos for full 720px sharpness.
+
+## v10.12
+- Schedule: every plan now has a Delete plan button (asks first; shared plans offer "for everyone" or "just mine").
+- Ideas: suggestions load by themselves when fewer than four show for your area, no need to tap More.
