@@ -23,8 +23,8 @@ const ICO = {
 };
 
 // ---------- Layout choices ----------
-export const HOME_STYLES = [['log', 'Log'], ['minimal', 'Minimal'], ['classic', 'Classic']];
-export const homeStyleOf = (p) => (p && p.homeStyle) || 'log';
+export const HOME_STYLES = [['log', 'Log']];
+export const homeStyleOf = (p) => 'log';   // Minimal and Classic were retired; Log is the only layout
 export const LOG_BUTTONS = [['water', 'Water'], ['energy', 'Energy'], ['pages', 'Pages'], ['note', 'Note']];
 export const logButtonsOf = (p) => (p && Array.isArray(p.logButtons) ? p.logButtons : ['water', 'energy', 'pages', 'note']);
 export const LOG_HIDES = ['targets', 'launchpad', 'hydration', 'reading', 'notes', 'feedback', 'mood'];
@@ -47,16 +47,13 @@ export function LayoutPicker({ profile, patch, jobsOn, openFeedback }) {
   const toggleBtn = (k) => patch({ logButtons: btns.includes(k) ? btns.filter(x => x !== k) : LOG_BUTTONS.map(([x]) => x).filter(x => btns.includes(x) || x === k) });
   return (
     <div data-layout-picker style={{ paddingTop: 8 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}><Lab>Pick a layout</Lab><Lab>Log is the default</Lab></div>
-      <div style={{ display: 'flex', gap: 8, marginTop: 7 }}>{HOME_STYLES.map(([k, l]) => <Thumb key={k} id={k} label={l} on={cur === k} set={(v) => patch({ homeStyle: v })} />)}</div>
-      <div style={{ fontSize: 11, color: MUT, marginTop: 8 }}>Today at a glance always stays on top.</div>
-      {cur === 'log' && <div style={{ marginTop: 12 }}>
+      {cur === 'log' && <div style={{ marginTop: 4 }}>
         <Lab>Quick log buttons</Lab>
         <div style={{ display: 'flex', gap: 6, marginTop: 6, flexWrap: 'wrap' }}>{LOG_BUTTONS.map(([k, l]) => <button key={k} data-log-toggle={k} aria-pressed={btns.includes(k)} onClick={() => toggleBtn(k)} style={{ fontSize: 11, padding: '5px 10px', border: `1.5px solid ${INK}`, background: btns.includes(k) ? INK : 'transparent', color: btns.includes(k) ? BG : MUT, borderRadius: 0 }}>{l}</button>)}</div>
       </div>}
-      {cur !== 'classic' && jobsOn !== null && <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 12, paddingTop: 8, borderTop: `1px solid ${RULE}` }}><span style={{ fontSize: 13 }}>Job hunt on Home</span>
+      {jobsOn !== null && <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 12, paddingTop: 8, borderTop: `1px solid ${RULE}` }}><span style={{ fontSize: 13 }}>Job hunt on Home</span>
         <button data-job-widget-toggle aria-pressed={jobsOn} onClick={() => patch({ jobWidget: !jobsOn })} style={{ width: 40, height: 22, border: `1.5px solid ${INK}`, background: jobsOn ? FOR : 'transparent', position: 'relative', borderRadius: 0 }}><span style={{ position: 'absolute', top: 2, [jobsOn ? 'right' : 'left']: 2, width: 15, height: 15, background: jobsOn ? BG : INK }} /></button></div>}
-      {cur !== 'classic' && openFeedback && <button data-feedback-link onClick={openFeedback} style={{ marginTop: 10, fontSize: 11, textDecoration: 'underline', color: MUT, background: 'none', border: 0, padding: 0 }}>Send feedback or report a bug</button>}
+      {openFeedback && <button data-feedback-link onClick={openFeedback} style={{ marginTop: 10, fontSize: 11, textDecoration: 'underline', color: MUT, background: 'none', border: 0, padding: 0 }}>Send feedback or report a bug</button>}
     </div>);
 }
 
@@ -109,17 +106,32 @@ function NoteSheet({ notes, setNotes, onClose }) {
 
 
 function GoalsSheet({ targets, setTargets, onClose }) {
+  const [name, setName] = useState(''); const [times, setTimes] = useState(3);
+  const addGoal = () => { if (!name.trim()) return; setTargets([...targets, { id: `wt_${Date.now()}`, title: name.trim(), current: 0, target: times, unit: 'sessions', category: 'leisure' }]); setName(''); };
+  const dropGoal = (id) => setTargets(targets.filter(t => t.id !== id));
   const bump = (id, d) => setTargets(targets.map(t => t.id === id ? { ...t, current: Math.max(0, Number(t.current || 0) + d) } : t));
   return (
     <Sheet title="Weekly goals" onClose={onClose} dataAttr={{ 'data-goals-sheet': true }}>
       <div style={{ marginTop: 6 }}>
-        {targets.length === 0 && <div style={{ padding: '14px 0', fontSize: 13, color: MUT }}>No goals yet. Add some in Classic layout.</div>}
+        {targets.length === 0 && <div style={{ padding: '14px 0', fontSize: 13, color: MUT }}>No goals yet. Add your first one below.</div>}
         {targets.map(t => { const p = Number(t.target) ? Number(t.current) / Number(t.target) : 0; const done = p >= 1; return (
           <div key={t.id} data-goal-row style={{ padding: '10px 0', borderTop: `1px solid ${RULE}` }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, fontSize: 13.5 }}><span style={{ flex: 1 }}>{t.title}</span><span style={{ fontWeight: 600, color: done ? FOR : CLAY }}>{t.current} of {t.target}</span>
-              <button aria-label={`Add one to ${t.title}`} data-goal-plus onClick={() => bump(t.id, 1)} style={{ width: 28, height: 28, border: `1.5px solid ${INK}`, fontWeight: 700, borderRadius: 0, background: 'transparent' }}>+</button></div>
+              <button aria-label={`Add one to ${t.title}`} data-goal-plus onClick={() => bump(t.id, 1)} style={{ width: 28, height: 28, border: `1.5px solid ${INK}`, fontWeight: 700, borderRadius: 0, background: 'transparent' }}>+</button>
+              <button aria-label={`Remove ${t.title}`} data-goal-remove onClick={() => dropGoal(t.id)} style={{ width: 28, height: 28, color: MUT, fontSize: 16, background: 'none', border: 0 }}>&times;</button></div>
             <div style={{ height: 5, background: RULE, marginTop: 6 }}><div style={{ width: Math.min(100, p * 100) + '%', height: 5, background: done ? FOR : CLAY }} /></div>
           </div>); })}
+      </div>
+      <div data-goal-add style={{ marginTop: 14, paddingTop: 12, borderTop: `3px double ${INK}` }}>
+        <Lab>Add a goal</Lab>
+        <input data-goal-name value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Go for a run" aria-label="Goal name" style={{ marginTop: 7, width: '100%', background: '#FAF8F2', border: `1.5px solid ${INK}`, padding: '10px 10px', fontSize: 15, borderRadius: 0 }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 8 }}>
+          <span style={{ fontSize: 13, color: MUT }}>Times a week</span>
+          <button aria-label="Fewer" onClick={() => setTimes(Math.max(1, times - 1))} style={{ width: 32, height: 32, border: `1.5px solid ${INK}`, borderRadius: 0, background: 'transparent' }}>&minus;</button>
+          <b data-goal-times style={{ minWidth: 18, textAlign: 'center' }}>{times}</b>
+          <button aria-label="More" onClick={() => setTimes(Math.min(21, times + 1))} style={{ width: 32, height: 32, border: `1.5px solid ${INK}`, borderRadius: 0, background: 'transparent' }}>+</button>
+          <button data-goal-save onClick={addGoal} style={{ ...btn(true), marginLeft: 'auto', width: 'auto', padding: '0 18px', height: 36 }}>Add</button>
+        </div>
       </div>
     </Sheet>);
 }
@@ -135,23 +147,26 @@ export function LogHome({ variant, profile, patch, today, water, setWater, water
   const pages = (reading.log || {})[today] || 0;
   const noteLines = String(notes || '').split('\n').filter(l => l.trim()).length;
   const LEV = { low: 'Low', steady: 'Steady', high: 'High' };
-  const Q = ({ id, label, cap, onTap, hot, children, aria }) => (
-    <div style={{ textAlign: 'center', flex: 1, minWidth: 0 }}>
-      <button data-log-btn={id} aria-label={aria || label} onClick={onTap} style={{ width: 52, height: 52, borderRadius: '50%', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', border: hot ? 0 : `1.5px solid ${INK}`, background: hot ? CLAY : 'transparent', color: hot ? BG : INK }}>{children}</button>
-      <div style={{ fontSize: 10, marginTop: 6, color: MUT }}>{label}</div>
-      <div data-log-cap={id} style={{ fontSize: 11, fontWeight: 600, marginTop: 1 }}>{cap}</div>
-    </div>);
+  const Q = ({ id, label, cap, onTap, hot, children, aria, last }) => (
+    <button data-log-btn={id} aria-label={aria || label} onClick={onTap} style={{ flex: 1, minWidth: 0, textAlign: 'left', padding: '10px 10px 9px', background: hot ? 'rgba(200,100,60,.10)' : 'transparent', border: 0, borderRight: last ? 0 : `1px solid ${INK}`, borderRadius: 0 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 24 }}>
+        <span style={{ fontSize: 9, letterSpacing: '.16em', textTransform: 'uppercase', color: hot ? CLAY : MUT, fontWeight: 700 }}>{label}</span>
+        <span style={{ display: 'inline-flex', color: hot ? CLAY : INK }}>{children}</span>
+      </div>
+      <div data-log-cap={id} style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', fontWeight: 600, fontSize: 17, marginTop: 4, lineHeight: 1.1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{cap}</div>
+    </button>);
+  const lastK = LOG_BUTTONS.map(([k]) => k).filter(k => btns.includes(k)).pop();
   const gp = goals.total ? goals.done / goals.total : 0;
   const Box = ({ id, a, b, hot, onTap }) => <button data-min-box={id} onClick={onTap} style={{ flex: 1, textAlign: 'left', border: `1.5px solid ${hot ? CLAY : INK}`, padding: '8px 10px', background: hot ? 'rgba(200,100,60,.08)' : 'transparent', borderRadius: 0 }}><div style={{ fontSize: 9, letterSpacing: '.14em', textTransform: 'uppercase', color: MUT }}>{a}</div><div style={{ ...FR, fontWeight: 600, fontSize: 17, marginTop: 3, color: hot ? CLAY : INK }}>{b}</div></button>;
   return (
     <div data-log-home={variant} style={{ order: -6 }}>
       {variant === 'log' ? (
         <>
-          {btns.length > 0 && <div style={{ display: 'flex', gap: 6 }}>
-            {btns.includes('water') && <Q id="water" label="Water" cap={`${wc} of ${waterGoal}`} hot onTap={() => setWater({ date: today, count: Math.min(40, wc + 1) })} aria="Add a glass of water"><span style={{ fontSize: 22, lineHeight: 1 }}>+</span></Q>}
-            {btns.includes('energy') && <Q id="energy" label="Energy" cap={lvl ? LEV[lvl] : 'Log'} onTap={() => setSheet('energy')}><Ico d={ICO.energy} /></Q>}
-            {btns.includes('pages') && <Q id="pages" label="Pages" cap={reading.page ? `p.${reading.page}` : (pages ? `${pages} today` : 'Log')} onTap={() => setSheet('pages')}><Ico d={ICO.pages} /></Q>}
-            {btns.includes('note') && <Q id="note" label="Note" cap={noteLines ? `${noteLines} saved` : 'Jot'} onTap={() => setSheet('note')}><Ico d={ICO.note} /></Q>}
+          {btns.length > 0 && <div data-log-strip style={{ display: 'flex', borderTop: `3px double ${INK}`, borderBottom: `1px solid ${INK}`, background: 'rgba(250,244,224,.55)' }}>
+            {btns.includes('water') && <Q id="water" last={lastK === 'water'} label="Water" cap={`${wc} of ${waterGoal}`} hot onTap={() => setWater({ date: today, count: Math.min(40, wc + 1) })} aria="Add a glass of water"><span style={{ fontSize: 22, lineHeight: 1 }}>+</span></Q>}
+            {btns.includes('energy') && <Q id="energy" last={lastK === 'energy'} label="Energy" cap={lvl ? LEV[lvl] : 'Log'} onTap={() => setSheet('energy')}><Ico d={ICO.energy} /></Q>}
+            {btns.includes('pages') && <Q id="pages" last={lastK === 'pages'} label="Pages" cap={reading.page ? `p.${reading.page}` : (pages ? `${pages} today` : 'Log')} onTap={() => setSheet('pages')}><Ico d={ICO.pages} /></Q>}
+            {btns.includes('note') && <Q id="note" last={lastK === 'note'} label="Note" cap={noteLines ? `${noteLines} saved` : 'Jot'} onTap={() => setSheet('note')}><Ico d={ICO.note} /></Q>}
           </div>}
           {btns.includes('water') && wc > 0 && <div style={{ textAlign: 'left', marginTop: 4 }}><button data-water-undo onClick={() => setWater({ date: today, count: Math.max(0, wc - 1) })} style={{ fontSize: 10.5, color: MUT, textDecoration: 'underline', background: 'none', border: 0, padding: 0 }}>Undo a glass</button></div>}
         </>

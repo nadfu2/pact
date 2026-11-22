@@ -287,3 +287,7 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 ## v10.12
 - Schedule: every plan now has a Delete plan button (asks first; shared plans offer "for everyone" or "just mine").
 - Ideas: suggestions load by themselves when fewer than four show for your area, no need to tap More.
+
+## v10.13
+- Home: Minimal and Classic layouts removed. Log is the only layout, redrawn as a ruled ledger strip (square cells, double rule on top). Weekly goals are now added from the goals sheet (See all).
+- Development: Job hunt card removed (it stays on Home). Background is gentle drifting seeds.
