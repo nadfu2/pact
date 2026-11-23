@@ -313,3 +313,6 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - Tap a chapter's circle to tick it; tap its title for note, target, reorder and remove.
 - New ⋯ menu: Rename, Change goal or timeframe, Move to another area, Suggest more chapters, Delete skill (with a confirm sheet).
 - Courses and Learn with a friend are folded away until opened.
+
+## v10.18 — Bigger titles
+- Section titles (Today at a glance, Chapters, and the rest of the black title tags) are larger: 14px, up from 10px.
