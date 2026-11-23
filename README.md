@@ -307,3 +307,9 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - Fix: the tap-to-plan box no longer stays over a plan after adding, so tapping a plan opens its edit sheet. The drag bar no longer swallows taps.
 - Home: removed the duplicate "Nothing planned today." line.
 - Home's daily counts (water, energy, pages) roll over at midnight even if the app is left open.
+
+## v10.17 — Calm skill page
+- Opening a skill now shows the name, progress, an "Up next" card (Tick it off / Plan a slot) and a simple chapter list.
+- Tap a chapter's circle to tick it; tap its title for note, target, reorder and remove.
+- New ⋯ menu: Rename, Change goal or timeframe, Move to another area, Suggest more chapters, Delete skill (with a confirm sheet).
+- Courses and Learn with a friend are folded away until opened.
