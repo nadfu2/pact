@@ -302,3 +302,8 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 ## v10.15
 - New planner (src/planner.jsx): one question per screen. Go out asks casual / formal / meeting (and who with); an event can be one that is on, one already booked (name it, optional host and place) or one you host; tasks are one screen; place search for somewhere you have already chosen; fine-tune folded away.
 - Tapping a time in Schedule carries the day, start time and length into the planner.
+
+## v10.16
+- Fix: the tap-to-plan box no longer stays over a plan after adding, so tapping a plan opens its edit sheet. The drag bar no longer swallows taps.
+- Home: removed the duplicate "Nothing planned today." line.
+- Home's daily counts (water, energy, pages) roll over at midnight even if the app is left open.

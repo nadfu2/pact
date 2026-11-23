@@ -2141,6 +2141,7 @@ function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMat
   const [ghost, setGhost] = useState(null);   // { s, e } minutes of the tapped empty slot (drag the bottom handle to resize)
   useEffect(() => { setGhost(null); }, [date]);
   const scrollRef = useRef(null);
+  const dragged = useRef(false);
   const cols = [{ id: 'me', name: 'You', blocks: mine, ok: true, mine: true }, ...(matching ? friends : [])];
   const all = cols.flatMap(c => c.blocks);
   const H0 = 0, H1 = 24;   // midnight to midnight; the grid scrolls
@@ -2199,12 +2200,12 @@ function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMat
                 setGhost({ s: st, e: Math.min(H1 * 60, st + 60) });
               } : undefined} style={{ position: 'relative', borderLeft: '1px solid #1B2A22', cursor: c.mine ? 'pointer' : undefined }}>
                 {c.mine && ghost != null && (
-                  <button data-slot-ghost onClick={() => onSlot && onSlot(ghost.s, ghost.e)} style={{ position: 'absolute', top: top(ghost.s), height: Math.max(LST_PX / 4, ((ghost.e - ghost.s) / 60) * LST_PX - 1), left: 1, right: 2, boxSizing: 'border-box', border: '1.5px dashed #C8643C', background: 'rgba(200,100,60,.12)', color: '#1B2A22', textAlign: 'left', padding: '4px 7px 14px', fontSize: 11, lineHeight: 1.2, zIndex: 2, borderRadius: 0, overflow: 'hidden' }}>
+                  <button data-slot-ghost onClick={() => { const g = ghost; setGhost(null); onSlot && onSlot(g.s, g.e); }} style={{ position: 'absolute', top: top(ghost.s), height: Math.max(LST_PX / 4, ((ghost.e - ghost.s) / 60) * LST_PX - 1), left: 1, right: 2, boxSizing: 'border-box', border: '1.5px dashed #C8643C', background: 'rgba(200,100,60,.12)', color: '#1B2A22', textAlign: 'left', padding: '4px 7px 14px', fontSize: 11, lineHeight: 1.2, zIndex: 2, borderRadius: 0, overflow: 'hidden' }}>
                     <b style={{ display: 'block' }}>+ New plan</b><span style={{ color: '#5A675F' }}>{fromMins(ghost.s)}–{ghost.e >= 1440 ? '24:00' : fromMins(ghost.e)}</span>
                     <div data-slot-handle aria-label="Drag to change the length"
-                      onClick={(e) => e.stopPropagation()}
-                      onPointerDown={(e) => { e.stopPropagation(); e.currentTarget.setPointerCapture(e.pointerId); }}
-                      onPointerMove={(e) => { if (!e.currentTarget.hasPointerCapture(e.pointerId)) return; const col = e.currentTarget.closest('[data-list-col]'); const m = Math.round(((e.clientY + 8 - col.getBoundingClientRect().top) / LST_PX) * 4) * 15; setGhost(g => ({ s: g.s, e: Math.max(g.s + 15, Math.min(H1 * 60, m)) })); }}
+                      onClick={(e) => { if (dragged.current) { e.stopPropagation(); dragged.current = false; } }}
+                      onPointerDown={(e) => { e.stopPropagation(); dragged.current = false; e.currentTarget.setPointerCapture(e.pointerId); }}
+                      onPointerMove={(e) => { if (!e.currentTarget.hasPointerCapture(e.pointerId)) return; dragged.current = true; const col = e.currentTarget.closest('[data-list-col]'); const m = Math.round(((e.clientY + 8 - col.getBoundingClientRect().top) / LST_PX) * 4) * 15; setGhost(g => ({ s: g.s, e: Math.max(g.s + 15, Math.min(H1 * 60, m)) })); }}
                       style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 16, touchAction: 'none', cursor: 'ns-resize', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <span style={{ width: 28, height: 4, borderRadius: 2, background: '#C8643C' }} />
                     </div>
@@ -4016,6 +4017,22 @@ function AppInner({ onReset }) {
   const locIsDefault = !(userProfile.location && userProfile.location.city) || !!userProfile.location.assumed;
 
   const calCtx = { tasks, calendarEvents, weeklyHours: userProfile.weeklyHours };
+
+  // New day while the app is open (or you come back to it): Home's daily counts are keyed by date, so a re-render at midnight is all they need.
+  const [dayKey, setDayKey] = useState(todayDateStr());
+  useEffect(() => {
+    const check = () => {
+      const t = todayDateStr();
+      setDayKey(prev => {
+        if (prev === t) return prev;
+        setSelectedDateStr(sel => (sel === prev ? t : sel));
+        return t;
+      });
+    };
+    const id = setInterval(check, 20000);
+    document.addEventListener('visibilitychange', check); window.addEventListener('focus', check);
+    return () => { clearInterval(id); document.removeEventListener('visibilitychange', check); window.removeEventListener('focus', check); };
+  }, []);
 
   // Planner opens on the day you are looking at, not a fixed demo date.
   useEffect(() => {
@@ -6755,7 +6772,6 @@ function AppInner({ onReset }) {
               return (
                 <div data-glance className="space-y-3" style={{ order: -8 }}>
                   <span className="np-flag">Today at a glance<span className="np-kicker">Front page</span></span>
-                  {todays.length === 0 && <div className="text-sm text-stone-600">Nothing planned today.</div>}
                   <div>
                     {todays.map((t, i) => {
                       const done = t.status === 'done';
@@ -7214,15 +7230,15 @@ function AppInner({ onReset }) {
                         </div>
 
                         {/* Add Person & Business vs Friendly Toggle */}
-                        <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center justify-between gap-2 flex-wrap">
                           <input
                             type="text"
                             placeholder="Tag a friend by name..."
                             value={task.withPerson || ''}
                             onChange={e => setTasks(tasks.map(t => t.id === task.id ? { ...t, withPerson: e.target.value } : t))}
-                            className="flex-1 bg-white border border-stone-300 px-2 py-1 text-xs"
+                            className="flex-1 min-w-[140px] bg-white border border-stone-300 px-2 py-1 text-xs"
                           />
-                          <div className="flex border border-stone-300">
+                          <div className="flex border border-stone-300 shrink-0">
                             {['Friendly', 'Business'].map(mType => (
                               <button
                                 key={mType}
