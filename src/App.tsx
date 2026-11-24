@@ -6240,7 +6240,7 @@ function AppInner({ onReset }) {
         <div data-dateline className="np-dateline">
           <span>{new Date().toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}</span>
           <span>{getLoc(userProfile).city}{mastWx ? ` · ${mastWx.t}°C${mastWx.w ? ' ' + mastWx.w : ''}` : ''}</span>
-          <span>No. 217</span>
+          <span>No. {Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000)}</span>
         </div>
 
 
