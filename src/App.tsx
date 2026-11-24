@@ -1321,12 +1321,58 @@ const applyTheme = (theme) => {
   const t = theme && THEME_PALETTES[theme.palette] ? theme : { palette: 'classic', mode: 'light' };
   let el = document.getElementById('pact-theme-css');
   const css = buildThemeCss(t.palette, t.mode);
-  if (!css) { if (el) el.remove(); document.documentElement.removeAttribute('data-pact-theme'); return; }
+  if (!css) { if (el) el.remove(); document.documentElement.removeAttribute('data-pact-theme'); syncDarkFix(false); return; }
   if (!el) { el = document.createElement('style'); el.id = 'pact-theme-css'; document.head.appendChild(el); }
   el.textContent = css;
   document.documentElement.setAttribute('data-pact-theme', t.palette + '-' + resolveThemeMode(t.mode));
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.setAttribute('content', resolveThemeMode(t.mode) === 'dark' ? '#1a1310' : '#F4EFE4');
+  syncDarkFix(!!css && resolveThemeMode(t.mode) === 'dark');
+};
+
+// Dark-mode safety net: any element that still renders as a light fill, dark text or dark icon (whatever Safari/Chrome did with the CSS rules) is recoloured from its real computed colour.
+let darkFixObs = null, darkFixTimer = 0;
+const parseRgb = (c) => { const m = /rgba?\(([^)]+)\)/.exec(c || ''); if (!m) return null; const p = m[1].split(/[ ,\/]+/).filter(Boolean).map(parseFloat); return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 }; };
+const lum = (o) => { const mx = Math.max(o.r, o.g, o.b) / 255, mn = Math.min(o.r, o.g, o.b) / 255; return (mx + mn) / 2; };
+const runDarkFix = () => {
+  const root = document.getElementById('root') || document.body;
+  const page = parseRgb(getComputedStyle(document.body).backgroundColor) || { r: 26, g: 19, b: 16 };
+  const surf = `rgb(${Math.min(255, page.r + 10)},${Math.min(255, page.g + 9)},${Math.min(255, page.b + 8)})`;
+  const els = root.querySelectorAll('*');
+  for (let i = 0; i < els.length; i++) {
+    const el = els[i];
+    if (el.closest('[data-mug],[data-idea-hero],img,canvas,video,[data-keep-light]')) continue;
+    const svgRoot = el.closest('svg');
+    if (svgRoot && (svgRoot.getAttribute('width') >= 60 || svgRoot.getBoundingClientRect().width >= 60)) continue;
+    const cs = getComputedStyle(el);
+    if (!(el instanceof SVGElement)) {
+      const bg = parseRgb(cs.backgroundColor);
+      if (bg && bg.a > 0.2 && lum(bg) > 0.7 && !el.hasAttribute('data-dkbg') && el.getBoundingClientRect().height >= 14) { el.setAttribute('data-dkbg', el.style.backgroundColor || ' '); el.style.setProperty('background-color', surf, 'important'); }
+      const fg = parseRgb(cs.color);
+      if (fg && lum(fg) < 0.4 && !el.hasAttribute('data-dkfg') && (el.childNodes.length && [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()))) { el.setAttribute('data-dkfg', el.style.color || ' '); el.style.setProperty('color', '#EAE3D7', 'important'); }
+    } else {
+      const sk = parseRgb(cs.stroke), fl = parseRgb(cs.fill);
+      if (sk && sk.a > 0.2 && lum(sk) < 0.4 && !el.hasAttribute('data-dkst')) { el.setAttribute('data-dkst', '1'); el.style.setProperty('stroke', '#EAE3D7', 'important'); }
+      if (fl && fl.a > 0.2 && lum(fl) < 0.3 && cs.fill !== 'none' && !el.hasAttribute('data-dkfl')) { el.setAttribute('data-dkfl', '1'); el.style.setProperty('fill', '#EAE3D7', 'important'); }
+    }
+  }
+};
+const clearDarkFix = () => {
+  document.querySelectorAll('[data-dkbg],[data-dkfg],[data-dkst],[data-dkfl]').forEach(el => {
+    if (el.hasAttribute('data-dkbg')) { el.style.removeProperty('background-color'); const v = el.getAttribute('data-dkbg').trim(); if (v) el.style.backgroundColor = v; el.removeAttribute('data-dkbg'); }
+    if (el.hasAttribute('data-dkfg')) { el.style.removeProperty('color'); const v = el.getAttribute('data-dkfg').trim(); if (v) el.style.color = v; el.removeAttribute('data-dkfg'); }
+    if (el.hasAttribute('data-dkst')) { el.style.removeProperty('stroke'); el.removeAttribute('data-dkst'); }
+    if (el.hasAttribute('data-dkfl')) { el.style.removeProperty('fill'); el.removeAttribute('data-dkfl'); }
+  });
+};
+const syncDarkFix = (dark) => {
+  if (typeof document === 'undefined') return;
+  if (darkFixObs) { darkFixObs.disconnect(); darkFixObs = null; }
+  if (!dark) { clearDarkFix(); return; }
+  const go = () => { clearTimeout(darkFixTimer); darkFixTimer = setTimeout(() => { try { runDarkFix(); } catch (e) {} }, 160); };
+  darkFixObs = new MutationObserver((ml) => { if (ml.some(m => !(m.target instanceof Element) || !m.target.hasAttribute || !(m.attributeName || '').startsWith('data-dk'))) go(); });
+  const start = () => { darkFixObs.observe(document.body, { childList: true, subtree: true }); go(); };
+  if (document.body) start(); else document.addEventListener('DOMContentLoaded', start, { once: true });
 };
 if (typeof window !== 'undefined') applyTheme(readStoredTheme());
 

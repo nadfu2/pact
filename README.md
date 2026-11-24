@@ -366,3 +366,6 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 ## v10.27
 - Dark mode polish: calmer, more neutral surfaces, brighter hairlines and rules, icons and drawn lines recolour properly, translucent cream tiles become dark cards, and printed artwork (initial portraits, picture-less hero cards) takes the palette's colour instead of staying forest green.
 - Softer tap feedback: the press now dips less and eases back over about half a second instead of snapping. Chat bubbles pop in more gently.
+
+## v10.28
+- Dark mode safety net: after the colour rules apply, any element still showing a light fill, dark text or dark icon is recoloured from its real computed colour, so nothing depends on how a particular browser writes inline styles.
