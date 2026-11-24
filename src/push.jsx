@@ -47,17 +47,24 @@ export default function PushCheck({ cloud, enable, standalone }) {
     setTimeout(run, 5000);
   };
   const bad = rows && rows.find(x => x.ok === false);
+  const [open, setOpen] = useState(false);
+  const bt = { height: 44, padding: '0 14px', borderRadius: 0, fontSize: 12, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase' };
   return (
-    <div data-push-check className="p-4 bg-white border border-stone-200 space-y-2">
-      <span className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Phone alerts</span>
-      <p className="text-[11.5px] text-stone-600 leading-snug">Alerts that arrive even when The Pact is closed. Press check and I will show which step is missing.</p>
-      {rows && <div>{rows.map((x, i) => <Step key={i} ok={x.ok} title={x.title} fix={x.fix} />)}</div>}
-      {rows && !bad && <p data-push-allgood className="text-[12px] font-medium" style={{ color: FOR }}>Every step is in place.</p>}
-      {note && <p data-push-note className="text-[11.5px] text-stone-700">{note}</p>}
-      <div className="flex gap-2 flex-wrap">
-        <button data-push-run disabled={busy} onClick={run} className="px-3 py-1.5 bg-slate-900 text-white text-[10px] uppercase tracking-wider font-medium disabled:opacity-50">{rows ? 'Check again' : 'Check phone alerts'}</button>
-        <button data-push-enable disabled={busy} onClick={async () => { await enable(); run(); }} className="px-3 py-1.5 border border-stone-400 text-[10px] uppercase tracking-wider font-medium">Turn on alerts</button>
-        <button data-push-test disabled={busy} onClick={test} className="px-3 py-1.5 border border-stone-400 text-[10px] uppercase tracking-wider font-medium">Send a test alert</button>
-      </div>
+    <div data-push-check style={{ border: `1.5px solid ${INK}`, background: 'rgba(250,248,242,.85)', padding: 14 }}>
+      <button data-push-fold aria-expanded={open} onClick={() => setOpen(o => !o)} className="w-full text-left" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10, background: 'none', border: 0, padding: 0, borderRadius: 0 }}>
+        <span><span className="font-fr" style={{ display: 'block', fontWeight: 600, fontSize: 22, lineHeight: 1.05 }}>Phone alerts</span>
+          <span style={{ display: 'block', fontSize: 13, color: MUT, marginTop: 4, lineHeight: 1.4 }}>Check that reminders reach your phone when The Pact is closed.</span></span>
+        <span style={{ fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase', color: MUT, flex: 'none' }}>{open ? 'Hide \u25B4' : 'Open \u25BE'}</span>
+      </button>
+      {open && <div style={{ marginTop: 10, borderTop: `3px solid ${INK}`, paddingTop: 4 }}>
+        {rows && <div>{rows.map((x, i) => <Step key={i} ok={x.ok} title={x.title} fix={x.fix} />)}</div>}
+        {rows && !bad && <p data-push-allgood style={{ fontSize: 14, fontWeight: 600, color: FOR, margin: '8px 0 0' }}>Every step is in place.</p>}
+        {note && <p data-push-note style={{ fontSize: 13, margin: '8px 0 0' }}>{note}</p>}
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 12 }}>
+          <button data-push-run disabled={busy} onClick={run} style={{ ...bt, border: 0, background: FOR, color: '#F4EFE4', opacity: busy ? .5 : 1 }}>{rows ? 'Check again' : 'Check phone alerts'}</button>
+          <button data-push-enable disabled={busy} onClick={async () => { await enable(); run(); }} style={{ ...bt, border: `1.5px solid ${INK}`, background: 'transparent', color: INK, opacity: busy ? .5 : 1 }}>Turn on alerts</button>
+          <button data-push-test disabled={busy} onClick={test} style={{ ...bt, border: `1.5px solid ${INK}`, background: 'transparent', color: INK, opacity: busy ? .5 : 1 }}>Send a test alert</button>
+        </div>
+      </div>}
     </div>);
 }

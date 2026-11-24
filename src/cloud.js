@@ -143,6 +143,17 @@ export const cloud = {
     if (error) throw new Error(error.message || 'profile unavailable');
     return (data && data[0]) || { bio: '', avatar: '' };
   },
+  // Full-quality profile picture: stored as a file (Supabase Storage bucket "avatars"), the profile keeps only its short web address.
+  async uploadAvatar(blob) {
+    const { data: u } = await sb.auth.getUser();
+    const uid = u && u.user && u.user.id; if (!uid) throw new Error('not signed in');
+    const ext = blob.type === 'image/jpeg' ? 'jpg' : 'webp';
+    const path = `${uid}/avatar-${Date.now()}.${ext}`;
+    const { error } = await sb.storage.from('avatars').upload(path, blob, { contentType: blob.type, cacheControl: '31536000', upsert: false });
+    if (error) throw new Error(error.message || 'upload failed');
+    const { data } = sb.storage.from('avatars').getPublicUrl(path);
+    return data.publicUrl;
+  },
   async setMyProfile(bio, avatar) {
     const { data, error } = await sb.rpc('set_my_profile', { p_bio: bio || '', p_avatar: avatar || '' });
     if (error) throw new Error(error.message || 'could not save');

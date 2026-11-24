@@ -336,3 +336,10 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - Friend Book is one search bar: on Pact and not a friend gives Add, a friend gives Message and Invite, and anyone else can be added as a person.
 - Time matching starts with just you. Add friends one by one; a friend who has not shared gets a Send request button (sent as a message).
 - Press and hold a plan in the schedule to lift it, then drag to move it or drag the top or bottom handle to stretch it. A tap still opens the edit sheet.
+
+## v10.23
+- Profile screens restyled to match the app: Reminders (one ruled list with switches, Phone alerts check folds away), Calendar and hours (segmented source picker, ruled day rows with switches), Location and places.
+- Getting-ready times moved to About you.
+- Text size now resizes text and reflows the layout; the column keeps the same visual width instead of growing.
+- Full-quality profile photos (run `supabase/UPGRADE_HD_PHOTOS.sql` once); photo halftone removed.
+- Saving the press-card description collapses the editor.
