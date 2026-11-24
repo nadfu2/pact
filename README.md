@@ -362,3 +362,7 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - Chats open instantly from a saved copy, already at the bottom, and only new messages pop in (like WhatsApp).
 - Every collapsible panel now slides open and shut.
 - Home "Today at a glance" shows only the next two plans, the second fading out, with Show all / Show fewer.
+
+## v10.27
+- Dark mode polish: calmer, more neutral surfaces, brighter hairlines and rules, icons and drawn lines recolour properly, translucent cream tiles become dark cards, and printed artwork (initial portraits, picture-less hero cards) takes the palette's colour instead of staying forest green.
+- Softer tap feedback: the press now dips less and eases back over about half a second instead of snapping. Chat bubbles pop in more gently.

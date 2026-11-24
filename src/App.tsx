@@ -71,12 +71,12 @@ const V8_CSS = `
 .pact-root *{-webkit-tap-highlight-color:transparent}
 @keyframes pact-up{from{transform:translateY(100%)}to{transform:none}}
 @keyframes pact-fade{from{opacity:0}to{opacity:1}}
-@keyframes pact-pop{0%{transform:scale(.55) translateY(10px);opacity:0}100%{transform:none;opacity:1}}
+@keyframes pact-pop{0%{transform:scale(.9) translateY(6px);opacity:0}100%{transform:none;opacity:1}}
 @keyframes pact-page{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .pact-page-in{animation:pact-page .3s cubic-bezier(.2,.8,.25,1) both}
-.pact-root button,.pact-root a,.pact-root [role=button]{transition:transform .16s cubic-bezier(.2,.8,.2,1),opacity .18s,background-color .2s,border-color .2s,color .2s}
-.pact-root button:active:not(:disabled):not([data-nopress]),.pact-root a:active:not([data-nopress]),body>[role=dialog] button:active:not(:disabled){transform:scale(.96);opacity:.85}
-body>[role=dialog] button{transition:transform .16s cubic-bezier(.2,.8,.2,1),opacity .18s}
+.pact-root button,.pact-root a,.pact-root [role=button]{transition:transform .5s cubic-bezier(.22,.61,.36,1),opacity .5s cubic-bezier(.22,.61,.36,1),background-color .25s,border-color .25s,color .25s}
+.pact-root button:active:not(:disabled):not([data-nopress]),.pact-root a:active:not([data-nopress]),body>[role=dialog] button:active:not(:disabled){transform:scale(.985);opacity:.72;transition-duration:.1s,.1s,.25s,.25s,.25s}
+body>[role=dialog] button{transition:transform .5s cubic-bezier(.22,.61,.36,1),opacity .5s cubic-bezier(.22,.61,.36,1)}
 .pact-root input,.pact-root textarea,.pact-root select{transition:border-color .2s,box-shadow .2s}
 .pact-root input:focus,.pact-root textarea:focus,.pact-root select:focus{box-shadow:0 0 0 3px rgba(200,100,60,.22)}
 [data-task-sheet]{animation:pact-fade .25s both}
@@ -1263,7 +1263,8 @@ const buildThemeCss = (paletteId, mode) => {
   if (m === 'dark') for (const [f, [h, sa]] of Object.entries(FIXED_FAMILIES)) emit(f, h, sa, 'col');
   // surfaces
   const L = m === 'dark' ? { page: 9, card: 13, soft: 16, soft2: 19, line: 24, fg: 92 } : { page: 95, card: 99, soft: 97, soft2: 91, line: 87, fg: 15 };
-  const page = hsl(pal.nh, pal.ns, L.page), card = hsl(pal.nh, pal.ns, L.card), soft = hsl(pal.nh, pal.ns, L.soft), soft2 = hsl(pal.nh, pal.ns, L.soft2);
+  const nsB = m === 'dark' ? Math.round(pal.ns * 0.55) : pal.ns;
+  const page = hsl(pal.nh, nsB, L.page), card = hsl(pal.nh, nsB, L.card), soft = hsl(pal.nh, nsB, L.soft), soft2 = hsl(pal.nh, nsB, L.soft2);
   rules.push(`html[data-pact-theme] .bg-white{background-color:${card}!important}`);
   rules.push(`html[data-pact-theme] .bg-\\[\\#FAF8F5\\]{background-color:${soft}!important}`);
   rules.push(`html[data-pact-theme] .bg-\\[\\#F5F3EC\\]{background-color:${page}!important}`);
@@ -1278,20 +1279,21 @@ const buildThemeCss = (paletteId, mode) => {
     // The newspaper design paints with fixed hex colours inline; recolour them by role so dark mode reaches every screen.
     const rgb = (h) => { const n = parseInt(h.slice(1), 16); return `rgb(${n >> 16}, ${(n >> 8) & 255}, ${n & 255})`; };
     const toHsl = (h) => { const n = parseInt(h.slice(1), 16); const r = (n >> 16) / 255, g = ((n >> 8) & 255) / 255, bl = (n & 255) / 255; const mx = Math.max(r, g, bl), mn = Math.min(r, g, bl), l = (mx + mn) / 2, d = mx - mn; let hu = 0, sa = 0; if (d) { sa = d / (1 - Math.abs(2 * l - 1)); hu = mx === r ? ((g - bl) / d) % 6 : mx === g ? (bl - r) / d + 2 : (r - g) / d + 4; hu = (hu * 60 + 360) % 360; } return [hu, sa, l]; };
-    const kind = (hu, sa) => sa < 0.22 || (hu >= 30 && hu < 60 && sa < 0.45) ? 'n' : (hu >= 90 && hu < 200) ? 'g' : 'o';
-    const tone = (hu, sa, nl, k) => k === 'n' ? hsl(pal.nh, pal.ns, nl * 100) : k === 'g' ? hsl(pal.p[0], Math.round(pal.p[1] * Math.min(1, sa + 0.2)), nl * 100) : hsl(hu, Math.round(sa * 85), nl * 100);
-    const N = (l) => hsl(pal.nh, pal.ns, l);
+    const kind = (hu, sa, l) => l >= 0.85 || sa < 0.22 || (hu >= 30 && hu < 60 && sa < 0.45) ? 'n' : (hu >= 90 && hu < 200) ? 'g' : 'o';
+    const tone = (hu, sa, nl, k) => k === 'n' ? hsl(pal.nh, Math.round(pal.ns * 0.6), nl * 100) : k === 'g' ? hsl(pal.p[0], Math.round(pal.p[1] * Math.min(1, sa + 0.2)), nl * 100) : hsl(hu, Math.round(sa * 85), nl * 100);
+    const N = (l) => hsl(pal.nh, Math.round(pal.ns * 0.6), l);
     const H = 'html[data-pact-theme] ';
     const HEXES = ["#0F0F0D", "#12251C", "#14282B", "#17323A", "#1A1310", "#1A1A17", "#1B2A22", "#1E3F44", "#1F3A2E", "#25241F", "#2A2A26", "#2A5359", "#2C4A3B", "#2F4A3C", "#33322B", "#3A1F10", "#3A4A41", "#3A6A70", "#3E1B0D", "#3E3D37", "#3F6B55", "#47453D", "#4C7F85", "#4F7A63", "#55534B", "#5A675F", "#5C5A52", "#5F8C73", "#639499", "#6B3A1E", "#6B5320", "#6B6960", "#7A3418", "#7B2A22", "#7C857F", "#8A4A27", "#8A877D", "#8FA398", "#8FB09D", "#8FB2B6", "#9CA3AF", "#A4452A", "#A65F37", "#A8C4C6", "#B08A3E", "#B3261E", "#B5683A", "#B5B1A5", "#B5CABD", "#B9C6BE", "#C77E52", "#C8643C", "#CADCDD", "#CFC7B4", "#CFCABD", "#D3CEC0", "#D5E0D8", "#D6D1C4", "#D9945F", "#D9D4C6", "#DDD5C2", "#DDE6DF", "#E0A178", "#E1ECED", "#E39A6D", "#E58B6C", "#E5E7EB", "#E6B38C", "#E6DFCF", "#E6EDE8", "#E7B79F", "#E7B89F", "#E7E3D8", "#EAE3D2", "#EBE2CC", "#ECE8DD", "#EDEAE0", "#EEF4F5", "#F0D1B8", "#F0F4F1", "#F1EEE6", "#F3F0E8", "#F4EFE4", "#F5F3EC", "#F6E4D5", "#F8F3E7", "#FAF1EA", "#FAF4E0", "#FAF8F2", "#FAF8F5", "#FBF4E0", "#FBF8F0", "#FBF9F3"];
     HEXES.forEach(hex => {
-      const [hu, sa, l] = toHsl(hex), k = kind(hu, sa), x = rgb(hex), esc = '\\#' + hex.slice(1);
+      const [hu, sa, l] = toHsl(hex), k = kind(hu, sa, l), x = rgb(hex), esc = '\\#' + hex.slice(1);
       let tx = null, bg = null, bd = null;
       if (l <= 0.45) tx = tone(hu, sa, k === 'n' ? 0.92 - (l / 0.45) * 0.24 : 0.80 - (l / 0.45) * 0.10, k);
       if (l >= 0.78) bg = tone(hu, k === 'o' ? sa * 0.5 : sa, Math.max(0.08, 0.08 + (1 - l) * 0.95), k);
       else if (l <= 0.30) bg = tone(hu, sa, 0.28 + l * 0.35, k === 'n' ? 'g' : k);
-      if (l >= 0.65) bd = tone(hu, sa, 0.25, k === 'o' ? 'n' : k); else if (l <= 0.30) bd = tone(hu, Math.min(sa, 0.5), 0.36, k === 'n' ? 'n' : k);
+      if (l >= 0.65) bd = tone(hu, sa, 0.25, k === 'o' ? 'n' : k); else if (l <= 0.30) bd = tone(hu, Math.min(sa, 0.45), 0.52, k === 'n' ? 'n' : k);
       if (tx) rules.push(`${H}[style*="; color: ${x}"],${H}[style^="color: ${x}"],${H}.text-\\[${esc}\\]{color:${tx}!important}`);
       if (bg) rules.push(`${H}[style*="background: ${x}"],${H}[style*="background-color: ${x}"],${H}.bg-\\[${esc}\\]{background-color:${bg}!important}`);
+      if (tx) rules.push(`${H}svg [stroke="${hex}" i]{stroke:${tx}!important}${H}svg [fill="${hex}" i]{fill:${tx}!important}${H}svg[stroke="${hex}" i]{stroke:${tx}!important}`);
       if (bd) rules.push(`${H}[style*="solid ${x}"],${H}[style*="border-color: ${x}"],${H}.border-\\[${esc}\\]{border-color:${bd}!important}`);
     });
     rules.push(`${H}.np-title,${H}.np-dateline,${H}.np-dropcap{color:${hsl(pal.p[0], pal.p[1], 78)}!important}`);
@@ -1299,6 +1301,7 @@ const buildThemeCss = (paletteId, mode) => {
     rules.push(`${H}.np-rule{border-top-color:${hsl(pal.p[0], pal.p[1], 46)}!important;border-bottom-color:${hsl(pal.p[0], pal.p[1], 46)}!important}`);
     rules.push(`${H}.np-sc{color:${N(66)}!important}`);
     rules.push(`${H}.np-barcode{filter:invert(.78)}`);
+    for (let r = 243; r <= 252; r++) rules.push(`${H}[style*="background: rgba(${r}, "]{background-color:${N(14).replace(')', ' / .86)')}!important}`);
     rules.push(`${H}[style*="background: rgba(250, 248, 242"]{background:${hsl(pal.nh, pal.ns, 13).replace(')', ' / .9)')}!important}`);
     rules.push(`${H}[style*="background: rgb(250, 248, 242, "]{background:${N(13)}!important}`);
     rules.push(`${H}.font-fr{color:inherit}`);
@@ -1307,6 +1310,8 @@ const buildThemeCss = (paletteId, mode) => {
     rules.push(`html[data-pact-theme] option{background:${card};color:${hsl(pal.nh, pal.ns, 92)}}`);
     rules.push(`html[data-pact-theme] .text-black{color:${hsl(pal.nh, pal.ns, 92)}!important}`);
   }
+  // Printed-style artwork (initial portraits, picture-less cards) takes the palette's colour instead of staying forest green.
+  if (paletteId !== 'classic') rules.push(`html[data-pact-theme] [data-mug]:not(:has(img)),html[data-pact-theme] [data-idea-hero]:not(:has(img)){filter:hue-rotate(${pal.p[0] - 152}deg) saturate(.9)}`);
   return rules.join('\n');
 };
 const THEME_KEY = 'pact_theme_v1';
@@ -9525,11 +9530,11 @@ function AppInner({ onReset }) {
               {chatMsgs.length === 0 && <p style={{ fontSize: 14, color: '#5A675F', margin: 'auto', textAlign: 'center', maxWidth: 260 }}>No messages yet. Say hello, or invite them to a plan from the Social tab.</p>}
               {chatMsgs.map((m, i) => m.kind === 'text' ? (
                 <div key={m.id} data-chat-msg style={{ display: 'flex', flexDirection: 'column', alignItems: m.mine ? 'flex-end' : 'flex-start' }}>
-                  <div style={{ maxWidth: '78%', padding: '9px 14px', fontSize: 16, lineHeight: 1.35, overflowWrap: 'anywhere', borderRadius: m.mine ? '18px 18px 4px 18px' : '18px 18px 18px 4px', background: m.mine ? '#1F3A2E' : '#FAF4E0', color: m.mine ? '#F4EFE4' : '#1B2A22', border: m.mine ? 0 : '1px solid #CFC7B4', transformOrigin: m.mine ? 'right bottom' : 'left bottom', animation: m.anim || String(m.id).startsWith('tmp') ? 'pact-pop .34s cubic-bezier(.2,1.3,.4,1) both' : 'none' }}>{m.body}</div>
+                  <div style={{ maxWidth: '78%', padding: '9px 14px', fontSize: 16, lineHeight: 1.35, overflowWrap: 'anywhere', borderRadius: m.mine ? '18px 18px 4px 18px' : '18px 18px 18px 4px', background: m.mine ? '#1F3A2E' : '#FAF4E0', color: m.mine ? '#F4EFE4' : '#1B2A22', border: m.mine ? 0 : '1px solid #CFC7B4', transformOrigin: m.mine ? 'right bottom' : 'left bottom', animation: m.anim || String(m.id).startsWith('tmp') ? 'pact-pop .42s cubic-bezier(.22,.61,.36,1) both' : 'none' }}>{m.body}</div>
                   {m.mine && i === chatMsgs.map(x => x.mine && x.kind === 'text').lastIndexOf(true) && <div data-chat-receipt style={{ fontSize: 11, color: '#5A675F', marginTop: 3, letterSpacing: '.04em' }}>{String(m.id).startsWith('tmp') ? 'Sending' : m.read_at ? `Read ${new Date(m.read_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}` : 'read_at' in m ? 'Delivered' : 'Sent'}</div>}
                 </div>
               ) : (
-                <div key={m.id} data-chat-event style={{ border: '1.5px solid #1B2A22', background: 'rgba(250,248,242,.85)', padding: '10px 12px', fontSize: 14, animation: m.anim ? 'pact-pop .34s cubic-bezier(.2,1.3,.4,1) both' : 'none' }}>
+                <div key={m.id} data-chat-event style={{ border: '1.5px solid #1B2A22', background: 'rgba(250,248,242,.85)', padding: '10px 12px', fontSize: 14, animation: m.anim ? 'pact-pop .42s cubic-bezier(.22,.61,.36,1) both' : 'none' }}>
                   <div><span style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: '#A4452A' }}>{m.kind === 'invite' ? 'Invite' : m.kind === 'update' ? 'Event updated' : m.kind === 'cancel' ? 'Cancelled' : 'Reply'}</span><div style={{ marginTop: 3 }}>{m.body}</div></div>
                   {m.kind === 'invite' && !m.mine && m.my_status === 'invited' && m.activity_id && (
                     <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
