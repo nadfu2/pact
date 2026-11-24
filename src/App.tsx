@@ -1297,6 +1297,7 @@ const buildThemeCss = (paletteId, mode) => {
       if (tx) rules.push(`${H}svg:not([data-keep-light]) [stroke="${hex}" i]{stroke:${tx}!important}${H}svg:not([data-keep-light]) [fill="${hex}" i]{fill:${tx}!important}${H}svg:not([data-keep-light])[stroke="${hex}" i]{stroke:${tx}!important}`);
       if (bd) rules.push(`${H}[style*="solid ${x}"],${H}[style*="border-color: ${x}"],${H}.border-\\[${esc}\\]{border-color:${bd}!important}`);
     });
+    { const [fh, fs, fl] = toHsl('#1F3A2E'); rules.push(`${H}.np-flag{background:${tone(fh, fs, 0.28 + fl * 0.35, 'g')}!important}`); }   // section flags ("Today at a glance") use the same green as the buttons
     rules.push(`${H}.np-title,${H}.np-dateline,${H}.np-dropcap{color:${hsl(pal.p[0], pal.p[1], 78)}!important}`);
     rules.push(`${H}.np-dateline{color:${N(66)}!important;border-bottom-color:${N(30)}!important}`);
     rules.push(`${H}.np-rule{border-top-color:${hsl(pal.p[0], pal.p[1], 46)}!important;border-bottom-color:${hsl(pal.p[0], pal.p[1], 46)}!important}`);
@@ -1312,7 +1313,7 @@ const buildThemeCss = (paletteId, mode) => {
     rules.push(`html[data-pact-theme] .text-black{color:${hsl(pal.nh, pal.ns, 92)}!important}`);
   }
   // The engraved clock is simply inverted in dark mode: dark face, light markings (hue-rotate keeps the clay band clay).
-  if (m === 'dark') rules.push(`html[data-pact-theme] [data-fp-clock]{filter:invert(1) hue-rotate(180deg)}`);
+  if (m === 'dark') rules.push(`html[data-pact-theme] [data-fp-clock]{filter:invert(1) hue-rotate(180deg)}html[data-pact-theme] [data-fp-clock]>circle:first-child{fill:transparent!important}`);
   return rules.join('\n');
 };
 const THEME_KEY = 'pact_theme_v1';
@@ -4369,6 +4370,18 @@ function AppInner({ onReset }) {
     document.addEventListener('visibilitychange', check); window.addEventListener('focus', check);
     return () => { clearInterval(id); document.removeEventListener('visibilitychange', check); window.removeEventListener('focus', check); };
   }, []);
+
+  // Every new day starts clean: medicine ticks and meals eaten reset at midnight (water, pages, energy, care and mood are already keyed by date).
+  useEffect(() => {
+    if (!hydrated || !authUser) return;
+    const key = 'pact_dayreset_' + (authUser.id || 'local'); let last = null;
+    try { last = localStorage.getItem(key); } catch (e) { /* private mode */ }
+    if (last && last !== dayKey) {
+      setMedications(prev => (prev.some(m => m.taken) ? prev.map(m => (m.taken ? { ...m, taken: false } : m)) : prev));
+      setDailyMeals(prev => (prev.some(m => m.eaten) ? prev.map(m => (m.eaten ? { ...m, eaten: false, deducted: 0, loggedBatchId: '', logId: '', detail: '', selectedBatchId: '' } : m)) : prev));
+    }
+    try { localStorage.setItem(key, dayKey); } catch (e) { /* ignore */ }
+  }, [dayKey, hydrated, authUser && authUser.id]);
 
   // Planner opens on the day you are looking at, not a fixed demo date.
   useEffect(() => {

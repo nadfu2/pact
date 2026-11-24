@@ -173,6 +173,7 @@ export default function FrontPage({ hidden, open, setOpen, registerSlot, meds, s
   const medTile = show('medicine') && (
     <section data-fp-tile="medicine" style={{ position: 'relative', borderTop: `3px double ${INK}`, borderBottom: `1px solid ${INK}`, overflow: 'hidden' }}>
       <Dots />
+      <div data-fp-medhead style={{ position: 'relative' }}>
       <div data-fp-open="medicine" role="button" tabIndex={0} aria-expanded={open === 'medicine'} onClick={() => toggle('medicine')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle('medicine'); } }} style={{ position: 'relative', display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center', textAlign: 'left', padding: meds.length > 0 ? '10px 0 0' : '12px 0 12px', cursor: 'pointer' }}>
         <div>
           <div style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}><Kicker>{meds.length === 0 ? 'Medicine' : nextMed ? 'Medicine · next dose' : 'Medicine · all taken'}</Kicker><CloseTag on={open === 'medicine'} /></div>
@@ -183,9 +184,9 @@ export default function FrontPage({ hidden, open, setOpen, registerSlot, meds, s
               <div style={{ ...FRS, fontStyle: 'italic', fontSize: 13, color: MUT, maxWidth: 190 }}>{nextMed.name}</div></>
               : <div style={{ ...FRS, fontWeight: 700, fontSize: 30, lineHeight: 1, marginTop: 6 }}>All done <span style={{ color: FOR }}>&#10003;</span></div>}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'center', flex: 'none', marginRight: -2 }}><Clock time={clockT} band={!!nextMed} /></div>
       </div>
-      {meds.length > 0 && <div data-fp-pillbox style={{ position: 'relative', display: 'flex', gap: 6, flexWrap: 'wrap', margin: '6px 0 12px' }}>
+      <div data-fp-clockwrap aria-hidden style={{ position: 'absolute', left: '73%', top: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }}><Clock time={clockT} band={!!nextMed} /></div>
+      {meds.length > 0 && <div data-fp-pillbox style={{ position: 'relative', display: 'flex', gap: 6, flexWrap: 'wrap', margin: '6px 0 12px', maxWidth: '58%' }}>
         {sortedMeds.map(m => {
           const isNext = nextMed && nextMed.id === m.id, t = fmt12(m.time);
           return (
@@ -200,6 +201,7 @@ export default function FrontPage({ hidden, open, setOpen, registerSlot, meds, s
             </button>);
         })}
       </div>}
+      </div>
       {slotDiv('medicine')}
     </section>);
 

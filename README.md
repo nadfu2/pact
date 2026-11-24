@@ -382,3 +382,8 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - Notifications: shows just the sender's name and the message; tapping one opens that chat (messages and invites) or the Friend Book. Needs the new Cloudflare function deployed (automatic on push).
 - Removing a friend is no longer in the Friend Book list: it sits at the bottom of their profile and needs their name typed.
 - New SQL: supabase/UPGRADE_CHAT_FILES.sql (storage for voice notes and documents; photos still work without it).
+
+## v10.32
+- Medicine clock sits in the empty space to the right of the medicine text, vertically centred on the whole block; in dark mode its face is transparent so it matches the charcoal background.
+- Medicine ticks and meal ticks now reset automatically at midnight (water, pages, energy, care and mood were already per-day).
+- "Today at a glance" flag follows the updated green accent in dark mode.

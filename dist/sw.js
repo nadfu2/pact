@@ -1,6 +1,6 @@
 // Pact service worker: lets the app install to the home screen and open offline.
 // Pages: network first (so updates arrive), falling back to the cached copy. Never caches API or database calls.
-const CACHE = 'pact-shell-v46';
+const CACHE = 'pact-shell-v47';
 const SHELL = ['/', '/assets/app.js', '/assets/app.css', '/manifest.webmanifest', '/icons/icon-192.png'];
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL).catch(() => {})).then(() => self.skipWaiting())); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
