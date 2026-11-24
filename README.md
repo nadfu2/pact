@@ -316,3 +316,6 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 
 ## v10.18 — Bigger titles
 - Section titles (Today at a glance, Chapters, and the rest of the black title tags) are larger: 14px, up from 10px.
+
+## v10.19 — Tap a plan on Home to edit it
+- Plans listed under Today at a glance are now tappable and open the same edit sheet as the Schedule.
