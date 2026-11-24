@@ -350,6 +350,12 @@ export default function PlannerWizard({ c }) {
       <Q t="What needs doing?" />
       <Lbl mt={14}>Name it</Lbl>
       <Inp data-task-name value={f.title} placeholder="Finish dissertation chapter 3" onChange={e => setTaskF(p => ({ ...p, title: e.target.value }))} />
+      <Lbl>What sort of thing?</Lbl>
+      <Chips id="tcat" items={[['work', 'Work or study'], ['chores', 'Chore'], ['misc', 'Errand or misc']]} val={f.cat || 'work'} onPick={(k) => setTaskF(p => ({ ...p, cat: k, ready: k === 'work' ? undefined : (k === 'chores' ? 'no' : p.ready) }))} />
+      {(f.cat === 'chores' || f.cat === 'misc') && <>
+        <Lbl>Do you need to get ready for it?</Lbl>
+        <Seg id="tready" items={[['no', 'No, just do it'], ['yes', 'Yes, add getting-ready time']]} val={f.ready || (f.cat === 'chores' ? 'no' : '')} onPick={(k) => setTaskF(p => ({ ...p, ready: k }))} />
+      </>}
       <Lbl>How long?</Lbl>
       <Chips id="thours" items={[[0.25, '15 min'], [0.5, '30 min'], [1, '1 hour'], [2, '2 hours'], [4, 'Half a day']]} val={f.hours} onPick={(k) => setTaskF(p => ({ ...p, hours: k }))} />
       <Lbl>Done by</Lbl>
@@ -359,9 +365,9 @@ export default function PlannerWizard({ c }) {
     </>;
     next('Find a slot', () => {
       const deadline = f.by === 'today' ? c.todayStr : f.by === 'tomorrow' ? c.addDays(c.todayStr, 1) : f.by === 'week' ? c.addDays(c.todayStr, 4) : (f.other || c.addDays(c.todayStr, 7));
-      c.setTaskConfig(p => ({ ...p, title: f.title.trim(), totalHours: f.hours, blocks: f.hours > 2 ? 2 : 1, deadline, date: c.todayStr > c.selectedDateStr ? c.todayStr : c.selectedDateStr, pref: 'any', startTime: '08:00' }));
+      c.setTaskConfig(p => ({ ...p, category: f.cat || 'work', needsReady: (f.cat === 'chores' || f.cat === 'misc') ? (f.ready ? f.ready === 'yes' : f.cat === 'misc' ? undefined : false) : undefined, title: f.title.trim(), totalHours: f.hours, blocks: f.hours > 2 ? 2 : 1, deadline, date: c.todayStr > c.selectedDateStr ? c.todayStr : c.selectedDateStr, pref: 'any', startTime: '08:00' }));
       c.setPlannerMode('task'); go('taskres');
-    }, !!f.title.trim(), null);
+    }, !!f.title.trim() && !(f.cat === 'misc' && !f.ready), null);
   } else if (step === 'taskres') {
     const tp = c.taskPlan;
     body = <>

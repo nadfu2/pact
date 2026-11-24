@@ -346,3 +346,12 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 
 ## v10.24
 - Care card: medicines (dose, daily time, refill date with a warning inside 7 days; timed ones join the daily tick list), care contacts with one-tap Call, and linking the person you look after if they are a Pact friend, so you can add a plan to your schedule and send them an invite in one go.
+
+## v10.25
+- Dark mode now recolours the newspaper design everywhere (masthead, cards, fields, buttons), not just the old Tailwind parts.
+- Text size now scales with a transform and reflows to the screen width, so the header and nav always fit. Page height follows the real visible height (foldables, Android keyboards).
+- Plan edit sheet: Type of plan chips and "Need to get ready for it?". New categories Misc & errands and Chores (chores default to no getting-ready time). The planner asks for the type and the get-ready question.
+- Ideas budget filter is Free / £ / ££ / £££ (£ up to 10, ££ 10 to 25, £££ over 25).
+- Messages open full screen with a slide-up and popping bubbles, newest at the bottom.
+- iOS-style motion: press-down scale on buttons, page fade-rise between screens, sheets slide up. Respects reduced-motion.
+- Life Admin widget restyled to the theme.
