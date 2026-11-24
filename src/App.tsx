@@ -1293,7 +1293,7 @@ const buildThemeCss = (paletteId, mode) => {
       if (l >= 0.65) bd = tone(hu, sa, 0.25, k === 'o' ? 'n' : k); else if (l <= 0.30) bd = tone(hu, Math.min(sa, 0.45), 0.52, k === 'n' ? 'n' : k);
       if (tx) rules.push(`${H}[style*="; color: ${x}"],${H}[style^="color: ${x}"],${H}.text-\\[${esc}\\]{color:${tx}!important}`);
       if (bg) rules.push(`${H}[style*="background: ${x}"],${H}[style*="background-color: ${x}"],${H}.bg-\\[${esc}\\]{background-color:${bg}!important}`);
-      if (tx) rules.push(`${H}svg [stroke="${hex}" i]{stroke:${tx}!important}${H}svg [fill="${hex}" i]{fill:${tx}!important}${H}svg[stroke="${hex}" i]{stroke:${tx}!important}`);
+      if (tx) rules.push(`${H}svg:not([data-keep-light]) [stroke="${hex}" i]{stroke:${tx}!important}${H}svg:not([data-keep-light]) [fill="${hex}" i]{fill:${tx}!important}${H}svg:not([data-keep-light])[stroke="${hex}" i]{stroke:${tx}!important}`);
       if (bd) rules.push(`${H}[style*="solid ${x}"],${H}[style*="border-color: ${x}"],${H}.border-\\[${esc}\\]{border-color:${bd}!important}`);
     });
     rules.push(`${H}.np-title,${H}.np-dateline,${H}.np-dropcap{color:${hsl(pal.p[0], pal.p[1], 78)}!important}`);
@@ -1348,6 +1348,8 @@ const runDarkFix = () => {
     if (!(el instanceof SVGElement)) {
       const bg = parseRgb(cs.backgroundColor);
       if (bg && bg.a > 0.2 && lum(bg) > 0.7 && !el.hasAttribute('data-dkbg') && el.getBoundingClientRect().height >= 14) { el.setAttribute('data-dkbg', el.style.backgroundColor || ' '); el.style.setProperty('background-color', surf, 'important'); }
+      if (bg && bg.a > 0.2 && lum(bg) <= 0.3 && !el.hasAttribute('data-dkbg')) { const r = el.getBoundingClientRect(); if ((r.height > 0 && r.height <= 4 && r.width > 24) || (r.width > 0 && r.width <= 4 && r.height > 24)) { el.setAttribute('data-dkbg', el.style.backgroundColor || ' '); el.style.setProperty('background-color', 'rgb(104,92,82)', 'important'); } }
+      if (!el.hasAttribute('data-dkbd')) { let hit = false; for (const sd of ['Top', 'Right', 'Bottom', 'Left']) { const w = parseFloat(cs['border' + sd + 'Width']); const c = parseRgb(cs['border' + sd + 'Color']); if (w > 0 && cs['border' + sd + 'Style'] !== 'none' && c && c.a > 0.2 && lum(c) <= 0.3) { el.style.setProperty('border-' + sd.toLowerCase() + '-color', 'rgb(112,99,88)', 'important'); hit = true; } } if (hit) el.setAttribute('data-dkbd', '1'); }
       const fg = parseRgb(cs.color);
       if (fg && lum(fg) < 0.4 && !el.hasAttribute('data-dkfg') && (el.childNodes.length && [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim()))) { el.setAttribute('data-dkfg', el.style.color || ' '); el.style.setProperty('color', '#EAE3D7', 'important'); }
     } else {
@@ -1358,9 +1360,10 @@ const runDarkFix = () => {
   }
 };
 const clearDarkFix = () => {
-  document.querySelectorAll('[data-dkbg],[data-dkfg],[data-dkst],[data-dkfl]').forEach(el => {
+  document.querySelectorAll('[data-dkbg],[data-dkfg],[data-dkst],[data-dkfl],[data-dkbd]').forEach(el => {
     if (el.hasAttribute('data-dkbg')) { el.style.removeProperty('background-color'); const v = el.getAttribute('data-dkbg').trim(); if (v) el.style.backgroundColor = v; el.removeAttribute('data-dkbg'); }
     if (el.hasAttribute('data-dkfg')) { el.style.removeProperty('color'); const v = el.getAttribute('data-dkfg').trim(); if (v) el.style.color = v; el.removeAttribute('data-dkfg'); }
+    if (el.hasAttribute('data-dkbd')) { ['top', 'right', 'bottom', 'left'].forEach(sd => el.style.removeProperty('border-' + sd + '-color')); el.removeAttribute('data-dkbd'); }
     if (el.hasAttribute('data-dkst')) { el.style.removeProperty('stroke'); el.removeAttribute('data-dkst'); }
     if (el.hasAttribute('data-dkfl')) { el.style.removeProperty('fill'); el.removeAttribute('data-dkfl'); }
   });

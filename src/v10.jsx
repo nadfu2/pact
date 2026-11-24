@@ -50,7 +50,7 @@ export function Clock({ time, band, size = 92 }) {
   const nums = [['XII', 0], ['III', 90], ['VI', 180], ['IX', 270]].map(([l, a]) => { const [x, y] = pt(31, a); return <text key={l} x={f1(x)} y={f1(y + 2.4)} textAnchor="middle" fontSize="7" fill={INK} fontStyle="italic" fontWeight="600" style={FRS}>{l}</text>; });
   const [hx, hy] = pt(25, hourA), [mx, my] = pt(37, minA);
   return (
-    <svg data-fp-clock width={size} height={size} viewBox="0 0 100 100" aria-hidden style={{ display: 'block' }}>
+    <svg data-fp-clock data-keep-light width={size} height={size} viewBox="0 0 100 100" aria-hidden style={{ display: 'block' }}>
       <circle cx="50" cy="50" r="47" fill={BG} stroke={INK} strokeWidth="1.3" /><circle cx="50" cy="50" r="44.5" fill="none" stroke={INK} strokeWidth=".4" />
       {ticks}{nums}
       {Array.from({ length: 12 }, (_, k) => <ellipse key={k} cx="50" cy="50" rx="20" ry="6.5" fill="none" stroke={INK} strokeWidth=".28" transform={`rotate(${k * 15} 50 50)`} />)}

@@ -369,3 +369,6 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 
 ## v10.28
 - Dark mode safety net: after the colour rules apply, any element still showing a light fill, dark text or dark icon is recoloured from its real computed colour, so nothing depends on how a particular browser writes inline styles.
+
+## v10.29
+- Dark mode: dark-green rules, dividers and borders are recoloured from their real computed colour (not only from CSS text matching), and the engraved clock keeps its own colours.
