@@ -1,6 +1,6 @@
 // Pact service worker: lets the app install to the home screen and open offline.
 // Pages: network first (so updates arrive), falling back to the cached copy. Never caches API or database calls.
-const CACHE = 'pact-shell-v37';
+const CACHE = 'pact-shell-v38';
 const SHELL = ['/', '/assets/app.js', '/assets/app.css', '/manifest.webmanifest', '/icons/icon-192.png'];
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL).catch(() => {})).then(() => self.skipWaiting())); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
@@ -25,6 +25,7 @@ self.addEventListener('push', (e) => {
   let d = {};
   try { d = e.data ? e.data.json() : {}; } catch (err) { d = { title: 'Pact', body: e.data ? e.data.text() : '' }; }
   e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+    list.forEach(c => { try { c.postMessage({ type: 'pact-push' }); } catch (err) { /* ignore */ } });   // an open Pact refreshes straight away
     // Always show it: iPhone and Chrome cancel a device's alerts if a push arrives and nothing is shown (even while Pact is open).
     return self.registration.showNotification(d.title || 'Pact', {
       body: d.body || '', icon: '/icons/icon-192.png', badge: '/icons/icon-192.png',

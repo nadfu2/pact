@@ -261,6 +261,17 @@ export const cloud = {
     if (error) throw new Error(error.message || 'inbox unavailable');
     return data || [];
   },
+  // Live messages: calls onEvent('in' | 'read', row) the moment a message to me arrives or one of mine is read.
+  subscribeMessages(myId, onEvent) {
+    if (!sb || !myId || !sb.channel) return () => {};
+    try {
+      const ch = sb.channel('pact-msgs-' + myId)
+        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: 'to_id=eq.' + myId }, (p) => onEvent('in', p.new))
+        .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'messages', filter: 'from_id=eq.' + myId }, (p) => onEvent('read', p.new))
+        .subscribe();
+      return () => { try { sb.removeChannel(ch); } catch (e) { /* ignore */ } };
+    } catch (e) { return () => {}; }
+  },
   async markRead(userId) {
     try { await sb.rpc('mark_read', { p_user: userId }); } catch (e) { /* ignore */ }
   },

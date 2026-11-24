@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { cloud } from './cloud.js';
 import { findSkillPlan, planMilestones, planResources, skillPlanLabel } from './skills.js';
@@ -2776,6 +2776,7 @@ function AppInner({ onReset }) {
   const [chatWith, setChatWith] = useState(null);      // a friend entry (with userId)
   const [chatMsgs, setChatMsgs] = useState([]);
   const [chatText, setChatText] = useState('');
+  const [glanceAll, setGlanceAll] = useState(false);
   const [inviteSel, setInviteSel] = useState([]);      // Pact user ids to invite
   const [inviteNote, setInviteNote] = useState('');
   const [inviteBusy, setInviteBusy] = useState(false);
@@ -2938,6 +2939,36 @@ function AppInner({ onReset }) {
     set(); const vv = window.visualViewport;
     window.addEventListener('resize', set); window.addEventListener('orientationchange', set); if (vv) vv.addEventListener('resize', set);
     return () => { window.removeEventListener('resize', set); window.removeEventListener('orientationchange', set); if (vv) vv.removeEventListener('resize', set); };
+  }, []);
+  // Smooth open and close for every collapsible panel (the section under a toggle slides open; on close a copy slides shut).
+  useEffect(() => {
+    if (typeof document === 'undefined' || !document.body.animate) return undefined;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const EASE = 'cubic-bezier(.2,.8,.25,1)';
+    const openerBtn = (n) => { if (!n || n.nodeType !== 1) return null; const b = n.tagName === 'BUTTON' ? n : n.querySelector('button[aria-expanded="true"]'); return b && (b.getAttribute('aria-expanded') === 'true' || /\u25B4/.test(b.textContent || '')) ? b : null; };
+    const slide = (el, from, to, done) => {
+      const keep = el.style.overflow; el.style.overflow = 'hidden';
+      const an = el.animate([{ height: from + 'px', opacity: from ? 1 : 0 }, { height: to + 'px', opacity: to ? 1 : 0 }], { duration: 300, easing: EASE });
+      an.onfinish = an.oncancel = () => { el.style.overflow = keep; if (done) done(); };
+    };
+    const mo = new MutationObserver(list => {
+      for (const m of list) m.addedNodes.forEach(el => {
+        if (el.nodeType !== 1 || !el.closest || !el.closest('.pact-root') || el.closest('[data-chat]') || el.hasAttribute('data-no-reveal')) return;
+        if (!openerBtn(el.previousElementSibling)) return;
+        const h = el.offsetHeight; if (h > 0 && h < 1400) slide(el, 0, h);
+      });
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+    const onClick = (e) => {
+      const b = e.target && e.target.closest && e.target.closest('button[aria-expanded="true"]'); if (!b || !b.closest('.pact-root')) return;
+      const content = b.nextElementSibling || (b.parentElement && b.parentElement.nextElementSibling); if (!content || content.hasAttribute('data-no-reveal')) return;
+      const h = content.offsetHeight; if (h < 8 || h > 1400) return;
+      const clone = content.cloneNode(true); clone.setAttribute('aria-hidden', 'true'); clone.style.pointerEvents = 'none';
+      content.after(clone);
+      requestAnimationFrame(() => { if (content.isConnected) { clone.remove(); return; } slide(clone, h, 0, () => clone.remove()); });
+    };
+    document.addEventListener('click', onClick, true);
+    return () => { mo.disconnect(); document.removeEventListener('click', onClick, true); };
   }, []);
   // A short fade-and-rise whenever the page, profile screen or social sub-tab changes, like moving between iOS screens.
   useEffect(() => { const m = document.getElementById('pact-main'); if (!m) return undefined; m.classList.remove('pact-page-in'); void m.offsetWidth; m.classList.add('pact-page-in'); const t = setTimeout(() => m.classList.remove('pact-page-in'), 380); return () => clearTimeout(t); }, [activeTab, profileScreen, socialSub]);
@@ -5217,11 +5248,31 @@ function AppInner({ onReset }) {
   const unreadTotal = inboxRows.reduce((n, r) => n + (r.unread || 0), 0);
   const pendingInvites = sharedEvents.filter(e => !e.is_owner && e.my_status === 'invited');
   const loadChat = async (fr) => {
-    try { const rows = await cloud.conversation(fr.userId); setChatMsgs(rows.slice().reverse()); await cloud.markRead(fr.userId); loadInbox(); } catch (e) { /* ignore */ }
+    try {
+      const rows = (await cloud.conversation(fr.userId)).slice().reverse();
+      const seen = chatSeen.current; const first = seen.size === 0;
+      const out = rows.map(r => ({ ...r, anim: !first && !seen.has(r.id) })); rows.forEach(r => seen.add(r.id));
+      chatCache.current[fr.userId] = rows; try { localStorage.setItem('pact_chat_' + fr.userId, JSON.stringify(rows.slice(-40))); } catch (e) { /* storage full */ }
+      const sig = (l) => stableJson(l.map(x => [x.id, x.read_at === undefined ? 'u' : x.read_at, x.my_status]));
+      setChatMsgs(prev => (sig(prev) === sig(out) ? prev : out));
+      await cloud.markRead(fr.userId); loadInbox();
+    } catch (e) { /* ignore */ }
   };
-  const openChat = (fr) => { setChatWith(fr); setChatMsgs([]); loadChat(fr); };
+  // Opening a chat shows what we already have straight away (like WhatsApp), already at the bottom, then catches up quietly.
+  const chatSeen = useRef(new Set()); const chatCache = useRef({}); const chatInstant = useRef(true);
+  const openChat = (fr) => {
+    let cached = chatCache.current[fr.userId];
+    if (!cached) { try { cached = JSON.parse(localStorage.getItem('pact_chat_' + fr.userId) || 'null') || []; } catch (e) { cached = []; } }
+    chatSeen.current = new Set(cached.map(r => r.id)); chatInstant.current = true;
+    setChatWith(fr); setChatMsgs(cached.map(r => ({ ...r, anim: false }))); loadChat(fr);
+  };
   const chatScrollRef = useRef(null);
-  useEffect(() => { const el = chatScrollRef.current; if (el) setTimeout(() => { try { el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' }); } catch (e) { el.scrollTop = el.scrollHeight; } }, 60); }, [chatMsgs.length, chatWith && chatWith.userId]);
+  useLayoutEffect(() => {
+    const el = chatScrollRef.current; if (!el) return;
+    if (chatInstant.current) { el.scrollTop = el.scrollHeight; if (chatMsgs.length) chatInstant.current = false; return; }
+    const near = el.scrollHeight - el.scrollTop - el.clientHeight < 160;
+    if (near) { try { el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' }); } catch (e) { el.scrollTop = el.scrollHeight; } }
+  }, [chatMsgs.length, chatWith && chatWith.userId]);
   const sendChat = async () => {
     const b = chatText.trim(); if (!b || !chatWith) return;
     setChatText(''); setChatMsgs(prev => [...prev, { id: 'tmp' + Date.now(), mine: true, kind: 'text', body: b }]);
@@ -5230,7 +5281,7 @@ function AppInner({ onReset }) {
   };
   useEffect(() => {
     if (!chatWith) return undefined;
-    const id = setInterval(() => { if (typeof document === 'undefined' || document.visibilityState === 'visible') loadChat(chatWith); }, 8000);
+    const id = setInterval(() => { if (typeof document === 'undefined' || document.visibilityState === 'visible') loadChat(chatWith); }, 3000);
     return () => clearInterval(id);
   }, [chatWith && chatWith.userId]);
   const answerEvent = async (eventId, status, note) => {
@@ -5326,6 +5377,19 @@ function AppInner({ onReset }) {
     catch (e) { pushToast("Couldn't remove them right now.", 'error'); }
   };
   useEffect(() => { if (hydrated && authUser && authUser.cloud && (activeTab === 'social' || activeTab === 'schedule')) { if (activeTab === 'social') refreshFriends(); else { syncShared(); loadInbox(); } } }, [activeTab, socialSub, hydrated]);
+  // Live messages: a new message or a read receipt refreshes at once (realtime), when the app comes back to the front, or when a push arrives.
+  const chatRef = useRef(null); chatRef.current = chatWith;
+  const liveFns = useRef({}); liveFns.current = { loadInbox, loadChat, syncShared };
+  useEffect(() => {
+    if (!hydrated || !authUser || !authUser.cloud) return undefined;
+    const refresh = (m) => { const f = liveFns.current; f.loadInbox(); const c = chatRef.current; if (c && (!m || m.from_id === c.userId || m.to_id === c.userId)) f.loadChat(c); if (m && m.kind && m.kind !== 'text') f.syncShared(); };
+    const off = cloud.subscribeMessages(authUser.id, (k, m) => refresh(m));
+    const onVis = () => { if (document.visibilityState === 'visible') refresh(null); };
+    const onSw = (e) => { if (e.data && e.data.type === 'pact-push') refresh(null); };
+    document.addEventListener('visibilitychange', onVis);
+    if (navigator.serviceWorker) navigator.serviceWorker.addEventListener('message', onSw);
+    return () => { off(); document.removeEventListener('visibilitychange', onVis); if (navigator.serviceWorker) navigator.serviceWorker.removeEventListener('message', onSw); };
+  }, [authUser && authUser.id, hydrated]);
   useEffect(() => {
     if (!hydrated || !authUser || !authUser.cloud) return undefined;
     claimHandle(accountInfo.username).catch(() => { /* friends tables not set up yet */ });
@@ -7016,21 +7080,24 @@ function AppInner({ onReset }) {
               const todays = tasks.filter(t => t.date === todayS).sort((a, b) => a.startTime.localeCompare(b.startTime));
               const nowM = new Date().getHours() * 60 + new Date().getMinutes();
               const nextT = todays.find(t => toMins(t.startTime) >= nowM && t.status !== 'done');
+              const gi = nextT ? Math.max(0, todays.findIndex(x => x.id === nextT.id)) : 0;
+              const glanceShown = glanceAll ? todays : todays.slice(gi, gi + 2);
               const free = getFreeGaps(todayS, calCtx, 45, { from: Math.max(8 * 60, roundUpTo(nowM, 15)) });
               return (
                 <div data-glance className="space-y-3" style={{ order: -8 }}>
                   <span className="np-flag">Today at a glance<span className="np-kicker">Front page</span></span>
-                  <div>
-                    {todays.map((t, i) => {
+                  {(() => { return null; })()}
+                  <div data-glance-list>
+                    {glanceShown.map((t, i) => {
                       const done = t.status === 'done';
                       const isNext = !!nextT && nextT.id === t.id;
                       const st = toMins(t.startTime);
                       const readyAt = readyStartFor(t, st, userProfile);
                       const travel = Number(t.travelTime) || 0;
                       return (
-                        <div key={t.id} className="grid grid-cols-[46px_1fr] gap-x-3">
+                        <div key={t.id} className="grid grid-cols-[46px_1fr] gap-x-3" style={(!glanceAll && i === glanceShown.length - 1 && i > 0 && todays.length > glanceShown.length) ? { WebkitMaskImage: 'linear-gradient(to bottom, #000 0%, transparent 92%)', maskImage: 'linear-gradient(to bottom, #000 0%, transparent 92%)', minHeight: 64 } : undefined}>
                           <div className={`text-[13px] pt-0.5 text-right ${isNext ? 'font-semibold text-rose-700' : 'text-stone-500'}`}>{t.startTime}</div>
-                          <div className={`relative pl-4 ${i === todays.length - 1 ? 'pb-1' : 'pb-5'} border-l-2 ${isNext ? 'border-purple-900' : 'border-stone-300'}`}>
+                          <div className={`relative pl-4 ${i === glanceShown.length - 1 ? 'pb-1' : 'pb-5'} border-l-2 ${isNext ? 'border-purple-900' : 'border-stone-300'}`}>
                             {isNext && <span className="lg-pulse-dot absolute -left-[7px] top-1 w-3.5 h-3.5 rounded-full bg-rose-700 opacity-50" />}
                             <span className={`absolute -left-[7px] top-1 w-3.5 h-3.5 rounded-full ${isNext ? 'bg-rose-700 border-2 border-[#F4EFE4]' : 'bg-stone-300'}`} />
                             {isNext ? (
@@ -7054,6 +7121,7 @@ function AppInner({ onReset }) {
                       );
                     })}
                   </div>
+                  {todays.length > 2 && <button data-glance-more aria-expanded={glanceAll} onClick={() => setGlanceAll(v => !v)} style={{ display: 'block', width: '100%', marginTop: 4, padding: '10px 0', background: 'none', border: 0, borderTop: '1px solid #CFC7B4', borderRadius: 0, fontSize: 12, fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: '#1B2A22' }}>{glanceAll ? 'Show fewer \u25B4' : `Show all ${todays.length} today \u25BE`}</button>}
                   <div data-glance-stats className="grid grid-cols-3 border-t-[3px] border-b border-slate-900">
                     {[[todays.length, todays.length === 1 ? 'Plan' : 'Plans'], [free.length, 'Free windows'], [nextT ? fromMins(readyStartFor(nextT, toMins(nextT.startTime), userProfile)) : '–', 'Get ready']].map(([n, l], i) => (
                       <div key={l} className={`py-2.5 ${i ? 'pl-3 border-l border-slate-900' : ''}`}><div className="font-editorial text-[28px] leading-none">{n}</div><div className="text-[9.5px] uppercase tracking-[0.12em] text-stone-500 mt-1.5">{l}</div></div>
@@ -9444,7 +9512,7 @@ function AppInner({ onReset }) {
       )}
 
       {chatWith && (
-        <div data-chat className="fixed inset-0 z-[320]" style={{ background: '#F4EFE4', animation: 'pact-up .36s cubic-bezier(.2,.9,.25,1) both' }}>
+        <div data-chat className="fixed inset-0 z-[320]" style={{ background: '#F4EFE4', animation: 'pact-up .26s cubic-bezier(.2,.9,.25,1) both' }}>
           <div style={{ maxWidth: 820, margin: '0 auto', height: '100%', display: 'flex', flexDirection: 'column', paddingTop: 'env(safe-area-inset-top, 0px)' }}>
             <div style={{ padding: '10px 16px 8px', borderBottom: '3px double #1B2A22', display: 'flex', alignItems: 'center', gap: 12 }}>
               <button data-chat-close aria-label="Back" onClick={() => setChatWith(null)} style={{ background: 'none', border: 0, borderRadius: 0, fontSize: 15, fontWeight: 700, padding: '8px 4px', color: '#1B2A22' }}>&lsaquo; Back</button>
@@ -9456,11 +9524,12 @@ function AppInner({ onReset }) {
             <div ref={chatScrollRef} data-chat-scroll style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 8, overscrollBehavior: 'contain' }}>
               {chatMsgs.length === 0 && <p style={{ fontSize: 14, color: '#5A675F', margin: 'auto', textAlign: 'center', maxWidth: 260 }}>No messages yet. Say hello, or invite them to a plan from the Social tab.</p>}
               {chatMsgs.map((m, i) => m.kind === 'text' ? (
-                <div key={m.id} data-chat-msg style={{ display: 'flex', justifyContent: m.mine ? 'flex-end' : 'flex-start' }}>
-                  <div style={{ maxWidth: '78%', padding: '9px 14px', fontSize: 16, lineHeight: 1.35, overflowWrap: 'anywhere', borderRadius: m.mine ? '18px 18px 4px 18px' : '18px 18px 18px 4px', background: m.mine ? '#1F3A2E' : '#FAF4E0', color: m.mine ? '#F4EFE4' : '#1B2A22', border: m.mine ? 0 : '1px solid #CFC7B4', transformOrigin: m.mine ? 'right bottom' : 'left bottom', animation: `pact-pop .34s cubic-bezier(.2,1.3,.4,1) ${Math.min(i * 22, 260)}ms both` }}>{m.body}</div>
+                <div key={m.id} data-chat-msg style={{ display: 'flex', flexDirection: 'column', alignItems: m.mine ? 'flex-end' : 'flex-start' }}>
+                  <div style={{ maxWidth: '78%', padding: '9px 14px', fontSize: 16, lineHeight: 1.35, overflowWrap: 'anywhere', borderRadius: m.mine ? '18px 18px 4px 18px' : '18px 18px 18px 4px', background: m.mine ? '#1F3A2E' : '#FAF4E0', color: m.mine ? '#F4EFE4' : '#1B2A22', border: m.mine ? 0 : '1px solid #CFC7B4', transformOrigin: m.mine ? 'right bottom' : 'left bottom', animation: m.anim || String(m.id).startsWith('tmp') ? 'pact-pop .34s cubic-bezier(.2,1.3,.4,1) both' : 'none' }}>{m.body}</div>
+                  {m.mine && i === chatMsgs.map(x => x.mine && x.kind === 'text').lastIndexOf(true) && <div data-chat-receipt style={{ fontSize: 11, color: '#5A675F', marginTop: 3, letterSpacing: '.04em' }}>{String(m.id).startsWith('tmp') ? 'Sending' : m.read_at ? `Read ${new Date(m.read_at).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}` : 'read_at' in m ? 'Delivered' : 'Sent'}</div>}
                 </div>
               ) : (
-                <div key={m.id} data-chat-event style={{ border: '1.5px solid #1B2A22', background: 'rgba(250,248,242,.85)', padding: '10px 12px', fontSize: 14, animation: `pact-pop .34s cubic-bezier(.2,1.3,.4,1) ${Math.min(i * 22, 260)}ms both` }}>
+                <div key={m.id} data-chat-event style={{ border: '1.5px solid #1B2A22', background: 'rgba(250,248,242,.85)', padding: '10px 12px', fontSize: 14, animation: m.anim ? 'pact-pop .34s cubic-bezier(.2,1.3,.4,1) both' : 'none' }}>
                   <div><span style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: '#A4452A' }}>{m.kind === 'invite' ? 'Invite' : m.kind === 'update' ? 'Event updated' : m.kind === 'cancel' ? 'Cancelled' : 'Reply'}</span><div style={{ marginTop: 3 }}>{m.body}</div></div>
                   {m.kind === 'invite' && !m.mine && m.my_status === 'invited' && m.activity_id && (
                     <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>

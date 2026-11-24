@@ -355,3 +355,10 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - Messages open full screen with a slide-up and popping bubbles, newest at the bottom.
 - iOS-style motion: press-down scale on buttons, page fade-rise between screens, sheets slide up. Respects reduced-motion.
 - Life Admin widget restyled to the theme.
+
+## v10.26
+- Messages arrive live (Supabase realtime, plus a refresh when the app returns to the front or a push arrives); polling while a chat is open is now every 3 seconds. Needs `supabase/UPGRADE_LIVE_CHAT.sql` once.
+- Read receipts under your last message: Sending, Delivered, Read (with the time).
+- Chats open instantly from a saved copy, already at the bottom, and only new messages pop in (like WhatsApp).
+- Every collapsible panel now slides open and shut.
+- Home "Today at a glance" shows only the next two plans, the second fading out, with Show all / Show fewer.
