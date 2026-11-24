@@ -319,3 +319,9 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 
 ## v10.19 — Tap a plan on Home to edit it
 - Plans listed under Today at a glance are now tappable and open the same edit sheet as the Schedule.
+
+## v10.20 — Plan sheet, manual time, many notes, desktop scroll
+- Tapping a plan opens a newspaper-style sheet where every field (title, date, start, end, place, notes, person) edits in place. No Change plan step.
+- Planner: your own date and time sit right under the suggested times, and under the task slots too.
+- Quick notes keep a list: add as many as you like, edit or delete each. An old single note becomes the first one.
+- Desktop: the mouse wheel scrolls the page from anywhere, not just the middle column.

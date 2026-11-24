@@ -61,6 +61,7 @@ export default function PlannerWizard({ c }) {
   const [meet, setMeet] = useState('coffee');
   const [evPath, setEvPath] = useState('on');
   const [ownTime, setOwnTime] = useState(false);
+  const [taskOwn, setTaskOwn] = useState({ date: '', time: '' });
   const [chgDur, setChgDur] = useState(false);
   const [fine, setFine] = useState(false);
   const [extra, setExtra] = useState('');
@@ -245,11 +246,11 @@ export default function PlannerWizard({ c }) {
             <span style={{ display: 'block', fontSize: 13, opacity: .75, marginTop: 2 }}>{s.line}</span>
           </button>);
       })}
-      <LinkBtn data-own-time onClick={() => setOwnTime(o => !o)}>Pick my own time</LinkBtn>
-      {ownTime && <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 8 }}>
-        <Inp type="date" data-own-date value={ec.date} onChange={e => pickSlot(e.target.value, ec.startTime)} />
-        <Inp type="time" data-own-clock value={ec.startTime} onChange={e => pickSlot(ec.date, e.target.value)} />
-      </div>}
+      <Lbl mt={18}>Or pick your own time</Lbl>
+      <div data-own-time style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 8 }}>
+        <Inp type="date" data-own-date value={ec.date} min={c.todayStr} onChange={e => e.target.value && pickSlot(e.target.value, ec.startTime)} />
+        <Inp type="time" data-own-clock value={ec.startTime} onChange={e => e.target.value && pickSlot(ec.date, e.target.value)} />
+      </div>
       <p style={{ ...fr, fontStyle: 'italic', color: MUT, fontSize: 15, margin: '16px 0 0' }}>About {durWord(dur).toLowerCase()}. <button onClick={() => setChgDur(o => !o)} style={{ background: 'none', border: 0, padding: 0, textDecoration: 'underline', color: INK, fontStyle: 'italic', fontFamily: 'inherit', fontSize: 'inherit' }}>Change</button></p>
       {chgDur && <Chips id="dur" items={DURS} val={dur} onPick={(k) => setEc({ duration: k })} />}
       {c.scheduleConflictWarning && <Warn>{c.scheduleConflictWarning}</Warn>}
@@ -375,6 +376,12 @@ export default function PlannerWizard({ c }) {
           {blk.options > 1 && <button data-task-other onClick={() => c.otherTime(blk.index)} style={{ padding: '7px 10px', border: `1.5px solid ${INK}`, borderRadius: 0, background: 'transparent', fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', fontWeight: 700 }}>Other time</button>}
         </div>))}
       {tp && tp.warnings.map(w => <Warn key={w}>{w}</Warn>)}
+      <Lbl mt={18}>Or pick your own time</Lbl>
+      <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 8 }}>
+        <Inp type="date" data-task-own-date value={taskOwn.date || c.todayStr} min={c.todayStr} onChange={e => setTaskOwn(p => ({ ...p, date: e.target.value }))} />
+        <Inp type="time" data-task-own-clock value={taskOwn.time || '09:00'} onChange={e => setTaskOwn(p => ({ ...p, time: e.target.value }))} />
+      </div>
+      <button data-task-own-add disabled={!taskF.title.trim()} onClick={() => c.addPlan({ title: taskF.title.trim(), date: taskOwn.date || c.todayStr, startTime: taskOwn.time || '09:00', duration: Math.round((taskF.hours || 1) * 60), type: 'analytical', categoryColor: 'work', meetingType: 'Business', notes: '' })} style={{ marginTop: 10, width: '100%', height: 46, border: `1.5px solid ${INK}`, borderRadius: 0, background: 'transparent', color: INK, fontSize: 13, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', opacity: !taskF.title.trim() ? .4 : 1 }}>Add at my own time</button>
     </>;
     next(tp && tp.failed > 0 ? `Add the ${tp.blocks.length} that fit` : 'Add to my schedule', c.confirmPlan, !!(tp && tp.blocks.length), null);
   } else if (step === 'try') {

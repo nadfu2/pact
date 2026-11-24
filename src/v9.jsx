@@ -100,8 +100,28 @@ function EnergySheet({ level, set, onClose }) {
     <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', marginTop: 7 }}>{label}</div></button>;
   return <Sheet title="How's your battery?" onClose={onClose} dataAttr={{ 'data-energy-sheet': true }}><div style={{ display: 'flex', gap: 8, marginTop: 14 }}><B id="low" label="Low" n={1} /><B id="steady" label="Steady" n={2} /><B id="high" label="High" n={3} /></div><div style={{ fontSize: 11.5, color: MUT, marginTop: 10 }}>A low day gets a gentler plan. Nothing is lost.</div></Sheet>;
 }
+export function NotesList({ notes, setNotes, rows = 3 }) {
+  const [draft, setDraft] = useState('');
+  const list = Array.isArray(notes) ? notes : [];
+  const add = () => { const t = draft.trim(); if (!t) return; setNotes([{ id: uid('qn'), text: t, ts: Date.now() }, ...list]); setDraft(''); };
+  const when = (ts) => { try { return new Date(ts).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }); } catch (e) { return ''; } };
+  return (
+    <div data-notes-list>
+      <textarea data-note-input aria-label="New note" rows={rows} value={draft} onChange={e => setDraft(e.target.value)} placeholder="Jot something down" style={{ width: '100%', boxSizing: 'border-box', background: '#FAF8F2', border: `1.5px solid ${INK}`, padding: 10, fontSize: 15, outline: 'none', borderRadius: 0, resize: 'vertical' }} />
+      <button data-note-add onClick={add} disabled={!draft.trim()} style={{ ...btn(true), marginTop: 8, opacity: draft.trim() ? 1 : .4 }}>Add note</button>
+      {list.length === 0 && <div style={{ fontSize: 13, color: MUT, marginTop: 12 }}>No notes yet. Each one you add is kept separately.</div>}
+      {list.map(n => (
+        <div key={n.id} data-note-item style={{ marginTop: 12, borderTop: `1px solid ${RULE}`, paddingTop: 10 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: MUT }}>{when(n.ts)}</span>
+            <button data-note-del aria-label="Delete this note" onClick={() => setNotes(list.filter(x => x.id !== n.id))} style={{ background: 'none', border: 0, padding: '2px 4px', fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', fontWeight: 700, color: '#A4452A' }}>Delete</button>
+          </div>
+          <textarea data-note-text aria-label="Note" rows={Math.min(6, Math.max(2, String(n.text).split('\n').length))} value={n.text} onChange={e => setNotes(list.map(x => x.id === n.id ? { ...x, text: e.target.value } : x))} style={{ width: '100%', boxSizing: 'border-box', marginTop: 4, background: 'transparent', border: 0, padding: 0, fontSize: 15, lineHeight: 1.4, outline: 'none', borderRadius: 0, resize: 'none' }} />
+        </div>))}
+    </div>);
+}
 function NoteSheet({ notes, setNotes, onClose }) {
-  return <Sheet title="Quick note" onClose={onClose} dataAttr={{ 'data-note-sheet': true }}><textarea data-note-input autoFocus rows={7} value={notes} onChange={e => setNotes(e.target.value)} placeholder="Jot something down. It saves automatically." aria-label="Quick note" style={{ marginTop: 12, width: '100%', background: '#FAF8F2', border: `1.5px solid ${INK}`, padding: 10, fontSize: 14, outline: 'none', borderRadius: 0 }} /><div style={{ marginTop: 12 }}><button onClick={onClose} style={btn(true)}>Done</button></div></Sheet>;
+  return <Sheet title="Quick notes" onClose={onClose} dataAttr={{ 'data-note-sheet': true }}><div style={{ marginTop: 12, maxHeight: '60vh', overflowY: 'auto' }}><NotesList notes={notes} setNotes={setNotes} /></div><div style={{ marginTop: 12 }}><button onClick={onClose} style={btn(false)}>Done</button></div></Sheet>;
 }
 
 
@@ -145,7 +165,7 @@ export function LogHome({ variant, profile, patch, today, water, setWater, water
   const wc = water.date === today ? water.count : 0;
   const lvl = (profile.energyLog || {})[today] || null;
   const pages = (reading.log || {})[today] || 0;
-  const noteLines = String(notes || '').split('\n').filter(l => l.trim()).length;
+  const noteLines = Array.isArray(notes) ? notes.length : 0;
   const LEV = { low: 'Low', steady: 'Steady', high: 'High' };
   const Q = ({ id, label, cap, onTap, hot, children, aria }) => (
     <button data-log-btn={id} aria-label={aria || label} onClick={onTap} style={{ width: 72, height: 72, flexShrink: 0, boxSizing: 'border-box', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3, padding: 4, textAlign: 'center', background: hot ? 'rgba(200,100,60,.10)' : 'rgba(250,244,224,.55)', border: `1.5px solid ${hot ? CLAY : INK}`, borderRadius: 0 }}>
