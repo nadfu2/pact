@@ -440,17 +440,25 @@ export function BudgetCard({ profile, patch, filter, setFilter }) {
 }
 
 // ---------- Caring for someone (Home) ----------
-export function CarePanel({ profile, patch, today, tasks, onPlanForMe, onPlanAppt }) {
+export function CarePanel({ profile, patch, today, tasks, onPlanForMe, onPlanAppt, pactFriends, onPlanForThem }) {
   const C = profile.care || { name: '', items: [], done: {}, notes: [] };
+  const meds = C.meds || []; const contacts = C.contacts || []; const link = C.link || null;
+  const [md, setMd] = useState({ name: '', dose: '', time: '', refill: '' }); const [ct, setCt] = useState({ name: '', role: '', phone: '' }); const [pf, setPf] = useState({ title: '', date: today, start: '10:00', end: '11:00' }); const [pickOpen, setPickOpen] = useState(false); const [pfOpen, setPfOpen] = useState(false); const [pfBusy, setPfBusy] = useState(false);
   const items = C.items || []; const doneToday = (C.done || {})[today] || []; const notes = C.notes || [];
   const [nm, setNm] = useState(''); const [it, setIt] = useState(''); const [tm, setTm] = useState(''); const [nt, setNt] = useState(''); const [open, setOpen] = useState(true);
-  const save = (o) => patch({ care: { name: '', items: [], done: {}, notes: [], ...C, ...o } });
+  const save = (o) => patch({ care: { name: '', items: [], done: {}, notes: [], meds: [], contacts: [], link: null, ...C, ...o } });
   const tick = (id) => save({ done: { [today]: doneToday.includes(id) ? doneToday.filter(x => x !== id) : [...doneToday, id] } });
   const addItem = (title, time) => { if (!title.trim()) return; save({ items: [...items, { id: uid(), title: title.trim(), time: time || '' }].sort((a, b) => String(a.time || '99').localeCompare(String(b.time || '99'))) }); setIt(''); setTm(''); };
   const addNote = () => { if (!nt.trim()) return; save({ notes: [{ id: uid(), d: today, text: nt.trim() }, ...notes].slice(0, 30) }); setNt(''); };
   const who = C.name || 'someone';
   const appt = (tasks || []).filter(t => t.date >= today && t.status !== 'done' && /doctor|dentist|hospital|clinic|appointment|surgery|checkup|optician|nurse|physio|gp\b/i.test(t.title)).sort((a, b) => (a.date + a.startTime).localeCompare(b.date + b.startTime))[0];
-  const left = items.filter(x => !doneToday.includes(x.id)).length;
+  const dayItems = [...items, ...meds.filter(m => m.time).map(m => ({ id: 'med-' + m.id, title: `${m.name}${m.dose ? ' ' + m.dose : ''}`, time: m.time, med: true }))].sort((a, b) => String(a.time || '99').localeCompare(String(b.time || '99')));
+  const left = dayItems.filter(x => !doneToday.includes(x.id)).length;
+  const daysTo = (d) => Math.round((new Date(d + 'T12:00:00') - new Date(today + 'T12:00:00')) / 864e5);
+  const addMed = () => { if (!md.name.trim()) return; save({ meds: [...meds, { id: uid(), name: md.name.trim(), dose: md.dose.trim(), time: md.time, refill: md.refill }] }); setMd({ name: '', dose: '', time: '', refill: '' }); };
+  const addContact = () => { if (!ct.name.trim()) return; save({ contacts: [...contacts, { id: uid(), name: ct.name.trim(), role: ct.role.trim(), phone: ct.phone.replace(/[^\d+]/g, '') }] }); setCt({ name: '', role: '', phone: '' }); };
+  const kick = { fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: MUT };
+  const ghost = { width: '100%', height: 44, border: `1.5px solid ${INK}`, borderRadius: 0, background: 'transparent', color: INK, fontSize: 13, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase' };
   const fld = { width: '100%', boxSizing: 'border-box', border: `1.5px solid ${INK}`, background: '#FAF4E0', padding: '0 10px', fontSize: 16, color: INK, borderRadius: 0, height: 44, minWidth: 0 };
   const lab = { display: 'block', fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: MUT };
   const SUGG = [['Morning tablets', '08:00'], ['Lunch', '12:30'], ['Evening call', '19:00'], ['Bedtime check', '21:30']].filter(([t]) => !items.some(x => x.title === t));
@@ -469,13 +477,13 @@ export function CarePanel({ profile, patch, today, tasks, onPlanForMe, onPlanApp
         </div> : <>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 12, fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: MUT }}><span>{who}&rsquo;s day</span><button data-care-rename onClick={() => save({ name: '' })} style={{ background: 'none', border: 0, padding: 0, fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: MUT, textDecoration: 'underline' }}>Change name</button></div>
           <div style={{ borderTop: `3px solid ${INK}`, marginTop: 6 }} />
-          {items.length === 0 && <div style={{ fontSize: 13, color: MUT, padding: '10px 0' }}>Add the things that happen every day. They reset each morning.</div>}
-          {items.map(x => { const d = doneToday.includes(x.id); return (
+          {dayItems.length === 0 && <div style={{ fontSize: 13, color: MUT, padding: '10px 0' }}>Add the things that happen every day. They reset each morning.</div>}
+          {dayItems.map(x => { const d = doneToday.includes(x.id); return (
             <div key={x.id} data-care-item style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '9px 0', borderBottom: `1px solid ${RULE}` }}>
               <button data-care-tick={x.id} aria-pressed={d} aria-label={`${d ? 'Untick' : 'Tick'} ${x.title}`} onClick={() => tick(x.id)} style={{ width: 28, height: 28, flex: 'none', borderRadius: '50%', border: `1.75px solid ${d ? FOR : INK}`, background: d ? FOR : 'transparent', color: BG, padding: 0, fontSize: 14 }}>{d ? '\u2713' : ''}</button>
               <span style={{ flex: 1, minWidth: 0, fontSize: 16, textDecoration: d ? 'line-through' : 'none', color: d ? SOFT : INK, overflowWrap: 'anywhere' }}>{x.title}</span>
               {x.time && <span style={{ fontSize: 12, color: MUT }}>{x.time}</span>}
-              <button data-care-del aria-label={`Remove ${x.title}`} onClick={() => save({ items: items.filter(y => y.id !== x.id) })} style={{ background: 'none', border: 0, padding: 6, fontSize: 18, color: MUT, borderRadius: 0 }}>&times;</button>
+              {!x.med && <button data-care-del aria-label={`Remove ${x.title}`} onClick={() => save({ items: items.filter(y => y.id !== x.id) })} style={{ background: 'none', border: 0, padding: 6, fontSize: 18, color: MUT, borderRadius: 0 }}>&times;</button>}
             </div>); })}
           {SUGG.length > 0 && <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>{SUGG.map(([t, tmv]) => <Chip key={t} data-care-sugg={t} onClick={() => addItem(t, tmv)}>+ {t}</Chip>)}</div>}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 110px', gap: 8, marginTop: 10 }}>
@@ -483,6 +491,69 @@ export function CarePanel({ profile, patch, today, tasks, onPlanForMe, onPlanApp
             <label style={lab}>Time<input data-care-time type="time" aria-label="Time" value={tm} onChange={e => setTm(e.target.value)} style={{ ...fld, marginTop: 5 }} /></label>
           </div>
           <button data-care-add onClick={() => addItem(it, tm)} disabled={!it.trim()} style={{ marginTop: 8, width: '100%', height: 44, border: `1.5px solid ${INK}`, borderRadius: 0, background: 'transparent', color: INK, fontSize: 13, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', opacity: it.trim() ? 1 : .4 }}>Add</button>
+          <div data-care-link style={{ marginTop: 14, borderTop: `1px solid ${RULE}`, paddingTop: 10 }}>
+            <div style={kick}>{who} on The Pact</div>
+            {link ? <>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginTop: 6 }}>
+                <span data-care-linked className="font-fr" style={{ fontWeight: 600, fontSize: 18 }}>Linked to {link.name}</span>
+                <button data-care-unlink onClick={() => { save({ link: null }); setPfOpen(false); }} style={{ background: 'none', border: 0, padding: 0, fontSize: 12, textDecoration: 'underline', color: MUT }}>Unlink</button>
+              </div>
+              <button data-care-plan-them aria-expanded={pfOpen} onClick={() => setPfOpen(o => !o)} style={{ ...ghost, marginTop: 8 }}>Plan something for {link.name}</button>
+              {pfOpen && <div data-care-plan-form style={{ marginTop: 8 }}>
+                <input data-care-pf-title type="text" aria-label="What is it" placeholder="e.g. Doctor's appointment, lunch together" value={pf.title} onChange={e => setPf({ ...pf, title: e.target.value })} style={fld} />
+                <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', gap: 8, marginTop: 8 }}>
+                  <input data-care-pf-date type="date" aria-label="Date" value={pf.date} onChange={e => setPf({ ...pf, date: e.target.value })} style={fld} />
+                  <input data-care-pf-start type="time" aria-label="Start" value={pf.start} onChange={e => setPf({ ...pf, start: e.target.value })} style={fld} />
+                  <input data-care-pf-end type="time" aria-label="End" value={pf.end} onChange={e => setPf({ ...pf, end: e.target.value })} style={fld} />
+                </div>
+                <button data-care-pf-send disabled={!pf.title.trim() || pfBusy} onClick={async () => { setPfBusy(true); const ok = await onPlanForThem({ ...pf, title: pf.title.trim() }, link); setPfBusy(false); if (ok) { setPf({ title: '', date: today, start: '10:00', end: '11:00' }); setPfOpen(false); } }} style={{ marginTop: 8, width: '100%', height: 46, border: 0, borderRadius: 0, background: FOR, color: BG, fontSize: 13, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', opacity: pf.title.trim() && !pfBusy ? 1 : .4 }}>{pfBusy ? 'Sending' : `Add to both schedules`}</button>
+                <div style={{ fontSize: 12, color: MUT, marginTop: 6 }}>It goes in your schedule now. {link.name} gets an invite on The Pact to accept.</div>
+              </div>}
+            </> : <>
+              <div style={{ fontSize: 13, color: MUT, marginTop: 4 }}>If {who} has The Pact, link them to plan things for them.</div>
+              {(pactFriends || []).length === 0 ? <div style={{ fontSize: 12, color: MUT, marginTop: 6 }}>Add them as a friend first (Social tab), then link them here.</div> : <>
+                <button data-care-link-open aria-expanded={pickOpen} onClick={() => setPickOpen(o => !o)} style={{ ...ghost, marginTop: 8 }}>Link a Pact friend</button>
+                {pickOpen && <div style={{ border: `1.5px solid ${INK}`, marginTop: 6 }}>{pactFriends.map((f, i) => <button key={f.userId} data-care-link-pick={f.userId} onClick={() => { save({ link: { userId: f.userId, name: f.name } }); setPickOpen(false); }} className="w-full text-left" style={{ display: 'block', padding: '11px 12px', fontSize: 15, background: 'none', border: 0, borderTop: i ? `1px solid ${RULE}` : 0, borderRadius: 0 }}>{f.name}</button>)}</div>}
+              </>}
+            </>}
+          </div>
+          <div data-care-meds style={{ marginTop: 14, borderTop: `1px solid ${RULE}`, paddingTop: 10 }}>
+            <div style={kick}>Medicines</div>
+            <div style={{ borderTop: `3px solid ${INK}`, marginTop: 6 }} />
+            {meds.length === 0 && <div style={{ fontSize: 13, color: MUT, padding: '10px 0' }}>Add each medicine with its dose and time. Ones with a time join the daily list above.</div>}
+            {meds.map(m => { const dl = m.refill ? daysTo(m.refill) : null; const soon = dl !== null && dl <= 7; return (
+              <div key={m.id} data-care-med style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 0', borderBottom: `1px solid ${RULE}` }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 16, overflowWrap: 'anywhere' }}>{m.name}{m.dose ? <span style={{ color: MUT }}> &middot; {m.dose}</span> : null}</div>
+                  <div style={{ fontSize: 12, color: MUT }}>{m.time ? `Daily at ${m.time}` : 'As needed'}{m.refill ? <span data-care-refill style={{ color: soon ? CLAY : MUT, fontWeight: soon ? 700 : 400 }}> &middot; {dl < 0 ? 'Refill overdue' : dl === 0 ? 'Refill today' : soon ? `Refill in ${dl} day${dl === 1 ? '' : 's'}` : `Refill by ${nice(m.refill)}`}</span> : null}</div>
+                </div>
+                <button data-care-med-del aria-label={`Remove ${m.name}`} onClick={() => save({ meds: meds.filter(y => y.id !== m.id) })} style={{ background: 'none', border: 0, padding: 6, fontSize: 18, color: MUT, borderRadius: 0 }}>&times;</button>
+              </div>); })}
+            <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 8, marginTop: 10 }}>
+              <label style={lab}>Medicine<input data-care-med-name type="text" aria-label="Medicine name" placeholder="e.g. Metformin" value={md.name} onChange={e => setMd({ ...md, name: e.target.value })} style={{ ...fld, marginTop: 5 }} /></label>
+              <label style={lab}>Dose<input data-care-med-dose type="text" aria-label="Dose" placeholder="e.g. 500mg" value={md.dose} onChange={e => setMd({ ...md, dose: e.target.value })} style={{ ...fld, marginTop: 5 }} /></label>
+              <label style={lab}>Daily time<input data-care-med-time type="time" aria-label="Medicine time" value={md.time} onChange={e => setMd({ ...md, time: e.target.value })} style={{ ...fld, marginTop: 5 }} /></label>
+              <label style={lab}>Refill by<input data-care-med-refill type="date" aria-label="Refill by" value={md.refill} onChange={e => setMd({ ...md, refill: e.target.value })} style={{ ...fld, marginTop: 5 }} /></label>
+            </div>
+            <button data-care-med-add onClick={addMed} disabled={!md.name.trim()} style={{ ...ghost, marginTop: 8, opacity: md.name.trim() ? 1 : .4 }}>Add medicine</button>
+          </div>
+          <div data-care-contacts style={{ marginTop: 14, borderTop: `1px solid ${RULE}`, paddingTop: 10 }}>
+            <div style={kick}>Care contacts</div>
+            <div style={{ borderTop: `3px solid ${INK}`, marginTop: 6 }} />
+            {contacts.length === 0 && <div style={{ fontSize: 13, color: MUT, padding: '10px 0' }}>GP, pharmacy, carer, family. One tap to call.</div>}
+            {contacts.map(c => (
+              <div key={c.id} data-care-contact style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 0', borderBottom: `1px solid ${RULE}` }}>
+                <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontSize: 16, overflowWrap: 'anywhere' }}>{c.name}</div>{(c.role || c.phone) && <div style={{ fontSize: 12, color: MUT }}>{[c.role, c.phone].filter(Boolean).join(' \u00B7 ')}</div>}</div>
+                {c.phone && <a data-care-call href={`tel:${c.phone}`} style={{ height: 40, padding: '0 14px', display: 'inline-flex', alignItems: 'center', background: FOR, color: BG, fontSize: 12, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', textDecoration: 'none' }}>Call</a>}
+                <button data-care-contact-del aria-label={`Remove ${c.name}`} onClick={() => save({ contacts: contacts.filter(y => y.id !== c.id) })} style={{ background: 'none', border: 0, padding: 6, fontSize: 18, color: MUT, borderRadius: 0 }}>&times;</button>
+              </div>))}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 10 }}>
+              <label style={lab}>Name<input data-care-contact-name type="text" aria-label="Contact name" placeholder="e.g. Dr Patel" value={ct.name} onChange={e => setCt({ ...ct, name: e.target.value })} style={{ ...fld, marginTop: 5 }} /></label>
+              <label style={lab}>Who they are<input data-care-contact-role type="text" aria-label="Contact role" placeholder="e.g. GP" value={ct.role} onChange={e => setCt({ ...ct, role: e.target.value })} style={{ ...fld, marginTop: 5 }} /></label>
+            </div>
+            <label style={{ ...lab, marginTop: 8 }}>Phone<input data-care-contact-phone type="tel" aria-label="Contact phone" placeholder="Number to call" value={ct.phone} onChange={e => setCt({ ...ct, phone: e.target.value })} style={{ ...fld, marginTop: 5 }} /></label>
+            <button data-care-contact-add onClick={addContact} disabled={!ct.name.trim()} style={{ ...ghost, marginTop: 8, opacity: ct.name.trim() ? 1 : .4 }}>Add contact</button>
+          </div>
           <div style={{ marginTop: 14, borderTop: `1px solid ${RULE}`, paddingTop: 10 }}>
             <div style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: MUT }}>Next appointment</div>
             {appt ? <div data-care-appt className="font-fr" style={{ fontWeight: 600, fontSize: 18, marginTop: 4 }}>{nice(appt.date)} {appt.startTime}<span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: 13, color: MUT }}> &middot; {appt.title}</span></div>

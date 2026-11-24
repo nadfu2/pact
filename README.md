@@ -343,3 +343,6 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - Text size now resizes text and reflows the layout; the column keeps the same visual width instead of growing.
 - Full-quality profile photos (run `supabase/UPGRADE_HD_PHOTOS.sql` once); photo halftone removed.
 - Saving the press-card description collapses the editor.
+
+## v10.24
+- Care card: medicines (dose, daily time, refill date with a warning inside 7 days; timed ones join the daily tick list), care contacts with one-tap Call, and linking the person you look after if they are a Pact friend, so you can add a plan to your schedule and send them an invite in one go.

@@ -5784,6 +5784,14 @@ function AppInner({ onReset }) {
   const cf = comfortOf(userProfile); const zoomV = ZOOM[cf.size] || 1; const simpleView = !!cf.simpleNav;
   const moveTaskTomorrow = (id) => setTasks(prev => prev.map(t => t.id === id ? { ...t, date: addDaysStr(t.date, 1) } : t));
   const addPlainTask = (o) => setTasks(prev => [...prev, { id: Date.now() + Math.floor(Math.random() * 1000), duration: 60, status: 'pending', transportMode: '', distance: '', leaveByNote: '', notes: '', rating: null, reviewNote: '', withPerson: null, meetingType: 'Friendly', ...o }]);
+  const planForThem = async (o, link) => {
+    try {
+      const st = o.start || '10:00'; const en = o.end || st; const id = Date.now() + Math.floor(Math.random() * 1000);
+      const eid = await cloud.createSharedEvent(o.title, { date: o.date, start: st, end: en, location: '' }, [link.userId], `Planned for you by ${userProfile.name || 'your carer'}.`);
+      setTasks(prev => [...prev, { id, title: o.title, date: o.date, startTime: st, endTime: en, duration: Math.max(15, toMins(en) - toMins(st)), status: 'pending', transportMode: '', distance: '', leaveByNote: '', notes: '', rating: null, reviewNote: '', withPerson: link.name, meetingType: 'Friendly', sharedId: eid, sharedRole: 'owner' }]);
+      pushToast(`Added for you, and invite sent to ${link.name}.`, 'success'); loadInbox(); return true;
+    } catch (e) { pushToast("Couldn't send that. Check your connection and try again.", 'error'); return false; }
+  };
   return (
     <div className={`pact-root w-full mx-auto bg-[#F5F3EC] text-slate-900 flex flex-col relative font-sans overflow-hidden shadow-2xl border-x border-stone-200${cf.contrast ? ' pact-hc' : ''}${cf.bigButtons ? ' pact-bigbtn' : ''}${cf.calmMotion ? ' pact-calm' : ''}`} style={{ height: zoomV === 1 ? '100dvh' : `calc(100dvh / ${zoomV})`, ...(zoomV === 1 ? {} : { zoom: zoomV }) }}>
       <LedgerBg tab={activeTab} />
@@ -6200,7 +6208,7 @@ function AppInner({ onReset }) {
         })()}
         {activeTab === 'home' && !(simpleView && !calmFull) && (
           <div className="np-skin flex flex-col gap-5 animate-in fade-in duration-300">
-            {hasSit(userProfile, 'carer') && <CarePanel profile={userProfile} patch={patchProfile} today={todayDateStr()} tasks={tasks} onPlanForMe={() => { setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }} onPlanAppt={() => { setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }} />}
+            {hasSit(userProfile, 'carer') && <CarePanel profile={userProfile} patch={patchProfile} today={todayDateStr()} tasks={tasks} pactFriends={pactFriends} onPlanForThem={planForThem} onPlanForMe={() => { setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }} onPlanAppt={() => { setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }} />}
             {(homeStyle === 'classic' ? (hasSit(userProfile, 'energy') || (userProfile.energyLog || {})[todayDateStr()]) : (userProfile.energyLog || {})[todayDateStr()] === 'low') && <EnergyCard profile={userProfile} patch={patchProfile} tasks={tasks} today={todayDateStr()} moveTask={moveTaskTomorrow} pushToast={pushToast} />}
             {simpleView && <button data-calm-back onClick={() => setCalmFull(false)} className="text-left text-[13px] underline" style={{ order: -20, color: '#5A675F', borderRadius: 0 }}>&larr; Back to the calm Today</button>}
 
