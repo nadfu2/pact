@@ -251,10 +251,10 @@ export default function FrontPage({ hidden, open, setOpen, registerSlot, meds, s
         <div style={{ marginTop: 6 }}>
           {items.length === 0 && <div style={{ ...FRS, fontStyle: 'italic', fontSize: 14, color: MUT }}>Nothing coming up.</div>}
           {items.map(it => { const late = it.dueDate && daysBetween(today, it.dueDate) < 0; return (
-            <div key={it.id} data-fp-admin style={{ display: 'flex', alignItems: 'baseline', gap: 6, padding: '4px 0', borderBottom: `1px dotted ${SOFT}`, fontSize: 12.5 }}>
+            <div key={it.id} data-fp-admin style={{ display: 'flex', alignItems: 'baseline', gap: 6, padding: '6px 0', borderBottom: `1px dotted ${SOFT}`, fontSize: 12.5 }}>
               <span style={{ width: 5, height: 5, background: INK, flex: 'none', transform: 'translateY(-2px)' }} />
-              <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{it.title}</span>
-              <span style={{ fontSize: 10.5, color: late ? CLAY : MUT, fontWeight: late ? 700 : 400, textDecoration: late ? `underline wavy ${CLAY}` : 'none', textUnderlineOffset: 3, flex: 'none' }}>{dueTxt(it)}</span>
+              <span style={{ ...FRS, fontWeight: 600, fontSize: 16, lineHeight: 1.2, flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{it.title}</span>
+              <span style={{ fontSize: 11, color: late ? CLAY : MUT, fontWeight: late ? 700 : 400, textDecoration: late ? `underline wavy ${CLAY}` : 'none', textUnderlineOffset: 3, flex: 'none' }}>{dueTxt(it)}</span>
             </div>); })}
         </div>
       </button>
