@@ -81,7 +81,17 @@ export async function onRequest({ request, env }) {
   let b; try { b = await request.json(); } catch (e) { return json(400, { error: 'Bad request' }); }
   const subs = Array.isArray(b.subs) ? b.subs.slice(0, 12) : [];
   if (!subs.length) return json(200, { sent: 0 });
-  const message = JSON.stringify({ title: String(b.title || 'Pact').slice(0, 80), body: String(b.body || '').slice(0, 160), url: String(b.url || '/').slice(0, 200), tag: String(b.tag || 'pact').slice(0, 60) });
+  // Keep it light: the app icon already says where it is from, so show just "Name" and the message.
+  let title = String(b.title || 'Pact'), text = String(b.body || ''), url = String(b.url || '/'); const tag = String(b.tag || 'pact');
+  text = text.split('\u2063')[0].trim();                                   // shared photos, ideas and replies carry a hidden payload after this mark
+  let m;
+  if (title === 'New friend request' && (m = /^(.+?) wants to be friends on Pact\.?$/.exec(text))) { title = m[1]; text = 'Wants to be friends.'; }
+  else if (title === 'Friend request accepted' && (m = /^(.+?) is now your friend on Pact\.?$/.exec(text))) { title = m[1]; text = 'Accepted your friend request.'; }
+  else if ((m = /^(.+?) (invited you to .+)$/.exec(text)) && m[1] === title) { text = m[2].charAt(0).toUpperCase() + m[2].slice(1); }
+  // Tapping it goes straight to what it is about: a message or invite opens that chat, a friend request opens the Friend Book.
+  if ((m = /^msg-([0-9a-f-]{36})$/i.exec(tag))) url = '/?open=chat&u=' + m[1];
+  else if (/^fra?-/.test(tag)) url = '/?open=friends';
+  const message = JSON.stringify({ title: title.slice(0, 80), body: text.slice(0, 160), url: url.slice(0, 200), tag: tag.slice(0, 60) });
   const results = await Promise.all(subs.map(s => sendOne(s, message, env).catch(() => ({ ok: false, status: 0, endpoint: s && s.endpoint }))));
   return json(200, { sent: results.filter(r => r.ok).length, statuses: results.map(r => r.status), gone: results.filter(r => r.status === 404 || r.status === 410).map(r => r.endpoint) });
 }

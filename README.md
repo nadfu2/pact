@@ -375,3 +375,10 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 
 ## v10.30
 - Dark mode keeps its green accents (buttons, fills, rules) instead of turning them the theme's brown; the engraved clock is inverted (dark face, light markings); the clock sits flush with the page margin.
+
+## v10.31
+- Messages: the top-right + is now a Messages button opening "The Post" (conversations, start-a-chat strip, unread marks). Home "Plan something" opens the full list of planning steps. The Plans / Free windows / Get ready strip is gone from Home.
+- Chat: share photos, ideas, plans to join (real invites), Pact friends, voice notes and documents (tickets, PDFs). Reply to a message by swiping it right or tapping it. "Files" in a chat opens an archive of its photos, documents and voice notes.
+- Notifications: shows just the sender's name and the message; tapping one opens that chat (messages and invites) or the Friend Book. Needs the new Cloudflare function deployed (automatic on push).
+- Removing a friend is no longer in the Friend Book list: it sits at the bottom of their profile and needs their name typed.
+- New SQL: supabase/UPGRADE_CHAT_FILES.sql (storage for voice notes and documents; photos still work without it).

@@ -154,6 +154,21 @@ export const cloud = {
     const { data } = sb.storage.from('avatars').getPublicUrl(path);
     return data.publicUrl;
   },
+  // A file sent in a chat (photo, voice note, document): stored in the "chat" bucket; the message keeps only its web address.
+  // Photos fall back to the avatars bucket if the chat bucket has not been set up yet.
+  async uploadChatFile(blob, ext, contentType) {
+    const { data: u } = await sb.auth.getUser();
+    const uid = u && u.user && u.user.id; if (!uid) throw new Error('not signed in');
+    const rnd = Math.random().toString(36).slice(2, 10);
+    const path = `${uid}/chat-${Date.now()}-${rnd}.${ext}`;
+    const type = contentType || blob.type || 'application/octet-stream';
+    let bucket = 'chat';
+    let { error } = await sb.storage.from('chat').upload(path, blob, { contentType: type, cacheControl: '31536000', upsert: false });
+    if (error && /^image\//.test(type)) { bucket = 'avatars'; ({ error } = await sb.storage.from('avatars').upload(path, blob, { contentType: type, cacheControl: '31536000', upsert: false })); }
+    if (error) throw new Error(error.message || 'upload failed');
+    const { data } = sb.storage.from(bucket).getPublicUrl(path);
+    return data.publicUrl;
+  },
   async setMyProfile(bio, avatar) {
     const { data, error } = await sb.rpc('set_my_profile', { p_bio: bio || '', p_avatar: avatar || '' });
     if (error) throw new Error(error.message || 'could not save');

@@ -1,6 +1,6 @@
 // Pact service worker: lets the app install to the home screen and open offline.
 // Pages: network first (so updates arrive), falling back to the cached copy. Never caches API or database calls.
-const CACHE = 'pact-shell-v45';
+const CACHE = 'pact-shell-v46';
 const SHELL = ['/', '/assets/app.js', '/assets/app.css', '/manifest.webmanifest', '/icons/icon-192.png'];
 self.addEventListener('install', (e) => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL).catch(() => {})).then(() => self.skipWaiting())); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
@@ -10,12 +10,17 @@ self.addEventListener('fetch', (e) => {
   if (req.method !== 'GET' || url.origin !== self.location.origin || url.pathname.startsWith('/api/') || url.pathname === '/config.js') return;
   e.respondWith(fetch(req).then(res => { if (res && res.ok) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(req, copy)); } return res; }).catch(() => caches.match(req).then(r => r || caches.match('/'))));
 });
-// Tapping a notification opens or focuses the app.
+// Tapping a notification goes straight to what it is about (a chat, an invite, the Friend Book).
 self.addEventListener('notificationclick', (e) => {
   e.notification.close();
   const target = (e.notification.data && e.notification.data.url) || '/';
   e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
-    for (const c of list) { if ('focus' in c) { c.navigate && c.navigate(target); return c.focus(); } }
+    for (const c of list) {
+      if ('focus' in c) {
+        try { c.postMessage({ type: 'pact-open', url: target }); } catch (err) { /* ignore */ }   // an open Pact switches without reloading
+        return c.focus();
+      }
+    }
     return self.clients.openWindow(target);
   }));
 });
@@ -27,8 +32,9 @@ self.addEventListener('push', (e) => {
   e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
     list.forEach(c => { try { c.postMessage({ type: 'pact-push' }); } catch (err) { /* ignore */ } });   // an open Pact refreshes straight away
     // Always show it: iPhone and Chrome cancel a device's alerts if a push arrives and nothing is shown (even while Pact is open).
+    const body = String(d.body || '').split('\u2063')[0];
     return self.registration.showNotification(d.title || 'Pact', {
-      body: d.body || '', icon: '/icons/icon-192.png', badge: '/icons/icon-192.png',
+      body, icon: '/icons/icon-192.png', badge: '/icons/icon-192.png',
       tag: d.tag || 'pact', renotify: true, data: { url: d.url || '/' }
     });
   }));
