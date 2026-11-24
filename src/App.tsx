@@ -1280,7 +1280,7 @@ const buildThemeCss = (paletteId, mode) => {
     const rgb = (h) => { const n = parseInt(h.slice(1), 16); return `rgb(${n >> 16}, ${(n >> 8) & 255}, ${n & 255})`; };
     const toHsl = (h) => { const n = parseInt(h.slice(1), 16); const r = (n >> 16) / 255, g = ((n >> 8) & 255) / 255, bl = (n & 255) / 255; const mx = Math.max(r, g, bl), mn = Math.min(r, g, bl), l = (mx + mn) / 2, d = mx - mn; let hu = 0, sa = 0; if (d) { sa = d / (1 - Math.abs(2 * l - 1)); hu = mx === r ? ((g - bl) / d) % 6 : mx === g ? (bl - r) / d + 2 : (r - g) / d + 4; hu = (hu * 60 + 360) % 360; } return [hu, sa, l]; };
     const kind = (hu, sa, l) => l >= 0.85 || sa < 0.22 || (hu >= 30 && hu < 60 && sa < 0.45) ? 'n' : (hu >= 90 && hu < 200) ? 'g' : 'o';
-    const tone = (hu, sa, nl, k) => k === 'n' ? hsl(pal.nh, Math.round(pal.ns * 0.6), nl * 100) : k === 'g' ? hsl(pal.p[0], Math.round(pal.p[1] * Math.min(1, sa + 0.2)), nl * 100) : hsl(hu, Math.round(sa * 85), nl * 100);
+    const tone = (hu, sa, nl, k) => k === 'n' ? hsl(pal.nh, Math.round(pal.ns * 0.6), nl * 100) : k === 'g' ? hsl(hu, Math.round(Math.min(0.5, sa) * 100), nl * 100) : k === 'p' ? hsl(pal.p[0], Math.round(pal.p[1] * Math.min(1, sa + 0.2)), nl * 100) : hsl(hu, Math.round(sa * 85), nl * 100);
     const N = (l) => hsl(pal.nh, Math.round(pal.ns * 0.6), l);
     const H = 'html[data-pact-theme] ';
     const HEXES = ["#0F0F0D", "#12251C", "#14282B", "#17323A", "#1A1310", "#1A1A17", "#1B2A22", "#1E3F44", "#1F3A2E", "#25241F", "#2A2A26", "#2A5359", "#2C4A3B", "#2F4A3C", "#33322B", "#3A1F10", "#3A4A41", "#3A6A70", "#3E1B0D", "#3E3D37", "#3F6B55", "#47453D", "#4C7F85", "#4F7A63", "#55534B", "#5A675F", "#5C5A52", "#5F8C73", "#639499", "#6B3A1E", "#6B5320", "#6B6960", "#7A3418", "#7B2A22", "#7C857F", "#8A4A27", "#8A877D", "#8FA398", "#8FB09D", "#8FB2B6", "#9CA3AF", "#A4452A", "#A65F37", "#A8C4C6", "#B08A3E", "#B3261E", "#B5683A", "#B5B1A5", "#B5CABD", "#B9C6BE", "#C77E52", "#C8643C", "#CADCDD", "#CFC7B4", "#CFCABD", "#D3CEC0", "#D5E0D8", "#D6D1C4", "#D9945F", "#D9D4C6", "#DDD5C2", "#DDE6DF", "#E0A178", "#E1ECED", "#E39A6D", "#E58B6C", "#E5E7EB", "#E6B38C", "#E6DFCF", "#E6EDE8", "#E7B79F", "#E7B89F", "#E7E3D8", "#EAE3D2", "#EBE2CC", "#ECE8DD", "#EDEAE0", "#EEF4F5", "#F0D1B8", "#F0F4F1", "#F1EEE6", "#F3F0E8", "#F4EFE4", "#F5F3EC", "#F6E4D5", "#F8F3E7", "#FAF1EA", "#FAF4E0", "#FAF8F2", "#FAF8F5", "#FBF4E0", "#FBF8F0", "#FBF9F3"];
@@ -1289,7 +1289,7 @@ const buildThemeCss = (paletteId, mode) => {
       let tx = null, bg = null, bd = null;
       if (l <= 0.45) tx = tone(hu, sa, k === 'n' ? 0.92 - (l / 0.45) * 0.24 : 0.80 - (l / 0.45) * 0.10, k);
       if (l >= 0.78) bg = tone(hu, k === 'o' ? sa * 0.5 : sa, Math.max(0.08, 0.08 + (1 - l) * 0.95), k);
-      else if (l <= 0.30) bg = tone(hu, sa, 0.28 + l * 0.35, k === 'n' ? 'g' : k);
+      else if (l <= 0.30) bg = tone(hu, sa, 0.28 + l * 0.35, k === 'n' ? 'p' : k);
       if (l >= 0.65) bd = tone(hu, sa, 0.25, k === 'o' ? 'n' : k); else if (l <= 0.30) bd = tone(hu, Math.min(sa, 0.45), 0.52, k === 'n' ? 'n' : k);
       if (tx) rules.push(`${H}[style*="; color: ${x}"],${H}[style^="color: ${x}"],${H}.text-\\[${esc}\\]{color:${tx}!important}`);
       if (bg) rules.push(`${H}[style*="background: ${x}"],${H}[style*="background-color: ${x}"],${H}.bg-\\[${esc}\\]{background-color:${bg}!important}`);
@@ -1310,8 +1310,8 @@ const buildThemeCss = (paletteId, mode) => {
     rules.push(`html[data-pact-theme] option{background:${card};color:${hsl(pal.nh, pal.ns, 92)}}`);
     rules.push(`html[data-pact-theme] .text-black{color:${hsl(pal.nh, pal.ns, 92)}!important}`);
   }
-  // Printed-style artwork (initial portraits, picture-less cards) takes the palette's colour instead of staying forest green.
-  if (paletteId !== 'classic') rules.push(`html[data-pact-theme] [data-mug]:not(:has(img)),html[data-pact-theme] [data-idea-hero]:not(:has(img)){filter:hue-rotate(${pal.p[0] - 152}deg) saturate(.9)}`);
+  // The engraved clock is simply inverted in dark mode: dark face, light markings (hue-rotate keeps the clay band clay).
+  if (m === 'dark') rules.push(`html[data-pact-theme] [data-fp-clock]{filter:invert(1) hue-rotate(180deg)}`);
   return rules.join('\n');
 };
 const THEME_KEY = 'pact_theme_v1';

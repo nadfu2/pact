@@ -183,7 +183,7 @@ export default function FrontPage({ hidden, open, setOpen, registerSlot, meds, s
               <div style={{ ...FRS, fontStyle: 'italic', fontSize: 13, color: MUT, maxWidth: 190 }}>{nextMed.name}</div></>
               : <div style={{ ...FRS, fontWeight: 700, fontSize: 30, lineHeight: 1, marginTop: 6 }}>All done <span style={{ color: FOR }}>&#10003;</span></div>}
         </div>
-        <div style={{ paddingRight: 4, display: 'flex', alignItems: 'center', alignSelf: 'center', flex: 'none' }}><Clock time={clockT} band={!!nextMed} /></div>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', alignSelf: 'center', flex: 'none', marginRight: -2 }}><Clock time={clockT} band={!!nextMed} /></div>
       </div>
       {meds.length > 0 && <div data-fp-pillbox style={{ position: 'relative', display: 'flex', gap: 6, flexWrap: 'wrap', margin: '6px 0 12px' }}>
         {sortedMeds.map(m => {

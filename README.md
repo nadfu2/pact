@@ -372,3 +372,6 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 
 ## v10.29
 - Dark mode: dark-green rules, dividers and borders are recoloured from their real computed colour (not only from CSS text matching), and the engraved clock keeps its own colours.
+
+## v10.30
+- Dark mode keeps its green accents (buttons, fills, rules) instead of turning them the theme's brown; the engraved clock is inverted (dark face, light markings); the clock sits flush with the page margin.
