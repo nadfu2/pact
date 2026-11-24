@@ -6,7 +6,7 @@ import { NotesList, LogHome, LayoutPicker, JobWidget, DevStrip, homeStyleOf, LOG
 import FrontPage, { JobFace } from './v10.jsx';
 import PushCheck from './push.jsx';
 import PlannerWizard from './planner.jsx';
-import { SITUATIONS, SIT_HINTS, presetPatch, hasSit, comfortOf, ZOOM, LifePanel, EnergyCard, CalmHome, JobHunt, TermPanel, RotaPanel, BudgetCard, CirclePanel, priceNum, budgetLeft, budgetPass, dstr as gDstr } from './groups.jsx';
+import { SITUATIONS, SIT_HINTS, presetPatch, hasSit, comfortOf, ZOOM, LifePanel, EnergyCard, CalmHome, JobHunt, TermPanel, RotaPanel, rotaEvents, CarePanel, BudgetCard, CirclePanel, priceNum, budgetLeft, budgetPass, dstr as gDstr } from './groups.jsx';
 import {
   ArrowLeft,
   Search,
@@ -2195,7 +2195,7 @@ function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMat
             </div>
             {cols.map(c => (
               <div key={c.id} data-list-col={c.id} onClick={c.mine ? (e) => {
-                if (e.target.closest('[data-list-block], [data-slot-ghost]')) return;
+                if (e.target.closest('[data-list-block], [data-cal-block], [data-slot-ghost]')) return;
                 const st = Math.max(H0 * 60, Math.min(H1 * 60 - 15, snapAt(e.currentTarget, e.clientY)));
                 setGhost({ s: st, e: Math.min(H1 * 60, st + 60) });
               } : undefined} style={{ position: 'relative', borderLeft: '1px solid #1B2A22', cursor: c.mine ? 'pointer' : undefined }}>
@@ -2216,10 +2216,10 @@ function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMat
                   const h = Math.max(24, ((b.e - b.s) / 60) * LST_PX - 1);
                   const w = 100 / b.lanes;
                   const base = { position: 'absolute', top: top(b.s), height: h, left: `calc(${b.lane * w}% + 1px)`, width: `calc(${w}% - 3px)`, boxSizing: 'border-box', padding: '4px 7px', fontSize: 11, lineHeight: 1.2, textAlign: 'left', overflow: 'hidden', borderRadius: 0 };
-                  const st = c.mine ? (b.past ? { ...base, border: '1px solid #CFC7B4', color: '#7C857F', background: '#F4EFE4' } : { ...base, background: '#1F3A2E', color: '#F4EFE4', border: 0 })
+                  const st = c.mine ? (b.kind === 'cal' ? { ...base, background: b.past ? '#F4EFE4' : '#DDE6DF', color: b.past ? '#7C857F' : '#1B2A22', border: '1px solid #1F3A2E', borderLeft: '4px solid #1F3A2E' } : b.past ? { ...base, border: b.kind === 'deadline' ? '1px solid #B3261E' : '1px solid #CFC7B4', color: b.kind === 'deadline' ? '#B3261E' : '#7C857F', background: '#F4EFE4' } : { ...base, background: b.kind === 'deadline' ? '#B3261E' : '#1F3A2E', color: '#F4EFE4', border: 0 })
                     : { ...base, backgroundImage: HATCH, border: '1px solid #CFC7B4', color: '#5A675F', background: undefined };
                   return (
-                    <button key={i} data-list-block={c.mine ? b.id : undefined} disabled={!c.mine} onClick={() => c.mine && onTapTask(b.id)} style={st}>
+                    <button key={i} data-list-block={c.mine && b.kind !== 'cal' ? b.id : undefined} data-cal-block={b.kind === 'cal' ? '' : undefined} disabled={!c.mine || b.kind === 'cal'} onClick={() => c.mine && b.kind !== 'cal' && onTapTask(b.id)} style={st}>
                       {c.mine && !b.past ? <><b style={{ display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{b.t}</b>{h >= 40 && <span style={{ display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{b.loc || (fromMins(b.s) + '–' + fromMins(b.e))}</span>}</> : <span style={{ display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{b.t}</span>}
                     </button>
                   );
@@ -2650,7 +2650,7 @@ function AppInner({ onReset }) {
   const [calForm, setCalForm] = useState({ provider: 'google', url: '' });
   const [calBusy, setCalBusy] = useState(false);
   const [calStatus, setCalStatus] = useState('');
-  const calendarEvents = calendarSources.flatMap(src => src.events || []);
+  const syncedEvents = calendarSources.flatMap(src => src.events || []);
   const [taskSkipState, setTaskSkipState] = useState({ sig: '', skip: [] });
   const [surprisePick, setSurprisePick] = useState(null);
   const [surpriseLoading, setSurpriseLoading] = useState(false);
@@ -2776,6 +2776,7 @@ function AppInner({ onReset }) {
   const [calmFull, setCalmFull] = useState(false);
   useEffect(() => { try { document.documentElement.style.setProperty('--pact-zoom', String(ZOOM[comfortOf(userProfile).size] || 1)); } catch (e) {} }, [userProfile.comfort]);
   const patchProfile = (o) => setUserProfile(prev => ({ ...prev, ...o }));
+  const calendarEvents = React.useMemo(() => [...syncedEvents, ...rotaEvents(userProfile)], [calendarSources, userProfile.rota]);
   const [friendsList, setFriendsList] = useState([]);
   const [newFriendName, setNewFriendName] = useState('');
   const [inviteCopied, setInviteCopied] = useState(false);
@@ -4078,6 +4079,16 @@ function AppInner({ onReset }) {
   const locIsDefault = !(userProfile.location && userProfile.location.city) || !!userProfile.location.assumed;
 
   const calCtx = { tasks, calendarEvents, weeklyHours: userProfile.weeklyHours };
+  // Deadlines are plans too: they sit in the schedule in red
+  const mkDeadline = (title, date, time) => { const st = time || '12:00'; const en = fromMins(Math.min(1439, toMins(st) + 30)); return { id: Date.now() + Math.floor(Math.random() * 100000), title, date, startTime: st, endTime: en, duration: Math.max(15, toMins(en) - toMins(st)), status: 'pending', kind: 'deadline', type: 'deadline', categoryColor: 'deadline', location: '', transportMode: '', travelTime: 0, distance: '', leaveByNote: '', notes: '', rating: null, reviewNote: '', withPerson: null, meetingType: 'Business' }; };
+  const addDeadline = (title, date, time) => setTasks(prev => [...prev, mkDeadline(title, date, time)]);
+  const removeDeadline = (id) => setTasks(prev => prev.filter(t => t.id !== id));
+  useEffect(() => {
+    const old = userProfile.deadlines || [];
+    if (!old.length) return;
+    setTasks(prev => [...prev, ...old.map(d => mkDeadline(d.title, d.date, d.time || '12:00'))]);
+    setUserProfile(prev => ({ ...prev, deadlines: [] }));
+  }, [(userProfile.deadlines || []).length]);
 
   // New day while the app is open (or you come back to it): Home's daily counts are keyed by date, so a re-render at midnight is all they need.
   const [dayKey, setDayKey] = useState(todayDateStr());
@@ -6100,6 +6111,7 @@ function AppInner({ onReset }) {
         })()}
         {activeTab === 'home' && !(simpleView && !calmFull) && (
           <div className="np-skin flex flex-col gap-5 animate-in fade-in duration-300">
+            {hasSit(userProfile, 'carer') && <CarePanel profile={userProfile} patch={patchProfile} today={todayDateStr()} tasks={tasks} onPlanForMe={() => { setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }} onPlanAppt={() => { setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }} />}
             {(homeStyle === 'classic' ? (hasSit(userProfile, 'energy') || (userProfile.energyLog || {})[todayDateStr()]) : (userProfile.energyLog || {})[todayDateStr()] === 'low') && <EnergyCard profile={userProfile} patch={patchProfile} tasks={tasks} today={todayDateStr()} moveTask={moveTaskTomorrow} pushToast={pushToast} />}
             {simpleView && <button data-calm-back onClick={() => setCalmFull(false)} className="text-left text-[13px] underline" style={{ order: -20, color: '#5A675F', borderRadius: 0 }}>&larr; Back to the calm Today</button>}
 
@@ -7015,8 +7027,8 @@ function AppInner({ onReset }) {
            ========================================================= */}
         {activeTab === 'schedule' && (
           <div className="np-skin space-y-4 animate-in fade-in duration-300">
-            {hasSit(userProfile, 'study') && <TermPanel profile={userProfile} patch={patchProfile} goData={() => { setActiveTab('profile'); setProfileSubTab('data'); }} />}
-            {hasSit(userProfile, 'shifts') && <RotaPanel profile={userProfile} patch={patchProfile} pushToast={pushToast} />}
+            {hasSit(userProfile, 'study') && <TermPanel profile={userProfile} patch={patchProfile} goData={() => { setActiveTab('profile'); setProfileSubTab('data'); }} deadlines={tasks.filter(t => t.kind === 'deadline' && t.status !== 'completed' && t.status !== 'done')} onAddDeadline={addDeadline} onRemoveDeadline={removeDeadline} linked={calendarSources.length > 0} />}
+            {hasSit(userProfile, 'shifts') && <RotaPanel profile={userProfile} patch={patchProfile} />}
 
             {/* Context-Aware Reclaimed Time Prompt */}
             {reclaimedMinutes && (
@@ -7190,22 +7202,10 @@ function AppInner({ onReset }) {
               </div>
             )}
 
-            {calendarEvents.filter(c => c.date === selectedDateStr).length > 0 && (
-              <div className="p-3 bg-white border border-stone-200 space-y-1.5">
-                <span className="text-[10px] uppercase tracking-widest text-blue-800 font-medium">From your synced calendars</span>
-                {calendarEvents.filter(c => c.date === selectedDateStr).sort((x, y) => x.start.localeCompare(y.start)).map(c => (
-                  <div key={c.id} className="flex justify-between gap-3 text-xs">
-                    <span className="font-mono text-stone-500 shrink-0">{c.allDay ? 'All day' : `${c.start}–${c.end === '24:00' ? '00:00' : c.end}`}</span>
-                    <span className="text-slate-800 text-right">{c.title}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-
             {/* Listings: your day first; friends' columns only when they chose to share */}
             {(() => {
               const nowM0 = new Date().getHours() * 60 + new Date().getMinutes();
-              const mineBlocks = filteredTasks.filter(t => t.startTime && t.endTime).map(t => { const e = Math.max(toMins(t.startTime) + 15, toMins(t.endTime)); const dn = t.status === 'completed' || t.status === 'done'; return { id: t.id, s: toMins(t.startTime), e, t: t.title, loc: t.location && t.location !== t.title ? t.location : '', done: dn, past: dn || selectedDateStr < todayDateStr() || (selectedDateStr === todayDateStr() && e <= nowM0) }; });
+              const mineBlocks = filteredTasks.filter(t => t.startTime && t.endTime).map(t => { const e = Math.max(toMins(t.startTime) + 15, toMins(t.endTime)); const dn = t.status === 'completed' || t.status === 'done'; return { id: t.id, kind: t.kind, s: toMins(t.startTime), e, t: t.kind === 'deadline' ? 'Due: ' + t.title : t.title, loc: t.location && t.location !== t.title ? t.location : '', done: dn, past: dn || selectedDateStr < todayDateStr() || (selectedDateStr === todayDateStr() && e <= nowM0) }; }).concat(calendarEvents.filter(c => c.date === selectedDateStr && !c.allDay && c.start && c.end).map(c => { const cs = toMins(c.start), ce = c.end === '24:00' ? 1440 : toMins(c.end); const e = Math.max(cs + 15, ce); return { id: 'cal_' + c.id, kind: 'cal', s: cs, e, t: c.title, loc: '', done: false, past: selectedDateStr < todayDateStr() || (selectedDateStr === todayDateStr() && e <= nowM0) }; }));
               const friendCols = pactFriends.map(f => {
                 const sh = schedShared.find(x => x.owner_id === f.userId);
                 const ok = !!sh && selectedDateStr <= sh.until;
@@ -7381,8 +7381,7 @@ function AppInner({ onReset }) {
            ========================================================= */}
         {activeTab === 'ideas' && (
           <div className="np-skin flex flex-col gap-4 animate-in fade-in duration-300">
-            {(hasSit(userProfile, 'study') || userProfile.budget) && <div style={{ order: -30 }}><BudgetCard profile={userProfile} patch={patchProfile} filter={budgetFilter} setFilter={setBudgetFilter} /></div>}
-
+            
             {/* Unfilled Weekly Target Nudge Banner */}
             {false && weeklyTargets.some(t => t.current < t.target) && (
               <div style={{ order: 40 }} className="p-3.5 bg-blue-900 text-white flex justify-between items-center">
@@ -7423,8 +7422,14 @@ function AppInner({ onReset }) {
                   onSearch={() => setIdeaSearchOpen(o => !o)}
                   onOpen={(it) => setIdeaOpenId(it.id)} onAdd={addIdeaToPlan} onFav={toggleFav} isFav={isFav}
                   adventure={adventurousMode} onSurprise={() => { setShowFavs(false); setIdeaSearchRes(null); setAdventurousMode(true); shuffleAdventure(); }} onBack={() => setAdventurousMode(false)}
-                  filters={{ toggle: () => setIdeaFiltersOpen(o => !o), label: activeFilterLabels.length ? 'Filter (' + activeFilterLabels.length + ')' : 'Filter', panel: ideaFiltersOpen ? (
+                  filters={{ toggle: () => setIdeaFiltersOpen(o => !o), label: (activeFilterLabels.length + Object.values(budgetFilter).filter(Boolean).length) ? 'Filter (' + (activeFilterLabels.length + Object.values(budgetFilter).filter(Boolean).length) + ')' : 'Filter', panel: ideaFiltersOpen ? (
               <div data-idea-filters className="flex flex-wrap gap-1.5 py-2">
+                <div className="w-full flex flex-wrap gap-1.5 items-center pb-1" data-idea-budget>
+                  <span style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: '#5A675F', marginRight: 4 }}>Budget</span>
+                  {[['free', 'Free'], ['under5', 'Under £5'], ['under10', 'Under £10'], ['under20', 'Under £20']].map(([k, l]) => (
+                    <button key={k} data-budget-chip={k} aria-pressed={!!budgetFilter[k]} onClick={() => setBudgetFilter(f => ({ ...f, [k]: !f[k] }))} style={{ borderRadius: 0 }} className={`px-2 py-1 text-[11px] border ${budgetFilter[k] ? 'bg-[#1F3A2E] text-[#F4EFE4] border-[#1F3A2E]' : 'border-[#1B2A22]/50 text-[#1B2A22]'}`}>{l}</button>
+                  ))}
+                </div>
                 {(ideaSubFilterOptions[selectedIdeaCategory] || []).map(sub => (
                   <button key={sub} data-idea-filter={sub} aria-pressed={activeFilterLabels.includes(sub)} onClick={() => toggleIdeaFilter(sub)}
                     style={{ borderRadius: 0 }} className={`px-2 py-1 text-[11px] border ${activeFilterLabels.includes(sub) ? 'bg-[#1F3A2E] text-[#F4EFE4] border-[#1F3A2E]' : 'border-[#1B2A22]/50 text-[#1B2A22]'}`}>{sub}</button>

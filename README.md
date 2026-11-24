@@ -325,3 +325,9 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - Planner: your own date and time sit right under the suggested times, and under the task slots too.
 - Quick notes keep a list: add as many as you like, edit or delete each. An old single note becomes the first one.
 - Desktop: the mouse wheel scrolls the page from anywhere, not just the middle column.
+
+## v10.21 — Student, shift work and carer
+- Term, sorted is collapsible with a caption. Deadlines take a time and go into the schedule as red blocks. A linked uni timetable shows in the schedule grid, not in the panel.
+- The student budget tracker is gone; Ideas filters now have a Budget row (Free, under 5, 10 and 20 pounds).
+- Shift work is collapsible, has a week picker, your own start and end times per day, and shifts appear in the schedule automatically.
+- Carers get a Care card on Home: a daily routine that resets each morning, next appointment, plan time for me, and short care notes.

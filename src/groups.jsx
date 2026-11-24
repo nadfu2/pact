@@ -297,74 +297,115 @@ export function JobHunt({ profile, patch, addTask, pushToast, pulseOnly, collaps
 }
 
 // ---------- Term + deadlines (Schedule) ----------
-export function TermPanel({ profile, patch, goData }) {
-  const mode = profile.termMode || 'term'; const dl = (profile.deadlines || []).slice().sort((a, b) => a.date.localeCompare(b.date));
-  const [t, setT] = useState(''); const [dt, setDt] = useState(addDays(dstr(), 7));
+const fieldStyle = { width: '100%', boxSizing: 'border-box', marginTop: 5, border: `1.5px solid ${INK}`, background: '#FAF4E0', padding: '10px 10px', fontSize: 16, fontWeight: 400, color: INK, borderRadius: 0, minWidth: 0, height: 44 };
+const labStyle = { display: 'block', fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: MUT };
+export function TermPanel({ profile, patch, goData, deadlines, onAddDeadline, onRemoveDeadline, linked }) {
+  const mode = profile.termMode || 'term'; const dl = (deadlines || []).slice().sort((a, b) => (a.date + a.startTime).localeCompare(b.date + b.startTime));
+  const [open, setOpen] = useState(false);
+  const [t, setT] = useState(''); const [dt, setDt] = useState(addDays(dstr(), 7)); const [tm, setTm] = useState('12:00');
   const setMode = (m) => {
     if (m === mode) return;
     if (m === 'holiday') patch({ termMode: 'holiday', termHours: profile.weeklyHours, weeklyHours: Object.fromEntries(Object.entries(profile.weeklyHours || {}).map(([k, v]) => [k, { ...v, active: false }])) });
     else patch({ termMode: 'term', weeklyHours: profile.termHours || profile.weeklyHours, termHours: null });
   };
+  const add = () => { if (!t.trim() || !dt) return; onAddDeadline && onAddDeadline(t.trim(), dt, tm || '12:00'); setT(''); };
   return (
-    <div data-term-panel style={{ border: `1.5px solid ${INK}`, padding: '12px 14px', background: 'rgba(250,248,242,.85)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}><div className="font-fr" style={{ fontWeight: 600, fontSize: 20 }}>Term, sorted.</div><Lab>Student</Lab></div>
-      <div style={{ marginTop: 10, display: 'grid', gridTemplateColumns: '1fr 1fr', border: `1.5px solid ${INK}` }}>{[['term', 'Term'], ['holiday', 'Holiday']].map(([k, l], i) => <button key={k} data-term-mode={k} aria-pressed={mode === k} onClick={() => setMode(k)} style={{ padding: '9px 0', fontSize: 11, fontWeight: 600, letterSpacing: '.06em', textTransform: 'uppercase', borderRadius: 0, borderRight: i === 0 ? `1px solid ${INK}` : 0, background: mode === k ? INK : 'transparent', color: mode === k ? BG : INK }}>{l}</button>)}</div>
-      <div data-term-note style={{ marginTop: 8, fontSize: 11.5, color: MUT, lineHeight: 1.45 }}>{mode === 'holiday' ? 'Holiday mode: your study and work hours are cleared, so there is more room for plans, trips and catch-ups. Switch back to Term and they return.' : 'Term mode: your study and work hours are protected.'}</div>
-      <div style={{ marginTop: 10, border: `1.5px dashed ${SOFT}`, padding: '9px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}><div style={{ fontSize: 12, color: MUT, lineHeight: 1.4 }}>Timetable: add your uni calendar link once and your sessions appear here.</div><Btn solid={false} h={30} data-term-import onClick={goData}>Add link</Btn></div>
-      <Sec t="Due soon" r={String(dl.length)} mt={12} />
-      {dl.map(x => { const n = daysTo(x.date); return <div key={x.id} data-deadline style={{ display: 'flex', alignItems: 'baseline', gap: 6, padding: '9px 0', borderBottom: `1px solid ${RULE}`, fontWeight: n <= 7 ? 600 : 400 }}><span style={{ fontSize: 14, color: n <= 7 ? CLAY : INK }}>{x.title}</span><span style={{ flex: 1, borderBottom: `1.5px dotted ${SOFT}`, transform: 'translateY(-3px)' }} /><span style={{ fontSize: 13, color: n <= 7 ? CLAY : MUT }}>{n < 0 ? 'overdue' : n === 0 ? 'today' : `${n} day${n === 1 ? '' : 's'}`}</span><button aria-label={`Remove ${x.title}`} onClick={() => patch({ deadlines: (profile.deadlines || []).filter(y => y.id !== x.id) })} style={{ color: MUT, fontSize: 16, borderRadius: 0 }}>&times;</button></div>; })}
-      <div style={{ marginTop: 10, display: 'flex', gap: 8, alignItems: 'flex-end' }}>
-        <div style={{ flex: 1 }}><Input data-deadline-title placeholder="Deadline, e.g. Fluids report" aria-label="Deadline" value={t} onChange={e => setT(e.target.value)} /></div>
-        <input data-deadline-date type="date" aria-label="Due date" value={dt} onChange={e => setDt(e.target.value)} style={{ width: 130, height: 36, border: `1.5px solid ${INK}`, background: 'transparent', padding: '0 6px', borderRadius: 0 }} />
-        <Btn data-deadline-add onClick={() => { if (!t.trim()) return; patch({ deadlines: [...(profile.deadlines || []), { id: uid(), title: t.trim(), date: dt }] }); setT(''); }}>Add</Btn>
-      </div>
+    <div data-term-panel style={{ border: `1.5px solid ${INK}`, background: 'rgba(250,248,242,.85)' }}>
+      <button data-term-toggle aria-expanded={open} onClick={() => setOpen(o => !o)} className="w-full text-left" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10, padding: '12px 14px', background: 'none', border: 0, borderRadius: 0 }}>
+        <span><span className="font-fr" style={{ display: 'block', fontWeight: 600, fontSize: 22, lineHeight: 1.05 }}>Term, sorted.</span>
+          <span style={{ display: 'block', fontSize: 13, color: MUT, marginTop: 4, lineHeight: 1.35 }}>Put in deadlines, switch term or holiday mode, and link your uni timetable.{dl.length ? ` ${dl.length} due.` : ''}</span></span>
+        <span style={{ fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase', color: MUT, flex: 'none' }}>{open ? 'Hide \u25B4' : 'Open \u25BE'}</span>
+      </button>
+      {open && <div style={{ padding: '0 14px 14px', borderTop: `1px solid ${RULE}` }}>
+        <div style={{ marginTop: 12, display: 'grid', gridTemplateColumns: '1fr 1fr', border: `1.5px solid ${INK}` }}>{[['term', 'Term'], ['holiday', 'Holiday']].map(([k, l], i) => <button key={k} data-term-mode={k} aria-pressed={mode === k} onClick={() => setMode(k)} style={{ padding: '11px 0', fontSize: 12, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', borderRadius: 0, borderRight: i === 0 ? `1px solid ${INK}` : 0, background: mode === k ? INK : 'transparent', color: mode === k ? BG : INK }}>{l}</button>)}</div>
+        <div data-term-note style={{ marginTop: 8, fontSize: 13, color: MUT, lineHeight: 1.45 }}>{mode === 'holiday' ? 'Holiday mode: your study and work hours are cleared, so there is more room for plans, trips and catch-ups. Switch back to Term and they return.' : 'Term mode: your study and work hours are protected.'}</div>
+        {linked ? <div data-term-linked style={{ marginTop: 10, fontSize: 13, color: MUT }}>Uni timetable linked. Your sessions show in your schedule.</div>
+          : <div style={{ marginTop: 10, border: `1.5px dashed ${SOFT}`, padding: '10px 12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}><div style={{ fontSize: 13, color: MUT, lineHeight: 1.4 }}>Add your uni calendar link once and your sessions appear in your schedule.</div><Btn solid={false} h={34} data-term-import onClick={goData}>Add link</Btn></div>}
+        <div style={{ marginTop: 14, borderTop: `3px solid ${INK}` }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: MUT, marginTop: 6 }}><span>Deadlines</span><span>{dl.length}</span></div>
+        {dl.length === 0 && <div style={{ fontSize: 13, color: MUT, padding: '10px 0' }}>Nothing due. Add one below and it goes into your schedule in red.</div>}
+        {dl.map(x => { const n = daysTo(x.date); return <div key={x.id} data-deadline style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 0', borderBottom: `1px solid ${RULE}` }}><span style={{ width: 8, height: 8, background: '#B3261E', flex: 'none' }} /><span style={{ flex: 1, minWidth: 0, fontSize: 15, fontWeight: 600, overflowWrap: 'anywhere' }}>{x.title}</span><span style={{ fontSize: 12, color: n <= 7 ? '#B3261E' : MUT, fontWeight: 600, textAlign: 'right', flex: 'none' }}>{n < 0 ? 'Overdue' : n === 0 ? 'Today' : n === 1 ? 'Tomorrow' : n + ' days'}<span style={{ display: 'block', fontWeight: 400, color: MUT }}>{nice(x.date)} {x.startTime}</span></span><button data-deadline-del aria-label={`Remove ${x.title}`} onClick={() => onRemoveDeadline && onRemoveDeadline(x.id)} style={{ background: 'none', border: 0, padding: 6, fontSize: 18, color: MUT, borderRadius: 0 }}>&times;</button></div>; })}
+        <label style={{ ...labStyle, marginTop: 14 }}>What is due<input data-deadline-title type="text" placeholder="e.g. Fluids report" aria-label="Deadline" value={t} onChange={e => setT(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') add(); }} style={fieldStyle} /></label>
+        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 8 }}>
+          <label style={{ ...labStyle, marginTop: 10 }}>Date<input data-deadline-date type="date" aria-label="Due date" value={dt} onChange={e => setDt(e.target.value)} style={fieldStyle} /></label>
+          <label style={{ ...labStyle, marginTop: 10 }}>Time<input data-deadline-time type="time" aria-label="Due time" value={tm} onChange={e => setTm(e.target.value)} style={fieldStyle} /></label>
+        </div>
+        <button data-deadline-add onClick={add} disabled={!t.trim()} style={{ marginTop: 12, width: '100%', height: 46, border: 0, borderRadius: 0, background: FOR, color: BG, fontSize: 13, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', opacity: t.trim() ? 1 : .4 }}>Add to my schedule</button>
+      </div>}
     </div>
   );
 }
 
 // ---------- Rota (Schedule) ----------
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-const SHIFTS = { off: { l: 'Day off', s: '', e: '' }, early: { l: 'Early', s: '06:00', e: '14:00' }, day: { l: 'Day', s: '09:00', e: '17:00' }, late: { l: 'Late', s: '14:00', e: '22:00' }, night: { l: 'Night', s: '22:00', e: '23:59' } };
+const SHIFTS = { off: { l: 'Day off', s: '', e: '' }, early: { l: 'Early', s: '06:00', e: '14:00' }, day: { l: 'Day', s: '09:00', e: '17:00' }, late: { l: 'Late', s: '14:00', e: '22:00' }, night: { l: 'Night', s: '22:00', e: '23:59' }, custom: { l: 'My own', s: '09:00', e: '17:00' } };
 export const rotaFree = (sh) => {
   const lo = 8 * 60, hi = 22 * 60; if (!sh || sh.k === 'off') return [[lo, hi]];
   const s = toM(sh.s), e = toM(sh.e); const out = [];
   if (s - lo >= 60) out.push([lo, Math.min(s, hi)]); if (hi - e >= 60 && e < hi) out.push([Math.max(e, lo), hi]); return out;
 };
-export function RotaPanel({ profile, patch, pushToast }) {
-  const wk = weekStart(); const R = (profile.rota && profile.rota[wk]) || {};
-  const [open, setOpen] = useState(false);
-  const setDay = (d, k, o = {}) => patch({ rota: { ...(profile.rota || {}), [wk]: { ...R, [d]: { k, s: SHIFTS[k].s, e: SHIFTS[k].e, ...o } } } });
+// Shifts become schedule entries on their own: one entry per day that has a shift, for every week you have set
+export const rotaEvents = (profile) => {
+  const out = []; const R = (profile && profile.rota) || {};
+  Object.keys(R).forEach(wk => DAYS.forEach((d, i) => {
+    const sh = R[wk] && R[wk][d]; if (!sh || sh.k === 'off' || !sh.s || !sh.e) return;
+    const date = addDays(wk, i); const e = toM(sh.e) <= toM(sh.s) ? '23:59' : sh.e;
+    out.push({ id: `rota_${date}`, date, start: sh.s, end: e, title: `${(SHIFTS[sh.k] || SHIFTS.custom).l} shift`, allDay: false, source: 'rota' });
+  }));
+  return out;
+};
+export function RotaPanel({ profile, patch }) {
+  const [open, setOpen] = useState(false); const [off, setOff] = useState(0); const [edit, setEdit] = useState('');
+  const wk = addDays(weekStart(), off * 7); const R = (profile.rota && profile.rota[wk]) || {};
+  const setDay = (d, k, o = {}) => patch({ rota: { ...(profile.rota || {}), [wk]: { ...R, [d]: { ...(R[d] || {}), k, s: SHIFTS[k].s, e: SHIFTS[k].e, ...o } } } });
+  const setTime = (d, key, v) => { if (!v) return; const cur = R[d] || { k: 'custom', s: '09:00', e: '17:00' }; patch({ rota: { ...(profile.rota || {}), [wk]: { ...R, [d]: { ...cur, k: 'custom', [key]: v } } } }); };
   const prevWk = addDays(wk, -7); const hasPrev = profile.rota && profile.rota[prevWk];
-  const apply = () => {
-    const wh = { ...(profile.weeklyHours || {}) };
-    DAYS.forEach(d => { const sh = R[d]; if (!sh) return; wh[d] = sh.k === 'off' ? { ...(wh[d] || { start: '09:00', end: '17:00' }), active: false } : { active: true, start: sh.s, end: sh.e }; });
-    patch({ weeklyHours: wh }); pushToast && pushToast('Your planner now uses this week’s rota.', 'success');
-  };
+  const setCount = DAYS.filter(d => R[d]).length;
   const sc = (m) => Math.max(0, Math.min(100, (m / 60 - 6) / 18 * 100));
   const fm = (m) => pad(Math.floor(m / 60));
+  const wkLabel = `${nice(wk).replace(/^\w+ /, '')} to ${nice(addDays(wk, 6)).replace(/^\w+ /, '')}`;
+  const fld = { height: 44, border: `1.5px solid ${INK}`, background: '#FAF4E0', padding: '0 10px', fontSize: 16, color: INK, borderRadius: 0, boxSizing: 'border-box', width: '100%', minWidth: 0, marginTop: 5 };
+  const lab = { display: 'block', fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: MUT };
   return (
-    <div data-rota-panel style={{ border: `1.5px solid ${INK}`, padding: '12px 14px', background: 'rgba(250,248,242,.85)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}><div className="font-fr" style={{ fontWeight: 600, fontSize: 20 }}>Your rota, your free time.</div><Lab>Shifts</Lab></div>
-      <div style={{ fontFamily: 'Fraunces, serif', fontStyle: 'italic', color: MUT, fontSize: 14, marginTop: 3 }}>Add shifts once. I find the gaps.</div>
-      <div style={{ marginTop: 8 }}>
-        {DAYS.map(d => { const sh = R[d]; const fr = rotaFree(sh); return (
-          <div key={d} data-rota-day={d} style={{ display: 'grid', gridTemplateColumns: '34px 1fr', gap: 10, alignItems: 'center', padding: '7px 0', borderBottom: `1px solid ${RULE}` }}>
-            <div style={{ fontSize: 10, letterSpacing: '.12em', color: MUT }}>{d.toUpperCase()}</div>
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 4 }}><span style={{ fontWeight: 600 }}>{sh ? (sh.k === 'off' ? 'Day off' : `${SHIFTS[sh.k].l} ${sh.s}–${sh.e}`) : 'Not set'}</span><span style={{ color: CLAY }}>{sh ? (fr.length ? 'Free ' + fr.map(([a, b]) => `${fm(a)}–${fm(b)}`).join(', ') : 'No free time') : ''}</span></div>
-              <div style={{ position: 'relative', height: 14, background: RULE }}>
-                {sh && sh.k !== 'off' && <div style={{ position: 'absolute', left: sc(toM(sh.s)) + '%', width: sc(toM(sh.e)) - sc(toM(sh.s)) + '%', top: 0, bottom: 0, background: FOR }} />}
-                {sh && fr.map(([a, b], i) => <div key={i} style={{ position: 'absolute', left: sc(a) + '%', width: sc(b) - sc(a) + '%', top: 0, bottom: 0, border: `1.5px solid ${CLAY}`, background: 'rgba(200,100,60,.12)' }} />)}
+    <div data-rota-panel style={{ border: `1.5px solid ${INK}`, background: 'rgba(250,248,242,.85)' }}>
+      <button data-rota-toggle aria-expanded={open} onClick={() => setOpen(o => !o)} className="w-full text-left" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10, padding: '12px 14px', background: 'none', border: 0, borderRadius: 0 }}>
+        <span><span className="font-fr" style={{ display: 'block', fontWeight: 600, fontSize: 22, lineHeight: 1.05 }}>Your rota, your free time.</span>
+          <span style={{ display: 'block', fontSize: 13, color: MUT, marginTop: 4, lineHeight: 1.35 }}>Set your shifts for any week, with your own times. They appear in your schedule on their own.</span></span>
+        <span style={{ fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase', color: MUT, flex: 'none' }}>{open ? 'Hide \u25B4' : 'Open \u25BE'}</span>
+      </button>
+      {open && <div style={{ padding: '0 14px 14px', borderTop: `1px solid ${RULE}` }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 12 }}>
+          <button data-rota-prev aria-label="Previous week" onClick={() => setOff(o => o - 1)} style={{ width: 40, height: 40, border: `1.5px solid ${INK}`, borderRadius: 0, background: 'transparent', fontSize: 18 }}>&lsaquo;</button>
+          <div style={{ textAlign: 'center' }}><div style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: MUT }}>{off === 0 ? 'This week' : off === 1 ? 'Next week' : 'Week of'}</div><div data-rota-week className="font-fr" style={{ fontWeight: 600, fontSize: 18 }}>{wkLabel}</div></div>
+          <button data-rota-next aria-label="Next week" onClick={() => setOff(o => o + 1)} style={{ width: 40, height: 40, border: `1.5px solid ${INK}`, borderRadius: 0, background: 'transparent', fontSize: 18 }}>&rsaquo;</button>
+        </div>
+        <div style={{ marginTop: 10 }}>
+          {DAYS.map((d, i) => { const sh = R[d]; const fr = rotaFree(sh); const isOpen = edit === d; return (
+            <div key={d} data-rota-day={d} style={{ padding: '8px 0', borderBottom: `1px solid ${RULE}` }}>
+              <button data-rota-row={d} aria-expanded={isOpen} onClick={() => setEdit(isOpen ? '' : d)} className="w-full text-left" style={{ display: 'grid', gridTemplateColumns: '58px 1fr auto', gap: 8, alignItems: 'center', background: 'none', border: 0, padding: 0, borderRadius: 0 }}>
+                <span><span style={{ display: 'block', fontSize: 10, letterSpacing: '.12em', color: MUT, fontWeight: 700 }}>{d.toUpperCase()}</span><span className="font-fr" style={{ fontWeight: 600, fontSize: 17 }}>{addDays(wk, i).slice(8).replace(/^0/, '')}</span></span>
+                <span><span style={{ display: 'block', fontSize: 14, fontWeight: 600 }}>{sh ? (sh.k === 'off' ? 'Day off' : `${(SHIFTS[sh.k] || SHIFTS.custom).l} ${sh.s}\u2013${sh.e}`) : 'Not set'}</span>
+                  <span style={{ display: 'block', fontSize: 12, color: CLAY }}>{sh ? (fr.length ? 'Free ' + fr.map(([a, b2]) => `${fm(a)}\u2013${fm(b2)}`).join(', ') : 'No free time') : 'Tap to set'}</span></span>
+                <span style={{ color: MUT, fontSize: 14 }}>{isOpen ? '\u25B4' : '\u25BE'}</span>
+              </button>
+              <div style={{ position: 'relative', height: 10, background: RULE, marginTop: 6 }}>
+                {sh && sh.k !== 'off' && <div style={{ position: 'absolute', left: sc(toM(sh.s)) + '%', width: Math.max(0, sc(toM(sh.e)) - sc(toM(sh.s))) + '%', top: 0, bottom: 0, background: FOR }} />}
               </div>
-              <div style={{ display: 'flex', gap: 5, marginTop: 6, flexWrap: 'wrap' }}>{Object.keys(SHIFTS).map(k => <Chip key={k} data-rota-set={`${d}:${k}`} on={sh && sh.k === k} onClick={() => setDay(d, k)}>{SHIFTS[k].l}</Chip>)}</div>
-            </div>
-          </div>); })}
-      </div>
-      <div style={{ marginTop: 10, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-        <Btn data-rota-apply onClick={apply}>Use this week in my planner</Btn>
-        {hasPrev && <Btn data-rota-copy solid={false} onClick={() => patch({ rota: { ...(profile.rota || {}), [wk]: { ...profile.rota[prevWk] } } })}>Copy last week</Btn>}
-      </div>
-      <div style={{ marginTop: 8, fontSize: 11, color: MUT }}>Next week different? Come back on Monday and set it again. Night shifts count until 23:59.</div>
+              {isOpen && <div style={{ marginTop: 10 }}>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>{Object.keys(SHIFTS).map(k => <Chip key={k} data-rota-set={`${d}:${k}`} on={sh && sh.k === k} onClick={() => setDay(d, k)}>{SHIFTS[k].l}</Chip>)}</div>
+                {sh && sh.k !== 'off' && <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 8 }}>
+                  <label style={lab}>Starts<input data-rota-start type="time" aria-label={`${d} shift start`} value={sh.s} onChange={e => setTime(d, 's', e.target.value)} style={fld} /></label>
+                  <label style={lab}>Ends<input data-rota-end type="time" aria-label={`${d} shift end`} value={sh.e} onChange={e => setTime(d, 'e', e.target.value)} style={fld} /></label>
+                </div>}
+                {sh && sh.k !== 'off' && toM(sh.e) <= toM(sh.s) && <div style={{ fontSize: 12, color: MUT, marginTop: 6 }}>Ends after midnight: your schedule shows it until 23:59.</div>}
+              </div>}
+            </div>); })}
+        </div>
+        <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+          {hasPrev && <Btn data-rota-copy solid={false} h={40} onClick={() => patch({ rota: { ...(profile.rota || {}), [wk]: { ...profile.rota[prevWk] } } })}>Copy the week before</Btn>}
+          <span style={{ fontSize: 13, color: MUT }}>{setCount ? `${setCount} of 7 days set. These are in your schedule.` : 'Tap a day to set your shift.'}</span>
+        </div>
+      </div>}
     </div>
   );
 }
@@ -372,7 +413,7 @@ export function RotaPanel({ profile, patch, pushToast }) {
 // ---------- Budget (Ideas) ----------
 export const priceNum = (p) => { const s = String(p == null ? '' : p).toLowerCase(); if (!s || s.includes('free')) return 0; const m = s.match(/(\d+(?:\.\d+)?)/); return m ? Number(m[1]) : null; };
 export const budgetLeft = (profile) => { const B = profile.budget || {}; const wk = weekStart(); return (Number(B.weekly) || 35) - (B.spend || []).filter(s => s.d >= wk).reduce((a, s) => a + Number(s.amt || 0), 0); };
-export const budgetPass = (item, f, left) => { f = f || {}; if (!f.free && !f.under5 && !f.fits) return true; const n = priceNum(item.price); if (f.free && n !== 0) return false; if (f.under5 && !(n !== null && n < 5)) return false; if (f.fits && !(n !== null && n <= left)) return false; return true; };
+export const budgetPass = (item, f, left) => { f = f || {}; if (!f.free && !f.under5 && !f.under10 && !f.under20 && !f.fits) return true; const n = priceNum(item.price); if (f.free && n !== 0) return false; if (f.under5 && !(n !== null && n < 5)) return false; if (f.under10 && !(n !== null && n < 10)) return false; if (f.under20 && !(n !== null && n < 20)) return false; if (f.fits && !(n !== null && n <= left)) return false; return true; };
 export function BudgetCard({ profile, patch, filter, setFilter }) {
   const B = profile.budget || {}; const weekly = Number(B.weekly) || 35; const wk = weekStart();
   const spend = (B.spend || []).filter(s => s.d >= wk); const spent = spend.reduce((a, s) => a + Number(s.amt || 0), 0); const left = weekly - spent;
@@ -394,6 +435,68 @@ export function BudgetCard({ profile, patch, filter, setFilter }) {
         <Btn data-budget-add onClick={() => { const a = Number(amt); if (!(a > 0)) return; patch({ budget: { ...B, weekly, spend: [...(B.spend || []), { id: uid(), d: dstr(), amt: a, note: note.trim() }] } }); setAmt(''); setNote(''); }}>Log</Btn>
       </div>
       {spend.length > 0 && <div style={{ marginTop: 8 }}>{spend.slice(-3).reverse().map(s => <div key={s.id} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, padding: '4px 0', borderBottom: `1px solid ${RULE}`, color: MUT }}><span>{nice(s.d)} &middot; {s.note || 'Spent'}</span><span>&pound;{Number(s.amt).toFixed(2)}</span></div>)}</div>}
+    </div>
+  );
+}
+
+// ---------- Caring for someone (Home) ----------
+export function CarePanel({ profile, patch, today, tasks, onPlanForMe, onPlanAppt }) {
+  const C = profile.care || { name: '', items: [], done: {}, notes: [] };
+  const items = C.items || []; const doneToday = (C.done || {})[today] || []; const notes = C.notes || [];
+  const [nm, setNm] = useState(''); const [it, setIt] = useState(''); const [tm, setTm] = useState(''); const [nt, setNt] = useState(''); const [open, setOpen] = useState(true);
+  const save = (o) => patch({ care: { name: '', items: [], done: {}, notes: [], ...C, ...o } });
+  const tick = (id) => save({ done: { [today]: doneToday.includes(id) ? doneToday.filter(x => x !== id) : [...doneToday, id] } });
+  const addItem = (title, time) => { if (!title.trim()) return; save({ items: [...items, { id: uid(), title: title.trim(), time: time || '' }].sort((a, b) => String(a.time || '99').localeCompare(String(b.time || '99'))) }); setIt(''); setTm(''); };
+  const addNote = () => { if (!nt.trim()) return; save({ notes: [{ id: uid(), d: today, text: nt.trim() }, ...notes].slice(0, 30) }); setNt(''); };
+  const who = C.name || 'someone';
+  const appt = (tasks || []).filter(t => t.date >= today && t.status !== 'done' && /doctor|dentist|hospital|clinic|appointment|surgery|checkup|optician|nurse|physio|gp\b/i.test(t.title)).sort((a, b) => (a.date + a.startTime).localeCompare(b.date + b.startTime))[0];
+  const left = items.filter(x => !doneToday.includes(x.id)).length;
+  const fld = { width: '100%', boxSizing: 'border-box', border: `1.5px solid ${INK}`, background: '#FAF4E0', padding: '0 10px', fontSize: 16, color: INK, borderRadius: 0, height: 44, minWidth: 0 };
+  const lab = { display: 'block', fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: MUT };
+  const SUGG = [['Morning tablets', '08:00'], ['Lunch', '12:30'], ['Evening call', '19:00'], ['Bedtime check', '21:30']].filter(([t]) => !items.some(x => x.title === t));
+  return (
+    <div data-care-panel style={{ order: -6, border: `1.5px solid ${INK}`, background: 'rgba(250,248,242,.85)' }}>
+      <button data-care-toggle aria-expanded={open} onClick={() => setOpen(o => !o)} className="w-full text-left" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10, padding: '12px 14px', background: 'none', border: 0, borderRadius: 0 }}>
+        <span><span style={{ display: 'inline-block', background: INK, color: BG, fontSize: 12, letterSpacing: '.14em', textTransform: 'uppercase', padding: '4px 10px', fontWeight: 600 }}>Care</span>
+          <span className="font-fr" style={{ display: 'block', fontWeight: 600, fontSize: 22, lineHeight: 1.05, marginTop: 8 }}>{C.name ? `Looking after ${C.name}` : 'Looking after someone'}</span>
+          {C.name && items.length > 0 && <span style={{ display: 'block', fontSize: 13, color: MUT, marginTop: 3 }}>{left === 0 ? 'Everything done today.' : `${left} still to do today.`}</span>}</span>
+        <span style={{ fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase', color: MUT, flex: 'none' }}>{open ? 'Hide \u25B4' : 'Open \u25BE'}</span>
+      </button>
+      {open && <div style={{ padding: '0 14px 14px', borderTop: `1px solid ${RULE}` }}>
+        {!C.name ? <div style={{ marginTop: 12 }}>
+          <label style={lab}>Who are you caring for?<input data-care-name type="text" aria-label="Who are you caring for" placeholder="Their first name" value={nm} onChange={e => setNm(e.target.value)} style={{ ...fld, marginTop: 5 }} /></label>
+          <button data-care-save onClick={() => nm.trim() && save({ name: nm.trim() })} disabled={!nm.trim()} style={{ marginTop: 10, width: '100%', height: 46, border: 0, borderRadius: 0, background: FOR, color: BG, fontSize: 13, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', opacity: nm.trim() ? 1 : .4 }}>Save</button>
+        </div> : <>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 12, fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: MUT }}><span>{who}&rsquo;s day</span><button data-care-rename onClick={() => save({ name: '' })} style={{ background: 'none', border: 0, padding: 0, fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', color: MUT, textDecoration: 'underline' }}>Change name</button></div>
+          <div style={{ borderTop: `3px solid ${INK}`, marginTop: 6 }} />
+          {items.length === 0 && <div style={{ fontSize: 13, color: MUT, padding: '10px 0' }}>Add the things that happen every day. They reset each morning.</div>}
+          {items.map(x => { const d = doneToday.includes(x.id); return (
+            <div key={x.id} data-care-item style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '9px 0', borderBottom: `1px solid ${RULE}` }}>
+              <button data-care-tick={x.id} aria-pressed={d} aria-label={`${d ? 'Untick' : 'Tick'} ${x.title}`} onClick={() => tick(x.id)} style={{ width: 28, height: 28, flex: 'none', borderRadius: '50%', border: `1.75px solid ${d ? FOR : INK}`, background: d ? FOR : 'transparent', color: BG, padding: 0, fontSize: 14 }}>{d ? '\u2713' : ''}</button>
+              <span style={{ flex: 1, minWidth: 0, fontSize: 16, textDecoration: d ? 'line-through' : 'none', color: d ? SOFT : INK, overflowWrap: 'anywhere' }}>{x.title}</span>
+              {x.time && <span style={{ fontSize: 12, color: MUT }}>{x.time}</span>}
+              <button data-care-del aria-label={`Remove ${x.title}`} onClick={() => save({ items: items.filter(y => y.id !== x.id) })} style={{ background: 'none', border: 0, padding: 6, fontSize: 18, color: MUT, borderRadius: 0 }}>&times;</button>
+            </div>); })}
+          {SUGG.length > 0 && <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>{SUGG.map(([t, tmv]) => <Chip key={t} data-care-sugg={t} onClick={() => addItem(t, tmv)}>+ {t}</Chip>)}</div>}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 110px', gap: 8, marginTop: 10 }}>
+            <label style={lab}>Add to the day<input data-care-new type="text" aria-label="Add to the day" placeholder="e.g. Physio exercises" value={it} onChange={e => setIt(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') addItem(it, tm); }} style={{ ...fld, marginTop: 5 }} /></label>
+            <label style={lab}>Time<input data-care-time type="time" aria-label="Time" value={tm} onChange={e => setTm(e.target.value)} style={{ ...fld, marginTop: 5 }} /></label>
+          </div>
+          <button data-care-add onClick={() => addItem(it, tm)} disabled={!it.trim()} style={{ marginTop: 8, width: '100%', height: 44, border: `1.5px solid ${INK}`, borderRadius: 0, background: 'transparent', color: INK, fontSize: 13, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', opacity: it.trim() ? 1 : .4 }}>Add</button>
+          <div style={{ marginTop: 14, borderTop: `1px solid ${RULE}`, paddingTop: 10 }}>
+            <div style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: MUT }}>Next appointment</div>
+            {appt ? <div data-care-appt className="font-fr" style={{ fontWeight: 600, fontSize: 18, marginTop: 4 }}>{nice(appt.date)} {appt.startTime}<span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 400, fontSize: 13, color: MUT }}> &middot; {appt.title}</span></div>
+              : <div style={{ fontSize: 13, color: MUT, marginTop: 4 }}>None in your schedule. <button data-care-plan-appt onClick={onPlanAppt} style={{ background: 'none', border: 0, padding: 0, fontSize: 13, textDecoration: 'underline', color: INK }}>Add one</button></div>}
+          </div>
+          <button data-care-me onClick={onPlanForMe} style={{ marginTop: 12, width: '100%', height: 46, border: 0, borderRadius: 0, background: FOR, color: BG, fontSize: 13, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase' }}>Plan time for me</button>
+          <div style={{ fontSize: 12, color: MUT, marginTop: 6 }}>Carers need a break too. Pick a slot that is only yours.</div>
+          <div style={{ marginTop: 14, borderTop: `1px solid ${RULE}`, paddingTop: 10 }}>
+            <label style={lab}>How was today?<textarea data-care-note rows={2} aria-label="Care note" placeholder={`A line about ${who}'s day, to look back on`} value={nt} onChange={e => setNt(e.target.value)} style={{ ...fld, height: 'auto', padding: 10, marginTop: 5, resize: 'vertical' }} /></label>
+            <button data-care-note-add onClick={addNote} disabled={!nt.trim()} style={{ marginTop: 8, width: '100%', height: 44, border: `1.5px solid ${INK}`, borderRadius: 0, background: 'transparent', color: INK, fontSize: 13, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', opacity: nt.trim() ? 1 : .4 }}>Save note</button>
+            {notes.slice(0, 3).map(n => <div key={n.id} data-care-note-item style={{ padding: '8px 0', borderBottom: `1px solid ${RULE}`, fontSize: 14 }}><span style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: MUT }}>{nice(n.d)}</span><div style={{ marginTop: 2 }}>{n.text}</div></div>)}
+          </div>
+        </>}
+      </div>}
     </div>
   );
 }
