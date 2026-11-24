@@ -331,3 +331,8 @@ Tests: `test/v9.mjs` (52 checks). `test/v8.mjs` now expects the Energy button on
 - The student budget tracker is gone; Ideas filters now have a Budget row (Free, under 5, 10 and 20 pounds).
 - Shift work is collapsible, has a week picker, your own start and end times per day, and shifts appear in the schedule automatically.
 - Carers get a Care card on Home: a daily routine that resets each morning, next appointment, plan time for me, and short care notes.
+
+## v10.22 — Social search, time match picker, press-and-hold editing
+- Friend Book is one search bar: on Pact and not a friend gives Add, a friend gives Message and Invite, and anyone else can be added as a person.
+- Time matching starts with just you. Add friends one by one; a friend who has not shared gets a Send request button (sent as a message).
+- Press and hold a plan in the schedule to lift it, then drag to move it or drag the top or bottom handle to stretch it. A tap still opens the edit sheet.

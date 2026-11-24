@@ -2137,7 +2137,18 @@ function Headline({ title, sub }) {
     </div>
   );
 }
-function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMatch, onTapTask, onShare, onAdd, onSlot, nowMin, isToday }) {
+function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMatch, onTapTask, onShare, onAdd, onSlot, nowMin, isToday, pickList, onPick, onUnpick, onAsk, onMoveTask }) {
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [edit, setEdit] = useState(null);   // { id, s, e }: a plan lifted by press-and-hold, ready to move or stretch
+  const holdRef = useRef(null); const dragRef = useRef(null); const editRef = useRef(null); const holdY = useRef(0); const suppress = useRef(false);
+  editRef.current = edit;
+  useEffect(() => { setEdit(null); }, [date]);
+  useEffect(() => {
+    const el = scrollRef.current; if (!el) return undefined;
+    const stop = (e) => { if (dragRef.current) e.preventDefault(); };
+    el.addEventListener('touchmove', stop, { passive: false });
+    return () => el.removeEventListener('touchmove', stop);
+  });
   const [ghost, setGhost] = useState(null);   // { s, e } minutes of the tapped empty slot (drag the bottom handle to resize)
   useEffect(() => { setGhost(null); }, [date]);
   const scrollRef = useRef(null);
@@ -2164,7 +2175,7 @@ function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMat
     if (cur && cur.e - cur.s >= 60) free.push(cur);
   }
   const upcoming = mine.filter(b => !b.past).sort((a, b) => a.s - b.s)[0];
-  const title = matching ? (free.length ? `Everyone’s free at ${hourWord(free[0].s)}.` : 'No hour works for everyone.') : mine.length === 0 ? 'A clear day.' : `${mine.length} plan${mine.length === 1 ? '' : 's'} ${isToday ? 'today' : 'that day'}.`;
+  const title = matching && friends.length === 0 ? 'Pick a friend to compare.' : matching ? (free.length ? `Everyone’s free at ${hourWord(free[0].s)}.` : 'No hour works for everyone.') : mine.length === 0 ? 'A clear day.' : `${mine.length} plan${mine.length === 1 ? '' : 's'} ${isToday ? 'today' : 'that day'}.`;
   const sub = !matching && upcoming ? `Next: ${upcoming.t} at ${fromMins(upcoming.s)}.` : null;
   const grid = `34px repeat(${cols.length}, minmax(${matching ? 104 : 120}px, 1fr))`;
   const hoursLabels = []; for (let h = H0; h < H1; h += 1) hoursLabels.push(h);
@@ -2182,6 +2193,30 @@ function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMat
           <span><b style={{ display: 'block', fontSize: 12.5, lineHeight: 1.15 }}>Who sees mine</b><span style={{ display: 'block', fontSize: 10.5, opacity: .75, lineHeight: 1.2, marginTop: 1 }}>Set who can see</span></span>
         </button>
       </div>
+      {matching && (
+        <div data-match-picker style={{ marginTop: 12 }}>
+          <div style={{ fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase', fontWeight: 700, color: '#5A675F' }}>Comparing you with</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 6, alignItems: 'center' }}>
+            {friends.map(f => (
+              <span key={f.id} data-match-chip={f.id} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, height: 38, padding: '0 6px 0 12px', border: '1.5px solid #1B2A22', background: '#1F3A2E', color: '#F4EFE4', fontSize: 14, fontWeight: 600 }}>{f.name}
+                <button data-match-remove={f.id} aria-label={`Stop comparing with ${f.name}`} onClick={() => onUnpick(f.id)} style={{ width: 28, height: 28, border: 0, background: 'transparent', color: '#F4EFE4', fontSize: 18, borderRadius: 0 }}>&times;</button></span>
+            ))}
+            <button data-match-add aria-expanded={pickerOpen || friends.length === 0} onClick={() => setPickerOpen(o => !o)} style={{ height: 38, padding: '0 14px', border: '1.5px dashed #1B2A22', background: 'transparent', color: '#1B2A22', fontSize: 13, fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', borderRadius: 0 }}>+ Add friend</button>
+          </div>
+          {(pickerOpen || friends.length === 0) && (
+            <div data-match-list style={{ marginTop: 10, border: '1.5px solid #1B2A22', background: '#FAF4E0' }}>
+              {pickList.filter(f => !friends.some(x => x.id === f.id)).length === 0 && <div style={{ padding: 12, fontSize: 13, color: '#5A675F' }}>{pickList.length === 0 ? 'Add friends in the Social tab first.' : 'Everyone is already here.'}</div>}
+              {pickList.filter(f => !friends.some(x => x.id === f.id)).map((f, i) => (
+                <div key={f.id} data-match-option={f.id} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderTop: i ? '1px solid #CFC7B4' : 0 }}>
+                  <span style={{ flex: 1, minWidth: 0 }}><span style={{ display: 'block', fontSize: 15, fontWeight: 600 }}>{f.name}</span><span style={{ display: 'block', fontSize: 12, color: '#5A675F' }}>{f.shared ? 'Shares their schedule with you' : f.asked ? 'You asked. Waiting for them to share.' : 'Has not shared their schedule with you'}</span></span>
+                  {f.shared ? <button data-match-pick={f.id} onClick={() => { onPick(f.id); setPickerOpen(false); }} style={{ height: 38, padding: '0 14px', border: 0, background: '#1F3A2E', color: '#F4EFE4', fontSize: 12, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', borderRadius: 0 }}>Add</button>
+                    : <button data-match-ask={f.id} disabled={f.asked} onClick={() => onAsk(f.id)} style={{ height: 38, padding: '0 12px', border: '1.5px solid #1B2A22', background: 'transparent', color: '#1B2A22', fontSize: 12, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', borderRadius: 0, opacity: f.asked ? .5 : 1 }}>{f.asked ? 'Asked' : 'Send request'}</button>}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
       <div className="overflow-x-auto no-scrollbar" style={{ marginTop: 12 }}>
         <div style={{ minWidth: matching ? 34 + cols.length * 104 : undefined }}>
           <div style={{ display: 'grid', gridTemplateColumns: grid, borderTop: '3px solid #1B2A22', borderBottom: '1px solid #1B2A22' }}>
@@ -2196,6 +2231,7 @@ function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMat
             {cols.map(c => (
               <div key={c.id} data-list-col={c.id} onClick={c.mine ? (e) => {
                 if (e.target.closest('[data-list-block], [data-cal-block], [data-slot-ghost]')) return;
+                if (editRef.current) { setEdit(null); return; }
                 const st = Math.max(H0 * 60, Math.min(H1 * 60 - 15, snapAt(e.currentTarget, e.clientY)));
                 setGhost({ s: st, e: Math.min(H1 * 60, st + 60) });
               } : undefined} style={{ position: 'relative', borderLeft: '1px solid #1B2A22', cursor: c.mine ? 'pointer' : undefined }}>
@@ -2212,14 +2248,41 @@ function ScheduleListings({ date, mine, friends, matching, canMatch, onToggleMat
                   </button>
                 )}
                 {!c.ok && <div style={{ position: 'absolute', inset: 0, backgroundImage: HATCH, opacity: 0.35, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><span style={{ fontSize: 9, letterSpacing: '.14em', textTransform: 'uppercase', background: '#F4EFE4', color: '#5A675F', padding: '2px 5px' }}>Not shared</span></div>}
-                {lstLanes(c.blocks).map((b, i) => {
+                {lstLanes(c.mine && edit ? c.blocks.map(x => (x.id === edit.id ? { ...x, s: edit.s, e: edit.e } : x)) : c.blocks).map((b, i) => {
+                  const isEd = !!(c.mine && edit && b.id === edit.id);
                   const h = Math.max(24, ((b.e - b.s) / 60) * LST_PX - 1);
                   const w = 100 / b.lanes;
                   const base = { position: 'absolute', top: top(b.s), height: h, left: `calc(${b.lane * w}% + 1px)`, width: `calc(${w}% - 3px)`, boxSizing: 'border-box', padding: '4px 7px', fontSize: 11, lineHeight: 1.2, textAlign: 'left', overflow: 'hidden', borderRadius: 0 };
                   const st = c.mine ? (b.kind === 'cal' ? { ...base, background: b.past ? '#F4EFE4' : '#DDE6DF', color: b.past ? '#7C857F' : '#1B2A22', border: '1px solid #1F3A2E', borderLeft: '4px solid #1F3A2E' } : b.past ? { ...base, border: b.kind === 'deadline' ? '1px solid #B3261E' : '1px solid #CFC7B4', color: b.kind === 'deadline' ? '#B3261E' : '#7C857F', background: '#F4EFE4' } : { ...base, background: b.kind === 'deadline' ? '#B3261E' : '#1F3A2E', color: '#F4EFE4', border: 0 })
                     : { ...base, backgroundImage: HATCH, border: '1px solid #CFC7B4', color: '#5A675F', background: undefined };
                   return (
-                    <button key={i} data-list-block={c.mine && b.kind !== 'cal' ? b.id : undefined} data-cal-block={b.kind === 'cal' ? '' : undefined} disabled={!c.mine || b.kind === 'cal'} onClick={() => c.mine && b.kind !== 'cal' && onTapTask(b.id)} style={st}>
+                    <button key={i} data-list-block={c.mine && b.kind !== 'cal' ? b.id : undefined} data-cal-block={b.kind === 'cal' ? '' : undefined} data-editing={isEd ? '' : undefined} disabled={!c.mine || b.kind === 'cal'}
+                      onClick={(e) => { if (suppress.current) { suppress.current = false; e.stopPropagation(); return; } if (edit) { setEdit(null); if (!isEd) return; } c.mine && b.kind !== 'cal' && onTapTask(b.id); }}
+                      onContextMenu={(e) => { if (c.mine) e.preventDefault(); }}
+                      onPointerDown={c.mine && b.kind !== 'cal' && onMoveTask ? (e) => {
+                        suppress.current = false; const el = e.currentTarget; const pid = e.pointerId; const y0 = e.clientY;
+                        if (isEd) { dragRef.current = { mode: 'move', y0, s0: edit.s, e0: edit.e, moved: false }; try { el.setPointerCapture(pid); } catch (er) { /* fine */ } return; }
+                        clearTimeout(holdRef.current); holdY.current = e.clientY;
+                        holdRef.current = setTimeout(() => { suppress.current = true; setEdit({ id: b.id, s: b.s, e: b.e }); dragRef.current = { mode: 'move', y0, s0: b.s, e0: b.e, moved: false, fresh: true }; try { el.setPointerCapture(pid); } catch (er) { /* fine */ } if (navigator.vibrate) navigator.vibrate(12); }, 380);
+                      } : undefined}
+                      onPointerMove={(e) => {
+                        const d = dragRef.current;
+                        if (!d) { if (Math.abs(e.clientY - holdY.current) > 8) clearTimeout(holdRef.current); return; }
+                        const dm = Math.round(((e.clientY - d.y0) / LST_PX) * 4) * 15;
+                        if (Math.abs(e.clientY - d.y0) > 6) { d.moved = true; suppress.current = true; }
+                        if (d.mode === 'move') { const len = d.e0 - d.s0; const ns = Math.max(0, Math.min(1440 - len, d.s0 + dm)); setEdit(x => x && { ...x, s: ns, e: ns + len }); }
+                      }}
+                      onPointerUp={() => { clearTimeout(holdRef.current); const d = dragRef.current; dragRef.current = null; const cur = editRef.current; if (d && d.moved && cur && onMoveTask) { onMoveTask(cur.id, cur.s, cur.e); } else if (d && d.fresh) { /* released without moving: stay lifted */ } }}
+                      onPointerCancel={() => { clearTimeout(holdRef.current); dragRef.current = null; }}
+                      style={isEd ? { ...st, outline: '2px solid #C8643C', outlineOffset: 1, zIndex: 3, touchAction: 'none', boxShadow: '0 4px 14px rgba(27,42,34,.35)' } : st}>
+                      {isEd && ['top', 'bottom'].map(side => (
+                        <span key={side} data-edit-handle={side} role="presentation"
+                          onPointerDown={(e) => { e.stopPropagation(); dragRef.current = { mode: side, y0: e.clientY, s0: edit.s, e0: edit.e, moved: false }; try { e.currentTarget.setPointerCapture(e.pointerId); } catch (er) { /* fine */ } }}
+                          onPointerMove={(e) => { const d = dragRef.current; if (!d || d.mode !== side) return; const dm = Math.round(((e.clientY - d.y0) / LST_PX) * 4) * 15; if (Math.abs(e.clientY - d.y0) > 3) d.moved = true; setEdit(x => x && (side === 'top' ? { ...x, s: Math.max(0, Math.min(d.e0 - 15, d.s0 + dm)) } : { ...x, e: Math.min(1440, Math.max(d.s0 + 15, d.e0 + dm)) })); }}
+                          onPointerUp={(e) => { e.stopPropagation(); const d = dragRef.current; dragRef.current = null; const cur = editRef.current; if (d && d.moved && cur) onMoveTask(cur.id, cur.s, cur.e); }}
+                          onClick={(e) => e.stopPropagation()}
+                          style={{ position: 'absolute', left: '50%', [side]: -9, width: 22, height: 22, marginLeft: -11, borderRadius: '50%', background: '#F4EFE4', border: '2px solid #C8643C', touchAction: 'none', zIndex: 4 }} />
+                      ))}
                       {c.mine && !b.past ? <><b style={{ display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{b.t}</b>{h >= 40 && <span style={{ display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{b.loc || (fromMins(b.s) + '–' + fromMins(b.e))}</span>}</> : <span style={{ display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{b.t}</span>}
                     </button>
                   );
@@ -2942,6 +3005,7 @@ function AppInner({ onReset }) {
   const [buddies, setBuddies] = useState([]);
   // ---- schedule listings: friends who share with me, my own sharing choices ----
   const [matching, setMatching] = useState(false);
+  const [matchIds, setMatchIds] = useState([]);
   const [sharePanel, setSharePanel] = useState(false);
   const [schedShared, setSchedShared] = useState([]);
   const [schedGrants, setSchedGrants] = useState([]);
@@ -5062,6 +5126,12 @@ function AppInner({ onReset }) {
     }, 2000);
     return () => clearTimeout(timer);
   }, [skillForest, buddies, hydrated, authUser && authUser.email]);
+  const askToShare = async (friendId) => {
+    const fr = pactFriends.find(f => f.userId === friendId); if (!fr) return;
+    setUserProfile(prev => ({ ...prev, matchAsked: { ...(prev.matchAsked || {}), [friendId]: Date.now() } }));
+    try { await cloud.sendMessage(friendId, `${accountInfo.name || 'A friend'} would like to compare schedules with you to find a time. If you are happy for that, open Schedule, tap "Who sees mine" and share with ${accountInfo.name || 'them'}.`); pushToast(`Request sent to ${fr.name}.`, 'success'); }
+    catch (e) { pushToast("Couldn't send that request right now. Try again.", 'error'); }
+  };
   const setScheduleShare = async (friendId, days, titles) => {
     try {
       const r = await cloud.setScheduleGrant(friendId, days, titles);
@@ -5146,6 +5216,13 @@ function AppInner({ onReset }) {
     try { setFriendFound((await cloud.findUser(h)) || 'none'); } catch (e) { setFriendMsg("Couldn't search right now. Check your connection and try again."); }
     setFriendBusy(false);
   };
+  useEffect(() => {
+    if (!(authUser && authUser.cloud)) return undefined;
+    const h = cleanHandle(friendBookQ.trim());
+    if (h.length < 3) { setFriendFound(null); return undefined; }
+    const t = setTimeout(async () => { setFriendBusy(true); try { setFriendFound((await cloud.findUser(h)) || 'none'); } catch (e) { /* offline */ } setFriendBusy(false); }, 450);
+    return () => clearTimeout(t);
+  }, [friendBookQ]);
   const openFriendProfile = async (fr) => {
     if (!fr) return;
     setViewFriend({ fr, data: null, busy: true });
@@ -5160,7 +5237,7 @@ function AppInner({ onReset }) {
     try {
       const r = await cloud.sendFriendRequest(id);
       setFriendMsg(r === 'sent' ? 'Request sent. They will see it in their Friend Book.' : r === 'accepted' ? "You're now friends!" : r === 'already_friends' ? "You're already friends." : "Couldn't send that request.");
-      setFriendFound(null); setFriendQuery('');
+      setFriendFound(null); setFriendQuery(''); setFriendBookQ('');
       await refreshFriends();
     } catch (e) { setFriendMsg("Couldn't send that right now. Try again."); }
     setFriendBusy(false);
@@ -7206,7 +7283,7 @@ function AppInner({ onReset }) {
             {(() => {
               const nowM0 = new Date().getHours() * 60 + new Date().getMinutes();
               const mineBlocks = filteredTasks.filter(t => t.startTime && t.endTime).map(t => { const e = Math.max(toMins(t.startTime) + 15, toMins(t.endTime)); const dn = t.status === 'completed' || t.status === 'done'; return { id: t.id, kind: t.kind, s: toMins(t.startTime), e, t: t.kind === 'deadline' ? 'Due: ' + t.title : t.title, loc: t.location && t.location !== t.title ? t.location : '', done: dn, past: dn || selectedDateStr < todayDateStr() || (selectedDateStr === todayDateStr() && e <= nowM0) }; }).concat(calendarEvents.filter(c => c.date === selectedDateStr && !c.allDay && c.start && c.end).map(c => { const cs = toMins(c.start), ce = c.end === '24:00' ? 1440 : toMins(c.end); const e = Math.max(cs + 15, ce); return { id: 'cal_' + c.id, kind: 'cal', s: cs, e, t: c.title, loc: '', done: false, past: selectedDateStr < todayDateStr() || (selectedDateStr === todayDateStr() && e <= nowM0) }; }));
-              const friendCols = pactFriends.map(f => {
+              const friendCols = pactFriends.filter(f => matchIds.includes(f.userId)).map(f => {
                 const sh = schedShared.find(x => x.owner_id === f.userId);
                 const ok = !!sh && selectedDateStr <= sh.until;
                 const blocks = ok ? (sh.blocks || []).filter(b => b.d === selectedDateStr).map(b => ({ s: toMins(b.s), e: Math.max(toMins(b.s) + 15, toMins(b.e)), t: b.t || 'Busy' })) : [];
@@ -7215,7 +7292,7 @@ function AppInner({ onReset }) {
               const nowM = selectedDateStr === todayDateStr() ? new Date().getHours() * 60 + new Date().getMinutes() : null;
               return (<>
                 <ScheduleListings date={selectedDateStr} mine={mineBlocks} friends={friendCols} matching={matching} canMatch={!!(authUser && authUser.cloud) && pactFriends.length > 0}
-                  onToggleMatch={() => { setMatching(m => !m); loadSched(); }} onShare={() => setSharePanel(true)} nowMin={nowM} isToday={selectedDateStr === todayDateStr()}
+                  pickList={pactFriends.map(f => { const sh = schedShared.find(x => x.owner_id === f.userId); return { id: f.userId, name: f.name, shared: !!sh && selectedDateStr <= sh.until, asked: !!((userProfile.matchAsked || {})[f.userId]) }; })} onPick={(id) => setMatchIds(a => a.includes(id) ? a : [...a, id])} onUnpick={(id) => setMatchIds(a => a.filter(x => x !== id))} onAsk={askToShare} onMoveTask={(id, s0, e0) => setTasks(prev => prev.map(t => t.id === id ? { ...t, startTime: fromMins(s0), endTime: e0 >= 1440 ? '23:59' : fromMins(e0), duration: Math.max(15, e0 - s0) } : t))} onToggleMatch={() => { setMatching(m => !m); loadSched(); }} onShare={() => setSharePanel(true)} nowMin={nowM} isToday={selectedDateStr === todayDateStr()}
                   onTapTask={(id) => setSheetTaskId(id)}
                   onSlot={(m, e2) => { const t = fromMins(m); setEventConfig(c => ({ ...c, date: selectedDateStr, startTime: t, slotPicked: true, duration: Math.max(15, (e2 || m + 60) - m) })); setTaskConfig(c => ({ ...c, date: selectedDateStr, startTime: t })); setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }}
                   onAdd={() => { setPlannerMode('event'); setPlannerResultsStep(false); setPlannerOpen(true); }} />
@@ -8149,7 +8226,7 @@ function AppInner({ onReset }) {
 
                 <div className="relative">
                   <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-500" />
-                  <input data-friendbook-search type="search" aria-label="Search friends and requests" placeholder="Search friends, requests or @username" value={friendBookQ} onChange={e => setFriendBookQ(e.target.value)} className="w-full border border-slate-900 bg-transparent pl-9 pr-3 h-11 text-[13px]" style={{ borderRadius: 0 }} />
+                  <input data-friendbook-search type="search" aria-label="Search friends and requests" placeholder="Search a name or @username" value={friendBookQ} onChange={e => setFriendBookQ(e.target.value)} className="w-full border border-slate-900 bg-transparent pl-9 pr-3 h-11 text-[13px]" style={{ borderRadius: 0 }} />
                 </div>
 
                 {(() => {
@@ -8176,48 +8253,45 @@ function AppInner({ onReset }) {
                   );
                 })()}
 
-                {authUser && authUser.cloud ? (
-                  <div data-friend-search className="p-3 bg-[#FAF8F5] border border-stone-200 space-y-2">
-                    <div className="text-[10px] uppercase tracking-widest text-purple-800 font-medium">Find a friend on Pact</div>
-                    <div className="flex gap-2">
-                      <input type="text" aria-label="Friend's username" placeholder="Their @username, e.g. @maya_lin" value={friendQuery} onChange={e => setFriendQuery(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') searchFriend(); }} className="flex-1 min-w-0 bg-white border border-stone-300 px-2.5 py-1.5 text-xs" />
-                      <button data-friend-find onClick={() => searchFriend()} disabled={friendBusy || !friendQuery.trim()} className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider font-medium disabled:opacity-50">{friendBusy ? '...' : 'Find'}</button>
+                {(() => {
+                  const q = friendBookQ.trim();
+                  if (!q) return <p data-friend-msg className="text-[12px]" style={{ color: '#5A675F' }}>{friendMsg ? friendMsg + ' ' : ''}{authUser && authUser.cloud ? <>Type a name or a username. Your username is <strong>{accountInfo.username || '(not set)'}</strong>. Share it so friends can find you.</> : 'Type a name to find someone in your friend book.'}</p>;
+                  const lc = q.toLowerCase();
+                  const mine = friendsList.filter(fr => (fr.name + ' ' + fr.handle).toLowerCase().includes(lc));
+                  const ff = friendFound && friendFound !== 'none' ? friendFound : null;
+                  const alreadyListed = ff && friendsList.some(fr => fr.userId === ff.id);
+                  const btnS = { borderRadius: 0, height: 36, padding: '0 14px', fontSize: 11, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', border: '1.5px solid #1B2A22', background: 'transparent', color: '#1B2A22' };
+                  return (
+                    <div data-friend-search className="space-y-2">
+                      <div className="border-t-[3px] border-slate-900 pt-1.5 np-sc">Results</div>
+                      {ff && !alreadyListed && (
+                        <div data-friend-result className="border border-slate-900 bg-[#FAF8F2] p-3 flex items-center gap-3">
+                          <Mug src={ff.avatar} name={ff.display_name || ff.username} w={44} h={44} />
+                          <div className="flex-1 min-w-0 text-[13px] leading-snug"><span className="font-semibold">{ff.display_name || ff.username}</span> <span className="text-stone-500">@{ff.username}</span><div className="text-[11px] text-stone-500">On Pact</div></div>
+                          {ff.relation === 'friends' ? <span className="text-[10px] uppercase tracking-wider text-stone-500">Friends</span>
+                            : ff.relation === 'pending_out' ? <span className="text-[10px] uppercase tracking-wider text-stone-500">Request sent</span>
+                            : <button data-friend-send onClick={() => sendFriendReq(ff.id)} disabled={friendBusy} style={{ ...btnS, background: '#1F3A2E', color: '#F4EFE4', border: 0 }}>{ff.relation === 'pending_in' ? 'Accept' : 'Add'}</button>}
+                        </div>
+                      )}
+                      {mine.map(fr => (
+                        <div key={fr.id} data-friend-hit className="border border-slate-900 bg-[#FAF8F2] p-3 flex items-center gap-3">
+                          <Mug src={fr.avatar} name={fr.name} w={44} h={44} />
+                          <div className="flex-1 min-w-0 text-[13px] leading-snug"><span className="font-semibold">{fr.name}</span> <span className="text-stone-500">{fr.handle}</span><div className="text-[11px] text-stone-500">{fr.userId ? 'Friend on Pact' : 'In your people'}</div></div>
+                          {fr.userId && <button data-friend-hit-message onClick={() => openChat(fr)} style={btnS}>Message</button>}
+                          <button data-friend-hit-invite onClick={() => { setInviteDraft({ taskId: '', friend: fr.name }); setInviteOut(null); setSocialSub('plans'); setActiveTab('social'); }} style={btnS}>Invite</button>
+                        </div>
+                      ))}
+                      {!ff && !mine.length && (friendBusy ? <p className="text-[12px] text-stone-500">Searching Pact...</p> : <p data-friend-none className="text-[12px] text-stone-600">{authUser && authUser.cloud && cleanHandle(q).length >= 3 ? 'No one on Pact with that username.' : 'No one in your friend book with that name.'}</p>)}
+                      {!mine.some(fr => fr.name.toLowerCase() === lc) && (
+                        <div data-friend-person className="border border-dashed border-slate-500 p-3 flex items-center gap-3">
+                          <div className="flex-1 min-w-0 text-[13px] leading-snug">Not on Pact? Add <span className="font-semibold">{q}</span> as a person.<div className="text-[11px] text-stone-500">Just for your own plans. They don&rsquo;t need the app.</div></div>
+                          <button data-friend-person-add onClick={() => { setFriendsList(prev => [...prev, { id: Date.now(), name: q, handle: `@${q.toLowerCase().replace(/\s+/g, '')}`, lastSeen: 'Just added', type: 'Friend', status: 'Synced' }]); setFriendBookQ(''); setFriendMsg(''); }} style={{ ...btnS, background: '#1F3A2E', color: '#F4EFE4', border: 0 }}>Add</button>
+                        </div>
+                      )}
+                      {friendMsg && <p data-friend-msg className="text-[11px] text-stone-600">{friendMsg}</p>}
                     </div>
-                    <p className="text-[10px] text-stone-500 leading-snug">Your username: <strong>{accountInfo.username || '(not set)'}</strong>. Share it so friends can find you. They need to type it exactly.</p>
-                    {friendFound === 'none' && <p data-friend-none className="text-[11px] text-stone-600">No one found with that username. Check the spelling with them.</p>}
-                    {friendFound && friendFound !== 'none' && (
-                      <div data-friend-result className="p-2.5 bg-white border border-stone-200 flex justify-between items-center gap-2">
-                        <div className="flex items-center gap-2 min-w-0"><Avatar src={friendFound.avatar} name={friendFound.display_name || friendFound.username} size={32} /><div className="min-w-0"><div className="text-xs font-medium text-slate-900">{friendFound.display_name || friendFound.username} <span className="text-stone-400 font-normal">@{friendFound.username}</span></div>{friendFound.bio && <div className="text-[10px] text-stone-600 leading-snug">{friendFound.bio}</div>}</div></div>
-                        {friendFound.relation === 'friends' ? <span className="text-[10px] text-stone-500 uppercase tracking-wider">Already friends</span>
-                          : friendFound.relation === 'pending_out' ? <span className="text-[10px] text-stone-500 uppercase tracking-wider">Request sent</span>
-                          : <button data-friend-send onClick={() => sendFriendReq(friendFound.id)} disabled={friendBusy} className="px-2.5 py-1 bg-rose-700 text-white text-[10px] uppercase tracking-wider font-medium">{friendFound.relation === 'pending_in' ? 'Accept their request' : 'Send request'}</button>}
-                      </div>
-                    )}
-                    {friendMsg && <p data-friend-msg className="text-[11px] text-stone-600">{friendMsg}</p>}
-                  </div>
-                ) : (
-                  <p className="text-[11px] text-stone-500 leading-snug">Sign in with an account to find friends by username.</p>
-                )}
-
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    placeholder="Add someone who isn't on Pact yet (name)..."
-                    value={newFriendName}
-                    onChange={e => setNewFriendName(e.target.value)}
-                    className="flex-1 bg-[#FAF8F5] border border-stone-300 px-2.5 py-1.5 text-xs"
-                  />
-                  <button
-                    onClick={() => {
-                      if (!newFriendName.trim()) return;
-                      setFriendsList(prev => [...prev, { id: Date.now(), name: newFriendName, handle: `@${newFriendName.toLowerCase().replace(/\s+/g, '')}`, lastSeen: 'Just added', type: 'Friend', status: 'Synced' }]);
-                      setNewFriendName('');
-                    }}
-                    className="px-3 py-1.5 bg-purple-800 text-white text-[10px] uppercase tracking-wider font-medium"
-                  >
-                    + Add
-                  </button>
-                </div>
+                  );
+                })()}
 
                 {(() => {
                   const fq = friendBookQ.trim().toLowerCase();
